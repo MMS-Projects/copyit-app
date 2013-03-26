@@ -2,11 +2,13 @@ package net.mms_projects.copyit.forms;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.KeyStore.PasswordProtection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
+import java.util.UUID;
 
+import net.mms_projects.copyit.PasswordGenerator;
 import net.mms_projects.copyit.dialog_response.LoginResponse;
 
 import org.eclipse.swt.SWT;
@@ -18,24 +20,31 @@ import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.wb.swt.SWTResourceManager;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 
 public class LoginDialog extends Dialog {
 
 	protected Object result;
 	protected Shell shell;
-	protected LoginResponse response = new LoginResponse();;
+	protected LoginResponse response = new LoginResponse();
+	protected String loginUrl = "https://www.facebook.com/dialog/oauth?client_id=560584000620528&display=popup&redirect_uri=https://www.facebook.com/connect/login_success.html&response_type=token";
+	private Text text;
+	private Text text_1;
+	private Button btnDone;
 
-	/**
-	 * Create the dialog.
-	 * 
-	 * @param parent
-	 * @param style
-	 */
 	public LoginDialog(Shell parent) {
-		super(parent);
-		setText("SWT Dialog");
+		super(parent, SWT.DIALOG_TRIM | SWT.MIN | SWT.PRIMARY_MODAL);
+		
+		this.setText("Facebook login");
 	}
-
+	
+	
 	/**
 	 * Open the dialog.
 	 * 
@@ -58,60 +67,43 @@ public class LoginDialog extends Dialog {
 	 * Create contents of the dialog.
 	 */
 	private void createContents() {
-		shell = new Shell(getParent(), getStyle());
+		PasswordGenerator generator = new PasswordGenerator();
+		
+		shell = new Shell(getParent());
 		shell.setSize(800, 600);
 		shell.setText(getText());
-
-		shell.setLayout(new FillLayout(SWT.HORIZONTAL));
-
-		Browser browser = new Browser(shell, SWT.NONE);
-		browser.setUrl("https://www.facebook.com/dialog/oauth?client_id=560584000620528&redirect_uri=https://www.facebook.com/connect/login_success.html&response_type=token");
-		browser.setBackground(SWTResourceManager.getColor(SWT.COLOR_BLUE));
-		browser.addLocationListener(new LocationListener() {
-
+		shell.setLayout(new GridLayout(2, false));
+		
+		Label lblDeviceId = new Label(shell, SWT.NONE);
+		lblDeviceId.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		lblDeviceId.setText("Device id");
+		
+		text = new Text(shell, SWT.BORDER);
+		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		Label lblGeneratedPassword = new Label(shell, SWT.NONE);
+		lblGeneratedPassword.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		lblGeneratedPassword.setText("Generated password");
+		
+		text_1 = new Text(shell, SWT.BORDER);
+		text_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		text_1.setText(generator.generatePassword());
+		new Label(shell, SWT.NONE);
+		new Label(shell, SWT.NONE);
+		new Label(shell, SWT.NONE);
+		
+		btnDone = new Button(shell, SWT.NONE);
+		btnDone.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void changing(LocationEvent event) {
-				System.out.println("Changing: " + event.location);
-				if (event.location
-						.startsWith("https://www.facebook.com/connect/login_success.html#access_token=")) {
-					URL url;
-					try {
-						url = new URL(event.location);
-					} catch (MalformedURLException e) {
-						e.printStackTrace();
-						return;
-					}
-					Map<String, String> arguments = LoginDialog.this.getQueryMap(url.getRef());
-					if ((!arguments.containsKey("access_token")) || (!arguments.containsKey("expires_in"))) {
-						return;
-					}
-					int expiresIn = Integer.parseInt(arguments.get("expires_in"));
-					response.accessToken = arguments.get("access_token");
-					response.expireDate = new Date(System.currentTimeMillis() + (expiresIn * 1000));
-					response.error = 0;
-					shell.close();
-					shell.dispose();
-				}
-			}
-
-			@Override
-			public void changed(LocationEvent event) {
+			public void widgetSelected(SelectionEvent arg0) {
+				response.deviceId = UUID.fromString(text.getText());
+				response.devicePassword = text_1.getText();
+				shell.close();
 			}
 		});
+		btnDone.setText("Done");
 
+		
 	}
-
-	public Map<String, String> getQueryMap(String query)  
-	{  
-	    String[] params = query.split("&");  
-	    Map<String, String> map = new HashMap<String, String>();  
-	    for (String param : params)  
-	    {  
-	        String name = param.split("=")[0];  
-	        String value = param.split("=")[1];  
-	        map.put(name, value);  
-	    }  
-	    return map;  
-	} 
 	
 }

@@ -23,6 +23,7 @@
         <fileset file="lib/commons-logging-1.1.1.jar" />
         <fileset file="lib/httpcore-4.2.2.jar" />
         <fileset file="lib/httpclient-4.2.3.jar" />
+    	<fileset file="lib/json-simple-1.1.1.jar" />
     </path>
 
     <path id="linux-x86-classpath">

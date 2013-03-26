@@ -1,31 +1,34 @@
 package net.mms_projects.copyit;
 
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.ProtocolException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-
-import com.sun.net.httpserver.HttpsParameters;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 public class ServerApi {
 
-	String apiUrl = "http://interwebzpaste.com/api/";
+	public UUID deviceId;
+	public String devicePassword;
+
+	String apiUrl = "http://copyit.dev.mms-projects.net";
 	URL apiUrlObject;
 
 	public ServerApi() {
@@ -36,31 +39,82 @@ public class ServerApi {
 		}
 	}
 
-	public boolean set(String accessToken, String data) {
-		HttpResponse response;
-		String responseText = null;
+	public boolean set(String data) throws Exception {
 		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("action", "set"));
-		nameValuePairs.add(new BasicNameValuePair("access_token", accessToken));
 		nameValuePairs.add(new BasicNameValuePair("data", data));
 
-		HttpClient httpclient = new DefaultHttpClient();
-		HttpPost httppost = new HttpPost(this.apiUrl);
-		try {
-			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-		} catch (UnsupportedEncodingException e1) {
-			return false;
+		JSONObject json = this.doRequest("clipboard-data", "1", "PUT",
+				nameValuePairs);
+
+		if (!((String) json.get("status")).equalsIgnoreCase("OK")) {
+			throw new Exception("The server returned an error code");
 		}
 
-		try {
-			response = httpclient.execute(httppost);
-			HttpEntity entity = response.getEntity();
+		return true;
+	}
 
-			responseText = IOUtils.toString(entity.getContent(), "UTF-8");
-		} catch (Exception e) {
+	public String get() throws Exception {
+		JSONObject json = this.doRequest("clipboard-data", "1", "GET");
+		System.out.println(json.toJSONString());
+		if (!((String) json.get("status")).equalsIgnoreCase("OK")) {
+			throw new Exception("The server returned an error code");
+		}
+		return (String) json.get("data");
+	}
+
+	protected JSONObject doRequest(String endpoint, String id, String method)
+			throws Exception {
+		return this.doRequest(endpoint, id, method,
+				new ArrayList<NameValuePair>());
+	}
+
+	protected JSONObject doRequest(String endpoint, String id, String method,
+			List<NameValuePair> parameters) throws Exception {
+		String url = this.apiUrl + "/api/" + endpoint;
+		if (!id.isEmpty()) {
+			url += "/" + id;
+		}
+		url += ".json?";
+
+		URIBuilder uriBuilder = null;
+		try {
+			uriBuilder = new URIBuilder(url);
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return true;
+		uriBuilder.addParameter("device_id", this.deviceId.toString());
+		uriBuilder.addParameter("device_password", this.devicePassword);
+		URI uri = null;
+		try {
+			uri = uriBuilder.build();
+		} catch (URISyntaxException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		JSONParser parser = new JSONParser();
+		HttpResponse response = null;
+		String responseText = null;
+
+		HttpClient httpclient = new DefaultHttpClient();
+		if (method == "GET") {
+			HttpGet request = new HttpGet(uri);
+			response = httpclient.execute(request);
+		} else if (method == "POST") {
+			HttpPost request = new HttpPost(uri);
+			request.setEntity(new UrlEncodedFormEntity(parameters));
+			response = httpclient.execute(request);
+		} else if (method == "PUT") {
+			HttpPut request = new HttpPut(uri);
+			request.setEntity(new UrlEncodedFormEntity(parameters));
+			response = httpclient.execute(request);
+		}
+
+		HttpEntity entity = response.getEntity();
+
+		responseText = IOUtils.toString(entity.getContent(), "UTF-8");
+		return (JSONObject) parser.parse(responseText);
 	}
 
 }
