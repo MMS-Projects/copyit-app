@@ -1,4 +1,5 @@
-package net.mms_projects.copyit;
+package net.mms_projects.copyit.ui.swt;
+
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;

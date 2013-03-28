@@ -1,18 +1,14 @@
 package net.mms_projects.copyit.app;
 
-import net.mms_projects.copyit.ActionProvider;
-import net.mms_projects.copyit.TrayEntry;
-import net.mms_projects.copyit.forms.MainWindow;
-
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Tray;
+import net.mms_projects.copyit.Settings;
+import net.mms_projects.copyit.ui.AbstractUi;
+import net.mms_projects.copyit.ui.SwtGui;
+import net.mms_projects.copyit.ui.swt.forms.MainWindow;
 
 public class CopyIt {
 
-	protected Display display;
-	protected Tray systemTray;
-
+	protected Settings settings;
+	
 	/**
 	 * @param args
 	 */
@@ -21,18 +17,11 @@ public class CopyIt {
 		app.run();
 	}
 
-	public CopyIt() {
-		this.display = Display.getDefault();
-		this.systemTray = display.getSystemTray();
-	}
-
 	public void run() {
-		ActionProvider actionProvider = new ActionProvider(display);
-
-		new TrayEntry(this.systemTray, actionProvider);
-
-		MainWindow mainWindow = new MainWindow();
-		mainWindow.open();
+		this.settings = new Settings();
+		
+		AbstractUi ui = new SwtGui(this.settings);
+		ui.open();
 	}
 
 }

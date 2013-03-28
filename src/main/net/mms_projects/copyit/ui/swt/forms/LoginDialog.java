@@ -1,4 +1,4 @@
-package net.mms_projects.copyit.forms;
+package net.mms_projects.copyit.ui.swt.forms;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import net.mms_projects.copyit.PasswordGenerator;
-import net.mms_projects.copyit.dialog_response.LoginResponse;
+import net.mms_projects.copyit.ui.swt.dialog_response.LoginResponse;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
