@@ -19,9 +19,12 @@ public class CopyIt {
 
 	public void run() {
 		this.settings = new Settings();
+		this.settings.loadProperties();
 		
 		AbstractUi ui = new SwtGui(this.settings);
 		ui.open();
+		
+		this.settings.saveProperties();
 	}
 
 }

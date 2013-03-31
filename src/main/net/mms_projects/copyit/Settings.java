@@ -15,6 +15,7 @@ public class Settings {
 	private Properties properties;
 
 	public Settings() {
+		this.defaults.setProperty("server.baseurl", "http://copyit.dev.mms-projects.net");
 		this.properties = new Properties(defaults);
 	}
 

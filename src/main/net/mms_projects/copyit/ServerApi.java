@@ -27,8 +27,8 @@ public class ServerApi {
 
 	public UUID deviceId;
 	public String devicePassword;
-
-	String apiUrl = "http://copyit.dev.mms-projects.net";
+	public String apiUrl = "http://copyit.dev.mms-projects.net";
+	
 	URL apiUrlObject;
 
 	public ServerApi() {
@@ -37,6 +37,25 @@ public class ServerApi {
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public boolean initDevice(String deviceName) throws Exception {
+		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("device_name", deviceName));
+		
+		JSONObject json = null;
+		try {
+			json = this.doRequest("device", this.deviceId.toString(), "POST", nameValuePairs);
+		} catch (Exception e) {
+			// TODO: weird crash without this try catch
+			System.out.println(e.getMessage());
+		}
+		
+		if (!((String) json.get("status")).equalsIgnoreCase("OK")) {
+			throw new Exception("The server returned an error code");
+		}
+
+		return true;
 	}
 
 	public boolean set(String data) throws Exception {

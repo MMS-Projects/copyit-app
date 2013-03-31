@@ -33,7 +33,6 @@ public class LoginDialog extends Dialog {
 	protected Object result;
 	protected Shell shell;
 	protected LoginResponse response = new LoginResponse();
-	protected String loginUrl = "https://www.facebook.com/dialog/oauth?client_id=560584000620528&display=popup&redirect_uri=https://www.facebook.com/connect/login_success.html&response_type=token";
 	private Text text;
 	private Text text_1;
 	private Button btnDone;

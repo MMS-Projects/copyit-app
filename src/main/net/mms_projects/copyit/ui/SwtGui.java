@@ -19,7 +19,7 @@ public class SwtGui extends AbstractUi {
 	public SwtGui(Settings settings) {
 		super(settings);
 		
-		ActionProvider actionProvider = new ActionProvider(this.display);
+		ActionProvider actionProvider = new ActionProvider(this.display, settings);
 		this.trayEntry = new TrayEntry(this.tray, actionProvider);
 	}
 	
