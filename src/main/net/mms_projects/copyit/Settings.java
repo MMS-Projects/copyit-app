@@ -13,12 +13,19 @@ public class Settings {
 
 	private Properties defaults = new Properties();
 	private Properties properties;
+	private FileInputStream inputStream;
+	private FileOutputStream outputStream;
 
 	public Settings() {
 		this.defaults.setProperty("server.baseurl", "http://copyit.dev.mms-projects.net");
 		this.properties = new Properties(defaults);
 	}
 
+	public void setFileStream(FileInputStream inputStream, FileOutputStream outputStream) {
+		this.inputStream = inputStream;
+		this.outputStream = outputStream;
+	}
+	
 	public void set(String key, String value) throws Exception {
 		this.properties.setProperty(key, value);
 		saveProperties();
@@ -31,8 +38,7 @@ public class Settings {
 	public void loadProperties() {
 		BufferedInputStream stream;
 		try {
-			stream = new BufferedInputStream(new FileInputStream(
-					"options.properties"));
+			stream = new BufferedInputStream(this.inputStream);
 			this.properties.load(stream);
 			stream.close();
 		} catch (FileNotFoundException e) {
@@ -46,12 +52,8 @@ public class Settings {
 	public void saveProperties() {
 		BufferedOutputStream stream;
 		try {
-			File file = new File("options.properties");
-			if (!file.exists()) {
-				file.createNewFile();
-			}
 			this.properties.store(new BufferedOutputStream(
-					new FileOutputStream(file)), "");
+					this.outputStream), "");
 		} catch (FileNotFoundException e) {
 			// we checked this first so this shouldn't occurs
 		} catch (IOException e) {

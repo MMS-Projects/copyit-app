@@ -90,7 +90,7 @@ public class ServerApi {
 	protected JSONObject doRequest(String endpoint, String id, String method,
 			List<NameValuePair> parameters) throws Exception {
 		String url = this.apiUrl + "/api/" + endpoint;
-		if (!id.isEmpty()) {
+		if (id.length() != 0) {
 			url += "/" + id;
 		}
 		url += ".json?";
