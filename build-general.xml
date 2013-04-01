@@ -34,7 +34,7 @@
         <fileset file="libs/commons-logging-1.1.1.jar" />
         <fileset file="libs/httpcore-4.2.2.jar" />
         <fileset file="libs/httpclient-4.2.3.jar" />
-    	<fileset file="libs/json-simple-1.1.1.jar" />
+    	<fileset file="libs/gson-2.2.2.jar" />
     </path>
 
     <path id="linux-x86-classpath">
@@ -70,7 +70,7 @@
         	<zipfileset excludes="META-INF/*.SF" src="libs/commons-logging-1.1.1.jar" />
         	<zipfileset excludes="META-INF/*.SF" src="libs/httpcore-4.2.2.jar" />
         	<zipfileset excludes="META-INF/*.SF" src="libs/httpclient-4.2.3.jar" />
-        	<zipfileset excludes="META-INF/*.SF" src="libs/json-simple-1.1.1.jar" />
+        	<zipfileset excludes="META-INF/*.SF" src="libs/gson-2.2.2.jar" />
             <fileset dir=".">
                <include name="**/res/**.properties" />
                <include name="**/res/mmsprojects-copyit-**.png" />
@@ -95,7 +95,7 @@
             <zipfileset excludes="META-INF/*.SF" src="libs/commons-logging-1.1.1.jar" />
             <zipfileset excludes="META-INF/*.SF" src="libs/httpcore-4.2.2.jar" />
             <zipfileset excludes="META-INF/*.SF" src="libs/httpclient-4.2.3.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="libs/json-simple-1.1.1.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="libs/gson-2.2.2.jar" />
             <fileset dir=".">
                <include name="**/res/**.properties" />
                <include name="**/res/mmsprojects-copyit-**.png" />
@@ -120,7 +120,7 @@
             <zipfileset excludes="META-INF/*.SF" src="libs/commons-logging-1.1.1.jar" />
             <zipfileset excludes="META-INF/*.SF" src="libs/httpcore-4.2.2.jar" />
             <zipfileset excludes="META-INF/*.SF" src="libs/httpclient-4.2.3.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="libs/json-simple-1.1.1.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="libs/gson-2.2.2.jar" />
             <fileset dir=".">
                <include name="**/res/**.properties" />
                <include name="**/res/mmsprojects-copyit-**.png" />
@@ -145,7 +145,7 @@
             <zipfileset excludes="META-INF/*.SF" src="libs/commons-logging-1.1.1.jar" />
             <zipfileset excludes="META-INF/*.SF" src="libs/httpcore-4.2.2.jar" />
             <zipfileset excludes="META-INF/*.SF" src="libs/httpclient-4.2.3.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="libs/json-simple-1.1.1.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="libs/gson-2.2.2.jar" />
             <fileset dir=".">
                <include name="**/res/**.properties" />
                <include name="**/res/mmsprojects-copyit-**.png" />

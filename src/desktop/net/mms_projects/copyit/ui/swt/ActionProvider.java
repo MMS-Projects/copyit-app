@@ -4,9 +4,9 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.UUID;
 
+import net.mms_projects.copyit.LoginResponse;
 import net.mms_projects.copyit.ServerApi;
 import net.mms_projects.copyit.Settings;
-import net.mms_projects.copyit.ui.swt.dialog_response.LoginResponse;
 import net.mms_projects.copyit.ui.swt.forms.AutoLoginDialog;
 
 import org.eclipse.swt.dnd.Clipboard;

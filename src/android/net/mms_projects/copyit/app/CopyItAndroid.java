@@ -13,10 +13,16 @@ public class CopyItAndroid extends CopyIt {
 
 	protected Settings settings;
 	
+	public Settings getSettings() {
+		return this.settings;
+	}
+	
 	public void run(MainActivity activity, FileInputStream inputStream, FileOutputStream outputStream) {
 		this.settings = new Settings();
 		this.settings.setFileStream(inputStream, outputStream);
 		this.settings.loadProperties();
+		
+		AndroidApplication.getInstance().setSettings(this.settings);
 		
 		AbstractUi ui = new AndroidGui(this.settings, activity);
 		ui.open();

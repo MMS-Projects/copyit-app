@@ -1,4 +1,4 @@
-package net.mms_projects.copyit.ui.swt.dialog_response;
+package net.mms_projects.copyit;
 
 import java.util.UUID;
 

@@ -1,8 +1,6 @@
 package net.mms_projects.copyit;
 
 import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,18 +15,17 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
-import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+
+import com.google.gson.Gson;
 
 public class ServerApi {
 
 	public UUID deviceId;
 	public String devicePassword;
 	public String apiUrl = "http://copyit.dev.mms-projects.net";
-	
+
 	URL apiUrlObject;
 
 	public ServerApi() {
@@ -38,21 +35,23 @@ public class ServerApi {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public boolean initDevice(String deviceName) throws Exception {
 		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("device_name", deviceName));
-		
-		JSONObject json = null;
+
+		ApiResponse response = null;
 		try {
-			json = this.doRequest("device", this.deviceId.toString(), "POST", nameValuePairs);
+			response = this.doRequest("device", this.deviceId.toString(), "POST",
+					nameValuePairs);
 		} catch (Exception e) {
 			// TODO: weird crash without this try catch
 			System.out.println(e.getMessage());
 		}
-		
-		if (!((String) json.get("status")).equalsIgnoreCase("OK")) {
-			throw new Exception("The server returned an error code");
+
+		if (!(response.status.equalsIgnoreCase("OK"))) {
+			throw new Exception("The server returned an error code: "
+					+ response.messages.get(0));
 		}
 
 		return true;
@@ -62,70 +61,55 @@ public class ServerApi {
 		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("data", data));
 
-		JSONObject json = this.doRequest("clipboard-data", "1", "PUT",
+		ApiResponse response = this.doRequest("clipboard-data", "1", "PUT",
 				nameValuePairs);
 
-		if (!((String) json.get("status")).equalsIgnoreCase("OK")) {
-			throw new Exception("The server returned an error code");
+		if (!(response.status.equalsIgnoreCase("OK"))) {
+			throw new Exception("The server returned an error code: "
+					+ response.messages.get(0));
 		}
 
 		return true;
 	}
 
 	public String get() throws Exception {
-		JSONObject json = this.doRequest("clipboard-data", "1", "GET");
-		System.out.println(json.toJSONString());
-		if (!((String) json.get("status")).equalsIgnoreCase("OK")) {
-			throw new Exception("The server returned an error code");
+		ApiResponse response = this.doRequest("clipboard-data", "1", "GET");
+		if (!(response.status.equalsIgnoreCase("OK"))) {
+			throw new Exception("The server returned an error code: "
+					+ response.messages.get(0));
 		}
-		return (String) json.get("data");
+		return response.data;
 	}
 
-	protected JSONObject doRequest(String endpoint, String id, String method)
+	protected ApiResponse doRequest(String endpoint, String id, String method)
 			throws Exception {
 		return this.doRequest(endpoint, id, method,
 				new ArrayList<NameValuePair>());
 	}
 
-	protected JSONObject doRequest(String endpoint, String id, String method,
+	protected ApiResponse doRequest(String endpoint, String id, String method,
 			List<NameValuePair> parameters) throws Exception {
 		String url = this.apiUrl + "/api/" + endpoint;
 		if (id.length() != 0) {
 			url += "/" + id;
 		}
 		url += ".json?";
-
-		URIBuilder uriBuilder = null;
-		try {
-			uriBuilder = new URIBuilder(url);
-		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		uriBuilder.addParameter("device_id", this.deviceId.toString());
-		uriBuilder.addParameter("device_password", this.devicePassword);
-		URI uri = null;
-		try {
-			uri = uriBuilder.build();
-		} catch (URISyntaxException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-		JSONParser parser = new JSONParser();
+		url += "device_id=" + this.deviceId.toString() + "&";
+		url += "device_password=" + this.devicePassword;
+		
 		HttpResponse response = null;
 		String responseText = null;
 
 		HttpClient httpclient = new DefaultHttpClient();
 		if (method == "GET") {
-			HttpGet request = new HttpGet(uri);
+			HttpGet request = new HttpGet(url);
 			response = httpclient.execute(request);
 		} else if (method == "POST") {
-			HttpPost request = new HttpPost(uri);
+			HttpPost request = new HttpPost(url);
 			request.setEntity(new UrlEncodedFormEntity(parameters));
 			response = httpclient.execute(request);
 		} else if (method == "PUT") {
-			HttpPut request = new HttpPut(uri);
+			HttpPut request = new HttpPut(url);
 			request.setEntity(new UrlEncodedFormEntity(parameters));
 			response = httpclient.execute(request);
 		}
@@ -133,7 +117,9 @@ public class ServerApi {
 		HttpEntity entity = response.getEntity();
 
 		responseText = IOUtils.toString(entity.getContent(), "UTF-8");
-		return (JSONObject) parser.parse(responseText);
+		
+		ApiResponse data = new Gson().fromJson(responseText, ApiResponse.class);
+		return data;
 	}
 
 }

@@ -8,8 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import net.mms_projects.copyit.LoginResponse;
 import net.mms_projects.copyit.PasswordGenerator;
-import net.mms_projects.copyit.ui.swt.dialog_response.LoginResponse;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
