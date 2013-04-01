@@ -11,7 +11,7 @@
 
     <target name="linux" depends="linux-x86, linux-x86_64" />
     <target name="windows" depends="windows-x86, windows-x86_64" />
-    <target name="android" depends="debug, out.final.file.exists, copy-signed">
+    <target name="android" depends="debug, check-out.final.file.exists, copy-signed">
 	<copy file="${out.packaged.file}" tofile="build/copyit-android-unsigned.apk" />
     </target>
     <target name="copy-signed" if="out.final.file.exists">
