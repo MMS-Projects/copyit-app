@@ -8,25 +8,21 @@ import java.util.UUID;
 
 import net.mms_projects.copyit.LoginResponse;
 import net.mms_projects.copyit.R;
-import net.mms_projects.copyit.ServerApi;
 import net.mms_projects.copyit.Settings;
-import net.mms_projects.copyit.app.AndroidApplication;
+import net.mms_projects.copyit.api.ServerApi;
+import net.mms_projects.copyit.api.endpoints.ClipboardContentEndpoint;
+import net.mms_projects.copyit.api.endpoints.DeviceEndpoint;
 import net.mms_projects.copyit.app.CopyItAndroid;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
@@ -55,13 +51,6 @@ public class MainActivity extends Activity {
 			e.printStackTrace();
 		}
 
-		try {
-			System.out.println(this.api.get());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
 		setContentView(R.layout.activity_main);
 	}
 
@@ -74,7 +63,7 @@ public class MainActivity extends Activity {
 
 	public void copyIt(View view) {
 		try {
-			this.api.set(this.getClipboard());
+			new ClipboardContentEndpoint(this.api).update(this.getClipboard());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -83,7 +72,7 @@ public class MainActivity extends Activity {
 
 	public void pasteIt(View view) {
 		try {
-			this.setClipboard(this.api.get());
+			this.setClipboard(new ClipboardContentEndpoint(this.api).get());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -124,7 +113,7 @@ public class MainActivity extends Activity {
 					InetAddress addr = InetAddress.getLocalHost();
 					String hostname = addr.getHostName();
 
-					this.api.initDevice(hostname);
+					new DeviceEndpoint(this.api).create(hostname);
 				} catch (UnknownHostException e) {
 					e.printStackTrace();
 				} catch (Exception e) {

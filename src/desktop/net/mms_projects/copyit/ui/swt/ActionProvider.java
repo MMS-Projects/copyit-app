@@ -5,8 +5,10 @@ import java.net.UnknownHostException;
 import java.util.UUID;
 
 import net.mms_projects.copyit.LoginResponse;
-import net.mms_projects.copyit.ServerApi;
 import net.mms_projects.copyit.Settings;
+import net.mms_projects.copyit.api.ServerApi;
+import net.mms_projects.copyit.api.endpoints.ClipboardContentEndpoint;
+import net.mms_projects.copyit.api.endpoints.DeviceEndpoint;
 import net.mms_projects.copyit.ui.swt.forms.AutoLoginDialog;
 
 import org.eclipse.swt.dnd.Clipboard;
@@ -57,7 +59,7 @@ public class ActionProvider {
 			InetAddress addr = InetAddress.getLocalHost();
 			String hostname = addr.getHostName();
 
-			this.api.initDevice(hostname);
+			new DeviceEndpoint(this.api).create(hostname);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -71,7 +73,7 @@ public class ActionProvider {
 		String data = (String) this.clipboard.getContents(transfer);
 		if (data != null) {
 			try {
-				this.api.set(data);
+				new ClipboardContentEndpoint(this.api).update(data);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -81,7 +83,7 @@ public class ActionProvider {
 	public void doDataGet() {
 		String data;
 		try {
-			data = this.api.get();
+			data = new ClipboardContentEndpoint(this.api).get();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return;

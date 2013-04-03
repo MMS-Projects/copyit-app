@@ -2,8 +2,8 @@ package net.mms_projects.copyit.ui;
 
 import java.util.UUID;
 
-import net.mms_projects.copyit.ServerApi;
 import net.mms_projects.copyit.Settings;
+import net.mms_projects.copyit.api.ServerApi;
 import net.mms_projects.copyit.ui.android.MainActivity;
 
 public class AndroidGui extends AbstractUi {

@@ -1,7 +1,7 @@
 package net.mms_projects.copyit.ui.swt.forms;
 
 import net.mms_projects.copyit.LoginResponse;
-import net.mms_projects.copyit.ServerApi;
+import net.mms_projects.copyit.api.ServerApi;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
