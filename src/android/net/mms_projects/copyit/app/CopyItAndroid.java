@@ -4,6 +4,7 @@ package net.mms_projects.copyit.app;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
+import net.mms_projects.copyit.FileStreamBuilder;
 import net.mms_projects.copyit.Settings;
 import net.mms_projects.copyit.ui.AbstractUi;
 import net.mms_projects.copyit.ui.AndroidGui;
@@ -17,9 +18,9 @@ public class CopyItAndroid extends CopyIt {
 		return this.settings;
 	}
 	
-	public void run(MainActivity activity, FileInputStream inputStream, FileOutputStream outputStream) {
+	public void run(MainActivity activity, FileStreamBuilder streamBuilder) {
 		this.settings = new Settings();
-		this.settings.setFileStream(inputStream, outputStream);
+		this.settings.setFileStreamBuilder(streamBuilder);
 		this.settings.loadProperties();
 		
 		AndroidApplication.getInstance().setSettings(this.settings);

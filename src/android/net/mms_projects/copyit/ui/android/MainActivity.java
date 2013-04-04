@@ -1,11 +1,14 @@
 package net.mms_projects.copyit.ui.android;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.UUID;
 
+import net.mms_projects.copyit.FileStreamBuilder;
 import net.mms_projects.copyit.LoginResponse;
 import net.mms_projects.copyit.R;
 import net.mms_projects.copyit.Settings;
@@ -42,14 +45,7 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		this.app = new CopyItAndroid();
-		try {
-			FileOutputStream output = openFileOutput("settings",
-					Context.MODE_PRIVATE);
-			this.app.run(this, openFileInput("settings"), output);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		this.app.run(this, new StreamBuilder(this));
 
 		setContentView(R.layout.activity_main);
 	}
@@ -137,40 +133,62 @@ public class MainActivity extends Activity {
 			}
 		}
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	protected void setClipboard(String text) {
 		int sdk = android.os.Build.VERSION.SDK_INT;
-		if(sdk < android.os.Build.VERSION_CODES.HONEYCOMB) {
-		    android.text.ClipboardManager clipboard = (android.text.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-		    clipboard.setText(text);
+		if (sdk < android.os.Build.VERSION_CODES.HONEYCOMB) {
+			android.text.ClipboardManager clipboard = (android.text.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+			clipboard.setText(text);
 		} else {
-		    this.setClipboardHoneycomb(text);
+			this.setClipboardHoneycomb(text);
 		}
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	protected String getClipboard() {
 		int sdk = android.os.Build.VERSION.SDK_INT;
-		if(sdk < android.os.Build.VERSION_CODES.HONEYCOMB) {
-		    android.text.ClipboardManager clipboard = (android.text.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-		    return clipboard.getText().toString();
+		if (sdk < android.os.Build.VERSION_CODES.HONEYCOMB) {
+			android.text.ClipboardManager clipboard = (android.text.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+			return clipboard.getText().toString();
 		} else {
-		    return this.getClipboardHoneycomb();
+			return this.getClipboardHoneycomb();
 		}
 	}
-	
+
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	protected void setClipboardHoneycomb(String text) {
-		android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE); 
-	    android.content.ClipData clip = android.content.ClipData.newPlainText("text label", text);
-	    clipboard.setPrimaryClip(clip);
+		android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+		android.content.ClipData clip = android.content.ClipData.newPlainText(
+				"text label", text);
+		clipboard.setPrimaryClip(clip);
 	}
-	
+
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	protected String getClipboardHoneycomb() {
-		android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE); 
+		android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
 		android.content.ClipData clip = clipboard.getPrimaryClip();
 		return clip.getItemAt(0).getText().toString();
+	}
+
+	class StreamBuilder extends FileStreamBuilder {
+
+		private Activity activity;
+
+		public StreamBuilder(Activity activity) {
+			this.activity = activity;
+		}
+
+		@Override
+		public FileInputStream getInputStream() throws IOException {
+			return this.activity.openFileInput("settings");
+		}
+
+		@Override
+		public FileOutputStream getOutputStream() throws IOException {
+			return this.activity.openFileOutput("settings",
+					Context.MODE_PRIVATE);
+		}
+
 	}
 }

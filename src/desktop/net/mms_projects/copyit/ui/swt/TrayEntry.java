@@ -1,6 +1,8 @@
 package net.mms_projects.copyit.ui.swt;
 
 
+import net.mms_projects.copyit.ui.swt.forms.PreferencesDialog;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
@@ -76,6 +78,15 @@ public class TrayEntry {
 				TrayEntry.this.actionProvider.doLogin(shell);
 			}
 		});
+		
+		MenuItem menuItemPreferences = new MenuItem(menu, SWT.PUSH);
+		menuItemPreferences.setText("Preferences");
+		menuItemPreferences.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				new PreferencesDialog(shell, TrayEntry.this.actionProvider.settings).open();
+			}
+		});
+		
 		this.trayItem.addListener(SWT.MenuDetect, new Listener() {
 			public void handleEvent(Event event) {
 				TrayEntry.this.menu.setVisible(true);

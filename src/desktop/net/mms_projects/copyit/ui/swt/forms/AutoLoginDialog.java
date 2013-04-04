@@ -21,7 +21,7 @@ public class AutoLoginDialog extends Dialog {
 
 	protected Object result;
 	protected Shell shell;
-	protected LoginResponse response = new LoginResponse();
+	protected LoginResponse response;
 	private Browser browser;
 	protected Settings settings;
 
@@ -48,6 +48,12 @@ public class AutoLoginDialog extends Dialog {
 				display.sleep();
 			}
 		}
+		if (this.response != null) {
+			if (this.response.deviceId == null) {
+				new Exception("Response initialized without device id. Could be wrong login?").printStackTrace();
+				return null;
+			}
+		}
 		return this.response;
 	}
 
@@ -57,7 +63,8 @@ public class AutoLoginDialog extends Dialog {
 	private void createContents() {
 		PasswordGenerator generator = new PasswordGenerator();
 		
-		response.devicePassword = generator.generatePassword();
+		this.response = new LoginResponse();
+		this.response.devicePassword = generator.generatePassword();
 		
 		shell = new Shell(getParent());
 		shell.setSize(800, 600);
@@ -80,7 +87,7 @@ public class AutoLoginDialog extends Dialog {
 				
 				if (location.getPath().startsWith("/app-setup/done/")) {
 					String deviceId = location.getPath().substring(16);
-					response.deviceId = UUID.fromString(deviceId);
+					AutoLoginDialog.this.response.deviceId = UUID.fromString(deviceId);
 					shell.close();
 				}
 			}
