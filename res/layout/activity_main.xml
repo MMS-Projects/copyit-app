@@ -4,7 +4,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal" >
-	<Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/button_copyit" android:layout_weight="1"  android:onClick="copyIt" />
-	<Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/button_pasteit" android:layout_weight="1"  android:onClick="pasteIt" />
-	<Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/button_login" android:layout_weight="1"  android:onClick="login" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:onClick="copyIt"
+        android:text="@string/button_copyit" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:onClick="pasteIt"
+        android:text="@string/button_pasteit" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:onClick="doLogin"
+        android:text="@string/button_login" />
+
 </LinearLayout>

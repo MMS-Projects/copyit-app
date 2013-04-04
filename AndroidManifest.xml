@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="net.mms_projects.copyit.ui.android.LoginActivity"
+            android:name="net.mms_projects.copyit.ui.android.BrowserLoginActivity"
             android:label="@string/title_activity_login"
             android:parentActivityName="net.mms_projects.copyit.ui.android.MainActivity" >
             <meta-data
@@ -41,6 +41,20 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="net.mms_projects.copyit.ui.android.MainActivity" />
+        </activity>
+        <activity
+            android:name="net.mms_projects.copyit.ui.android.LoginActivity"
+            android:label="@string/title_activity_login"
+            android:parentActivityName="net.mms_projects.copyit.ui.android.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="net.mms_projects.copyit.ui.android.MainActivity" />
+
+            <intent-filter>
+                <action android:name="net.mms_projects.copyit.ui.android.LoginActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
     </application>
 

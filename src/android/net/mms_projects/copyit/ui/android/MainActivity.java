@@ -3,23 +3,17 @@ package net.mms_projects.copyit.ui.android;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.UUID;
 
 import net.mms_projects.copyit.FileStreamBuilder;
-import net.mms_projects.copyit.LoginResponse;
 import net.mms_projects.copyit.R;
 import net.mms_projects.copyit.Settings;
 import net.mms_projects.copyit.api.ServerApi;
 import net.mms_projects.copyit.api.endpoints.ClipboardContentEndpoint;
-import net.mms_projects.copyit.api.endpoints.DeviceEndpoint;
+import net.mms_projects.copyit.app.AndroidApplication;
 import net.mms_projects.copyit.app.CopyItAndroid;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -31,13 +25,10 @@ public class MainActivity extends Activity {
 
 	private CopyItAndroid app;
 	private Settings settings;
-	private ServerApi api;
-
-	private static final int ACTIVITY_LOGIN = 1;
 
 	public void setup(Settings settings, ServerApi api) {
 		this.settings = settings;
-		this.api = api;
+		AndroidApplication.getInstance().setApi(api);
 	}
 
 	@Override
@@ -56,22 +47,23 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-	    switch (item.getItemId()) {
-	        case R.id.action_settings:
-	        	Intent intent = new Intent(this, SettingsActivity.class);
-	    		startActivity(intent);
-	            return true;
-	        default:
-	            return super.onOptionsItemSelected(item);
-	    }
+		switch (item.getItemId()) {
+		case R.id.action_settings:
+			Intent intent = new Intent(this, SettingsActivity.class);
+			startActivity(intent);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 	public void copyIt(View view) {
 		try {
-			new ClipboardContentEndpoint(this.api).update(this.getClipboard());
+			new ClipboardContentEndpoint(AndroidApplication.getInstance()
+					.getApi()).update(this.getClipboard());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -80,70 +72,17 @@ public class MainActivity extends Activity {
 
 	public void pasteIt(View view) {
 		try {
-			this.setClipboard(new ClipboardContentEndpoint(this.api).get());
+			this.setClipboard(new ClipboardContentEndpoint(AndroidApplication
+					.getInstance().getApi()).get());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	public void login(View view) {
+	public void doLogin(View view) {
 		Intent intent = new Intent(this, LoginActivity.class);
-		startActivityForResult(intent, MainActivity.ACTIVITY_LOGIN);
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		switch (requestCode) {
-		case MainActivity.ACTIVITY_LOGIN:
-			if (resultCode == RESULT_OK) {
-				LoginResponse response = new LoginResponse();
-				response.deviceId = UUID.fromString(data
-						.getStringExtra("device_id"));
-				response.devicePassword = data
-						.getStringExtra("device_password");
-
-				try {
-					this.settings
-							.set("device.id", response.deviceId.toString());
-					this.settings.set("device.password",
-							response.devicePassword);
-					this.settings.saveProperties();
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-				this.api.deviceId = response.deviceId;
-				this.api.devicePassword = response.devicePassword;
-
-				try {
-					InetAddress addr = InetAddress.getLocalHost();
-					String hostname = addr.getHostName();
-
-					new DeviceEndpoint(this.api).create(hostname);
-				} catch (UnknownHostException e) {
-					e.printStackTrace();
-				} catch (Exception e) {
-					AlertDialog alertDialog = new AlertDialog.Builder(this)
-							.create();
-					alertDialog.setTitle("Error");
-					alertDialog.setMessage("Could not setup the device: "
-							+ e.getMessage());
-					alertDialog.setButton(DialogInterface.BUTTON_POSITIVE,
-							"OK", new DialogInterface.OnClickListener() {
-								@Override
-								public void onClick(DialogInterface dialog,
-										int which) {
-
-								}
-							});
-					alertDialog.setIcon(R.drawable.ic_launcher);
-					alertDialog.show();
-				}
-				break;
-			}
-		}
+		startActivity(intent);
 	}
 
 	@SuppressWarnings("deprecation")
