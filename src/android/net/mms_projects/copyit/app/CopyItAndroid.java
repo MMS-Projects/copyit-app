@@ -1,9 +1,6 @@
 package net.mms_projects.copyit.app;
 
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-
 import net.mms_projects.copyit.FileStreamBuilder;
 import net.mms_projects.copyit.Settings;
 import net.mms_projects.copyit.ui.AbstractUi;

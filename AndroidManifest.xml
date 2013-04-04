@@ -34,6 +34,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="net.mms_projects.copyit.ui.android.MainActivity" />
         </activity>
+        <activity
+            android:name="net.mms_projects.copyit.ui.android.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName="net.mms_projects.copyit.ui.android.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="net.mms_projects.copyit.ui.android.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
