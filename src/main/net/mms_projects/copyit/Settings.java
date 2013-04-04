@@ -2,7 +2,6 @@ package net.mms_projects.copyit;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -17,15 +16,17 @@ public class Settings {
 	private FileOutputStream outputStream;
 
 	public Settings() {
-		this.defaults.setProperty("server.baseurl", "http://copyit.dev.mms-projects.net");
+		this.defaults.setProperty("server.baseurl",
+				"http://copyit.dev.mms-projects.net");
 		this.properties = new Properties(defaults);
 	}
 
-	public void setFileStream(FileInputStream inputStream, FileOutputStream outputStream) {
+	public void setFileStream(FileInputStream inputStream,
+			FileOutputStream outputStream) {
 		this.inputStream = inputStream;
 		this.outputStream = outputStream;
 	}
-	
+
 	public void set(String key, String value) throws Exception {
 		this.properties.setProperty(key, value);
 		saveProperties();
@@ -50,10 +51,9 @@ public class Settings {
 	}
 
 	public void saveProperties() {
-		BufferedOutputStream stream;
 		try {
-			this.properties.store(new BufferedOutputStream(
-					this.outputStream), "");
+			this.properties.store(new BufferedOutputStream(this.outputStream),
+					"");
 		} catch (FileNotFoundException e) {
 			// we checked this first so this shouldn't occurs
 		} catch (IOException e) {
