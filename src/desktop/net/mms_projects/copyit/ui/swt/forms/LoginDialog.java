@@ -21,7 +21,7 @@ public class LoginDialog extends Dialog {
 
 	protected Object result;
 	protected Shell shell;
-	protected LoginResponse response = new LoginResponse();
+	protected LoginResponse response;
 	private Text text;
 	private Text text_1;
 	private Button btnDone;
@@ -47,6 +47,12 @@ public class LoginDialog extends Dialog {
 				display.sleep();
 			}
 		}
+		if (this.response != null) {
+			if (this.response.deviceId == null) {
+				new Exception("Response initialized without device id. Could be wrong login?").printStackTrace();
+				return null;
+			}
+		}
 		return this.response;
 	}
 
@@ -56,6 +62,9 @@ public class LoginDialog extends Dialog {
 	private void createContents() {
 		PasswordGenerator generator = new PasswordGenerator();
 
+		this.response = new LoginResponse();
+		this.response.devicePassword = generator.generatePassword();
+		
 		shell = new Shell(getParent());
 		shell.setSize(800, 600);
 		shell.setText(getText());
@@ -86,8 +95,8 @@ public class LoginDialog extends Dialog {
 		btnDone.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				response.deviceId = UUID.fromString(text.getText());
-				response.devicePassword = text_1.getText();
+				LoginDialog.this.response.deviceId = UUID.fromString(text.getText());
+				LoginDialog.this.response.devicePassword = text_1.getText();
 				shell.close();
 			}
 		});

@@ -25,6 +25,8 @@ public class PreferencesDialog extends Dialog {
 	private Label lblDeviceIdHere;
 	private Button btnLogin;
 
+	private Button btnManualLogin;
+
 	/**
 	 * Create the dialog.
 	 * 
@@ -63,11 +65,11 @@ public class PreferencesDialog extends Dialog {
 	 */
 	private void createContents() {
 		shell = new Shell(getParent(), SWT.DIALOG_TRIM);
-		shell.setSize(446, 334);
+		shell.setSize(558, 403);
 		shell.setText(getText());
 
 		TabFolder tabFolder = new TabFolder(shell, SWT.NONE);
-		tabFolder.setBounds(10, 10, 430, 280);
+		tabFolder.setBounds(10, 10, 538, 348);
 
 		TabItem tbtmAccount = new TabItem(tabFolder, SWT.NONE);
 		tbtmAccount.setText("Account");
@@ -120,8 +122,38 @@ public class PreferencesDialog extends Dialog {
 				PreferencesDialog.this.updateForm();
 			}
 		});
-		btnLogin.setBounds(200, 56, 91, 29);
+		btnLogin.setBounds(200, 56, 158, 29);
 		btnLogin.setText("Login");
+		
+		btnManualLogin = new Button(compositeAccount, SWT.NONE);
+		btnManualLogin.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent event) {
+				LoginDialog dialog = new LoginDialog(shell);
+				LoginResponse response = dialog.open();
+
+				if (response == null) {
+					System.out.println("No login response returned.");
+					return;
+				}
+
+				System.out.println(response.deviceId);
+
+				if (response.deviceId != null) {
+					System.out.println(response.deviceId.toString());
+				}
+				System.out.println(response.devicePassword);
+
+				PreferencesDialog.this.settings.set("device.id",
+						response.deviceId.toString());
+				PreferencesDialog.this.settings.set("device.password",
+						response.devicePassword);
+
+				PreferencesDialog.this.updateForm();
+			}
+		});
+		btnManualLogin.setBounds(364, 56, 160, 29);
+		btnManualLogin.setText("Manual login ");
 
 		TabItem tbtmSecurity = new TabItem(tabFolder, SWT.NONE);
 		tbtmSecurity.setText("Security");
@@ -149,7 +181,7 @@ public class PreferencesDialog extends Dialog {
 		textEncryptionPassphrase.setBounds(200, 40, 200, 27);
 
 		Button btnClose = new Button(shell, SWT.NONE);
-		btnClose.setBounds(349, 296, 91, 29);
+		btnClose.setBounds(457, 364, 91, 29);
 		btnClose.setText("Close");
 	}
 
@@ -162,6 +194,9 @@ public class PreferencesDialog extends Dialog {
 
 		if (settings.get("device.id") != null) {
 			btnLogin.setText("Relogin");
+		}
+		if (settings.get("device.id") != null) {
+			btnManualLogin.setText("Relogin (manual)");
 		}
 	}
 }
