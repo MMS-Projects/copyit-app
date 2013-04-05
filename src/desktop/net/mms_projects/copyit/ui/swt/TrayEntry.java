@@ -1,6 +1,5 @@
 package net.mms_projects.copyit.ui.swt;
 
-
 import net.mms_projects.copyit.ui.swt.forms.PreferencesDialog;
 
 import org.eclipse.swt.SWT;
@@ -21,11 +20,14 @@ public class TrayEntry {
 
 	protected Tray tray;
 	protected ActionProvider actionProvider;
-	
+
 	private MenuItem menuItemCopyIt;
 	private MenuItem menuItemPasteIt;
 
-	public TrayEntry(Tray tray, final ActionProvider actionProvider) {
+	private Shell activityShell;
+
+	public TrayEntry(Tray tray, final ActionProvider actionProvider,
+			Shell activityShell) {
 		this.tray = tray;
 		this.actionProvider = actionProvider;
 
@@ -38,6 +40,8 @@ public class TrayEntry {
 			}
 		});
 
+		this.activityShell = activityShell;
+
 		this.createMenu();
 	}
 
@@ -45,15 +49,14 @@ public class TrayEntry {
 		this.menuItemPasteIt.setEnabled(true);
 		this.menuItemCopyIt.setEnabled(true);
 	}
-	
+
 	public void disableFeatures() {
 		this.menuItemPasteIt.setEnabled(false);
 		this.menuItemCopyIt.setEnabled(false);
 	}
-	
+
 	protected void createMenu() {
-		final Shell shell = new Shell(display);
-		this.menu = new Menu(shell, SWT.POP_UP);
+		this.menu = new Menu(this.activityShell, SWT.POP_UP);
 
 		this.menuItemCopyIt = new MenuItem(menu, SWT.PUSH);
 		this.menuItemCopyIt.setText("Copy it");
@@ -75,18 +78,28 @@ public class TrayEntry {
 		menuItemLogin.setText("Login");
 		menuItemLogin.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				TrayEntry.this.actionProvider.doLogin(shell);
+				TrayEntry.this.actionProvider
+						.doLogin(TrayEntry.this.activityShell);
 			}
 		});
-		
+
 		MenuItem menuItemPreferences = new MenuItem(menu, SWT.PUSH);
 		menuItemPreferences.setText("Preferences");
 		menuItemPreferences.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				new PreferencesDialog(shell, TrayEntry.this.actionProvider.settings).open();
+				new PreferencesDialog(TrayEntry.this.activityShell,
+						TrayEntry.this.actionProvider.settings).open();
 			}
 		});
-		
+
+		MenuItem menuItemExit = new MenuItem(menu, SWT.PUSH);
+		menuItemExit.setText("Exit");
+		menuItemExit.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				TrayEntry.this.activityShell.close();
+			}
+		});
+
 		this.trayItem.addListener(SWT.MenuDetect, new Listener() {
 			public void handleEvent(Event event) {
 				TrayEntry.this.menu.setVisible(true);
