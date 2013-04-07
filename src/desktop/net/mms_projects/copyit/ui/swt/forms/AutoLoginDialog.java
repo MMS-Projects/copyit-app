@@ -5,7 +5,6 @@ import java.net.URL;
 import java.util.UUID;
 
 import net.mms_projects.copyit.LoginResponse;
-import net.mms_projects.copyit.PasswordGenerator;
 import net.mms_projects.copyit.Settings;
 
 import org.eclipse.swt.SWT;
@@ -13,66 +12,48 @@ import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.browser.LocationEvent;
 import org.eclipse.swt.browser.LocationListener;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Dialog;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
-public class AutoLoginDialog extends Dialog {
+public class AutoLoginDialog extends AbstractLoginDialog {
 
-	protected Object result;
-	protected Shell shell;
-	protected LoginResponse response;
-	private Browser browser;
-	protected Settings settings;
+	private Settings settings;
 
 	public AutoLoginDialog(Shell parent, Settings settings) {
-		super(parent, SWT.DIALOG_TRIM | SWT.MIN | SWT.PRIMARY_MODAL);
-		
+		super(parent);
+
 		this.settings = settings;
+
 		this.setText("Automatic setup");
 	}
-	
-	
-	/**
-	 * Open the dialog.
-	 * 
-	 * @return the result
-	 */
-	public LoginResponse open() {
-		createContents();
-		shell.open();
-		shell.layout();
-		Display display = getParent().getDisplay();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				display.sleep();
-			}
-		}
-		if (this.response != null) {
-			if (this.response.deviceId == null) {
-				new Exception("Response initialized without device id. Could be wrong login?").printStackTrace();
-				return null;
-			}
-		}
-		return this.response;
-	}
 
-	/**
-	 * Create contents of the dialog.
-	 */
-	private void createContents() {
-		PasswordGenerator generator = new PasswordGenerator();
-		
-		this.response = new LoginResponse();
-		this.response.devicePassword = generator.generatePassword();
-		
-		shell = new Shell(getParent());
-		shell.setSize(800, 600);
-		shell.setText(getText());
-		shell.setLayout(new FillLayout(SWT.HORIZONTAL));
-		
-		browser = new Browser(shell, SWT.NONE);
-		browser.setUrl(this.settings.get("server.baseurl") + "/app-setup/setup?device_password=" + response.devicePassword);
+	@Override
+	protected void createContents() {
+		/*
+		 * Definitions
+		 */
+
+		// Shell
+		this.shell = new Shell(this.getParent());
+		// Browser
+		Browser browser = new Browser(this.shell, SWT.NONE);
+
+		/*
+		 * Layout and settings
+		 */
+
+		// Window
+		this.shell.setSize(800, 600);
+		this.shell.setText(getText());
+		this.shell.setLayout(new FillLayout(SWT.HORIZONTAL));
+		// Browser
+		browser.setUrl(this.settings.get("server.baseurl")
+				+ "/app-setup/setup?device_password=" + this.getPassword());
+
+		/*
+		 * Listeners
+		 */
+
+		// Browser
 		browser.addLocationListener(new LocationListener() {
 			@Override
 			public void changing(LocationEvent event) {
@@ -82,21 +63,23 @@ public class AutoLoginDialog extends Dialog {
 				} catch (MalformedURLException e) {
 					e.printStackTrace();
 				}
-				
+
 				System.out.println(location.getPath());
-				
+
 				if (location.getPath().startsWith("/app-setup/done/")) {
-					String deviceId = location.getPath().substring(16);
-					AutoLoginDialog.this.response.deviceId = UUID.fromString(deviceId);
-					shell.close();
+					LoginResponse response = new LoginResponse();
+					response.deviceId = UUID.fromString(location.getPath()
+							.substring(16));
+					response.devicePassword = AutoLoginDialog.this
+							.getPassword();
+					AutoLoginDialog.this.setResponse(response);
 				}
 			}
-			
+
 			@Override
-			public void changed(LocationEvent arg0) {
+			public void changed(LocationEvent event) {
 			}
 		});
-		
 	}
-	
+
 }

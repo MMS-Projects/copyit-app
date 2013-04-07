@@ -3,7 +3,6 @@ package net.mms_projects.copyit.ui.swt.forms;
 import java.util.UUID;
 
 import net.mms_projects.copyit.LoginResponse;
-import net.mms_projects.copyit.PasswordGenerator;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -11,97 +10,74 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Dialog;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-public class LoginDialog extends Dialog {
-
-	protected Object result;
-	protected Shell shell;
-	protected LoginResponse response;
-	private Text text;
-	private Text text_1;
-	private Button btnDone;
+public class LoginDialog extends AbstractLoginDialog {
 
 	public LoginDialog(Shell parent) {
-		super(parent, SWT.DIALOG_TRIM | SWT.MIN | SWT.PRIMARY_MODAL);
+		super(parent);
 
 		this.setText("Facebook login");
 	}
 
-	/**
-	 * Open the dialog.
-	 * 
-	 * @return the result
-	 */
-	public LoginResponse open() {
-		createContents();
-		shell.open();
-		shell.layout();
-		Display display = getParent().getDisplay();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				display.sleep();
-			}
-		}
-		if (this.response != null) {
-			if (this.response.deviceId == null) {
-				new Exception("Response initialized without device id. Could be wrong login?").printStackTrace();
-				return null;
-			}
-		}
-		return this.response;
-	}
+	@Override
+	protected void createContents() {
+		/*
+		 * Definitions
+		 */
 
-	/**
-	 * Create contents of the dialog.
-	 */
-	private void createContents() {
-		PasswordGenerator generator = new PasswordGenerator();
+		// Shell
+		this.shell = new Shell(this.getParent());
+		// Row 1
+		Label lblDeviceId = new Label(this.shell, SWT.NONE);
+		final Text textDeviceId = new Text(this.shell, SWT.BORDER);
+		// Row 2
+		Label lblGeneratedPassword = new Label(this.shell, SWT.NONE);
+		Text textDevicePassword = new Text(this.shell, SWT.BORDER);
+		// Row 3
+		Button btnDone = new Button(this.shell, SWT.NONE);
 
-		this.response = new LoginResponse();
-		this.response.devicePassword = generator.generatePassword();
-		
-		shell = new Shell(getParent());
-		shell.setSize(800, 600);
-		shell.setText(getText());
-		shell.setLayout(new GridLayout(2, false));
+		/*
+		 * Layout and settings
+		 */
 
-		Label lblDeviceId = new Label(shell, SWT.NONE);
+		// Window
+		this.shell.setLayout(new GridLayout(2, false));
+		this.shell.setSize(800, 600);
+		this.shell.setText(getText());
+		// Row 1
 		lblDeviceId.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
 				false, 1, 1));
 		lblDeviceId.setText("Device id");
-
-		text = new Text(shell, SWT.BORDER);
-		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-		Label lblGeneratedPassword = new Label(shell, SWT.NONE);
+		textDeviceId.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
+				false, 1, 1));
+		// Row 2
 		lblGeneratedPassword.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER,
 				false, false, 1, 1));
 		lblGeneratedPassword.setText("Generated password");
-
-		text_1 = new Text(shell, SWT.BORDER);
-		text_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1,
-				1));
-		text_1.setText(generator.generatePassword());
-		new Label(shell, SWT.NONE);
-		new Label(shell, SWT.NONE);
-		new Label(shell, SWT.NONE);
-
-		btnDone = new Button(shell, SWT.NONE);
-		btnDone.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				LoginDialog.this.response.deviceId = UUID.fromString(text.getText());
-				LoginDialog.this.response.devicePassword = text_1.getText();
-				shell.close();
-			}
-		});
+		textDevicePassword.setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
+				true, false, 1, 1));
+		textDevicePassword.setText(this.getPassword());
+		// Row 3
 		btnDone.setText("Done");
 
+		/*
+		 * Listeners
+		 */
+
+		// Done button
+		btnDone.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent event) {
+				LoginResponse response = new LoginResponse();
+				response.deviceId = UUID.fromString(textDeviceId.getText());
+				response.devicePassword = LoginDialog.this.getPassword();
+				LoginDialog.this.setResponse(response);
+
+			}
+		});
 	}
 
 }
