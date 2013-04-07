@@ -56,6 +56,14 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="net.mms_projects.copyit.ui.android.WelcomeActivity"
+            android:label="@string/title_activity_welcome"
+            android:parentActivityName="net.mms_projects.copyit.ui.android.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="net.mms_projects.copyit.ui.android.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

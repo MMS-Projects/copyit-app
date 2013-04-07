@@ -8,5 +8,8 @@
     <string name="button_pasteit">Paste It!</string>
     <string name="button_login">Login</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_welcome">Welcome to CopyIt</string>
+    <string name="text_welcome_message">Welcome to CopyIt. To start using the app please login.</string>
+    <string name="desc_app_icon_big">Big CopyIt logo</string>
 
 </resources>

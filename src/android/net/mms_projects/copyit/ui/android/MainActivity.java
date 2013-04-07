@@ -32,8 +32,15 @@ public class MainActivity extends Activity {
 
 		this.app = new CopyItAndroid();
 		this.app.run(this, new StreamBuilder(this));
-
+		
 		setContentView(R.layout.activity_main);
+		
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		
+		if (!preferences.contains("device.id")) {
+			Intent intent = new Intent(this, WelcomeActivity.class);
+			startActivity(intent);
+		}
 	}
 
 	@Override
