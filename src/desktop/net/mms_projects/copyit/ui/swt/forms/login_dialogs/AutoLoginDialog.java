@@ -1,4 +1,4 @@
-package net.mms_projects.copyit.ui.swt.forms;
+package net.mms_projects.copyit.ui.swt.forms.login_dialogs;
 
 import java.net.MalformedURLException;
 import java.net.URL;

@@ -9,7 +9,7 @@ import net.mms_projects.copyit.Settings;
 import net.mms_projects.copyit.api.ServerApi;
 import net.mms_projects.copyit.api.endpoints.ClipboardContentEndpoint;
 import net.mms_projects.copyit.api.endpoints.DeviceEndpoint;
-import net.mms_projects.copyit.ui.swt.forms.AutoLoginDialog;
+import net.mms_projects.copyit.ui.swt.forms.login_dialogs.AutoLoginDialog;
 
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;

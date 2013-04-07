@@ -4,6 +4,9 @@ import net.mms_projects.copyit.LoginResponse;
 import net.mms_projects.copyit.Settings;
 import net.mms_projects.copyit.api.ServerApi;
 import net.mms_projects.copyit.api.endpoints.DeviceEndpoint;
+import net.mms_projects.copyit.ui.swt.forms.login_dialogs.AbstractLoginDialog;
+import net.mms_projects.copyit.ui.swt.forms.login_dialogs.AutoLoginDialog;
+import net.mms_projects.copyit.ui.swt.forms.login_dialogs.LoginDialog;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
