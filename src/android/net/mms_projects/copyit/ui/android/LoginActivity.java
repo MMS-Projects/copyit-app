@@ -11,6 +11,7 @@ import net.mms_projects.copyit.api.endpoints.DeviceEndpoint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,9 +20,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 
 public class LoginActivity extends Activity {
 
@@ -33,6 +34,10 @@ public class LoginActivity extends Activity {
 		setContentView(R.layout.activity_login);
 		// Show the Up button in the action bar.
 		setupActionBar();
+
+		Intent intent = new Intent(this, BrowserLoginActivity.class);
+		startActivityForResult(intent, LoginActivity.ACTIVITY_LOGIN);
+		finish();
 	}
 
 	/**
@@ -43,13 +48,6 @@ public class LoginActivity extends Activity {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			getActionBar().setDisplayHomeAsUpEnabled(true);
 		}
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.login, menu);
-		return true;
 	}
 
 	@Override
@@ -72,6 +70,7 @@ public class LoginActivity extends Activity {
 	public void openBrowserLogin(View view) {
 		Intent intent = new Intent(this, BrowserLoginActivity.class);
 		startActivityForResult(intent, LoginActivity.ACTIVITY_LOGIN);
+		finish();
 	}
 
 	@Override
@@ -79,6 +78,8 @@ public class LoginActivity extends Activity {
 		switch (requestCode) {
 		case LoginActivity.ACTIVITY_LOGIN:
 			if (resultCode == RESULT_OK) {
+				ProgressDialog progress = ProgressDialog.show(this, "Busy",
+						"Logging in...", true);
 				LoginResponse response = new LoginResponse();
 				response.deviceId = UUID.fromString(data
 						.getStringExtra("device_id"));
@@ -130,6 +131,7 @@ public class LoginActivity extends Activity {
 					alertDialog.setIcon(R.drawable.ic_launcher);
 					alertDialog.show();
 				}
+				progress.dismiss();
 				break;
 			}
 		}
