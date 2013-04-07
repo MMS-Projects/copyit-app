@@ -3,20 +3,21 @@ package net.mms_projects.copyit.ui.android;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.UUID;
 
 import net.mms_projects.copyit.FileStreamBuilder;
 import net.mms_projects.copyit.R;
-import net.mms_projects.copyit.Settings;
 import net.mms_projects.copyit.api.ServerApi;
 import net.mms_projects.copyit.api.endpoints.ClipboardContentEndpoint;
-import net.mms_projects.copyit.app.AndroidApplication;
 import net.mms_projects.copyit.app.CopyItAndroid;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,12 +25,6 @@ import android.view.View;
 public class MainActivity extends Activity {
 
 	private CopyItAndroid app;
-	private Settings settings;
-
-	public void setup(Settings settings, ServerApi api) {
-		this.settings = settings;
-		AndroidApplication.getInstance().setApi(api);
-	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +56,16 @@ public class MainActivity extends Activity {
 	}
 
 	public void copyIt(View view) {
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		ServerApi api = new ServerApi();
+		api.deviceId = UUID
+				.fromString(preferences.getString("device.id", null));
+		api.devicePassword = preferences.getString("device.password", null);
+		api.apiUrl = preferences.getString("server.baseurl", this
+				.getResources().getString(R.string.default_baseurl));
+
 		try {
-			new ClipboardContentEndpoint(AndroidApplication.getInstance()
-					.getApi()).update(this.getClipboard());
+			new ClipboardContentEndpoint(api).update(this.getClipboard());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -71,9 +73,16 @@ public class MainActivity extends Activity {
 	}
 
 	public void pasteIt(View view) {
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		ServerApi api = new ServerApi();
+		api.deviceId = UUID
+				.fromString(preferences.getString("device.id", null));
+		api.devicePassword = preferences.getString("device.password", null);
+		api.apiUrl = preferences.getString("server.baseurl", this
+				.getResources().getString(R.string.default_baseurl));
+
 		try {
-			this.setClipboard(new ClipboardContentEndpoint(AndroidApplication
-					.getInstance().getApi()).get());
+			this.setClipboard(new ClipboardContentEndpoint(api).get());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

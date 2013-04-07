@@ -11,21 +11,13 @@ public class CopyItAndroid extends CopyIt {
 
 	protected Settings settings;
 	
-	public Settings getSettings() {
-		return this.settings;
-	}
-	
 	public void run(MainActivity activity, FileStreamBuilder streamBuilder) {
 		this.settings = new Settings();
 		this.settings.setFileStreamBuilder(streamBuilder);
 		this.settings.loadProperties();
 		
-		AndroidApplication.getInstance().setSettings(this.settings);
-		
 		AbstractUi ui = new AndroidGui(this.settings, activity);
 		ui.open();
-		
-		this.settings.saveProperties();
 	}
 
 }

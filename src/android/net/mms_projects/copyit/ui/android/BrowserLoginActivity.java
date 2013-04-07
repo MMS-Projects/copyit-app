@@ -7,12 +7,13 @@ import java.util.UUID;
 import net.mms_projects.copyit.LoginResponse;
 import net.mms_projects.copyit.PasswordGenerator;
 import net.mms_projects.copyit.R;
-import net.mms_projects.copyit.app.AndroidApplication;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,7 +23,7 @@ import android.webkit.WebViewClient;
 public class BrowserLoginActivity extends Activity {
 
 	protected LoginResponse response = new LoginResponse();
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -35,11 +36,15 @@ public class BrowserLoginActivity extends Activity {
 		// Show the Up button in the action bar.
 		setupActionBar();
 
-		String baseUrl = AndroidApplication.getInstance().getSettings()
-				.get("server.baseurl");
+		SharedPreferences preferences = PreferenceManager
+				.getDefaultSharedPreferences(this);
+
+		String baseUrl = preferences.getString("server.baseurl", this
+				.getResources().getString(R.string.default_baseurl));
 
 		WebView webview = (WebView) findViewById(R.id.webview);
-		webview.loadUrl(baseUrl + "/app-setup/setup?device_password=" + response.devicePassword);
+		webview.loadUrl(baseUrl + "/app-setup/setup?device_password="
+				+ response.devicePassword);
 		webview.setWebViewClient(new WebViewClient() {
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -51,12 +56,15 @@ public class BrowserLoginActivity extends Activity {
 				}
 
 				System.out.println(url);
-				
+
 				if (location.getPath().startsWith("/app-setup/done/")) {
-					response.deviceId = UUID.fromString(location.getPath().substring(16));
+					response.deviceId = UUID.fromString(location.getPath()
+							.substring(16));
 					Intent returnIntent = new Intent();
-					returnIntent.putExtra("device_id", response.deviceId.toString());
-					returnIntent.putExtra("device_password", response.devicePassword);
+					returnIntent.putExtra("device_id",
+							response.deviceId.toString());
+					returnIntent.putExtra("device_password",
+							response.devicePassword);
 					setResult(RESULT_OK, returnIntent);
 					finish();
 				} else if (location.getPath().startsWith("/app-setup/fail/")) {

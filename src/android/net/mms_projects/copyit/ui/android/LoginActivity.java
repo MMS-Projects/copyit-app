@@ -6,15 +6,18 @@ import java.util.UUID;
 
 import net.mms_projects.copyit.LoginResponse;
 import net.mms_projects.copyit.R;
+import net.mms_projects.copyit.api.ServerApi;
 import net.mms_projects.copyit.api.endpoints.DeviceEndpoint;
-import net.mms_projects.copyit.app.AndroidApplication;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -82,27 +85,32 @@ public class LoginActivity extends Activity {
 				response.devicePassword = data
 						.getStringExtra("device_password");
 
+				SharedPreferences preferences = PreferenceManager
+						.getDefaultSharedPreferences(this);
+				ServerApi api = new ServerApi();
+
 				try {
-					AndroidApplication.getInstance().getSettings()
-							.set("device.id", response.deviceId.toString());
-					AndroidApplication.getInstance().getSettings()
-							.set("device.password", response.devicePassword);
-					AndroidApplication.getInstance().getSettings()
-							.saveProperties();
+					Editor preferenceEditor = preferences.edit();
+					preferenceEditor.putString("device.id",
+							response.deviceId.toString());
+					preferenceEditor.putString("device.password",
+							response.devicePassword);
+					preferenceEditor.commit();
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
-				AndroidApplication.getInstance().getApi().deviceId = response.deviceId;
-				AndroidApplication.getInstance().getApi().devicePassword = response.devicePassword;
+				api.deviceId = response.deviceId;
+				api.devicePassword = response.devicePassword;
+				api.apiUrl = preferences.getString("server.baseurl", this
+						.getResources().getString(R.string.default_baseurl));
 
 				try {
 					InetAddress addr = InetAddress.getLocalHost();
 					String hostname = addr.getHostName();
 
-					new DeviceEndpoint(AndroidApplication.getInstance()
-							.getApi()).create(hostname);
+					new DeviceEndpoint(api).create(hostname);
 				} catch (UnknownHostException e) {
 					e.printStackTrace();
 				} catch (Exception e) {
