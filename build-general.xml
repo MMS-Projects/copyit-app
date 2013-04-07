@@ -42,7 +42,7 @@
     </path>
 
     <path id="linux-x86_64-classpath">
-        <fileset file="libs/desktop/swt-4.2-gtk-linux-x86_64.jar" />
+        <fileset file="libs/desktop/swt-4.2.1-gtk-linux-x86_64.jar" />
     </path>
 
     <path id="windows-x86-classpath">
@@ -50,7 +50,7 @@
     </path>
 
     <path id="windows-x86_64-classpath">
-        <fileset file="libs/desktop/swt-4.2-win32-win32-x86_64.jar" />
+        <fileset file="libs/desktop/swt-4.2.1-win32-win32-x86_64.jar" />
     </path>
 
     <target name="linux-x86-compile" depends="clean">
@@ -89,7 +89,7 @@
 
     <target name="linux-x86_64-jar" depends="linux-x86_64-compile, global-manifest">
         <jar manifest="build/META-INF/MANIFEST.MF" destfile="build/copyit-linux-x86_64.jar" filesetmanifest="mergewithoutmain" basedir="build/classes">
-            <zipfileset excludes="META-INF/*.SF" src="libs/desktop/swt-4.2-gtk-linux-x86_64.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="libs/desktop/swt-4.2.1-gtk-linux-x86_64.jar" />
         	<zipfileset excludes="META-INF/*.SF" src="libs/desktop/swing2swt.jar" />
             <zipfileset excludes="META-INF/*.SF" src="libs/commons-io-2.4.jar" />
             <zipfileset excludes="META-INF/*.SF" src="libs/commons-logging-1.1.1.jar" />
@@ -139,7 +139,7 @@
 
     <target name="windows-x86_64-jar" depends="windows-x86_64-compile, global-manifest">
         <jar manifest="build/META-INF/MANIFEST.MF" destfile="build/copyit-windows-x86_64.jar" filesetmanifest="mergewithoutmain" basedir="build/classes">
-            <zipfileset excludes="META-INF/*.SF" src="libs/desktop/swt-4.2-win32-win32-x86_64.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="libs/desktop/swt-4.2.1-win32-win32-x86_64.jar" />
         	<zipfileset excludes="META-INF/*.SF" src="libs/desktop/swing2swt.jar" />
             <zipfileset excludes="META-INF/*.SF" src="libs/commons-io-2.4.jar" />
             <zipfileset excludes="META-INF/*.SF" src="libs/commons-logging-1.1.1.jar" />

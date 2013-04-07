@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="lib" path="libs/desktop/swt-4.2-gtk-linux-x86_64.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/httpclient-4.2.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/httpcore-4.2.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/desktop/swt-4.2.1-gtk-linux-x86_64.jar"/>
 	<classpathentry kind="src" path="src/main"/>
 	<classpathentry kind="src" path="src/android"/>
 	<classpathentry kind="src" path="src/desktop"/>
