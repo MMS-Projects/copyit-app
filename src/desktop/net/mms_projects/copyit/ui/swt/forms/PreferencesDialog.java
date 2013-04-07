@@ -2,6 +2,8 @@ package net.mms_projects.copyit.ui.swt.forms;
 
 import net.mms_projects.copyit.LoginResponse;
 import net.mms_projects.copyit.Settings;
+import net.mms_projects.copyit.api.ServerApi;
+import net.mms_projects.copyit.api.endpoints.DeviceEndpoint;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -107,12 +109,16 @@ public class PreferencesDialog extends Dialog {
 					return;
 				}
 
-				System.out.println(response.deviceId);
-
-				if (response.deviceId != null) {
-					System.out.println(response.deviceId.toString());
+				ServerApi api = new ServerApi();
+				api.deviceId = response.deviceId;
+				api.devicePassword = response.devicePassword;
+				
+				try {
+					new DeviceEndpoint(api).create("Interwebz Paste client");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-				System.out.println(response.devicePassword);
 
 				PreferencesDialog.this.settings.set("device.id",
 						response.deviceId.toString());
@@ -137,12 +143,16 @@ public class PreferencesDialog extends Dialog {
 					return;
 				}
 
-				System.out.println(response.deviceId);
-
-				if (response.deviceId != null) {
-					System.out.println(response.deviceId.toString());
+				ServerApi api = new ServerApi();
+				api.deviceId = response.deviceId;
+				api.devicePassword = response.devicePassword;
+				
+				try {
+					new DeviceEndpoint(api).create("Interwebz Paste client");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-				System.out.println(response.devicePassword);
 
 				PreferencesDialog.this.settings.set("device.id",
 						response.deviceId.toString());

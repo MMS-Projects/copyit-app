@@ -82,6 +82,12 @@ public class ServerApi {
 		url += ".json?";
 		url += "device_id=" + this.deviceId.toString() + "&";
 		url += "device_password=" + this.devicePassword;
+		
+		System.out.println(method);
+		System.out.println(url);
+		for (NameValuePair parameter : parameters) {
+			System.out.println(parameter.getName() + ": " + parameter.getValue());
+		}
 
 		HttpResponse response = null;
 		String responseText = null;
@@ -104,7 +110,6 @@ public class ServerApi {
 
 		responseText = IOUtils.toString(entity.getContent(), "UTF-8");
 
-		System.out.println(url);
 		System.out.println(responseText);
 
 		ApiResponse data = new Gson().fromJson(responseText, apiResponse);
