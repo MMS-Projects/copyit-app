@@ -80,4 +80,10 @@ public class LoginDialog extends AbstractLoginDialog {
 		});
 	}
 
+	@Override
+	protected void updateForm() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

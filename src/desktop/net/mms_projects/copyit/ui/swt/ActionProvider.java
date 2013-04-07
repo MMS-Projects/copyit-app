@@ -37,7 +37,8 @@ public class ActionProvider {
 
 	public void doLogin(Shell dialogParent) {
 		AutoLoginDialog dialog = new AutoLoginDialog(dialogParent, this.settings);
-		LoginResponse response = dialog.open();
+		dialog.open();
+		LoginResponse response = dialog.getResponse();
 
 		if (response.deviceId == null) {
 			return;

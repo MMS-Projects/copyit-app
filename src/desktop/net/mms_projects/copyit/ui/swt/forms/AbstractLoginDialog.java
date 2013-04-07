@@ -4,11 +4,10 @@ import net.mms_projects.copyit.LoginResponse;
 import net.mms_projects.copyit.PasswordGenerator;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
-public abstract class AbstractLoginDialog extends Dialog {
+public abstract class AbstractLoginDialog extends GeneralDialog {
 
 	protected Shell shell;
 
@@ -21,12 +20,10 @@ public abstract class AbstractLoginDialog extends Dialog {
 
 	/**
 	 * Open the dialog.
-	 * 
-	 * @return the result
 	 */
-	final public LoginResponse open() {
+	final public void open() {
 		Display display = this.getParent().getDisplay();
-		
+
 		this.createContents();
 		this.shell.open();
 		this.shell.layout();
@@ -35,6 +32,12 @@ public abstract class AbstractLoginDialog extends Dialog {
 				display.sleep();
 			}
 		}
+	}
+
+	/**
+	 * @return the result
+	 */
+	final public LoginResponse getResponse() {
 		if (this.response != null) {
 			if (this.response.deviceId == null) {
 				new Exception(
@@ -51,7 +54,7 @@ public abstract class AbstractLoginDialog extends Dialog {
 			PasswordGenerator generator = new PasswordGenerator();
 			this.password = generator.generatePassword();
 		}
-		
+
 		return this.password;
 	}
 
@@ -59,10 +62,5 @@ public abstract class AbstractLoginDialog extends Dialog {
 		this.response = response;
 		this.shell.close();
 	}
-
-	/**
-	 * Create contents of the dialog.
-	 */
-	abstract protected void createContents();
 
 }
