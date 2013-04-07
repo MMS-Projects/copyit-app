@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="action_settings">Instellingen</string>
+    <string name="button_login">Inloggen</string>
+    <string name="title_activity_login">Inloggen</string>
+    
+</resources>

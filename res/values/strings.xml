@@ -3,7 +3,6 @@
 
     <string name="app_name">CopyIt</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
     <string name="button_copyit">Copy It!</string>
     <string name="button_pasteit">Paste It!</string>
     <string name="button_login">Login</string>
