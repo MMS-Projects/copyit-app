@@ -24,6 +24,7 @@ import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
@@ -69,22 +70,23 @@ public class MainActivity extends Activity {
 	public void copyIt(View view) {
 		SharedPreferences preferences = PreferenceManager
 				.getDefaultSharedPreferences(this);
-		
+
 		Map<String, ?> settings = preferences.getAll();
 		for (String key : settings.keySet()) {
 			System.out.println(key + ": " + settings.get(key));
 		}
-		
+
 		if (preferences.getString("device.id", null) == null) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setMessage(
 					"It looks like you're not logged in. Do you want to login in?")
-					.setPositiveButton("Yes", new MainActivity.LoginYesNoDialog())
-					.setNegativeButton("No", new MainActivity.LoginYesNoDialog())
-					.show();
+					.setPositiveButton("Yes",
+							new MainActivity.LoginYesNoDialog())
+					.setNegativeButton("No",
+							new MainActivity.LoginYesNoDialog()).show();
 			return;
 		}
-		
+
 		ServerApi api = new ServerApi();
 		api.deviceId = UUID
 				.fromString(preferences.getString("device.id", null));
@@ -93,7 +95,10 @@ public class MainActivity extends Activity {
 				.getResources().getString(R.string.default_baseurl));
 
 		try {
-			new ClipboardContentEndpoint(api).update(this.getClipboard());
+			String content = this.getClipboard();
+			Toast.makeText(this, "Pushed the following content: " + content,
+					Toast.LENGTH_LONG).show();
+			new ClipboardContentEndpoint(api).update(content);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -107,12 +112,13 @@ public class MainActivity extends Activity {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setMessage(
 					"It looks like you're not logged in. Do you want to login in?")
-					.setPositiveButton("Yes", new MainActivity.LoginYesNoDialog())
-					.setNegativeButton("No", new MainActivity.LoginYesNoDialog())
-					.show();
+					.setPositiveButton("Yes",
+							new MainActivity.LoginYesNoDialog())
+					.setNegativeButton("No",
+							new MainActivity.LoginYesNoDialog()).show();
 			return;
 		}
-		
+
 		ServerApi api = new ServerApi();
 		api.deviceId = UUID
 				.fromString(preferences.getString("device.id", null));
@@ -121,7 +127,10 @@ public class MainActivity extends Activity {
 				.getResources().getString(R.string.default_baseurl));
 
 		try {
-			this.setClipboard(new ClipboardContentEndpoint(api).get());
+			String content = new ClipboardContentEndpoint(api).get();
+			Toast.makeText(this, "Pulled the following content: " + content,
+					Toast.LENGTH_LONG).show();
+			this.setClipboard(content);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

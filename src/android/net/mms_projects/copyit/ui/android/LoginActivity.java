@@ -22,6 +22,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 public class LoginActivity extends Activity {
 
@@ -130,6 +131,9 @@ public class LoginActivity extends Activity {
 					alertDialog.show();
 				}
 				progress.dismiss();
+				
+				Toast.makeText(this, "Login successful",
+						Toast.LENGTH_SHORT).show();
 				
 				finish();
 				break;
