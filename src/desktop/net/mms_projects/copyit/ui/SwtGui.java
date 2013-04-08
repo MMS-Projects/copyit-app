@@ -1,5 +1,8 @@
 package net.mms_projects.copyit.ui;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import net.mms_projects.copyit.Settings;
 import net.mms_projects.copyit.ui.swt.ActionProvider;
 import net.mms_projects.copyit.ui.swt.TrayEntry;
@@ -12,16 +15,30 @@ import org.eclipse.swt.widgets.Tray;
 
 public class SwtGui extends AbstractUi {
 
-	protected Display display = Display.getDefault();
-	protected Tray tray = display.getSystemTray();
+	protected Display display;
+	protected Tray tray;
 
 	// The system tray icon
-	protected TrayEntry trayEntry = null;
+	protected TrayEntry trayEntry;
 
-	protected Shell activityShell = new Shell(this.display);
+	protected Shell activityShell;
 
 	public SwtGui(Settings settings) {
 		super(settings);
+
+		try {
+			this.display = Display.getDefault();
+		} catch (UnsatisfiedLinkError error) {
+			error.printStackTrace();
+			
+			String message = "It looks like there was an error while loading the SWT libraries.\n"
+					+ "The following error was thrown:\n\n" + error.getMessage();
+			JOptionPane.showMessageDialog(new JFrame(), message, "Dialog",
+					JOptionPane.ERROR_MESSAGE);
+			System.exit(1);
+		}
+		this.tray = display.getSystemTray();
+		this.activityShell = new Shell(this.display);
 
 		ActionProvider actionProvider = new ActionProvider(this.display,
 				settings);
