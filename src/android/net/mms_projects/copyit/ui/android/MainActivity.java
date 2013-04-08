@@ -46,8 +46,61 @@ public class MainActivity extends Activity {
 			Intent intent = new Intent(this, WelcomeActivity.class);
 			startActivity(intent);
 		}
+		
+		// Get intent, action and MIME type
+	    Intent intent = getIntent();
+	    String action = intent.getAction();
+	    String type = intent.getType();
+
+	    if (Intent.ACTION_SEND.equals(action) && type != null) {
+	        if ("text/plain".equals(type)) {
+	            handleSendText(intent); // Handle text being sent
+	        } 
+	    }
 	}
 
+	private void handleSendText(Intent intent) {
+	    String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
+	    if (sharedText != null) {
+	    	SharedPreferences preferences = PreferenceManager
+					.getDefaultSharedPreferences(this);
+
+			Map<String, ?> settings = preferences.getAll();
+			for (String key : settings.keySet()) {
+				System.out.println(key + ": " + settings.get(key));
+			}
+
+			if (preferences.getString("device.id", null) == null) {
+				AlertDialog.Builder builder = new AlertDialog.Builder(this);
+				builder.setMessage(
+						"It looks like you're not logged in. Do you want to login in?")
+						.setPositiveButton("Yes",
+								new MainActivity.LoginYesNoDialog())
+						.setNegativeButton("No",
+								new MainActivity.LoginYesNoDialog()).show();
+				return;
+			}
+
+			ServerApi api = new ServerApi();
+			api.deviceId = UUID
+					.fromString(preferences.getString("device.id", null));
+			api.devicePassword = preferences.getString("device.password", null);
+			api.apiUrl = preferences.getString("server.baseurl", this
+					.getResources().getString(R.string.default_baseurl));
+
+			try {
+				String content = sharedText;
+				Toast.makeText(this, "Pushed the following content: " + content,
+						Toast.LENGTH_LONG).show();
+				new ClipboardContentEndpoint(api).update(content);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			finish();
+	    }
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
