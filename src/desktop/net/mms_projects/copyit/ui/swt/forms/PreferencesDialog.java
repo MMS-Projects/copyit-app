@@ -145,7 +145,13 @@ public class PreferencesDialog extends GeneralDialog {
 				PreferencesDialog.this.updateForm();
 			}
 		});
-
+		// Close button
+		btnClose.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent event) {
+				PreferencesDialog.this.shell.close();
+			}
+		});
 	}
 
 	protected void updateForm() {
