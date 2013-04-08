@@ -36,7 +36,6 @@ public class LoginActivity extends Activity {
 
 		Intent intent = new Intent(this, BrowserLoginActivity.class);
 		startActivityForResult(intent, LoginActivity.ACTIVITY_LOGIN);
-		finish();
 	}
 
 	/**
@@ -131,6 +130,8 @@ public class LoginActivity extends Activity {
 					alertDialog.show();
 				}
 				progress.dismiss();
+				
+				finish();
 				break;
 			}
 		}

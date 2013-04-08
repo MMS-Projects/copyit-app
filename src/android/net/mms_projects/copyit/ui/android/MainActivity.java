@@ -3,6 +3,7 @@ package net.mms_projects.copyit.ui.android;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Map;
 import java.util.UUID;
 
 import net.mms_projects.copyit.FileStreamBuilder;
@@ -12,7 +13,9 @@ import net.mms_projects.copyit.api.endpoints.ClipboardContentEndpoint;
 import net.mms_projects.copyit.app.CopyItAndroid;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -66,6 +69,22 @@ public class MainActivity extends Activity {
 	public void copyIt(View view) {
 		SharedPreferences preferences = PreferenceManager
 				.getDefaultSharedPreferences(this);
+		
+		Map<String, ?> settings = preferences.getAll();
+		for (String key : settings.keySet()) {
+			System.out.println(key + ": " + settings.get(key));
+		}
+		
+		if (preferences.getString("device.id", null) == null) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage(
+					"It looks like you're not logged in. Do you want to login in?")
+					.setPositiveButton("Yes", new MainActivity.LoginYesNoDialog())
+					.setNegativeButton("No", new MainActivity.LoginYesNoDialog())
+					.show();
+			return;
+		}
+		
 		ServerApi api = new ServerApi();
 		api.deviceId = UUID
 				.fromString(preferences.getString("device.id", null));
@@ -84,6 +103,16 @@ public class MainActivity extends Activity {
 	public void pasteIt(View view) {
 		SharedPreferences preferences = PreferenceManager
 				.getDefaultSharedPreferences(this);
+		if (preferences.getString("device.id", null) == null) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage(
+					"It looks like you're not logged in. Do you want to login in?")
+					.setPositiveButton("Yes", new MainActivity.LoginYesNoDialog())
+					.setNegativeButton("No", new MainActivity.LoginYesNoDialog())
+					.show();
+			return;
+		}
+		
 		ServerApi api = new ServerApi();
 		api.deviceId = UUID
 				.fromString(preferences.getString("device.id", null));
@@ -160,5 +189,22 @@ public class MainActivity extends Activity {
 					Context.MODE_PRIVATE);
 		}
 
+	}
+
+	class LoginYesNoDialog implements DialogInterface.OnClickListener {
+		@Override
+		public void onClick(DialogInterface dialog, int which) {
+			switch (which) {
+			case DialogInterface.BUTTON_POSITIVE:
+				Intent intent = new Intent(MainActivity.this,
+						LoginActivity.class);
+				MainActivity.this.startActivity(intent);
+				break;
+
+			case DialogInterface.BUTTON_NEGATIVE:
+				MainActivity.this.finish();
+				break;
+			}
+		}
 	}
 }
