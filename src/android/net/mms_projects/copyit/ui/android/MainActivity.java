@@ -32,11 +32,12 @@ public class MainActivity extends Activity {
 
 		this.app = new CopyItAndroid();
 		this.app.run(this, new StreamBuilder(this));
-		
+
 		setContentView(R.layout.activity_main);
-		
-		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-		
+
+		SharedPreferences preferences = PreferenceManager
+				.getDefaultSharedPreferences(this);
+
 		if (!preferences.contains("device.id")) {
 			Intent intent = new Intent(this, WelcomeActivity.class);
 			startActivity(intent);
@@ -63,7 +64,8 @@ public class MainActivity extends Activity {
 	}
 
 	public void copyIt(View view) {
-		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		SharedPreferences preferences = PreferenceManager
+				.getDefaultSharedPreferences(this);
 		ServerApi api = new ServerApi();
 		api.deviceId = UUID
 				.fromString(preferences.getString("device.id", null));
@@ -80,7 +82,8 @@ public class MainActivity extends Activity {
 	}
 
 	public void pasteIt(View view) {
-		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		SharedPreferences preferences = PreferenceManager
+				.getDefaultSharedPreferences(this);
 		ServerApi api = new ServerApi();
 		api.deviceId = UUID
 				.fromString(preferences.getString("device.id", null));

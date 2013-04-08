@@ -22,7 +22,6 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ProgressBar;
 
 public class LoginActivity extends Activity {
 
