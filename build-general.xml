@@ -7,10 +7,11 @@
         <isset property="env.BUILD_NUMBER" />
     </condition>
     
-    <target name="all" depends="linux, windows, android" />
+    <target name="all" depends="linux, windows, macosx, android" />
 
     <target name="linux" depends="linux-x86, linux-x86_64" />
     <target name="windows" depends="windows-x86, windows-x86_64" />
+    <target name="macosx" depends="macosx-x86, macosx-x86_64" />
     <target name="android" depends="debug, check-out.final.file.exists, copy-signed">
 	<copy file="${out.packaged.file}" tofile="build/copyit-android-unsigned.apk" />
     </target>
@@ -27,6 +28,8 @@
     <target name="linux-x86" depends="linux-x86-jar" />
     <target name="windows-x86" depends="windows-x86-jar" />
     <target name="windows-x86_64" depends="windows-x86_64-jar" />
+    <target name="macosx-x86" depends="macosx-x86-jar" />
+    <target name="macosx-x86_64" depends="macosx-x86_64-jar" />
 
     <path id="global-classpath">
         <fileset file="libs/desktop/swing2swt.jar" />
@@ -51,6 +54,14 @@
 
     <path id="windows-x86_64-classpath">
         <fileset file="libs/desktop/swt-4.2.1-win32-win32-x86_64.jar" />
+    </path>
+    
+    <path id="macosx-x86-classpath">
+        <fileset file="libs/desktop/swt-4.2.1-cocoa-macosx-x86.jar" />
+    </path>
+    
+    <path id="macosx-x86_64-classpath">
+        <fileset file="libs/desktop/swt-4.2.1-cocoa-macosx-x86_64.jar" />
     </path>
 
     <target name="linux-x86-compile" depends="clean">
@@ -140,6 +151,56 @@
     <target name="windows-x86_64-jar" depends="windows-x86_64-compile, global-manifest">
         <jar manifest="build/META-INF/MANIFEST.MF" destfile="build/copyit-windows-x86_64.jar" filesetmanifest="mergewithoutmain" basedir="build/classes">
             <zipfileset excludes="META-INF/*.SF" src="libs/desktop/swt-4.2.1-win32-win32-x86_64.jar" />
+        	<zipfileset excludes="META-INF/*.SF" src="libs/desktop/swing2swt.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="libs/commons-io-2.4.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="libs/commons-logging-1.1.1.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="libs/httpcore-4.2.2.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="libs/httpclient-4.2.3.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="libs/gson-2.2.2.jar" />
+            <fileset dir=".">
+               <include name="**/res/**.properties" />
+               <include name="**/res/mmsprojects-copyit-**.png" />
+            </fileset>
+        </jar>
+    </target>
+    
+    <target name="macosx-x86-compile" depends="clean">
+        <mkdir dir="build/classes" />
+        <!-- . is used for pointing to the current directory -->
+        <javac srcdir="src/main:src/desktop" destdir="build/classes">
+            <classpath refid="global-classpath" />
+            <classpath refid="macosx-x86-classpath" />
+        </javac>
+    </target>
+
+    <target name="macosx-x86-jar" depends="macosx-x86-compile, global-manifest">
+        <jar manifest="build/META-INF/MANIFEST.MF" destfile="build/copyit-macosx-x86.jar" filesetmanifest="mergewithoutmain" basedir="build/classes">
+            <zipfileset excludes="META-INF/*.SF" src="libs/desktop/swt-4.2.1-cocoa-macosx-x86.jar" />
+        	<zipfileset excludes="META-INF/*.SF" src="libs/desktop/swing2swt.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="libs/commons-io-2.4.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="libs/commons-logging-1.1.1.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="libs/httpcore-4.2.2.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="libs/httpclient-4.2.3.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="libs/gson-2.2.2.jar" />
+            <fileset dir=".">
+               <include name="**/res/**.properties" />
+               <include name="**/res/mmsprojects-copyit-**.png" />
+            </fileset>
+        </jar>
+    </target>
+    
+    <target name="macosx-x86_64-compile" depends="clean">
+        <mkdir dir="build/classes" />
+        <!-- . is used for pointing to the current directory -->
+        <javac srcdir="src/main:src/desktop" destdir="build/classes">
+            <classpath refid="global-classpath" />
+            <classpath refid="macosx-x86_64-classpath" />
+        </javac>
+    </target>
+
+    <target name="macosx-x86_64-jar" depends="macosx-x86_64-compile, global-manifest">
+        <jar manifest="build/META-INF/MANIFEST.MF" destfile="build/copyit-macosx-x86_64.jar" filesetmanifest="mergewithoutmain" basedir="build/classes">
+            <zipfileset excludes="META-INF/*.SF" src="libs/desktop/swt-4.2.1-cocoa-macosx-x86_64.jar" />
         	<zipfileset excludes="META-INF/*.SF" src="libs/desktop/swing2swt.jar" />
             <zipfileset excludes="META-INF/*.SF" src="libs/commons-io-2.4.jar" />
             <zipfileset excludes="META-INF/*.SF" src="libs/commons-logging-1.1.1.jar" />
