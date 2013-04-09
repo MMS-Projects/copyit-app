@@ -9,6 +9,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.swt.widgets.Tray;
 import org.eclipse.swt.widgets.TrayItem;
 
@@ -63,6 +64,13 @@ public class TrayEntry {
 		this.menuItemCopyIt.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
 				TrayEntry.this.actionProvider.doDataSet();
+
+				final ToolTip tip = new ToolTip(TrayEntry.this.activityShell,
+						SWT.BALLOON | SWT.ICON_INFORMATION);
+				tip.setText("Notification");
+				tip.setMessage("Your clipboard has been pushed to the server.");
+				trayItem.setToolTip(tip);
+				tip.setVisible(true);
 			}
 		});
 
@@ -71,6 +79,13 @@ public class TrayEntry {
 		this.menuItemPasteIt.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
 				TrayEntry.this.actionProvider.doDataGet();
+				
+				final ToolTip tip = new ToolTip(TrayEntry.this.activityShell,
+						SWT.BALLOON | SWT.ICON_INFORMATION);
+				tip.setText("Notification");
+				tip.setMessage("Your clipboard has been pulled from the server.");
+				trayItem.setToolTip(tip);
+				tip.setVisible(true);
 			}
 		});
 
