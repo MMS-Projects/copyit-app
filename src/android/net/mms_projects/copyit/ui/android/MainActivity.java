@@ -73,10 +73,15 @@ public class MainActivity extends Activity {
 			if (preferences.getString("device.id", null) == null) {
 				AlertDialog.Builder builder = new AlertDialog.Builder(this);
 				builder.setMessage(
-						"It looks like you're not logged in. Do you want to login in?")
-						.setPositiveButton("Yes",
+						this.getResources().getString(
+								R.string.text_login_question))
+						.setPositiveButton(
+								this.getResources().getString(
+										R.string.dialog_button_yes),
 								new MainActivity.LoginYesNoDialog())
-						.setNegativeButton("No",
+						.setNegativeButton(
+								this.getResources().getString(
+										R.string.dialog_button_no),
 								new MainActivity.LoginYesNoDialog()).show();
 				return;
 			}
@@ -124,10 +129,14 @@ public class MainActivity extends Activity {
 		if (preferences.getString("device.id", null) == null) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setMessage(
-					"It looks like you're not logged in. Do you want to login in?")
-					.setPositiveButton("Yes",
+					this.getResources().getString(R.string.text_login_question))
+					.setPositiveButton(
+							this.getResources().getString(
+									R.string.dialog_button_yes),
 							new MainActivity.LoginYesNoDialog())
-					.setNegativeButton("No",
+					.setNegativeButton(
+							this.getResources().getString(
+									R.string.dialog_button_no),
 							new MainActivity.LoginYesNoDialog()).show();
 			return;
 		}
@@ -149,10 +158,14 @@ public class MainActivity extends Activity {
 		if (preferences.getString("device.id", null) == null) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setMessage(
-					"It looks like you're not logged in. Do you want to login in?")
-					.setPositiveButton("Yes",
+					this.getResources().getString(R.string.text_login_question))
+					.setPositiveButton(
+							this.getResources().getString(
+									R.string.dialog_button_yes),
 							new MainActivity.LoginYesNoDialog())
-					.setNegativeButton("No",
+					.setNegativeButton(
+							this.getResources().getString(
+									R.string.dialog_button_no),
 							new MainActivity.LoginYesNoDialog()).show();
 			return;
 		}
@@ -174,10 +187,14 @@ public class MainActivity extends Activity {
 		if (preferences.getString("device.id", null) == null) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setMessage(
-					"It looks like you're not logged in. Do you want to login in?")
-					.setPositiveButton("Yes",
+					this.getResources().getString(R.string.text_login_question))
+					.setPositiveButton(
+							this.getResources().getString(
+									R.string.dialog_button_yes),
 							new MainActivity.LoginYesNoDialog())
-					.setNegativeButton("No",
+					.setNegativeButton(
+							this.getResources().getString(
+									R.string.dialog_button_no),
 							new MainActivity.LoginYesNoDialog()).show();
 			return;
 		}
@@ -297,8 +314,10 @@ public class MainActivity extends Activity {
 		protected void onPostExecute(Boolean result) {
 			System.out.println(result);
 			if (result) {
-				Toast.makeText(MainActivity.this,
-						"Pushed the following content: " + this.content,
+				Toast.makeText(
+						MainActivity.this,
+						MainActivity.this.getResources().getString(
+								R.string.text_content_pushed, this.content),
 						Toast.LENGTH_LONG).show();
 			}
 		}
@@ -322,8 +341,10 @@ public class MainActivity extends Activity {
 
 		@Override
 		protected void onPostExecute(String content) {
-			Toast.makeText(MainActivity.this,
-					"Pulled the following content: " + content,
+			Toast.makeText(
+					MainActivity.this,
+					MainActivity.this.getResources().getString(
+							R.string.text_content_pulled, content),
 					Toast.LENGTH_LONG).show();
 			MainActivity.this.setClipboard(content);
 		}
@@ -351,8 +372,10 @@ public class MainActivity extends Activity {
 			sendIntent.setAction(Intent.ACTION_SEND);
 			sendIntent.putExtra(Intent.EXTRA_TEXT, content);
 			sendIntent.setType("text/plain");
-			startActivity(Intent.createChooser(sendIntent,
-					"Select app to send to..."));
+			startActivity(Intent.createChooser(
+					sendIntent,
+					MainActivity.this.getResources().getString(
+							R.string.dialog_title_select_send_app)));
 		}
 	}
 

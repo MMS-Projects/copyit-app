@@ -122,8 +122,12 @@ public class LoginActivity extends Activity {
 
 		@Override
 		protected void onPreExecute() {
-			this.progress = ProgressDialog.show(LoginActivity.this, "Busy",
-					"Logging in...", true);
+			this.progress = ProgressDialog.show(
+					LoginActivity.this,
+					LoginActivity.this.getResources().getString(
+							R.string.dialog_title_busy),
+					LoginActivity.this.getResources().getString(
+							R.string.text_logging_in), true);
 		}
 
 		@Override
@@ -149,10 +153,15 @@ public class LoginActivity extends Activity {
 			if (!result) {
 				AlertDialog alertDialog = new AlertDialog.Builder(
 						LoginActivity.this).create();
-				alertDialog.setTitle("Error");
-				alertDialog.setMessage("Could not setup the device: "
-						+ this.exception.getMessage());
-				alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "OK",
+				alertDialog.setTitle(LoginActivity.this.getResources()
+						.getString(R.string.dialog_title_error));
+				alertDialog.setMessage(LoginActivity.this.getResources()
+						.getString(R.string.error_device_setup_failed,
+								this.exception.getMessage()));
+				alertDialog.setButton(
+						DialogInterface.BUTTON_POSITIVE,
+						LoginActivity.this.getResources().getString(
+								R.string.dialog_button_okay),
 						new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dialog,
@@ -164,8 +173,11 @@ public class LoginActivity extends Activity {
 				alertDialog.show();
 				return;
 			}
-			Toast.makeText(LoginActivity.this, "Login successful",
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(
+					LoginActivity.this,
+					LoginActivity.this.getResources().getString(
+							R.string.text_login_successful), Toast.LENGTH_SHORT)
+					.show();
 
 			this.progress.dismiss();
 
