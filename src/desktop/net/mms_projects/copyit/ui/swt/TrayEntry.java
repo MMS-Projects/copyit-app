@@ -1,5 +1,6 @@
 package net.mms_projects.copyit.ui.swt;
 
+import net.mms_projects.copyit.AndroidResourceLoader;
 import net.mms_projects.copyit.ui.swt.forms.PreferencesDialog;
 
 import org.eclipse.swt.SWT;
@@ -12,7 +13,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.swt.widgets.Tray;
 import org.eclipse.swt.widgets.TrayItem;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 public class TrayEntry {
 
@@ -35,7 +35,7 @@ public class TrayEntry {
 
 		this.trayItem = new TrayItem(tray, 0);
 
-		this.trayItem.setImage(SWTResourceManager.getImage("res/drawable-xxhdpi/app_icon_small.png"));
+		this.trayItem.setImage(AndroidResourceLoader.getImage("drawable-xxhdpi/app_icon_small.png"));
 		this.trayItem.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
 				System.out.println("selection");

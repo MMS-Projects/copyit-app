@@ -85,8 +85,8 @@
             <fileset dir=".">
                <include name="**/res/**.properties" />
                <include name="**/res/mmsprojects-copyit-**.png" />
-               <include name="**/res/**/**" />
             </fileset>
+            <fileset dir="res" />
         </jar>
     </target>
 
@@ -111,8 +111,8 @@
             <fileset dir=".">
                <include name="**/res/**.properties" />
                <include name="**/res/mmsprojects-copyit-**.png" />
-               <include name="**/res/**/**" />
             </fileset>
+            <fileset dir="res" />
         </jar>
     </target>
 
@@ -137,8 +137,8 @@
             <fileset dir=".">
                <include name="**/res/**.properties" />
                <include name="**/res/mmsprojects-copyit-**.png" />
-               <include name="**/res/**/**" />
             </fileset>
+            <fileset dir="res" />
         </jar>
     </target>
 
@@ -163,8 +163,8 @@
             <fileset dir=".">
                <include name="**/res/**.properties" />
                <include name="**/res/mmsprojects-copyit-**.png" />
-               <include name="**/res/**/**" />
             </fileset>
+            <fileset dir="res" />
         </jar>
     </target>
     
@@ -189,8 +189,8 @@
             <fileset dir=".">
                <include name="**/res/**.properties" />
                <include name="**/res/mmsprojects-copyit-**.png" />
-               <include name="**/res/**/**" />
             </fileset>
+            <fileset dir="res" />
         </jar>
     </target>
     
@@ -215,8 +215,8 @@
             <fileset dir=".">
                <include name="**/res/**.properties" />
                <include name="**/res/mmsprojects-copyit-**.png" />
-               <include name="**/res/**/**" />
             </fileset>
+            <fileset dir="res" />
         </jar>
     </target>
 
