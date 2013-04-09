@@ -4,5 +4,6 @@
     <string name="action_settings">Instellingen</string>
     <string name="button_login">Inloggen</string>
     <string name="title_activity_login">Inloggen</string>
+    <string name="text_welcome_message">Bedankt voor het downloaden van Copy it. Om Copy It te gebruiken moet je eerst inloggen.</string>
     
 </resources>
