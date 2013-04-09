@@ -190,6 +190,41 @@ public class MainActivity extends Activity {
 		}
 	}
 
+	public void sendToApp(View view) {
+		SharedPreferences preferences = PreferenceManager
+				.getDefaultSharedPreferences(this);
+		if (preferences.getString("device.id", null) == null) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage(
+					"It looks like you're not logged in. Do you want to login in?")
+					.setPositiveButton("Yes",
+							new MainActivity.LoginYesNoDialog())
+					.setNegativeButton("No",
+							new MainActivity.LoginYesNoDialog()).show();
+			return;
+		}
+
+		ServerApi api = new ServerApi();
+		api.deviceId = UUID
+				.fromString(preferences.getString("device.id", null));
+		api.devicePassword = preferences.getString("device.password", null);
+		api.apiUrl = preferences.getString("server.baseurl", this
+				.getResources().getString(R.string.default_baseurl));
+
+		try {
+			String content = new ClipboardContentEndpoint(api).get();
+
+			Intent sendIntent = new Intent();
+			sendIntent.setAction(Intent.ACTION_SEND);
+			sendIntent.putExtra(Intent.EXTRA_TEXT, content);
+			sendIntent.setType("text/plain");
+			startActivity(Intent.createChooser(sendIntent, "Select app to send to..."));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public void doLogin(View view) {
 		Intent intent = new Intent(this, LoginActivity.class);
 		startActivity(intent);
