@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
-    
-    
     <!-- App instellingen -->
+    
+    
     <string name="action_settings">Instellingen</string>
     <!-- Buttons -->
     <string name="button_copyit">Copy It!</string>
@@ -23,7 +23,7 @@
     <!-- Popup -->
     <string name="dialog_title_error">Fout</string>
     <string name="dialog_title_busy">Bezig</string>
-    <string name="dialog_title_select_send_app">Selecteer de app om te verzenden to&#8230;</string>
+    <string name="dialog_title_select_send_app">Selecteer de app om te verzenden&#8230;</string>
     <string name="dialog_button_okay">Oké</string>
     <string name="dialog_button_yes">Ja</string>
     <string name="dialog_button_no">Nee</string>
