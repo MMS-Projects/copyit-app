@@ -12,6 +12,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.swt.widgets.Tray;
 import org.eclipse.swt.widgets.TrayItem;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 public class TrayEntry {
 
@@ -34,7 +35,7 @@ public class TrayEntry {
 
 		this.trayItem = new TrayItem(tray, 0);
 
-		this.trayItem.setImage(display.getSystemImage(SWT.ICON_WORKING));
+		this.trayItem.setImage(SWTResourceManager.getImage("res/drawable-xxhdpi/app_icon_small.png"));
 		this.trayItem.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
 				System.out.println("selection");
