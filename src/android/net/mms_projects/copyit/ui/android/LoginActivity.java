@@ -77,8 +77,6 @@ public class LoginActivity extends Activity {
 		switch (requestCode) {
 		case LoginActivity.ACTIVITY_LOGIN:
 			if (resultCode == RESULT_OK) {
-				ProgressDialog progress = ProgressDialog.show(this, "Busy",
-						"Logging in...", true);
 				LoginResponse response = new LoginResponse();
 				response.deviceId = UUID.fromString(data
 						.getStringExtra("device_id"));
@@ -87,7 +85,6 @@ public class LoginActivity extends Activity {
 
 				SharedPreferences preferences = PreferenceManager
 						.getDefaultSharedPreferences(this);
-				ServerApi api = new ServerApi();
 
 				try {
 					Editor preferenceEditor = preferences.edit();
@@ -96,48 +93,83 @@ public class LoginActivity extends Activity {
 					preferenceEditor.putString("device.password",
 							response.devicePassword);
 					preferenceEditor.commit();
-				} catch (Exception e) {
+				} catch (Exception event) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					event.printStackTrace();
 				}
 
+				ServerApi api = new ServerApi();
 				api.deviceId = response.deviceId;
 				api.devicePassword = response.devicePassword;
 				api.apiUrl = preferences.getString("server.baseurl", this
 						.getResources().getString(R.string.default_baseurl));
 
-				try {
-					InetAddress addr = InetAddress.getLocalHost();
-					String hostname = addr.getHostName();
-
-					new DeviceEndpoint(api).create(hostname);
-				} catch (UnknownHostException e) {
-					e.printStackTrace();
-				} catch (Exception e) {
-					AlertDialog alertDialog = new AlertDialog.Builder(this)
-							.create();
-					alertDialog.setTitle("Error");
-					alertDialog.setMessage("Could not setup the device: "
-							+ e.getMessage());
-					alertDialog.setButton(DialogInterface.BUTTON_POSITIVE,
-							"OK", new DialogInterface.OnClickListener() {
-								@Override
-								public void onClick(DialogInterface dialog,
-										int which) {
-
-								}
-							});
-					alertDialog.setIcon(R.drawable.ic_launcher);
-					alertDialog.show();
-				}
-				progress.dismiss();
-				
-				Toast.makeText(this, "Login successful",
-						Toast.LENGTH_SHORT).show();
-				
-				finish();
+				LoginTask task = new LoginTask(api);
+				task.execute();
 				break;
 			}
+		}
+	}
+
+	private class LoginTask extends ServerApiTask<Void, Void, Boolean> {
+
+		private Exception exception;
+		private ProgressDialog progress;
+
+		public LoginTask(ServerApi api) {
+			super(api);
+		}
+
+		@Override
+		protected void onPreExecute() {
+			this.progress = ProgressDialog.show(LoginActivity.this, "Busy",
+					"Logging in...", true);
+		}
+
+		@Override
+		protected Boolean doInBackground(Void... params) {
+			try {
+				InetAddress addr = InetAddress.getLocalHost();
+				String hostname = addr.getHostName();
+
+				return new DeviceEndpoint(api).create(hostname);
+			} catch (UnknownHostException event) {
+				// TODO Auto-generated catch block
+				event.printStackTrace();
+			} catch (Exception event) {
+				// TODO Auto-generated catch block
+				event.printStackTrace();
+			}
+
+			return false;
+		}
+
+		@Override
+		protected void onPostExecute(Boolean result) {
+			if (!result) {
+				AlertDialog alertDialog = new AlertDialog.Builder(
+						LoginActivity.this).create();
+				alertDialog.setTitle("Error");
+				alertDialog.setMessage("Could not setup the device: "
+						+ this.exception.getMessage());
+				alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "OK",
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+
+							}
+						});
+				alertDialog.setIcon(R.drawable.ic_launcher);
+				alertDialog.show();
+				return;
+			}
+			Toast.makeText(LoginActivity.this, "Login successful",
+					Toast.LENGTH_SHORT).show();
+
+			this.progress.dismiss();
+
+			LoginActivity.this.finish();
 		}
 	}
 

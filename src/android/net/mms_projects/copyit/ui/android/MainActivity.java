@@ -46,23 +46,23 @@ public class MainActivity extends Activity {
 			Intent intent = new Intent(this, WelcomeActivity.class);
 			startActivity(intent);
 		}
-		
-		// Get intent, action and MIME type
-	    Intent intent = getIntent();
-	    String action = intent.getAction();
-	    String type = intent.getType();
 
-	    if (Intent.ACTION_SEND.equals(action) && type != null) {
-	        if ("text/plain".equals(type)) {
-	            handleSendText(intent); // Handle text being sent
-	        } 
-	    }
+		// Get intent, action and MIME type
+		Intent intent = getIntent();
+		String action = intent.getAction();
+		String type = intent.getType();
+
+		if (Intent.ACTION_SEND.equals(action) && type != null) {
+			if ("text/plain".equals(type)) {
+				handleSendText(intent); // Handle text being sent
+			}
+		}
 	}
 
 	private void handleSendText(Intent intent) {
-	    String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
-	    if (sharedText != null) {
-	    	SharedPreferences preferences = PreferenceManager
+		String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
+		if (sharedText != null) {
+			SharedPreferences preferences = PreferenceManager
 					.getDefaultSharedPreferences(this);
 
 			Map<String, ?> settings = preferences.getAll();
@@ -82,25 +82,17 @@ public class MainActivity extends Activity {
 			}
 
 			ServerApi api = new ServerApi();
-			api.deviceId = UUID
-					.fromString(preferences.getString("device.id", null));
+			api.deviceId = UUID.fromString(preferences.getString("device.id",
+					null));
 			api.devicePassword = preferences.getString("device.password", null);
 			api.apiUrl = preferences.getString("server.baseurl", this
 					.getResources().getString(R.string.default_baseurl));
 
-			try {
-				String content = sharedText;
-				Toast.makeText(this, "Pushed the following content: " + content,
-						Toast.LENGTH_LONG).show();
-				new ClipboardContentEndpoint(api).update(content);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			finish();
-	    }
+			CopyItTask task = new HandleShareTask(api);
+			task.execute(this.getClipboard());
+		}
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -147,15 +139,8 @@ public class MainActivity extends Activity {
 		api.apiUrl = preferences.getString("server.baseurl", this
 				.getResources().getString(R.string.default_baseurl));
 
-		try {
-			String content = this.getClipboard();
-			Toast.makeText(this, "Pushed the following content: " + content,
-					Toast.LENGTH_LONG).show();
-			new ClipboardContentEndpoint(api).update(content);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		CopyItTask task = new CopyItTask(api);
+		task.execute(this.getClipboard());
 	}
 
 	public void pasteIt(View view) {
@@ -179,15 +164,8 @@ public class MainActivity extends Activity {
 		api.apiUrl = preferences.getString("server.baseurl", this
 				.getResources().getString(R.string.default_baseurl));
 
-		try {
-			String content = new ClipboardContentEndpoint(api).get();
-			Toast.makeText(this, "Pulled the following content: " + content,
-					Toast.LENGTH_LONG).show();
-			this.setClipboard(content);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		PasteItTask task = new PasteItTask(api);
+		task.execute();
 	}
 
 	public void sendToApp(View view) {
@@ -211,20 +189,10 @@ public class MainActivity extends Activity {
 		api.apiUrl = preferences.getString("server.baseurl", this
 				.getResources().getString(R.string.default_baseurl));
 
-		try {
-			String content = new ClipboardContentEndpoint(api).get();
-
-			Intent sendIntent = new Intent();
-			sendIntent.setAction(Intent.ACTION_SEND);
-			sendIntent.putExtra(Intent.EXTRA_TEXT, content);
-			sendIntent.setType("text/plain");
-			startActivity(Intent.createChooser(sendIntent, "Select app to send to..."));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		SendToAppTask task = new SendToAppTask(api);
+		task.execute();
 	}
-	
+
 	public void doLogin(View view) {
 		Intent intent = new Intent(this, LoginActivity.class);
 		startActivity(intent);
@@ -302,6 +270,102 @@ public class MainActivity extends Activity {
 				MainActivity.this.finish();
 				break;
 			}
+		}
+	}
+
+	private class CopyItTask extends ServerApiTask<String, Void, Boolean> {
+		public CopyItTask(ServerApi api) {
+			super(api);
+		}
+
+		private String content;
+
+		@Override
+		protected Boolean doInBackground(String... params) {
+			this.content = params[0];
+
+			try {
+				return new ClipboardContentEndpoint(api).update(this.content);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return false;
+		}
+
+		@Override
+		protected void onPostExecute(Boolean result) {
+			System.out.println(result);
+			if (result) {
+				Toast.makeText(MainActivity.this,
+						"Pushed the following content: " + this.content,
+						Toast.LENGTH_LONG).show();
+			}
+		}
+	}
+
+	private class PasteItTask extends ServerApiTask<Void, Void, String> {
+		public PasteItTask(ServerApi api) {
+			super(api);
+		}
+
+		@Override
+		protected String doInBackground(Void... params) {
+			try {
+				return new ClipboardContentEndpoint(api).get();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(String content) {
+			Toast.makeText(MainActivity.this,
+					"Pulled the following content: " + content,
+					Toast.LENGTH_LONG).show();
+			MainActivity.this.setClipboard(content);
+		}
+	}
+
+	private class SendToAppTask extends ServerApiTask<Void, Void, String> {
+		public SendToAppTask(ServerApi api) {
+			super(api);
+		}
+
+		@Override
+		protected String doInBackground(Void... params) {
+			try {
+				return new ClipboardContentEndpoint(api).get();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(String content) {
+			Intent sendIntent = new Intent();
+			sendIntent.setAction(Intent.ACTION_SEND);
+			sendIntent.putExtra(Intent.EXTRA_TEXT, content);
+			sendIntent.setType("text/plain");
+			startActivity(Intent.createChooser(sendIntent,
+					"Select app to send to..."));
+		}
+	}
+
+	private class HandleShareTask extends CopyItTask {
+		public HandleShareTask(ServerApi api) {
+			super(api);
+		}
+
+		@Override
+		protected void onPostExecute(Boolean result) {
+			super.onPostExecute(result);
+
+			MainActivity.this.finish();
 		}
 	}
 }
