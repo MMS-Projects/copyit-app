@@ -7,7 +7,7 @@
         <isset property="env.BUILD_NUMBER" />
     </condition>
     
-    <target name="all" depends="fail, linux, windows, macosx, android" />
+    <target name="all" depends="linux, windows, macosx, android" />
 
     <target name="linux" depends="linux-x86, linux-x86_64" />
     <target name="windows" depends="windows-x86, windows-x86_64" />
