@@ -35,40 +35,6 @@ public class ActionProvider {
 		this.api.apiUrl = settings.get("server.baseurl");
 	}
 
-	public void doLogin(Shell dialogParent) {
-		AutoLoginDialog dialog = new AutoLoginDialog(dialogParent, this.settings);
-		dialog.open();
-		LoginResponse response = dialog.getResponse();
-
-		if (response.deviceId == null) {
-			return;
-		}
-		
-		try {
-			this.settings.set("device.id", response.deviceId.toString());
-			this.settings.set("device.password", response.devicePassword);
-			this.settings.saveProperties();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		this.api.deviceId = response.deviceId;
-		this.api.devicePassword = response.devicePassword;
-		
-		try {
-			InetAddress addr = InetAddress.getLocalHost();
-			String hostname = addr.getHostName();
-
-			new DeviceEndpoint(this.api).create(hostname);
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
 	public void doDataSet() {
 		TextTransfer transfer = TextTransfer.getInstance();
 		String data = (String) this.clipboard.getContents(transfer);

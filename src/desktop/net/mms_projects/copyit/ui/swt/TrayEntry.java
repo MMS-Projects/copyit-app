@@ -90,15 +90,6 @@ public class TrayEntry {
 			}
 		});
 
-		MenuItem menuItemLogin = new MenuItem(menu, SWT.PUSH);
-		menuItemLogin.setText("Login");
-		menuItemLogin.addListener(SWT.Selection, new Listener() {
-			public void handleEvent(Event event) {
-				TrayEntry.this.actionProvider
-						.doLogin(TrayEntry.this.activityShell);
-			}
-		});
-
 		MenuItem menuItemPreferences = new MenuItem(menu, SWT.PUSH);
 		menuItemPreferences.setText("Preferences");
 		menuItemPreferences.addListener(SWT.Selection, new Listener() {
