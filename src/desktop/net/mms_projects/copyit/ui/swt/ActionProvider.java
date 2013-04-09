@@ -1,21 +1,15 @@
 package net.mms_projects.copyit.ui.swt;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.UUID;
 
-import net.mms_projects.copyit.LoginResponse;
 import net.mms_projects.copyit.Settings;
 import net.mms_projects.copyit.api.ServerApi;
 import net.mms_projects.copyit.api.endpoints.ClipboardContentEndpoint;
-import net.mms_projects.copyit.api.endpoints.DeviceEndpoint;
-import net.mms_projects.copyit.ui.swt.forms.login_dialogs.AutoLoginDialog;
 
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
 
 public class ActionProvider {
 
@@ -27,7 +21,7 @@ public class ActionProvider {
 		this.clipboard = new Clipboard(display);
 		this.api = new ServerApi();
 		this.settings = settings;
-		
+
 		if (settings.get("device.id") != null) {
 			this.api.deviceId = UUID.fromString(settings.get("device.id"));
 			this.api.devicePassword = settings.get("device.password");
