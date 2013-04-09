@@ -3,14 +3,30 @@
     
     
     
+    <!-- App instellingen -->
     <string name="action_settings">Instellingen</string>
+    <!-- Buttons -->
     <string name="button_copyit">Copy It!</string>
     <string name="button_pasteit">Paste It!</string>
     <string name="button_login">Inloggen</string>
-    <string name="button_sendtoapp">Verstuur naar app...</string>
+    <string name="button_sendtoapp">Verstuur naar app&#8230;</string>
     <string name="title_activity_login">Inloggen</string>
+    <!-- Activiteiten titels -->
     <string name="title_activity_welcome">Welkom in CopyIt</string>
     <string name="text_welcome_message">Bedankt voor het downloaden van CopyIt. Om CopyIt te gebruiken moet je eerst inloggen.</string>
     <string name="desc_app_icon_big">Groot CopyIt logo</string>
+    <string name="text_logging_in">Inloggen&#8230;</string>
+    <string name="text_login_successful">Succesvol ingelogt!</string>
+    <string name="text_login_question">U bent niet ingelogt. Wilt u inloggen?</string>
+    <string name="text_content_pushed">Volgende inhoud word verstuurd: \'%1$s\'</string>
+    <string name="text_content_pulled">Volgende inhoud is ontvangen: \'%1$s\'</string>
+    <!-- Popup -->
+    <string name="dialog_title_error">Fout</string>
+    <string name="dialog_title_busy">Bezig</string>
+    <string name="dialog_title_select_send_app">Selecteer de app om te verzenden to&#8230;</string>
+    <string name="dialog_button_okay">Oké</string>
+    <string name="dialog_button_yes">Ja</string>
+    <string name="dialog_button_no">Nee</string>
+    <string name="error_device_setup_failed">Instellen van het app is mislukt: %1$s</string>
     
 </resources>
