@@ -40,6 +40,6 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/button_paste"
         android:onClick="sendToApp"
-        android:text="Send to app..." />
+        android:text="@string/button_sendtoapp" />
 
 </RelativeLayout>

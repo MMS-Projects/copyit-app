@@ -7,6 +7,7 @@
     <string name="button_copyit">Copy It!</string>
     <string name="button_pasteit">Paste It!</string>
     <string name="button_login">Inloggen</string>
+    <string name="button_sendtoapp">Verstuur naar app...</string>
     <string name="title_activity_login">Inloggen</string>
     <string name="title_activity_welcome">Welkom in CopyIt</string>
     <string name="text_welcome_message">Bedankt voor het downloaden van Copy it. Om CopyIt te gebruiken moet je eerst inloggen.</string>
