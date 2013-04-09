@@ -7,10 +7,22 @@
     <string name="button_copyit">Copy It!</string>
     <string name="button_pasteit">Paste It!</string>
     <string name="button_login">Login</string>
-    <string name="button_sendtoapp">Send to app...</string>
+    <string name="button_sendtoapp">Send to app&#8230;</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_welcome">Welcome to CopyIt</string>
     <string name="text_welcome_message">Thank you for installing CopyIt. To start using CopyIt please login.</string>
     <string name="desc_app_icon_big">Big CopyIt logo</string>
+    <string name="text_logging_in">Logging in&#8230;</string>
+    <string name="text_login_successful">Login successful</string>
+    <string name="text_login_question">It looks like you\'re not logged in. Do you want to login in?</string>
+    <string name="text_content_pushed">Pushed the following content: %1$s&#8230;</string>
+    <string name="text_content_pulled">Pulled the following content: %1$s&#8230;</string>
+    <string name="dialog_title_error">Error</string>
+    <string name="dialog_title_busy">Busy</string>
+    <string name="dialog_title_select_send_app">Select app to send to&#8230;</string>
+    <string name="dialog_button_okay">Okay</string>
+    <string name="dialog_button_yes">Yes</string>
+    <string name="dialog_button_no">No</string>
+    <string name="error_device_setup_failed">Could not setup the device: %1$s</string>
 
 </resources>
