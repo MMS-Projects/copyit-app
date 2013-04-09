@@ -10,7 +10,7 @@
     <string name="button_sendtoapp">Send to app...</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_welcome">Welcome to CopyIt</string>
-    <string name="text_welcome_message">Welcome to CopyIt. To start using the app please login.</string>
+    <string name="text_welcome_message">Thank you for installing CopyIt. To start using CopyIt please login.</string>
     <string name="desc_app_icon_big">Big CopyIt logo</string>
 
 </resources>

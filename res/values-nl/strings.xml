@@ -10,7 +10,7 @@
     <string name="button_sendtoapp">Verstuur naar app...</string>
     <string name="title_activity_login">Inloggen</string>
     <string name="title_activity_welcome">Welkom in CopyIt</string>
-    <string name="text_welcome_message">Bedankt voor het downloaden van Copy it. Om CopyIt te gebruiken moet je eerst inloggen.</string>
+    <string name="text_welcome_message">Bedankt voor het downloaden van CopyIt. Om CopyIt te gebruiken moet je eerst inloggen.</string>
     <string name="desc_app_icon_big">Groot CopyIt logo</string>
     
 </resources>
