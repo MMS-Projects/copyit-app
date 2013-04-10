@@ -2,8 +2,10 @@ package net.mms_projects.copyit.ui.swt;
 
 import net.mms_projects.copyit.AndroidResourceLoader;
 import net.mms_projects.copyit.ui.swt.forms.PreferencesDialog;
+import net.mms_projects.utils.OSValidator;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
@@ -35,7 +37,19 @@ public class TrayEntry {
 
 		this.trayItem = new TrayItem(tray, 0);
 
-		this.trayItem.setImage(AndroidResourceLoader.getImage("drawable-xxhdpi/app_icon_small.png"));
+		Image trayImage = AndroidResourceLoader
+				.getImage("drawable-xxhdpi/app_icon_small.png");
+		if (OSValidator.isUnix()) {
+			String desktop = System.getenv("XDG_CURRENT_DESKTOP");
+			if (desktop.equalsIgnoreCase("Unity")) {
+				System.out.println("Running on " + desktop
+						+ " using the monochrome icon");
+				trayImage = AndroidResourceLoader
+						.getImage("drawable-xxhdpi/app_icon_small_mono.png");
+			}
+		}
+
+		this.trayItem.setImage(trayImage);
 		this.trayItem.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
 				System.out.println("selection");
@@ -80,7 +94,7 @@ public class TrayEntry {
 		this.menuItemPasteIt.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
 				TrayEntry.this.actionProvider.doDataGet();
-				
+
 				final ToolTip tip = new ToolTip(TrayEntry.this.activityShell,
 						SWT.BALLOON | SWT.ICON_INFORMATION);
 				tip.setText("Notification");
