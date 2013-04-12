@@ -7,6 +7,10 @@
         <isset property="env.BUILD_NUMBER" />
     </condition>
     
+    <target name="load-launch4j" depends="windows-x86-compile, global-manifest">
+        <taskdef name="launch4j" classname="net.sf.launch4j.ant.Launch4jTask" classpath="${launch4j.dir}/launch4j.jar:${launch4j.dir}/lib/xstream.jar" />
+    </target>
+    
     <target name="all" depends="linux, windows, macosx, android" />
 
     <target name="linux" depends="linux-x86, linux-x86_64" />
@@ -23,6 +27,8 @@
                <available file="${out.final.file}" property="out.final.file.exists" />
        </condition>
    </target>
+
+    <target name="windows-binary" depends="windows-x86-binary, windows-x86_64-binary" />
 
     <target name="linux-x86_64" depends="linux-x86_64-jar" />
     <target name="linux-x86" depends="linux-x86-jar" />
@@ -141,6 +147,10 @@
             <fileset dir="res" />
         </jar>
     </target>
+    
+    <target name="windows-x86-binary" depends="load-launch4j, windows-x86-jar">
+        <launch4j configFile="./launch4j.xml" outfile="build/copyit-windows-x86.exe" jar="build/copyit-windows-x86.jar"/>
+    </target>
 
     <target name="windows-x86_64-compile" depends="clean">
         <mkdir dir="build/classes" />
@@ -166,6 +176,10 @@
             </fileset>
             <fileset dir="res" />
         </jar>
+    </target>
+    
+    <target name="windows-x86_64-binary" depends="load-launch4j, windows-x86_64-jar">
+        <launch4j configFile="./launch4j.xml" outfile="build/copyit-windows-x86_64.exe" jar="build/copyit-windows-x86_64.jar"/>
     </target>
     
     <target name="macosx-x86-compile" depends="clean">
