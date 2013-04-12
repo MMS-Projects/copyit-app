@@ -96,6 +96,7 @@ public class SettingsActivity extends PreferenceActivity {
 		// use the older PreferenceActivity APIs.
 
 		addPreferencesFromResource(R.xml.pref_account);
+		addPreferencesFromResource(R.xml.pref_about);
 	}
 
 	/** {@inheritDoc} */

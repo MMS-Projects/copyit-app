@@ -73,6 +73,20 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="net.mms_projects.copyit.ui.android.MainActivity" />
         </activity>
+        <activity
+            android:name="net.mms_projects.copyit.ui.android.AboutActivity"
+            android:label="@string/title_activity_about"
+            android:parentActivityName="net.mms_projects.copyit.ui.android.SettingsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="net.mms_projects.copyit.ui.android.SettingsActivity" />
+
+            <intent-filter>
+                <action android:name="net.mms_projects.copyit.ui.android.AboutActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

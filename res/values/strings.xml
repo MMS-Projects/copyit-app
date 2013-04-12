@@ -10,9 +10,13 @@
     <string name="button_pasteit">Paste It!</string>
     <string name="button_login">Login</string>
     <string name="button_sendtoapp">Send to app&#8230;</string>
+    <!-- Preferences -->
+    <string name="pref_about">About CopyIt</string>
     <!-- Activity titles -->
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_welcome">Welcome to CopyIt</string>
+    <string name="title_activity_about">@string/pref_about</string>
+    <!-- Other stuff -->
     <string name="text_welcome_message">Thank you for installing CopyIt. To start using CopyIt please login.</string>
     <string name="desc_app_icon_big">Big CopyIt logo</string>
     <string name="text_logging_in">Logging in&#8230;</string>
@@ -28,5 +32,9 @@
     <string name="dialog_button_yes">Yes</string>
     <string name="dialog_button_no">No</string>
     <string name="error_device_setup_failed">Could not setup the device: %1$s</string>
+    <string name="hello_world">Hello world!</string>
+    <!-- About information -->
+    <string name="about_version">Version: %1$s</string>
+    <string name="about_copyright">Made by MMS-Projects</string>
 
 </resources>
