@@ -47,40 +47,42 @@
     </path>
 
     <path id="linux-x86-classpath">
+        <path refid="global-classpath" />
         <fileset file="libs/desktop/swt-4.2.1-gtk-linux-x86.jar" />
     </path>
 
     <path id="linux-x86_64-classpath">
+        <path refid="global-classpath" />
         <fileset file="libs/desktop/swt-4.2.1-gtk-linux-x86_64.jar" />
     </path>
 
     <path id="windows-x86-classpath">
+        <path refid="global-classpath" />
         <fileset file="libs/desktop/swt-4.2.1-win32-win32-x86.jar" />
     </path>
 
     <path id="windows-x86_64-classpath">
+        <path refid="global-classpath" />
         <fileset file="libs/desktop/swt-4.2.1-win32-win32-x86_64.jar" />
     </path>
     
     <path id="macosx-x86-classpath">
+        <path refid="global-classpath" />
         <fileset file="libs/desktop/swt-4.2.1-cocoa-macosx-x86.jar" />
     </path>
     
     <path id="macosx-x86_64-classpath">
+        <path refid="global-classpath" />
         <fileset file="libs/desktop/swt-4.2.1-cocoa-macosx-x86_64.jar" />
     </path>
 
     <target name="linux-x86-compile" depends="clean">
         <mkdir dir="build/classes" />
-        <!-- . is used for pointing to the current directory -->
-        <javac srcdir="src/main:src/desktop" destdir="build/classes">
-            <classpath refid="global-classpath" />
-            <classpath refid="linux-x86-classpath" />
-        </javac>
+        <javac srcdir="src/main:src/desktop" destdir="build/classes" classpathref="linux-x86-classpath" />
     </target>
 
     <target name="linux-x86-jar" depends="linux-x86-compile, global-manifest">
-        <jar manifest="build/META-INF/MANIFEST.MF" destfile="build/copyit-linux-x86.jar" filesetmanifest="mergewithoutmain" basedir="build/classes">
+        <jar manifest="build/META-INF/MANIFEST.MF" destfile="build/copyit-linux-x86.jar" filesetmanifest="mergewithoutmain" basedir="build/classes">        
             <zipfileset excludes="META-INF/*.SF" src="libs/desktop/swt-4.2.1-gtk-linux-x86.jar" />
         	<zipfileset excludes="META-INF/*.SF" src="libs/desktop/swing2swt.jar" />
         	<zipfileset excludes="META-INF/*.SF" src="libs/commons-io-2.4.jar" />
@@ -99,10 +101,7 @@
     <target name="linux-x86_64-compile" depends="clean">
         <mkdir dir="build/classes" />
         <!-- . is used for pointing to the current directory -->
-        <javac srcdir="src/main:src/desktop" destdir="build/classes">
-            <classpath refid="global-classpath" />
-            <classpath refid="linux-x86_64-classpath" />
-        </javac>
+        <javac srcdir="src/main:src/desktop" destdir="build/classes" classpathref="linux-x86_64-classpath" />
     </target>
 
     <target name="linux-x86_64-jar" depends="linux-x86_64-compile, global-manifest">
@@ -124,11 +123,7 @@
 
     <target name="windows-x86-compile" depends="clean">
         <mkdir dir="build/classes" />
-        <!-- . is used for pointing to the current directory -->
-        <javac srcdir="src/main:src/desktop" destdir="build/classes">
-            <classpath refid="global-classpath" />
-            <classpath refid="windows-x86-classpath" />
-        </javac>
+        <javac srcdir="src/main:src/desktop" destdir="build/classes" classpathref="windows-x86-classpath" />
     </target>
 
     <target name="windows-x86-jar" depends="windows-x86-compile, global-manifest">
@@ -154,11 +149,7 @@
 
     <target name="windows-x86_64-compile" depends="clean">
         <mkdir dir="build/classes" />
-        <!-- . is used for pointing to the current directory -->
-        <javac srcdir="src/main:src/desktop" destdir="build/classes">
-            <classpath refid="global-classpath" />
-            <classpath refid="windows-x86_64-classpath" />
-        </javac>
+        <javac srcdir="src/main:src/desktop" destdir="build/classes" classpathref="windows-x86_64-classpath" />
     </target>
 
     <target name="windows-x86_64-jar" depends="windows-x86_64-compile, global-manifest">
@@ -184,11 +175,7 @@
     
     <target name="macosx-x86-compile" depends="clean">
         <mkdir dir="build/classes" />
-        <!-- . is used for pointing to the current directory -->
-        <javac srcdir="src/main:src/desktop" destdir="build/classes">
-            <classpath refid="global-classpath" />
-            <classpath refid="macosx-x86-classpath" />
-        </javac>
+        <javac srcdir="src/main:src/desktop" destdir="build/classes" classpathref="macosx-x86-classpath" />
     </target>
 
     <target name="macosx-x86-jar" depends="macosx-x86-compile, global-manifest">
@@ -210,11 +197,7 @@
     
     <target name="macosx-x86_64-compile" depends="clean">
         <mkdir dir="build/classes" />
-        <!-- . is used for pointing to the current directory -->
-        <javac srcdir="src/main:src/desktop" destdir="build/classes">
-            <classpath refid="global-classpath" />
-            <classpath refid="macosx-x86_64-classpath" />
-        </javac>
+        <javac srcdir="src/main:src/desktop" destdir="build/classes" classpathref="macosx-x86_64-classpath" />
     </target>
 
     <target name="macosx-x86_64-jar" depends="macosx-x86_64-compile, global-manifest">
