@@ -21,12 +21,13 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
 
 	private CopyItAndroid app;
 
@@ -212,6 +213,16 @@ public class MainActivity extends Activity {
 
 	public void doLogin(View view) {
 		Intent intent = new Intent(this, LoginActivity.class);
+		startActivity(intent);
+	}
+	
+	public void gotoSettings(View view) {
+		Intent intent = new Intent(this, SettingsActivity.class);
+		startActivity(intent);
+	}
+	
+	public void gotoAbout(View view) {
+		Intent intent = new Intent(this, AboutActivity.class);
 		startActivity(intent);
 	}
 

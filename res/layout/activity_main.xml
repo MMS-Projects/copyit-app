@@ -6,40 +6,21 @@
     android:layout_height="match_parent"
     android:orientation="horizontal" >
 
-    <Button
-        android:id="@+id/button_paste"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:onClick="pasteIt"
-        android:text="@string/button_pasteit" />
-
-    <Button
-        android:id="@+id/button_login"
+    <TextView
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:onClick="doLogin"
-        android:text="@string/button_login" />
-
-    <Button
-        android:id="@+id/button_copy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:onClick="copyIt"
-        android:text="@string/button_copyit" />
+        android:text="TextView" />
 
-    <Button
-        android:id="@+id/button_send_app"
-        android:layout_width="wrap_content"
+    <fragment
+        android:id="@+id/fragment_dashboard"
+        android:name="com.google.android.apps.iosched.ui.DashboardFragment"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/button_paste"
-        android:onClick="sendToApp"
-        android:text="@string/button_sendtoapp" />
+        android:layout_above="@+id/textView1"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" />
 
 </RelativeLayout>

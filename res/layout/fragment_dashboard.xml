@@ -1,0 +1,58 @@
+<!--
+  Copyright 2011 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.-->
+
+<com.google.android.apps.iosched.ui.widget.DashboardLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <Button
+        android:id="@+id/button_paste"
+        style="@style/DashboardButton"
+        android:drawableTop="@drawable/icon_receive"
+        android:onClick="pasteIt"
+        android:text="@string/button_pasteit" />
+
+    <Button
+        android:id="@+id/button_copy"
+        style="@style/DashboardButton"
+        android:drawableTop="@drawable/icon_send"
+        android:onClick="copyIt"
+        android:text="@string/button_copyit" />
+
+    <Button
+        android:id="@+id/button_login"
+        style="@style/DashboardButton"
+        android:onClick="doLogin"
+        android:text="@string/button_login" />
+
+    <Button
+        android:id="@+id/button_send_app"
+        style="@style/DashboardButton"
+        android:onClick="sendToApp"
+        android:text="@string/button_sendtoapp" />
+
+    <Button
+        android:id="@+id/button_settings"
+        style="@style/DashboardButton"
+        android:onClick="gotoSettings"
+        android:text="@string/action_settings" />
+
+    <Button
+        android:id="@+id/button_about"
+        style="@style/DashboardButton"
+        android:onClick="gotoAbout"
+        android:text="@string/pref_about" />
+
+</com.google.android.apps.iosched.ui.widget.DashboardLayout>
