@@ -16,15 +16,6 @@
         android:text="@string/button_pasteit" />
 
     <Button
-        android:id="@+id/button_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:onClick="doLogin"
-        android:text="@string/button_login" />
-
-    <Button
         android:id="@+id/button_copy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
