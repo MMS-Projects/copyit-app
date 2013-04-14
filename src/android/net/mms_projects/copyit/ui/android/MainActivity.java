@@ -6,19 +6,18 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.UUID;
 
+import net.mms_projects.copyit.ClipboardUtils;
 import net.mms_projects.copyit.FileStreamBuilder;
 import net.mms_projects.copyit.R;
 import net.mms_projects.copyit.api.ServerApi;
 import net.mms_projects.copyit.api.endpoints.ClipboardContentEndpoint;
 import net.mms_projects.copyit.app.CopyItAndroid;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
@@ -93,8 +92,10 @@ public class MainActivity extends Activity {
 			api.apiUrl = preferences.getString("server.baseurl", this
 					.getResources().getString(R.string.default_baseurl));
 
+			ClipboardUtils clipboard = new ClipboardUtils(MainActivity.this);
+
 			CopyItTask task = new HandleShareTask(api);
-			task.execute(this.getClipboard());
+			task.execute(clipboard.getText());
 		}
 	}
 
@@ -148,8 +149,10 @@ public class MainActivity extends Activity {
 		api.apiUrl = preferences.getString("server.baseurl", this
 				.getResources().getString(R.string.default_baseurl));
 
+		ClipboardUtils clipboard = new ClipboardUtils(MainActivity.this);
+
 		CopyItTask task = new CopyItTask(api);
-		task.execute(this.getClipboard());
+		task.execute(clipboard.getText());
 	}
 
 	public void pasteIt(View view) {
@@ -213,43 +216,6 @@ public class MainActivity extends Activity {
 	public void doLogin(View view) {
 		Intent intent = new Intent(this, LoginActivity.class);
 		startActivity(intent);
-	}
-
-	@SuppressWarnings("deprecation")
-	protected void setClipboard(String text) {
-		int sdk = android.os.Build.VERSION.SDK_INT;
-		if (sdk < android.os.Build.VERSION_CODES.HONEYCOMB) {
-			android.text.ClipboardManager clipboard = (android.text.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-			clipboard.setText(text);
-		} else {
-			this.setClipboardHoneycomb(text);
-		}
-	}
-
-	@SuppressWarnings("deprecation")
-	protected String getClipboard() {
-		int sdk = android.os.Build.VERSION.SDK_INT;
-		if (sdk < android.os.Build.VERSION_CODES.HONEYCOMB) {
-			android.text.ClipboardManager clipboard = (android.text.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-			return clipboard.getText().toString();
-		} else {
-			return this.getClipboardHoneycomb();
-		}
-	}
-
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-	protected void setClipboardHoneycomb(String text) {
-		android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-		android.content.ClipData clip = android.content.ClipData.newPlainText(
-				"text label", text);
-		clipboard.setPrimaryClip(clip);
-	}
-
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-	protected String getClipboardHoneycomb() {
-		android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-		android.content.ClipData clip = clipboard.getPrimaryClip();
-		return clip.getItemAt(0).getText().toString();
 	}
 
 	class StreamBuilder extends FileStreamBuilder {
@@ -341,12 +307,14 @@ public class MainActivity extends Activity {
 
 		@Override
 		protected void onPostExecute(String content) {
+			ClipboardUtils clipboard = new ClipboardUtils(MainActivity.this);
+
 			Toast.makeText(
 					MainActivity.this,
 					MainActivity.this.getResources().getString(
 							R.string.text_content_pulled, content),
 					Toast.LENGTH_LONG).show();
-			MainActivity.this.setClipboard(content);
+			clipboard.setText(content);
 		}
 	}
 
