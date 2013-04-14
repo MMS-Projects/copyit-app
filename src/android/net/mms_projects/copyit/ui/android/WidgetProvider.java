@@ -70,6 +70,19 @@ public class WidgetProvider extends AppWidgetProvider {
 			SharedPreferences preferences = PreferenceManager
 					.getDefaultSharedPreferences(context);
 
+			if (!intent.getAction().equals(ACTION_COPYIT)
+					&& !intent.getAction().equals(ACTION_PASTEIT)) {
+				super.onReceive(context, intent);
+				return;
+			}
+
+			if (preferences.getString("device.id", null) == null) {
+				Intent loginIntent = new Intent(context, LoginActivity.class);
+				loginIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				context.startActivity(loginIntent);
+				return;
+			}
+
 			ServerApi api = new ServerApi();
 			api.deviceId = UUID.fromString(preferences.getString("device.id",
 					null));
