@@ -1,18 +1,14 @@
 package net.mms_projects.copyit.ui.android;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.UUID;
 
 import net.mms_projects.copyit.LoginResponse;
 import net.mms_projects.copyit.R;
+import net.mms_projects.copyit.android.tasks.SetupDeviceTask;
 import net.mms_projects.copyit.api.ServerApi;
-import net.mms_projects.copyit.api.endpoints.DeviceEndpoint;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -22,7 +18,6 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 public class LoginActivity extends Activity {
 
@@ -104,82 +99,21 @@ public class LoginActivity extends Activity {
 				api.apiUrl = preferences.getString("server.baseurl", this
 						.getResources().getString(R.string.default_baseurl));
 
-				LoginTask task = new LoginTask(api);
+				LoginTask task = new LoginTask(this, api);
 				task.execute();
 				break;
 			}
 		}
 	}
 
-	private class LoginTask extends ServerApiTask<Void, Void, Boolean> {
-
-		private Exception exception;
-		private ProgressDialog progress;
-
-		public LoginTask(ServerApi api) {
-			super(api);
-		}
-
-		@Override
-		protected void onPreExecute() {
-			this.progress = ProgressDialog.show(
-					LoginActivity.this,
-					LoginActivity.this.getResources().getString(
-							R.string.dialog_title_busy),
-					LoginActivity.this.getResources().getString(
-							R.string.text_logging_in), true);
-		}
-
-		@Override
-		protected Boolean doInBackground(Void... params) {
-			try {
-				InetAddress addr = InetAddress.getLocalHost();
-				String hostname = addr.getHostName();
-
-				return new DeviceEndpoint(api).create(hostname);
-			} catch (UnknownHostException event) {
-				// TODO Auto-generated catch block
-				event.printStackTrace();
-			} catch (Exception event) {
-				// TODO Auto-generated catch block
-				event.printStackTrace();
-			}
-
-			return false;
+	private class LoginTask extends SetupDeviceTask {
+		public LoginTask(Context context, ServerApi api) {
+			super(context, api);
 		}
 
 		@Override
 		protected void onPostExecute(Boolean result) {
-			if (!result) {
-				AlertDialog alertDialog = new AlertDialog.Builder(
-						LoginActivity.this).create();
-				alertDialog.setTitle(LoginActivity.this.getResources()
-						.getString(R.string.dialog_title_error));
-				alertDialog.setMessage(LoginActivity.this.getResources()
-						.getString(R.string.error_device_setup_failed,
-								this.exception.getMessage()));
-				alertDialog.setButton(
-						DialogInterface.BUTTON_POSITIVE,
-						LoginActivity.this.getResources().getString(
-								R.string.dialog_button_okay),
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog,
-									int which) {
-
-							}
-						});
-				alertDialog.setIcon(R.drawable.ic_launcher);
-				alertDialog.show();
-				return;
-			}
-			Toast.makeText(
-					LoginActivity.this,
-					LoginActivity.this.getResources().getString(
-							R.string.text_login_successful), Toast.LENGTH_SHORT)
-					.show();
-
-			this.progress.dismiss();
+			super.onPostExecute(result);
 
 			LoginActivity.this.finish();
 		}
