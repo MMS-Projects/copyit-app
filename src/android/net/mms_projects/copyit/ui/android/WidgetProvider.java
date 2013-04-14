@@ -2,7 +2,10 @@ package net.mms_projects.copyit.ui.android;
 
 import java.util.UUID;
 
+import net.mms_projects.copyit.ClipboardUtils;
 import net.mms_projects.copyit.R;
+import net.mms_projects.copyit.android.tasks.CopyItTask;
+import net.mms_projects.copyit.android.tasks.PasteItTask;
 import net.mms_projects.copyit.api.ServerApi;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -12,7 +15,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
-import android.widget.Toast;
 
 public class WidgetProvider extends AppWidgetProvider {
 
@@ -64,6 +66,7 @@ public class WidgetProvider extends AppWidgetProvider {
 				this.onDeleted(context, new int[] { appWidgetId });
 			}
 		} else {
+			ClipboardUtils clipboard = new ClipboardUtils(context);
 			SharedPreferences preferences = PreferenceManager
 					.getDefaultSharedPreferences(context);
 
@@ -75,11 +78,11 @@ public class WidgetProvider extends AppWidgetProvider {
 					.getResources().getString(R.string.default_baseurl));
 
 			if (intent.getAction().equals(ACTION_COPYIT)) {
-				Toast.makeText(context, "Copy It! from widget",
-						Toast.LENGTH_SHORT).show();
+				CopyItTask task = new CopyItTask(context, api);
+				task.execute(clipboard.getText());
 			} else if (intent.getAction().equals(ACTION_PASTEIT)) {
-				Toast.makeText(context, "Paste It! from widget",
-						Toast.LENGTH_SHORT).show();
+				PasteItTask task = new PasteItTask(context, api);
+				task.execute();
 			}
 			super.onReceive(context, intent);
 		}
