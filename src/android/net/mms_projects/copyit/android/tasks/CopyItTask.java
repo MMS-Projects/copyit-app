@@ -36,5 +36,7 @@ public class CopyItTask extends ServerApiUiTask<String, Void, Boolean> {
 							R.string.text_content_pushed, this.content),
 					Toast.LENGTH_LONG).show();
 		}
+		
+		super.onPostExecute(result);
 	}
 }

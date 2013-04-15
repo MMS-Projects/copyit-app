@@ -7,7 +7,6 @@ import net.mms_projects.copyit.R;
 import net.mms_projects.copyit.api.ServerApi;
 import net.mms_projects.copyit.api.endpoints.DeviceEndpoint;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.widget.Toast;
@@ -15,20 +14,11 @@ import android.widget.Toast;
 public class SetupDeviceTask extends ServerApiUiTask<Void, Void, Boolean> {
 
 	private Exception exception;
-	private ProgressDialog progress;
 
 	public SetupDeviceTask(Context context, ServerApi api) {
 		super(context, api);
-	}
 
-	@Override
-	protected void onPreExecute() {
-		this.progress = ProgressDialog
-				.show(this.context,
-						this.context.getResources().getString(
-								R.string.dialog_title_busy),
-						this.context.getResources().getString(
-								R.string.text_logging_in), true);
+		this.setUseProgressDialog(true);
 	}
 
 	@Override
@@ -77,6 +67,6 @@ public class SetupDeviceTask extends ServerApiUiTask<Void, Void, Boolean> {
 						R.string.text_login_successful), Toast.LENGTH_SHORT)
 				.show();
 
-		this.progress.dismiss();
+		super.onPostExecute(result);
 	}
 }

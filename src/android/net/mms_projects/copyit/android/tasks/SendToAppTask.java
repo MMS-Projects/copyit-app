@@ -7,8 +7,12 @@ import android.content.Context;
 import android.content.Intent;
 
 public class SendToAppTask extends ServerApiUiTask<Void, Void, String> {
+
 	public SendToAppTask(Context context, ServerApi api) {
 		super(context, api);
+
+		this.progressDialogMessage = context.getResources().getString(
+				R.string.text_content_pulling);
 	}
 
 	@Override
@@ -28,9 +32,12 @@ public class SendToAppTask extends ServerApiUiTask<Void, Void, String> {
 		sendIntent.setAction(Intent.ACTION_SEND);
 		sendIntent.putExtra(Intent.EXTRA_TEXT, content);
 		sendIntent.setType("text/plain");
+
 		this.context.startActivity(Intent.createChooser(
 				sendIntent,
 				this.context.getResources().getString(
 						R.string.dialog_title_select_send_app)));
+		
+		super.onPostExecute(content);
 	}
 }

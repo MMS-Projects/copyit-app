@@ -33,5 +33,7 @@ public class PasteItTask extends ServerApiUiTask<Void, Void, String> {
 						R.string.text_content_pulled, content),
 				Toast.LENGTH_LONG).show();
 		clipboard.setText(content);
+		
+		super.onPostExecute(content);
 	}
 }
