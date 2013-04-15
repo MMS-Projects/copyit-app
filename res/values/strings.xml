@@ -38,9 +38,9 @@
     <string name="error_general">An error occurred: %1$s</string>
     <!-- Widgets -->
     <string name="widget_title_general">CopyIt - general</string>
-    <string name="widget_title_copyit">CopyIt - Copy It! only</string>
-    <string name="widget_title_pasteit">CopyIt - Paste It! only</string>
-    <string name="widget_title_copyit_pasteit">CopyIt - Copy It! and  Paste It!</string>
+    <string name="widget_title_copyit">CopyIt - Copy It! Button</string>
+    <string name="widget_title_pasteit">CopyIt - Paste It! Button</string>
+    <string name="widget_title_copyit_pasteit">CopyIt - Copy It! and Paste It!</string>
     <!-- About information -->
     <string name="about_version">Version: %1$s</string>
     <string name="about_copyright">Made by MMS-Projects</string>

@@ -24,6 +24,8 @@
     <string name="text_login_question">U bent niet ingelogt. Wilt u inloggen?</string>
     <string name="text_content_pushed">Volgende inhoud word verstuurd: \'%1$s\'</string>
     <string name="text_content_pulled">Volgende inhoud is ontvangen: \'%1$s\'</string>
+    <string name="text_content_pulling">Pulling content&#8230;</string>
+    <string name="text_content_pushing">Pushing content&#8230;</string>
     <!-- Dialog -->
     <string name="dialog_title_error">Fout</string>
     <string name="dialog_title_busy">Bezig</string>
@@ -31,10 +33,18 @@
     <string name="dialog_button_okay">Oké</string>
     <string name="dialog_button_yes">Ja</string>
     <string name="dialog_button_no">Nee</string>
+    <!-- Fouten -->
     <string name="error_device_setup_failed">Instellen van het app is mislukt: %1$s</string>
-    <string name="hello_world">Hallo wereld!</string>
+    <string name="error_general">Er is een fout opgetreden: %1$s</string>
+    <!-- Widgets -->
+    <string name="widget_title_general">CopyIt - algemeen</string>
+    <string name="widget_title_copyit">CopyIt - Copy It! Button</string>
+    <string name="widget_title_pasteit">CopyIt - Paste It! Button</string>
+    <string name="widget_title_copyit_pasteit">CopyIt - Copy It! en Paste It!</string>
     <!-- About information -->
-    <string name="about_version">Version: %1$s</string>
+    <string name="about_version">Versie: %1$s</string>
     <string name="about_copyright">Gemaakt door MMS-Projects</string>
+    <!-- Other -->
+    <string name="hello_world">Hallo wereld!</string>
     
 </resources>
