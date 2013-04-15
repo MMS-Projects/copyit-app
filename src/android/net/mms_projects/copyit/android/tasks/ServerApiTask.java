@@ -1,4 +1,4 @@
-package net.mms_projects.copyit.ui.android;
+package net.mms_projects.copyit.android.tasks;
 
 import net.mms_projects.copyit.api.ServerApi;
 import android.os.AsyncTask;
