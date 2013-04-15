@@ -9,20 +9,22 @@ abstract public class ServerApiUiTask<Params, Progress, Result> extends
 		ServerApiTask<Params, Progress, Result> {
 
 	final protected Context context;
-	
+
 	protected ProgressDialog progress;
 	protected boolean useProgressDialog = false;
-	protected String progressDialogTitle = this.context.getResources()
-			.getString(R.string.dialog_title_busy);
-	protected String progressDialogMessage = this.context.getResources()
-			.getString(R.string.dialog_title_busy);
-	
+	protected String progressDialogTitle;
+	protected String progressDialogMessage;
+
 	protected Exception exception;
 
 	public ServerApiUiTask(Context context, ServerApi api) {
 		super(api);
 
 		this.context = context;
+		this.progressDialogTitle = this.context.getResources().getString(
+				R.string.dialog_title_busy);
+		this.progressDialogMessage = this.context.getResources().getString(
+				R.string.dialog_title_busy);
 	}
 
 	@Override
@@ -37,6 +39,14 @@ abstract public class ServerApiUiTask<Params, Progress, Result> extends
 
 	public void setUseProgressDialog(boolean useProgressBar) {
 		this.useProgressDialog = useProgressBar;
+	}
+	
+	public void setProgressDialigTitle(String progressDialogTitle) {
+		this.progressDialogTitle = progressDialogTitle;
+	}
+	
+	public void setProgressDialigMessage(String progressDialogMessage) {
+		this.progressDialogMessage = progressDialogMessage;
 	}
 
 	@Override
