@@ -90,7 +90,7 @@
 
         <receiver
             android:name="net.mms_projects.copyit.ui.android.widgets.WidgetGeneral"
-            android:label="CopyIt general" >
+            android:label="@string/widget_title_general" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -99,10 +99,9 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_general_info" />
         </receiver>
-        
         <receiver
             android:name="net.mms_projects.copyit.ui.android.widgets.WidgetCopyIt"
-            android:label="CopyIt - Copy It! only" >
+            android:label="@string/widget_title_copyit" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -111,10 +110,9 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_copyit_info" />
         </receiver>
-        
         <receiver
             android:name="net.mms_projects.copyit.ui.android.widgets.WidgetPasteIt"
-            android:label="CopyIt - Paste It! only" >
+            android:label="@string/widget_title_pasteit" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -123,10 +121,9 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_pasteit_info" />
         </receiver>
-        
         <receiver
             android:name="net.mms_projects.copyit.ui.android.widgets.WidgetCopyItPasteIt"
-            android:label="CopyIt - Copy It! and  Paste It!" >
+            android:label="@string/widget_title_copyit_pasteit" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
