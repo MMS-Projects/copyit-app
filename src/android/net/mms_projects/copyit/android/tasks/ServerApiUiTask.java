@@ -9,13 +9,15 @@ abstract public class ServerApiUiTask<Params, Progress, Result> extends
 		ServerApiTask<Params, Progress, Result> {
 
 	final protected Context context;
-
+	
 	protected ProgressDialog progress;
 	protected boolean useProgressDialog = false;
 	protected String progressDialogTitle = this.context.getResources()
 			.getString(R.string.dialog_title_busy);
 	protected String progressDialogMessage = this.context.getResources()
 			.getString(R.string.dialog_title_busy);
+	
+	protected Exception exception;
 
 	public ServerApiUiTask(Context context, ServerApi api) {
 		super(api);
