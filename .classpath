@@ -2,7 +2,6 @@
 <classpath>
 	<classpathentry exported="true" kind="lib" path="libs/httpclient-4.2.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/httpcore-4.2.2.jar"/>
-	<classpathentry kind="lib" path="libs/desktop/swt-4.2.1-gtk-linux-x86_64.jar"/>
 	<classpathentry kind="src" path="src/main"/>
 	<classpathentry kind="src" path="src/android"/>
 	<classpathentry kind="src" path="src/desktop"/>
@@ -13,5 +12,6 @@
 	<classpathentry kind="lib" path="libs/commons-io-2.4.jar"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="lib" path="libs/gson-2.2.2.jar"/>
+	<classpathentry kind="var" path="SWT_LIB"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
