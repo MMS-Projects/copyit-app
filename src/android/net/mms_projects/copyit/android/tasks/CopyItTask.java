@@ -14,29 +14,36 @@ public class CopyItTask extends ServerApiUiTask<String, Void, Boolean> {
 	private String content;
 
 	@Override
-	protected Boolean doInBackground(String... params) {
+	protected Boolean doInBackgroundWithException(String... params)
+			throws Exception {
 		this.content = params[0];
 
-		try {
-			return new ClipboardContentEndpoint(api).update(this.content);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return false;
+		return new ClipboardContentEndpoint(api).update(this.content);
 	}
 
 	@Override
 	protected void onPostExecute(Boolean result) {
-		System.out.println(result);
-		if (result) {
+		try {
+			this.doExceptionCheck();
+
+			if (result) {
+				Toast.makeText(
+						this.context,
+						this.context.getResources().getString(
+								R.string.text_content_pushed, this.content),
+						Toast.LENGTH_LONG).show();
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
 			Toast.makeText(
 					this.context,
 					this.context.getResources().getString(
-							R.string.text_content_pushed, this.content),
+							R.string.error_general, e.getLocalizedMessage()),
 					Toast.LENGTH_LONG).show();
 		}
-		
+
 		super.onPostExecute(result);
 	}
 }
