@@ -14,7 +14,6 @@
         android:onClick="pasteIt"
         android:text="@string/button_pasteit" />
 
-
     <Button
         android:id="@+id/button_copy"
         android:layout_width="wrap_content"

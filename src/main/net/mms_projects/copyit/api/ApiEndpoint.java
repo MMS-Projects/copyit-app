@@ -1,12 +1,10 @@
 package net.mms_projects.copyit.api;
 
-import java.io.IOException;
 import java.util.List;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-
 import net.mms_projects.copyit.api.responses.ApiResponse;
+
+import org.apache.http.NameValuePair;
 
 public abstract class ApiEndpoint {
 
@@ -39,25 +37,25 @@ public abstract class ApiEndpoint {
 		this.deleteResponseType = responseType;
 	}
 
-	public ApiResponse get(String id) throws ClientProtocolException, IOException{
+	public ApiResponse get(String id) throws Exception{
 		ApiResponse response = this.api.doRequest(this.getResponseType,
 				this.endpoint, id, "GET");
 		return response;
 	}
 
-	public ApiResponse create(String id, List<NameValuePair> parameters) throws ClientProtocolException, IOException{
+	public ApiResponse create(String id, List<NameValuePair> parameters) throws Exception{
 		ApiResponse response = this.api.doRequest(this.createResponseType,
 				this.endpoint, id, "POST", parameters);
 		return response;
 	}
 
-	public ApiResponse update(String id, List<NameValuePair> parameters) throws ClientProtocolException, IOException {
+	public ApiResponse update(String id, List<NameValuePair> parameters) throws Exception {
 		ApiResponse response = this.api.doRequest(this.updateResponseType,
 				this.endpoint, id, "PUT", parameters);
 		return response;
 	}
 
-	public ApiResponse delete(String id) throws ClientProtocolException, IOException {
+	public ApiResponse delete(String id) throws Exception {
 		ApiResponse response = this.api.doRequest(this.deleteResponseType,
 				this.endpoint, id, "DELETE");
 		return response;
