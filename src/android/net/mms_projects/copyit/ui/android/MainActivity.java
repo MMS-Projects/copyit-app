@@ -214,11 +214,6 @@ public class MainActivity extends Activity {
 		task.execute();
 	}
 
-	public void doLogin(View view) {
-		Intent intent = new Intent(this, LoginActivity.class);
-		startActivity(intent);
-	}
-
 	class StreamBuilder extends FileStreamBuilder {
 
 		private Activity activity;

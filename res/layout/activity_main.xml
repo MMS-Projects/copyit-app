@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?><RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/RelativeLayout"
     android:layout_width="match_parent"
@@ -15,14 +14,6 @@
         android:onClick="pasteIt"
         android:text="@string/button_pasteit" />
 
-    <Button
-        android:id="@+id/button_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:onClick="doLogin"
-        android:text="@string/button_login" />
 
     <Button
         android:id="@+id/button_copy"
