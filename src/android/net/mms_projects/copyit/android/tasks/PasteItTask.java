@@ -13,25 +13,35 @@ public class PasteItTask extends ServerApiUiTask<Void, Void, String> {
 	}
 
 	@Override
-	protected String doInBackground(Void... params) {
-		try {
-			return new ClipboardContentEndpoint(api).get();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+	protected String doInBackgroundWithException(Void... params)
+			throws Exception {
+		return new ClipboardContentEndpoint(api).get();
 	}
 
 	@Override
 	protected void onPostExecute(String content) {
-		ClipboardUtils clipboard = new ClipboardUtils(this.context);
+		try {
+			this.doExceptionCheck();
 
-		Toast.makeText(
-				this.context,
-				this.context.getResources().getString(
-						R.string.text_content_pulled, content),
-				Toast.LENGTH_LONG).show();
-		clipboard.setText(content);
+			ClipboardUtils clipboard = new ClipboardUtils(this.context);
+
+			Toast.makeText(
+					this.context,
+					this.context.getResources().getString(
+							R.string.text_content_pulled, content),
+					Toast.LENGTH_LONG).show();
+			clipboard.setText(content);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+			Toast.makeText(
+					this.context,
+					this.context.getResources().getString(
+							R.string.error_general, e.getLocalizedMessage()),
+					Toast.LENGTH_LONG).show();
+		}
+
+		super.onPostExecute(content);
 	}
 }

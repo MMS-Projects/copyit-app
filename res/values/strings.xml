@@ -24,6 +24,8 @@
     <string name="text_login_question">It looks like you\'re not logged in. Do you want to login in?</string>
     <string name="text_content_pushed">Pushed the following content: \'%1$s\'</string>
     <string name="text_content_pulled">Pulled the following content: \'%1$s\'</string>
+    <string name="text_content_pulling">Pulling content&#8230;</string>
+    <string name="text_content_pushing">Pushing content&#8230;</string>
     <!-- Dialog -->
     <string name="dialog_title_error">Error</string>
     <string name="dialog_title_busy">Busy</string>
@@ -31,10 +33,13 @@
     <string name="dialog_button_okay">Okay</string>
     <string name="dialog_button_yes">Yes</string>
     <string name="dialog_button_no">No</string>
+    <!-- Errors -->
     <string name="error_device_setup_failed">Could not setup the device: %1$s</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="error_general">An error occurred: %1$s</string>
     <!-- About information -->
     <string name="about_version">Version: %1$s</string>
     <string name="about_copyright">Made by MMS-Projects</string>
+    <!-- Other -->
+    <string name="hello_world">Hello world!</string>
 
 </resources>

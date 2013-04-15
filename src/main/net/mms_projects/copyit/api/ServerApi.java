@@ -1,5 +1,6 @@
 package net.mms_projects.copyit.api;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
@@ -55,26 +57,29 @@ public class ServerApi {
 	}
 
 	protected ApiResponse doRequest(String endpoint, String id, String method)
-			throws Exception {
+			throws ClientProtocolException, IOException {
 		return this.doRequest(ApiResponse.class, endpoint, id, method,
 				new ArrayList<NameValuePair>());
 	}
 
 	protected ApiResponse doRequest(String endpoint, String id, String method,
-			List<NameValuePair> parameters) throws Exception {
+			List<NameValuePair> parameters) throws ClientProtocolException,
+			IOException {
 		return this.doRequest(ApiResponse.class, endpoint, id, method,
 				parameters);
 	}
 
 	protected ApiResponse doRequest(Class<? extends ApiResponse> apiResponse,
-			String endpoint, String id, String method) throws Exception {
+			String endpoint, String id, String method)
+			throws ClientProtocolException, IOException {
 		return this.doRequest(apiResponse, endpoint, id, method,
 				new ArrayList<NameValuePair>());
 	}
 
 	protected ApiResponse doRequest(Class<? extends ApiResponse> apiResponse,
 			String endpoint, String id, String method,
-			List<NameValuePair> parameters) throws Exception {
+			List<NameValuePair> parameters) throws ClientProtocolException,
+			IOException {
 		String url = this.apiUrl + "/api/" + endpoint;
 		if (id.length() != 0) {
 			url += "/" + id;
@@ -82,11 +87,12 @@ public class ServerApi {
 		url += ".json?";
 		url += "device_id=" + this.deviceId.toString() + "&";
 		url += "device_password=" + this.devicePassword;
-		
+
 		System.out.println(method);
 		System.out.println(url);
 		for (NameValuePair parameter : parameters) {
-			System.out.println(parameter.getName() + ": " + parameter.getValue());
+			System.out.println(parameter.getName() + ": "
+					+ parameter.getValue());
 		}
 
 		HttpResponse response = null;

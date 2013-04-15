@@ -8,7 +8,9 @@ import net.mms_projects.copyit.android.tasks.SetupDeviceTask;
 import net.mms_projects.copyit.api.ServerApi;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -18,6 +20,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 public class LoginActivity extends Activity {
 
@@ -113,6 +116,32 @@ public class LoginActivity extends Activity {
 
 		@Override
 		protected void onPostExecute(Boolean result) {
+			if (!result) {
+				AlertDialog alertDialog = new AlertDialog.Builder(this.context)
+						.create();
+				alertDialog.setTitle(this.context.getResources().getString(
+						R.string.dialog_title_error));
+				alertDialog.setMessage(this.context.getResources().getString(
+						R.string.error_device_setup_failed,
+						this.exception.getMessage()));
+				alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, this.context
+						.getResources().getString(R.string.dialog_button_okay),
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+
+							}
+						});
+				alertDialog.setIcon(R.drawable.ic_launcher);
+				alertDialog.show();
+				return;
+			}
+			Toast.makeText(
+					this.context,
+					this.context.getResources().getString(
+							R.string.text_login_successful), Toast.LENGTH_SHORT)
+					.show();
+			
 			super.onPostExecute(result);
 
 			LoginActivity.this.finish();
