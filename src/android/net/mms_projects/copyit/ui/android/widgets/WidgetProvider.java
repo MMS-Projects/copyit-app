@@ -2,6 +2,7 @@ package net.mms_projects.copyit.ui.android.widgets;
 
 import java.util.UUID;
 
+import net.mms_projects.copyit.AndroidClipboardUtils;
 import net.mms_projects.copyit.ClipboardUtils;
 import net.mms_projects.copyit.R;
 import net.mms_projects.copyit.android.tasks.CopyItTask;
@@ -32,7 +33,7 @@ public class WidgetProvider extends AppWidgetProvider {
 				this.onDeleted(context, new int[] { appWidgetId });
 			}
 		} else {
-			ClipboardUtils clipboard = new ClipboardUtils(context);
+			ClipboardUtils clipboard = new AndroidClipboardUtils(context);
 			SharedPreferences preferences = PreferenceManager
 					.getDefaultSharedPreferences(context);
 

@@ -1,5 +1,6 @@
 package net.mms_projects.copyit.android.tasks;
 
+import net.mms_projects.copyit.AndroidClipboardUtils;
 import net.mms_projects.copyit.ClipboardUtils;
 import net.mms_projects.copyit.R;
 import net.mms_projects.copyit.api.ServerApi;
@@ -23,7 +24,7 @@ public class PasteItTask extends ServerApiUiTask<Void, Void, String> {
 		try {
 			this.doExceptionCheck();
 
-			ClipboardUtils clipboard = new ClipboardUtils(this.context);
+			ClipboardUtils clipboard = new AndroidClipboardUtils(this.context);
 
 			Toast.makeText(
 					this.context,
