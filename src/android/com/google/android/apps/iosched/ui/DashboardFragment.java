@@ -16,7 +16,7 @@
 
 package com.google.android.apps.iosched.ui;
 
-import net.mms_projects.copyit.R;
+import net.mms_projects.copy_it.R;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
