@@ -15,6 +15,7 @@
     <!-- Activity titles -->
     <string name="title_activity_login">InloggenActiviteit</string>
     <string name="title_activity_welcome">Welkom in CopyIt</string>
+    <string name="title_activity_settings">Instellingen</string>
     <string name="title_activity_about">@string/pref_about</string>
     <!-- Other stuff -->
     <string name="text_welcome_message">Bedankt voor het downloaden van CopyIt. Om CopyIt te gebruiken moet je eerst inloggen.</string>
