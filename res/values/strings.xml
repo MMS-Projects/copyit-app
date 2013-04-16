@@ -15,6 +15,7 @@
     <!-- Activity titles -->
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_welcome">Welcome to CopyIt</string>
+    <string name="title_activity_settings">Settings</string>
     <string name="title_activity_about">@string/pref_about</string>
     <!-- Other stuff -->
     <string name="text_welcome_message">Thank you for installing CopyIt. To start using CopyIt please login.</string>
