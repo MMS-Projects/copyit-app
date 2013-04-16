@@ -14,6 +14,7 @@ import net.mms_projects.copyit.ui.SwtGui;
 public class CopyItDesktop extends CopyIt {
 
 	protected Settings settings;
+	protected File lockFile;
 
 	/**
 	 * @param args
@@ -33,6 +34,23 @@ public class CopyItDesktop extends CopyIt {
 			System.exit(1);
 		}
 		this.settings.loadProperties();
+		this.lockFile = new File(PathBuilder.getConfigDirectory(), ".lock");
+		if (this.lockFile.exists()) {
+			System.out.println("An instance is already running. "
+					+ "If not please remove the following lock file: "
+					+ this.lockFile.getAbsolutePath());
+			System.exit(0);
+		} else {
+			try {
+				this.lockFile.createNewFile();
+				
+				this.lockFile.deleteOnExit();
+			} catch (IOException e) {
+				e.printStackTrace();
+
+				System.exit(1);
+			}
+		}
 
 		AbstractUi ui = new SwtGui(this.settings);
 		ui.open();
