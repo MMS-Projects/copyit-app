@@ -17,7 +17,7 @@ public class WidgetCopyIt extends WidgetProvider {
 		for (int i = 0; i < N; i++) {
 			int appWidgetId = appWidgetIds[i];
 
-			Intent intentCopyIt = new Intent(context, WidgetProvider.class);
+			Intent intentCopyIt = new Intent(context, this.getClass());
 			intentCopyIt.setAction(ACTION_COPYIT);
 			PendingIntent pendingIntentCopyIt = PendingIntent.getBroadcast(
 					context, 0, intentCopyIt, 0);

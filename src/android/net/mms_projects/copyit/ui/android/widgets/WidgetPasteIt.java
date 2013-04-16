@@ -17,7 +17,7 @@ public class WidgetPasteIt extends WidgetProvider {
 		for (int i = 0; i < N; i++) {
 			int appWidgetId = appWidgetIds[i];
 
-			Intent intentPasteIt = new Intent(context, WidgetProvider.class);
+			Intent intentPasteIt = new Intent(context, this.getClass());
 			intentPasteIt.setAction(ACTION_PASTEIT);
 			PendingIntent pendingIntentPasteIt = PendingIntent.getBroadcast(
 					context, 0, intentPasteIt, 0);
