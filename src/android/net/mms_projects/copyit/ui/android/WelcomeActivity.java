@@ -1,6 +1,6 @@
 package net.mms_projects.copyit.ui.android;
 
-import net.mms_projects.copyit.R;
+import net.mms_projects.copy_it.R;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;

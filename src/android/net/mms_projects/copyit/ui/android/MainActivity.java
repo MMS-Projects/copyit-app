@@ -6,10 +6,10 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.UUID;
 
+import net.mms_projects.copy_it.R;
 import net.mms_projects.copyit.AndroidClipboardUtils;
 import net.mms_projects.copyit.ClipboardUtils;
 import net.mms_projects.copyit.FileStreamBuilder;
-import net.mms_projects.copyit.R;
 import net.mms_projects.copyit.android.tasks.CopyItTask;
 import net.mms_projects.copyit.android.tasks.PasteItTask;
 import net.mms_projects.copyit.android.tasks.SendToAppTask;

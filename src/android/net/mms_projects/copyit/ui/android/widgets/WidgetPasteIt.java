@@ -1,6 +1,6 @@
 package net.mms_projects.copyit.ui.android.widgets;
 
-import net.mms_projects.copyit.R;
+import net.mms_projects.copy_it.R;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.widget.RemoteViews;
