@@ -1,12 +1,14 @@
-package net.mms_projects.copyit.ui.android;
+package net.mms_projects.copyit.ui.android.widgets;
 
 import java.util.UUID;
 
+import net.mms_projects.copyit.AndroidClipboardUtils;
 import net.mms_projects.copyit.ClipboardUtils;
 import net.mms_projects.copyit.R;
 import net.mms_projects.copyit.android.tasks.CopyItTask;
 import net.mms_projects.copyit.android.tasks.PasteItTask;
 import net.mms_projects.copyit.api.ServerApi;
+import net.mms_projects.copyit.ui.android.LoginActivity;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -16,43 +18,10 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
 
-public class WidgetProvider extends AppWidgetProvider {
+abstract public class WidgetProvider extends AppWidgetProvider {
 
-	static public String ACTION_COPYIT = "copyit";
-	static public String ACTION_PASTEIT = "pasteit";
-
-	@Override
-	public void onUpdate(Context context, AppWidgetManager appWidgetManager,
-			int[] appWidgetIds) {
-		final int N = appWidgetIds.length;
-
-		for (int i = 0; i < N; i++) {
-			int appWidgetId = appWidgetIds[i];
-
-			Intent intentApp = new Intent(context, MainActivity.class);
-			PendingIntent pendingIntentApp = PendingIntent.getActivity(context,
-					0, intentApp, 0);
-
-			Intent intentCopyIt = new Intent(context, WidgetProvider.class);
-			intentCopyIt.setAction(ACTION_COPYIT);
-			PendingIntent pendingIntentCopyIt = PendingIntent.getBroadcast(
-					context, 0, intentCopyIt, 0);
-
-			Intent intentPasteIt = new Intent(context, WidgetProvider.class);
-			intentPasteIt.setAction(ACTION_PASTEIT);
-			PendingIntent pendingIntentPasteIt = PendingIntent.getBroadcast(
-					context, 0, intentPasteIt, 0);
-
-			RemoteViews views = new RemoteViews(context.getPackageName(),
-					R.layout.widget);
-			views.setOnClickPendingIntent(R.id.button_app, pendingIntentApp);
-			views.setOnClickPendingIntent(R.id.button_copy, pendingIntentCopyIt);
-			views.setOnClickPendingIntent(R.id.button_paste,
-					pendingIntentPasteIt);
-
-			appWidgetManager.updateAppWidget(appWidgetId, views);
-		}
-	}
+	final static public String ACTION_COPYIT = "copyit";
+	final static public String ACTION_PASTEIT = "pasteit";
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
@@ -66,7 +35,7 @@ public class WidgetProvider extends AppWidgetProvider {
 				this.onDeleted(context, new int[] { appWidgetId });
 			}
 		} else {
-			ClipboardUtils clipboard = new ClipboardUtils(context);
+			ClipboardUtils clipboard = new AndroidClipboardUtils(context);
 			SharedPreferences preferences = PreferenceManager
 					.getDefaultSharedPreferences(context);
 
@@ -99,6 +68,24 @@ public class WidgetProvider extends AppWidgetProvider {
 			}
 			super.onReceive(context, intent);
 		}
+	}
+
+	protected void addCopyItAction(RemoteViews views, Context context) {
+		Intent intent = new Intent(context, this.getClass());
+		intent.setAction(ACTION_COPYIT);
+		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0,
+				intent, 0);
+
+		views.setOnClickPendingIntent(R.id.button_copy, pendingIntent);
+	}
+
+	protected void addPasteItAction(RemoteViews views, Context context) {
+		Intent intent = new Intent(context, this.getClass());
+		intent.setAction(ACTION_PASTEIT);
+		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0,
+				intent, 0);
+
+		views.setOnClickPendingIntent(R.id.button_paste, pendingIntent);
 	}
 
 }

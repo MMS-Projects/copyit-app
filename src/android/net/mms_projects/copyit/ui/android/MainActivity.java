@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.UUID;
 
+import net.mms_projects.copyit.AndroidClipboardUtils;
 import net.mms_projects.copyit.ClipboardUtils;
 import net.mms_projects.copyit.FileStreamBuilder;
 import net.mms_projects.copyit.R;
@@ -94,7 +95,7 @@ public class MainActivity extends FragmentActivity {
 			api.apiUrl = preferences.getString("server.baseurl", this
 					.getResources().getString(R.string.default_baseurl));
 
-			ClipboardUtils clipboard = new ClipboardUtils(MainActivity.this);
+			ClipboardUtils clipboard = new AndroidClipboardUtils(MainActivity.this);
 
 			CopyItTask task = new HandleShareTask(this, api);
 			task.execute(clipboard.getText());
@@ -151,7 +152,7 @@ public class MainActivity extends FragmentActivity {
 		api.apiUrl = preferences.getString("server.baseurl", this
 				.getResources().getString(R.string.default_baseurl));
 
-		ClipboardUtils clipboard = new ClipboardUtils(MainActivity.this);
+		ClipboardUtils clipboard = new AndroidClipboardUtils(MainActivity.this);
 
 		CopyItTask task = new CopyItTask(this, api);
 		task.execute(clipboard.getText());

@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import net.mms_projects.copyit.FileStreamBuilder;
+import net.mms_projects.copyit.PathBuilder;
 import net.mms_projects.copyit.Settings;
 import net.mms_projects.copyit.ui.AbstractUi;
 import net.mms_projects.copyit.ui.SwtGui;
@@ -24,7 +25,13 @@ public class CopyItDesktop extends CopyIt {
 
 	public void run() {
 		this.settings = new Settings();
-		this.settings.setFileStreamBuilder(new StreamBuilder());
+		try {
+			this.settings.setFileStreamBuilder(new StreamBuilder());
+		} catch (IOException e) {
+			e.printStackTrace();
+
+			System.exit(1);
+		}
 		this.settings.loadProperties();
 
 		AbstractUi ui = new SwtGui(this.settings);
@@ -35,24 +42,25 @@ public class CopyItDesktop extends CopyIt {
 
 	class StreamBuilder extends FileStreamBuilder {
 
+		private File settingsFile;
+
+		public StreamBuilder() throws IOException {
+			this.settingsFile = new File(PathBuilder.getConfigDirectory(),
+					"options.properties");
+			if (!this.settingsFile.exists()) {
+				System.out.println("No settings file. Creating it.");
+				this.settingsFile.createNewFile();
+			}
+		}
+
 		@Override
 		public FileInputStream getInputStream() throws IOException {
-			File file = new File("options.properties");
-			if (!file.exists()) {
-				System.out.println("No settings file. Creating it.");
-				file.createNewFile();
-			}
-			return new FileInputStream(file);
+			return new FileInputStream(this.settingsFile);
 		}
 
 		@Override
 		public FileOutputStream getOutputStream() throws IOException {
-			File file = new File("options.properties");
-			if (!file.exists()) {
-				System.out.println("No settings file. Creating it.");
-				file.createNewFile();
-			}
-			return new FileOutputStream(file);
+			return new FileOutputStream(this.settingsFile);
 		}
 
 	}

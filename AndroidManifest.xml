@@ -89,15 +89,48 @@
         </activity>
 
         <receiver
-            android:name="net.mms_projects.copyit.ui.android.WidgetProvider"
-            android:label="CopyIt Widget" >
+            android:name="net.mms_projects.copyit.ui.android.widgets.WidgetGeneral"
+            android:label="@string/widget_title_general" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/widget_info" />
+                android:resource="@xml/widget_general_info" />
+        </receiver>
+        <receiver
+            android:name="net.mms_projects.copyit.ui.android.widgets.WidgetCopyIt"
+            android:label="@string/widget_title_copyit" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_copyit_info" />
+        </receiver>
+        <receiver
+            android:name="net.mms_projects.copyit.ui.android.widgets.WidgetPasteIt"
+            android:label="@string/widget_title_pasteit" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_pasteit_info" />
+        </receiver>
+        <receiver
+            android:name="net.mms_projects.copyit.ui.android.widgets.WidgetCopyItPasteIt"
+            android:label="@string/widget_title_copyit_pasteit" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_copyit_pasteit_info" />
         </receiver>
     </application>
 

@@ -1,6 +1,5 @@
 package net.mms_projects.copyit.api.endpoints;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +9,6 @@ import net.mms_projects.copyit.api.responses.ClipboardContentGetResponse;
 import net.mms_projects.copyit.api.responses.ClipboardContentUpdateResponse;
 
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.message.BasicNameValuePair;
 
 public class ClipboardContentEndpoint extends ApiEndpoint {
@@ -22,14 +20,14 @@ public class ClipboardContentEndpoint extends ApiEndpoint {
 		this.setUpdateResponseType(ClipboardContentUpdateResponse.class);
 	}
 
-	public String get() throws ClientProtocolException, IOException {
+	public String get() throws Exception {
 		ClipboardContentGetResponse response = (ClipboardContentGetResponse) super
 				.get("1");
 
 		return response.data;
 	}
 
-	public boolean update(String content) throws ClientProtocolException, IOException {
+	public boolean update(String content) throws Exception {
 		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
 		parameters.add(new BasicNameValuePair("data", content));
 		

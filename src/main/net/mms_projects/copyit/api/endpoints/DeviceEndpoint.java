@@ -1,6 +1,5 @@
 package net.mms_projects.copyit.api.endpoints;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +8,6 @@ import net.mms_projects.copyit.api.ServerApi;
 import net.mms_projects.copyit.api.responses.DeviceCreateResponse;
 
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.message.BasicNameValuePair;
 
 public class DeviceEndpoint extends ApiEndpoint {
@@ -20,7 +18,7 @@ public class DeviceEndpoint extends ApiEndpoint {
 		this.setCreateResponseType(DeviceCreateResponse.class);
 	}
 	
-	public boolean create(String hostname) throws ClientProtocolException, IOException {
+	public boolean create(String hostname) throws Exception {
 		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
 		parameters.add(new BasicNameValuePair("device_name", hostname));
 

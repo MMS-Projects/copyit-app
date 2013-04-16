@@ -1,6 +1,5 @@
 package net.mms_projects.copyit.api;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
@@ -57,29 +55,27 @@ public class ServerApi {
 	}
 
 	protected ApiResponse doRequest(String endpoint, String id, String method)
-			throws ClientProtocolException, IOException {
+			throws Exception {
 		return this.doRequest(ApiResponse.class, endpoint, id, method,
 				new ArrayList<NameValuePair>());
 	}
 
 	protected ApiResponse doRequest(String endpoint, String id, String method,
-			List<NameValuePair> parameters) throws ClientProtocolException,
-			IOException {
+			List<NameValuePair> parameters) throws Exception {
 		return this.doRequest(ApiResponse.class, endpoint, id, method,
 				parameters);
 	}
 
 	protected ApiResponse doRequest(Class<? extends ApiResponse> apiResponse,
 			String endpoint, String id, String method)
-			throws ClientProtocolException, IOException {
+			throws Exception {
 		return this.doRequest(apiResponse, endpoint, id, method,
 				new ArrayList<NameValuePair>());
 	}
 
 	protected ApiResponse doRequest(Class<? extends ApiResponse> apiResponse,
 			String endpoint, String id, String method,
-			List<NameValuePair> parameters) throws ClientProtocolException,
-			IOException {
+			List<NameValuePair> parameters) throws Exception {
 		String url = this.apiUrl + "/api/" + endpoint;
 		if (id.length() != 0) {
 			url += "/" + id;
@@ -116,9 +112,17 @@ public class ServerApi {
 
 		responseText = IOUtils.toString(entity.getContent(), "UTF-8");
 
-		System.out.println(responseText);
+		if (responseText.length() == 0) {
+			throw new Exception("No data was returned by the server");
+		}
 
-		ApiResponse data = new Gson().fromJson(responseText, apiResponse);
+		ApiResponse data = null;
+		try {
+			data = new Gson().fromJson(responseText, apiResponse);
+		} catch (com.google.gson.JsonSyntaxException exception) {
+			throw new Exception(exception);
+		}
+		
 		return data;
 	}
 
