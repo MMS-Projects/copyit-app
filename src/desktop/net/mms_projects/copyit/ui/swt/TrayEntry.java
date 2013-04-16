@@ -1,6 +1,7 @@
 package net.mms_projects.copyit.ui.swt;
 
 import net.mms_projects.copyit.AndroidResourceLoader;
+import net.mms_projects.copyit.ui.swt.forms.AboutDialog;
 import net.mms_projects.copyit.ui.swt.forms.PreferencesDialog;
 import net.mms_projects.utils.OSValidator;
 
@@ -110,6 +111,14 @@ public class TrayEntry {
 			public void handleEvent(Event event) {
 				new PreferencesDialog(TrayEntry.this.activityShell,
 						TrayEntry.this.actionProvider.settings).open();
+			}
+		});
+
+		MenuItem menuItemAbout = new MenuItem(menu, SWT.PUSH);
+		menuItemAbout.setText("About");
+		menuItemAbout.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				new AboutDialog(TrayEntry.this.activityShell, SWT.NONE).open();
 			}
 		});
 
