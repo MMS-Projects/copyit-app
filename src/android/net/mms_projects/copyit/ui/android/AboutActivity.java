@@ -1,6 +1,6 @@
 package net.mms_projects.copyit.ui.android;
 
-import net.mms_projects.copyit.R;
+import net.mms_projects.copy_it.R;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -28,7 +28,7 @@ public class AboutActivity extends Activity {
 		}
 		TextView appVersion = (TextView) this.findViewById(R.id.app_version);
 		appVersion.setText(this.getResources().getString(
-				R.string.about_version, versionName));
+				R.string.about_version, versionName.toString()));
 	}
 
 	/**
