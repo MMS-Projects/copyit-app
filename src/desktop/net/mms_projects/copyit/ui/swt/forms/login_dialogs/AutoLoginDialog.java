@@ -62,9 +62,10 @@ public class AutoLoginDialog extends AbstractLoginDialog {
 					location = new URL(event.location);
 				} catch (MalformedURLException e) {
 					e.printStackTrace();
+					return;
 				}
 
-				System.out.println(location.getPath());
+				System.out.println("Changing: " + location.getPath());
 
 				if (location.getPath().startsWith("/app-setup/done/")) {
 					LoginResponse response = new LoginResponse();
@@ -78,6 +79,24 @@ public class AutoLoginDialog extends AbstractLoginDialog {
 
 			@Override
 			public void changed(LocationEvent event) {
+				URL location = null;
+				try {
+					location = new URL(event.location);
+				} catch (MalformedURLException e) {
+					e.printStackTrace();
+					return;
+				}
+
+				System.out.println("Changed: " + location.getPath());
+
+				if (location.getPath().startsWith("/app-setup/done/")) {
+					LoginResponse response = new LoginResponse();
+					response.deviceId = UUID.fromString(location.getPath()
+							.substring(16));
+					response.devicePassword = AutoLoginDialog.this
+							.getPassword();
+					AutoLoginDialog.this.setResponse(response);
+				}
 			}
 		});
 	}
