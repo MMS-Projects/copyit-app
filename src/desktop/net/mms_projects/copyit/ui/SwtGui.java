@@ -48,7 +48,7 @@ public class SwtGui extends AbstractUi {
 
 	@Override
 	public void open() {
-		if (this.settings.get("device.id") == null) {
+		if (this.settings.get("run.firsttime") == null) {
 			MessageBox firstTimer = new MessageBox(this.activityShell);
 			firstTimer
 					.setMessage("It appairs this is the first time you started the app. "
@@ -56,6 +56,7 @@ public class SwtGui extends AbstractUi {
 			firstTimer.open();
 
 			new PreferencesDialog(this.activityShell, this.settings).open();
+			this.settings.set("run.firsttime", "nope");
 		}
 
 		while (!this.activityShell.isDisposed()) {
