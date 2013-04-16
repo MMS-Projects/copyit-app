@@ -17,26 +17,17 @@ public class WidgetGeneral extends WidgetProvider {
 		for (int i = 0; i < N; i++) {
 			int appWidgetId = appWidgetIds[i];
 
+			RemoteViews views = new RemoteViews(context.getPackageName(),
+					R.layout.widget_general);
+
 			Intent intentApp = new Intent(context, MainActivity.class);
 			PendingIntent pendingIntentApp = PendingIntent.getActivity(context,
 					0, intentApp, 0);
 
-			Intent intentCopyIt = new Intent(context, this.getClass());
-			intentCopyIt.setAction(ACTION_COPYIT);
-			PendingIntent pendingIntentCopyIt = PendingIntent.getBroadcast(
-					context, 0, intentCopyIt, 0);
-
-			Intent intentPasteIt = new Intent(context, this.getClass());
-			intentPasteIt.setAction(ACTION_PASTEIT);
-			PendingIntent pendingIntentPasteIt = PendingIntent.getBroadcast(
-					context, 0, intentPasteIt, 0);
-
-			RemoteViews views = new RemoteViews(context.getPackageName(),
-					R.layout.widget_general);
 			views.setOnClickPendingIntent(R.id.button_app, pendingIntentApp);
-			views.setOnClickPendingIntent(R.id.button_copy, pendingIntentCopyIt);
-			views.setOnClickPendingIntent(R.id.button_paste,
-					pendingIntentPasteIt);
+
+			this.addCopyItAction(views, context);
+			this.addPasteItAction(views, context);
 
 			appWidgetManager.updateAppWidget(appWidgetId, views);
 		}
