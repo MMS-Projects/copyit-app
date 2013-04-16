@@ -11,7 +11,8 @@
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
-  limitations under the License.-->
+  limitations under the License.
+-->
 
 <com.google.android.apps.iosched.ui.widget.DashboardLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
@@ -20,38 +21,42 @@
     <Button
         android:id="@+id/button_paste"
         style="@style/DashboardButton"
-        android:drawableTop="@drawable/icon_receive"
+        android:drawableTop="@drawable/dashboard_icon_placeholder"
         android:onClick="pasteIt"
         android:text="@string/button_pasteit" />
 
     <Button
         android:id="@+id/button_copy"
         style="@style/DashboardButton"
-        android:drawableTop="@drawable/icon_send"
+        android:drawableTop="@drawable/dashboard_icon_placeholder"
         android:onClick="copyIt"
         android:text="@string/button_copyit" />
 
     <Button
         android:id="@+id/button_login"
         style="@style/DashboardButton"
+        android:drawableTop="@drawable/dashboard_icon_placeholder"
         android:onClick="doLogin"
         android:text="@string/button_login" />
 
     <Button
         android:id="@+id/button_send_app"
         style="@style/DashboardButton"
+        android:drawableTop="@drawable/dashboard_icon_placeholder"
         android:onClick="sendToApp"
         android:text="@string/button_sendtoapp" />
 
     <Button
         android:id="@+id/button_settings"
         style="@style/DashboardButton"
+        android:drawableTop="@drawable/dashboard_icon_placeholder"
         android:onClick="gotoSettings"
         android:text="@string/action_settings" />
 
     <Button
         android:id="@+id/button_about"
         style="@style/DashboardButton"
+        android:drawableTop="@drawable/dashboard_icon_placeholder"
         android:onClick="gotoAbout"
         android:text="@string/pref_about" />
 
