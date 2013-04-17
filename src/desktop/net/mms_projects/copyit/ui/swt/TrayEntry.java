@@ -5,6 +5,7 @@ import java.util.UUID;
 import net.mms_projects.copyit.AndroidResourceLoader;
 import net.mms_projects.copyit.ClipboardUtils;
 import net.mms_projects.copyit.DesktopClipboardUtils;
+import net.mms_projects.copyit.Messages;
 import net.mms_projects.copyit.Settings;
 import net.mms_projects.copyit.api.ServerApi;
 import net.mms_projects.copyit.api.endpoints.ClipboardContentEndpoint;
@@ -104,7 +105,7 @@ public class TrayEntry {
 				final ToolTip tip = new ToolTip(TrayEntry.this.activityShell,
 						SWT.BALLOON | SWT.ICON_INFORMATION);
 				tip.setText("Notification");
-				tip.setMessage("Your clipboard has been pushed to the server.");
+				tip.setMessage(Messages.getString("text_content_pushed", data));
 				trayItem.setToolTip(tip);
 				tip.setVisible(true);
 			}
@@ -134,7 +135,7 @@ public class TrayEntry {
 				final ToolTip tip = new ToolTip(TrayEntry.this.activityShell,
 						SWT.BALLOON | SWT.ICON_INFORMATION);
 				tip.setText("Notification");
-				tip.setMessage("Your clipboard has been pulled from the server.");
+				tip.setMessage(Messages.getString("text_content_pulled", data));
 				trayItem.setToolTip(tip);
 				tip.setVisible(true);
 			}

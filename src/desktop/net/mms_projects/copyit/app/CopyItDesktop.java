@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import net.mms_projects.copyit.FileStreamBuilder;
+import net.mms_projects.copyit.Messages;
 import net.mms_projects.copyit.PathBuilder;
 import net.mms_projects.copyit.Settings;
 import net.mms_projects.copyit.ui.AbstractUi;
@@ -22,6 +23,23 @@ public class CopyItDesktop extends CopyIt {
 	public static void main(String[] args) {
 		CopyItDesktop app = new CopyItDesktop();
 		app.run();
+	}
+
+	public static String getVersion() {
+		String version = "";
+		if (CopyItDesktop.class.getPackage().getSpecificationVersion() != null) {
+			version += CopyItDesktop.class.getPackage()
+					.getSpecificationVersion();
+		} else {
+			version += "0.0.1";
+		}
+
+		if (CopyItDesktop.class.getPackage().getImplementationVersion() != null) {
+			version += "-"
+					+ CopyItDesktop.class.getPackage()
+							.getImplementationVersion();
+		}
+		return version;
 	}
 
 	public void run() {
@@ -43,7 +61,7 @@ public class CopyItDesktop extends CopyIt {
 		} else {
 			try {
 				this.lockFile.createNewFile();
-				
+
 				this.lockFile.deleteOnExit();
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -51,6 +69,7 @@ public class CopyItDesktop extends CopyIt {
 				System.exit(1);
 			}
 		}
+		;
 
 		AbstractUi ui = new SwtGui(this.settings);
 		ui.open();
