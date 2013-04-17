@@ -2,6 +2,8 @@ package net.mms_projects.copyit.ui.swt;
 
 import java.util.UUID;
 
+import net.mms_projects.copyit.ClipboardUtils;
+import net.mms_projects.copyit.DesktopClipboardUtils;
 import net.mms_projects.copyit.Settings;
 import net.mms_projects.copyit.api.ServerApi;
 import net.mms_projects.copyit.api.endpoints.ClipboardContentEndpoint;
@@ -30,8 +32,8 @@ public class ActionProvider {
 	}
 
 	public void doDataSet() {
-		TextTransfer transfer = TextTransfer.getInstance();
-		String data = (String) this.clipboard.getContents(transfer);
+		ClipboardUtils clipboard = new DesktopClipboardUtils();
+		String data = clipboard.getText();
 		if (data != null) {
 			try {
 				new ClipboardContentEndpoint(this.api).update(data);
@@ -42,6 +44,7 @@ public class ActionProvider {
 	}
 
 	public void doDataGet() {
+		ClipboardUtils clipboard = new DesktopClipboardUtils();
 		String data;
 		try {
 			data = new ClipboardContentEndpoint(this.api).get();
@@ -49,9 +52,7 @@ public class ActionProvider {
 			e.printStackTrace();
 			return;
 		}
-		TextTransfer textTransfer = TextTransfer.getInstance();
-		this.clipboard.setContents(new Object[] { data },
-				new Transfer[] { textTransfer });
+		clipboard.setText(data);
 	}
 
 }
