@@ -1,6 +1,8 @@
 package net.mms_projects.copyit.ui.swt.forms;
 
 import net.mms_projects.copyit.AndroidResourceLoader;
+import net.mms_projects.copyit.Messages;
+import net.mms_projects.copyit.app.CopyItDesktop;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FormAttachment;
@@ -27,7 +29,7 @@ public class AboutDialog extends Dialog {
 	 */
 	public AboutDialog(Shell parent, int style) {
 		super(parent, style);
-		setText("About Copy It");
+		setText(Messages.getString("title_activity_about"));
 	}
 
 	/**
@@ -75,19 +77,19 @@ public class AboutDialog extends Dialog {
 		fd_appName.left = new FormAttachment(0, 10);
 		fd_appName.right = new FormAttachment(100, -181);
 		appName.setLayoutData(fd_appName);
-		appName.setText("Copy It");
+		appName.setText(Messages.getString("app_name"));
 		
 		FormData fd_appVersion = new FormData();
 		fd_appVersion.top = new FormAttachment(appIcon);
 		fd_appVersion.right = new FormAttachment(100, -10);
 		appVersion.setLayoutData(fd_appVersion);
-		appVersion.setText("Version: 1.0");
+		appVersion.setText(Messages.getString("about_version", CopyItDesktop.getVersion()));
 
 		FormData fd_appCopyright = new FormData();
 		fd_appCopyright.top = new FormAttachment(appName, 6);
 		fd_appCopyright.left = new FormAttachment(appName, 0, SWT.LEFT);
 		appCopyright.setLayoutData(fd_appCopyright);
-		appCopyright.setText("Made by MMS-Projects");
+		appCopyright.setText(Messages.getString("about_copyright"));
 		
 		FormData fd_btnClose = new FormData();
 		fd_btnClose.right = new FormAttachment(appVersion, -195, SWT.RIGHT);

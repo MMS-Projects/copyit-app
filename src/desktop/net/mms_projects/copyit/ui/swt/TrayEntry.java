@@ -1,6 +1,14 @@
 package net.mms_projects.copyit.ui.swt;
 
+import java.util.UUID;
+
 import net.mms_projects.copyit.AndroidResourceLoader;
+import net.mms_projects.copyit.ClipboardUtils;
+import net.mms_projects.copyit.DesktopClipboardUtils;
+import net.mms_projects.copyit.Messages;
+import net.mms_projects.copyit.Settings;
+import net.mms_projects.copyit.api.ServerApi;
+import net.mms_projects.copyit.api.endpoints.ClipboardContentEndpoint;
 import net.mms_projects.copyit.ui.swt.forms.AboutDialog;
 import net.mms_projects.copyit.ui.swt.forms.PreferencesDialog;
 import net.mms_projects.utils.OSValidator;
@@ -24,18 +32,16 @@ public class TrayEntry {
 	protected TrayItem trayItem;
 
 	protected Tray tray;
-	protected ActionProvider actionProvider;
 
 	private MenuItem menuItemCopyIt;
 	private MenuItem menuItemPasteIt;
 
 	private Shell activityShell;
+	private Settings settings;
 
-	public TrayEntry(Tray tray, final ActionProvider actionProvider,
-			Shell activityShell) {
+	public TrayEntry(Tray tray, Settings settings, Shell activityShell) {
 		this.tray = tray;
-		this.actionProvider = actionProvider;
-
+		this.settings = settings;
 		this.trayItem = new TrayItem(tray, 0);
 
 		Image trayImage = AndroidResourceLoader
@@ -79,12 +85,27 @@ public class TrayEntry {
 		this.menuItemCopyIt.setText("Copy it");
 		this.menuItemCopyIt.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				TrayEntry.this.actionProvider.doDataSet();
+				ServerApi api = new ServerApi();
+				api.deviceId = UUID.fromString(TrayEntry.this.settings
+						.get("device.id"));
+				api.devicePassword = TrayEntry.this.settings
+						.get("device.password");
+				api.apiUrl = TrayEntry.this.settings.get("server.baseurl");
+
+				ClipboardUtils clipboard = new DesktopClipboardUtils();
+				String data = clipboard.getText();
+				if (data != null) {
+					try {
+						new ClipboardContentEndpoint(api).update(data);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
 
 				final ToolTip tip = new ToolTip(TrayEntry.this.activityShell,
 						SWT.BALLOON | SWT.ICON_INFORMATION);
 				tip.setText("Notification");
-				tip.setMessage("Your clipboard has been pushed to the server.");
+				tip.setMessage(Messages.getString("text_content_pushed", data));
 				trayItem.setToolTip(tip);
 				tip.setVisible(true);
 			}
@@ -94,12 +115,27 @@ public class TrayEntry {
 		this.menuItemPasteIt.setText("Paste it");
 		this.menuItemPasteIt.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				TrayEntry.this.actionProvider.doDataGet();
+				ServerApi api = new ServerApi();
+				api.deviceId = UUID.fromString(TrayEntry.this.settings
+						.get("device.id"));
+				api.devicePassword = TrayEntry.this.settings
+						.get("device.password");
+				api.apiUrl = TrayEntry.this.settings.get("server.baseurl");
+
+				ClipboardUtils clipboard = new DesktopClipboardUtils();
+				String data;
+				try {
+					data = new ClipboardContentEndpoint(api).get();
+				} catch (Exception e) {
+					e.printStackTrace();
+					return;
+				}
+				clipboard.setText(data);
 
 				final ToolTip tip = new ToolTip(TrayEntry.this.activityShell,
 						SWT.BALLOON | SWT.ICON_INFORMATION);
 				tip.setText("Notification");
-				tip.setMessage("Your clipboard has been pulled from the server.");
+				tip.setMessage(Messages.getString("text_content_pulled", data));
 				trayItem.setToolTip(tip);
 				tip.setVisible(true);
 			}
@@ -110,7 +146,7 @@ public class TrayEntry {
 		menuItemPreferences.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
 				new PreferencesDialog(TrayEntry.this.activityShell,
-						TrayEntry.this.actionProvider.settings).open();
+						TrayEntry.this.settings).open();
 			}
 		});
 
@@ -136,5 +172,4 @@ public class TrayEntry {
 			}
 		});
 	}
-
 }
