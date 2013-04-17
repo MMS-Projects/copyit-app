@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.UUID;
 
 import net.mms_projects.copyit.LoginResponse;
+import net.mms_projects.copyit.Messages;
 import net.mms_projects.copyit.Settings;
 
 import org.eclipse.swt.SWT;
@@ -23,7 +24,7 @@ public class AutoLoginDialog extends AbstractLoginDialog {
 
 		this.settings = settings;
 
-		this.setText("Automatic setup");
+		setText(Messages.getString("title_activity_login"));
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package net.mms_projects.copyit.ui.swt.forms.login_dialogs;
 import java.util.UUID;
 
 import net.mms_projects.copyit.LoginResponse;
+import net.mms_projects.copyit.Messages;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -19,7 +20,7 @@ public class LoginDialog extends AbstractLoginDialog {
 	public LoginDialog(Shell parent) {
 		super(parent);
 
-		this.setText("Facebook login");
+		setText(Messages.getString("title_activity_login"));
 	}
 
 	@Override

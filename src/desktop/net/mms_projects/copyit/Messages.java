@@ -23,4 +23,9 @@ public class Messages {
 			return '!' + key + '!';
 		}
 	}
+
+	public static String getString(String key, Object... formatArgs) {
+		String raw = getString(key);
+		return String.format(raw, formatArgs);
+	}
 }
