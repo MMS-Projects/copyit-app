@@ -12,6 +12,8 @@
     </target>
     
     <target name="all" depends="linux, windows, macosx, android" />
+    
+    <target name="version-update" depends="android-update-version-name" />
 
     <target name="linux" depends="linux-x86, linux-x86_64" />
     <target name="windows" depends="windows-x86, windows-x86_64" />
@@ -229,6 +231,34 @@
             <attribute name="Specification-Version" value="${version}" />
             <attribute name="Implementation-Version" value="${build.number}" />
         </manifest>
+    </target>
+    
+    <target name="android-update-version-name" description="Update VersionName in AndroidManifest.xml">
+	
+	<xmlproperty file="AndroidManifest.xml" collapseattributes="true" />
+	
+    	<property name="versionName" value="${version}-${build.number}" />
+    	
+    	<echo>Android version name changed from ${manifest.android:versionName} to ${versionName}</echo>
+    	
+	<replaceregexp file="AndroidManifest.xml"
+		match='android:versionName="[^"]*"'
+		replace='android:versionName="${versionName}"'
+    	/>
+    </target>
+    
+    <target name="android-update-version-code" description="Update VersionName in AndroidManifest.xml">
+	
+	<xmlproperty file="AndroidManifest.xml" collapseattributes="true" />
+    	
+    	<property name="versionCode" value="${build.number}" />
+    	
+        <echo>Android version code changed from ${manifest.android:versionCode} to ${versionCode}</echo>
+    
+	<replaceregexp file="AndroidManifest.xml"
+		match='android:versionCode="[^"]*"'
+		replace='android:versionCode="${versionCode}"'
+    	/>
     </target>
 
 </project>
