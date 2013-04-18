@@ -67,8 +67,7 @@ public class ServerApi {
 	}
 
 	protected ApiResponse doRequest(Class<? extends ApiResponse> apiResponse,
-			String endpoint, String id, String method)
-			throws Exception {
+			String endpoint, String id, String method) throws Exception {
 		return this.doRequest(apiResponse, endpoint, id, method,
 				new ArrayList<NameValuePair>());
 	}
@@ -84,6 +83,13 @@ public class ServerApi {
 		url += "device_id=" + this.deviceId.toString() + "&";
 		url += "device_password=" + this.devicePassword;
 
+		return this.doRawRequest(apiResponse, url, method, parameters);
+	}
+
+	@SuppressWarnings("static-method")
+	public ApiResponse doRawRequest(Class<? extends ApiResponse> apiResponse,
+			String url, String method, List<NameValuePair> parameters)
+			throws Exception {
 		System.out.println(method);
 		System.out.println(url);
 		for (NameValuePair parameter : parameters) {
@@ -122,7 +128,7 @@ public class ServerApi {
 		} catch (com.google.gson.JsonSyntaxException exception) {
 			throw new Exception(exception);
 		}
-		
+
 		return data;
 	}
 
