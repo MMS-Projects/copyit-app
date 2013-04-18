@@ -21,14 +21,14 @@
     <Button
         android:id="@+id/button_paste"
         style="@style/DashboardButton"
-        android:drawableTop="@drawable/dashboard_icon_placeholder"
+        android:drawableTop="@drawable/dashboard_icon_pull"
         android:onClick="pasteIt"
         android:text="@string/button_pasteit" />
 
     <Button
         android:id="@+id/button_copy"
         style="@style/DashboardButton"
-        android:drawableTop="@drawable/dashboard_icon_placeholder"
+        android:drawableTop="@drawable/dashboard_icon_push"
         android:onClick="copyIt"
         android:text="@string/button_copyit" />
 
