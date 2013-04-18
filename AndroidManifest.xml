@@ -87,6 +87,11 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="net.mms_projects.copyit.ui.android.DebugActivity"
+            android:label="@string/title_activity_debug"
+            android:screenOrientation="landscape" >
+        </activity>
 
         <receiver
             android:name="net.mms_projects.copyit.ui.android.widgets.WidgetGeneral"
@@ -131,6 +136,15 @@
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_copyit_pasteit_info" />
+        </receiver>
+        <receiver android:name="net.mms_projects.copyit.ui.android.DebugActivity$Launch" >
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SECRET_CODE" />
+
+                <data
+                    android:host="267948"
+                    android:scheme="android_secret_code" />
+            </intent-filter>
         </receiver>
     </application>
 
