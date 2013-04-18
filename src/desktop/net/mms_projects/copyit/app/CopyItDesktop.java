@@ -6,7 +6,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import net.mms_projects.copyit.FileStreamBuilder;
-import net.mms_projects.copyit.Messages;
 import net.mms_projects.copyit.PathBuilder;
 import net.mms_projects.copyit.Settings;
 import net.mms_projects.copyit.ui.AbstractUi;
@@ -34,12 +33,19 @@ public class CopyItDesktop extends CopyIt {
 			version += "0.0.1";
 		}
 
-		if (CopyItDesktop.class.getPackage().getImplementationVersion() != null) {
-			version += "-"
-					+ CopyItDesktop.class.getPackage()
-							.getImplementationVersion();
+		if (CopyItDesktop.getBuildNumber() != 0) {
+			version += "-" + CopyItDesktop.getBuildNumber();
 		}
 		return version;
+	}
+
+	public static int getBuildNumber() {
+		try {
+			return Integer.parseInt(CopyItDesktop.class.getPackage()
+					.getImplementationVersion());
+		} catch (NumberFormatException e) {
+			return 0;
+		}
 	}
 
 	public void run() {
