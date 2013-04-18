@@ -4,9 +4,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.UUID;
 
+import net.mms_projects.copy_it.R;
 import net.mms_projects.copyit.LoginResponse;
 import net.mms_projects.copyit.PasswordGenerator;
-import net.mms_projects.copyit.R;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;

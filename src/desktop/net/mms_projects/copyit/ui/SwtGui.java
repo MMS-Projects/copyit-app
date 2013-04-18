@@ -4,7 +4,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import net.mms_projects.copyit.Settings;
-import net.mms_projects.copyit.ui.swt.ActionProvider;
 import net.mms_projects.copyit.ui.swt.TrayEntry;
 import net.mms_projects.copyit.ui.swt.forms.PreferencesDialog;
 
@@ -30,9 +29,10 @@ public class SwtGui extends AbstractUi {
 			this.display = Display.getDefault();
 		} catch (UnsatisfiedLinkError error) {
 			error.printStackTrace();
-			
+
 			String message = "It looks like there was an error while loading the SWT libraries.\n"
-					+ "The following error was thrown:\n\n" + error.getMessage();
+					+ "The following error was thrown:\n\n"
+					+ error.getMessage();
 			JOptionPane.showMessageDialog(new JFrame(), message, "Dialog",
 					JOptionPane.ERROR_MESSAGE);
 			System.exit(1);
@@ -40,15 +40,12 @@ public class SwtGui extends AbstractUi {
 		this.tray = display.getSystemTray();
 		this.activityShell = new Shell(this.display);
 
-		ActionProvider actionProvider = new ActionProvider(this.display,
-				settings);
-		this.trayEntry = new TrayEntry(this.tray, actionProvider,
-				this.activityShell);
+		this.trayEntry = new TrayEntry(this.tray, this.settings, this.activityShell);
 	}
 
 	@Override
 	public void open() {
-		if (this.settings.get("device.id") == null) {
+		if (this.settings.get("run.firsttime") == null) {
 			MessageBox firstTimer = new MessageBox(this.activityShell);
 			firstTimer
 					.setMessage("It appairs this is the first time you started the app. "
@@ -56,6 +53,7 @@ public class SwtGui extends AbstractUi {
 			firstTimer.open();
 
 			new PreferencesDialog(this.activityShell, this.settings).open();
+			this.settings.set("run.firsttime", "nope");
 		}
 
 		while (!this.activityShell.isDisposed()) {

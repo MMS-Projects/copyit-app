@@ -1,6 +1,7 @@
 package net.mms_projects.copyit.ui.swt.forms;
 
 import net.mms_projects.copyit.LoginResponse;
+import net.mms_projects.copyit.Messages;
 import net.mms_projects.copyit.Settings;
 import net.mms_projects.copyit.api.ServerApi;
 import net.mms_projects.copyit.api.endpoints.DeviceEndpoint;
@@ -40,7 +41,7 @@ public class PreferencesDialog extends GeneralDialog {
 
 		this.settings = settings;
 
-		setText("Preferences");
+		setText(Messages.getString("title_activity_settings"));
 	}
 
 	@Override
@@ -104,7 +105,7 @@ public class PreferencesDialog extends GeneralDialog {
 		this.lblDeviceIdHere.setBounds(200, 33, 180, 17);
 		this.lblDeviceIdHere.setText("Device id here...");
 		this.btnLogin.setBounds(200, 56, 158, 29);
-		this.btnLogin.setText("Login");
+		this.btnLogin.setText(Messages.getString("button_login"));
 		this.btnManualLogin.setBounds(364, 56, 160, 29);
 		this.btnManualLogin.setText("Manual login ");
 		// Security tab

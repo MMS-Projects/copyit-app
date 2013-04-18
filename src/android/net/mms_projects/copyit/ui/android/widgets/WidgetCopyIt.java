@@ -1,10 +1,8 @@
 package net.mms_projects.copyit.ui.android.widgets;
 
-import net.mms_projects.copyit.R;
-import android.app.PendingIntent;
+import net.mms_projects.copy_it.R;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
-import android.content.Intent;
 import android.widget.RemoteViews;
 
 public class WidgetCopyIt extends WidgetProvider {
@@ -17,17 +15,13 @@ public class WidgetCopyIt extends WidgetProvider {
 		for (int i = 0; i < N; i++) {
 			int appWidgetId = appWidgetIds[i];
 
-			Intent intentCopyIt = new Intent(context, WidgetProvider.class);
-			intentCopyIt.setAction(ACTION_COPYIT);
-			PendingIntent pendingIntentCopyIt = PendingIntent.getBroadcast(
-					context, 0, intentCopyIt, 0);
-
 			RemoteViews views = new RemoteViews(context.getPackageName(),
 					R.layout.widget_copyit);
-			views.setOnClickPendingIntent(R.id.button_copy, pendingIntentCopyIt);
+
+			this.addCopyItAction(views, context);
 
 			appWidgetManager.updateAppWidget(appWidgetId, views);
 		}
 	}
-	
+
 }

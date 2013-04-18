@@ -2,8 +2,8 @@
 <resources>
 
     <!-- App settings -->
-    <string name="default_baseurl">http://copyit.dev.mms-projects.net</string>
-    <string name="app_name">CopyIt</string>
+    <string name="default_baseurl" translatable="false">http://copyit.dev.mms-projects.net</string>
+    <string name="app_name" translatable="false">CopyIt</string>
     <string name="action_settings">Settings</string>
     <!-- Buttons -->
     <string name="button_copyit">Copy It!</string>
@@ -15,6 +15,7 @@
     <!-- Activity titles -->
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_welcome">Welcome to CopyIt</string>
+    <string name="title_activity_settings">Settings</string>
     <string name="title_activity_about">@string/pref_about</string>
     <!-- Other stuff -->
     <string name="text_welcome_message">Thank you for installing CopyIt. To start using CopyIt please login.</string>

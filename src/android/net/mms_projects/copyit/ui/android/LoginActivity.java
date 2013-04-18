@@ -2,8 +2,8 @@ package net.mms_projects.copyit.ui.android;
 
 import java.util.UUID;
 
+import net.mms_projects.copy_it.R;
 import net.mms_projects.copyit.LoginResponse;
-import net.mms_projects.copyit.R;
 import net.mms_projects.copyit.android.tasks.SetupDeviceTask;
 import net.mms_projects.copyit.api.ServerApi;
 import android.annotation.TargetApi;
