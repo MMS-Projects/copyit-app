@@ -63,9 +63,7 @@ public class SettingsActivity extends PreferenceActivity implements
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
 			String key) {
-		if (key.equals("locale_override")) {
-			AndroidApplication.updateLanguage(this);
-		}
+		// Nothing yet
 	}
 
 	/**
@@ -119,7 +117,6 @@ public class SettingsActivity extends PreferenceActivity implements
 		// use the older PreferenceActivity APIs.
 
 		addPreferencesFromResource(R.xml.pref_account);
-		addPreferencesFromResource(R.xml.pref_language);
 		addPreferencesFromResource(R.xml.pref_about);
 	}
 
