@@ -25,6 +25,10 @@ public class DebugActivity extends Activity {
 		baseUrl.setText(preferences.getString("server.baseurl", this
 				.getResources().getString(R.string.default_baseurl)));
 
+		TextView jenkinsBaseUrl = (TextView) findViewById(R.id.info_jenkins_baseurl);
+		jenkinsBaseUrl.setText(this.getResources().getString(
+				R.string.jenkins_baseurl));
+
 		TextView deviceId = (TextView) findViewById(R.id.info_device_id);
 		deviceId.setText(preferences.getString("device.id", this.getResources()
 				.getString(R.string.debug_no_value)));
