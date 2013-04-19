@@ -9,7 +9,7 @@
     <string name="button_copyit">Copy It!</string>
     <string name="button_pasteit">Paste It!</string>
     <string name="button_login">Inloggen</string>
-    <string name="button_sendtoapp">Delen&#8230;</string>
+    <string name="button_sendtoapp">Delen</string>
     <!-- Preferenties -->
     <string name="pref_about">About CopyIt</string>
     <!-- Activity titles -->
