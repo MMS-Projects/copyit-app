@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <ListPreference
+        android:entries="@array/language_names"
+        android:entryValues="@array/language_locale"
+        android:key="locale_override"
+        android:title="@string/pref_language" />
+
+</PreferenceScreen>
