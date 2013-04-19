@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="net.mms_projects.copy_it"
     android:installLocation="internalOnly"
-    android:versionCode="9"
+    android:versionCode="0"
     android:versionName="0.0.1-ant" >
 
     <uses-sdk
@@ -86,6 +86,13 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="net.mms_projects.copyit.ui.android.UpdateActivity"
+            android:excludeFromRecents="true"
+            android:label="@string/title_activity_update"
+            android:launchMode="singleTask"
+            android:taskAffinity="" >
         </activity>
 
         <receiver

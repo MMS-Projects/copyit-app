@@ -3,6 +3,7 @@
 
     <!-- App settings -->
     <string name="default_baseurl" translatable="false">http://copyit.dev.mms-projects.net</string>
+    <string name="jenkins_baseurl" translatable="false">http://jenkins.marlinc.nl</string>
     <string name="app_name" translatable="false">CopyIt</string>
     <string name="action_settings">Settings</string>
     <!-- Buttons -->
@@ -17,6 +18,7 @@
     <string name="title_activity_welcome">Welcome to CopyIt</string>
     <string name="title_activity_settings">Settings</string>
     <string name="title_activity_about">@string/pref_about</string>
+    <string name="title_activity_update">UpdateActivity</string>
     <!-- Other stuff -->
     <string name="text_welcome_message">Thank you for installing CopyIt. To start using CopyIt please login.</string>
     <string name="desc_app_icon_big">Big CopyIt logo</string>

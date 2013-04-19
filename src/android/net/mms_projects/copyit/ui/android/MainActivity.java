@@ -10,6 +10,7 @@ import net.mms_projects.copy_it.R;
 import net.mms_projects.copyit.AndroidClipboardUtils;
 import net.mms_projects.copyit.ClipboardUtils;
 import net.mms_projects.copyit.FileStreamBuilder;
+import net.mms_projects.copyit.android.tasks.CheckUpdateTask;
 import net.mms_projects.copyit.android.tasks.CopyItTask;
 import net.mms_projects.copyit.android.tasks.PasteItTask;
 import net.mms_projects.copyit.android.tasks.SendToAppTask;
@@ -24,6 +25,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -58,6 +60,17 @@ public class MainActivity extends FragmentActivity {
 			if ("text/plain".equals(type)) {
 				handleSendText(intent); // Handle text being sent
 			}
+		}
+
+		ServerApi api = new ServerApi();
+		api.apiUrl = this.getResources().getString(R.string.jenkins_baseurl);
+
+		if (CopyItAndroid.getBuildNumber(this) != 0) {
+			CheckUpdateTask task = new CheckUpdateTask(this, api);
+			task.execute();
+		} else {
+			Log.i("update-check",
+					"Build number is 0. Not running Jenkins build. Ignoring update check!");
 		}
 	}
 
