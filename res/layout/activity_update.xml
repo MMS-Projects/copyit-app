@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:text="There is a new Copy It version available. To download the latest version click the download button. Select the package with the following name:" />
+        android:text="@string/update_available_text" />
 
     <TextView
         android:id="@+id/label_artifact_name"
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/text_new_version"
-        android:text="copyit.apk" />
+        android:text="@string/default_apk" />
 
     <Button
         android:id="@+id/button_download"
@@ -31,6 +31,6 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:onClick="doDownload"
-        android:text="Download" />
+        android:text="@string/update_button_download" />
 
 </RelativeLayout>

@@ -15,7 +15,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_alignRight="@+id/label_device_password"
-        android:text="Server baseurl:" />
+        android:text="@string/debug_label_server_baseurl" />
 
     <TextView
         android:id="@+id/label_device_id"
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/label_server_baseurl"
-        android:text="Device id:" />
+        android:text="@string/debug_label_device_id" />
 
     <TextView
         android:id="@+id/label_device_password"
@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/label_device_id"
-        android:text="Device password:" />
+        android:text="@string/debug_label_device_id" />
 
     <TextView
         android:id="@+id/label_build_number"
@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/label_device_password"
-        android:text="Build number" />
+        android:text="@string/debug_label_build_number" />
 
     <TextView
         android:id="@+id/info_server_baseurl"
@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/info_server_baseurl"
-        android:text="None" />
+        android:text="@string/debug_no_value" />
 
     <TextView
         android:id="@+id/info_device_password"
@@ -63,7 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/info_device_id"
-        android:text="None" />
+        android:text="@string/debug_no_value" />
 
     <TextView
         android:id="@+id/info_build_number"
@@ -71,6 +71,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/info_device_password"
-        android:text="None" />
+        android:text="@string/debug_no_value" />
 
 </RelativeLayout>
