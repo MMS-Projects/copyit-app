@@ -24,13 +24,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
-public class MainActivity extends FragmentActivity {
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+
+public class MainActivity extends SherlockFragmentActivity {
 
 	private CopyItAndroid app;
 
@@ -42,6 +44,9 @@ public class MainActivity extends FragmentActivity {
 		this.app.run(this);
 
 		setContentView(R.layout.activity_main);
+
+		// Show the Up button in the action bar.
+		getSupportActionBar();
 
 		SharedPreferences preferences = PreferenceManager
 				.getDefaultSharedPreferences(this);
@@ -118,8 +123,8 @@ public class MainActivity extends FragmentActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
+		MenuInflater inflater = getSupportMenuInflater();
+		inflater.inflate(R.menu.main, menu);
 		return true;
 	}
 

@@ -7,19 +7,18 @@ import java.util.UUID;
 import net.mms_projects.copy_it.R;
 import net.mms_projects.copyit.LoginResponse;
 import net.mms_projects.copyit.PasswordGenerator;
-import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
-import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-public class BrowserLoginActivity extends Activity {
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.MenuItem;
+
+public class BrowserLoginActivity extends SherlockActivity {
 
 	protected LoginResponse response = new LoginResponse();
 
@@ -33,7 +32,7 @@ public class BrowserLoginActivity extends Activity {
 		setContentView(R.layout.activity_browser_login);
 
 		// Show the Up button in the action bar.
-		setupActionBar();
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		SharedPreferences preferences = PreferenceManager
 				.getDefaultSharedPreferences(this);
@@ -76,16 +75,6 @@ public class BrowserLoginActivity extends Activity {
 				return true;
 			}
 		});
-	}
-
-	/**
-	 * Set up the {@link android.app.ActionBar}, if the API is available.
-	 */
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-	private void setupActionBar() {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			getActionBar().setDisplayHomeAsUpEnabled(true);
-		}
 	}
 
 	@Override

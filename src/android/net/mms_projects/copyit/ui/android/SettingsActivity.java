@@ -1,8 +1,6 @@
 package net.mms_projects.copyit.ui.android;
 
 import net.mms_projects.copy_it.R;
-import net.mms_projects.copyit.app.AndroidApplication;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -15,7 +13,9 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
-import android.view.MenuItem;
+
+import com.actionbarsherlock.app.SherlockPreferenceActivity;
+import com.actionbarsherlock.view.MenuItem;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -28,7 +28,7 @@ import android.view.MenuItem;
  * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
  * API Guide</a> for more information on developing a Settings UI.
  */
-public class SettingsActivity extends PreferenceActivity implements
+public class SettingsActivity extends SherlockPreferenceActivity implements
 		OnSharedPreferenceChangeListener {
 	/**
 	 * Determines whether to always show the simplified settings UI, where
@@ -41,7 +41,8 @@ public class SettingsActivity extends PreferenceActivity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setupActionBar();
+		// Show the Up button in the action bar.
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override
@@ -64,17 +65,6 @@ public class SettingsActivity extends PreferenceActivity implements
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
 			String key) {
 		// Nothing yet
-	}
-
-	/**
-	 * Set up the {@link android.app.ActionBar}, if the API is available.
-	 */
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-	private void setupActionBar() {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			// Show the Up button in the action bar.
-			getActionBar().setDisplayHomeAsUpEnabled(true);
-		}
 	}
 
 	@Override

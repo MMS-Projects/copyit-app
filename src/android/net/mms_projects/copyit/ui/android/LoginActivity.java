@@ -6,23 +6,22 @@ import net.mms_projects.copy_it.R;
 import net.mms_projects.copyit.LoginResponse;
 import net.mms_projects.copyit.android.tasks.SetupDeviceTask;
 import net.mms_projects.copyit.api.ServerApi;
-import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-public class LoginActivity extends Activity {
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.MenuItem;
+
+public class LoginActivity extends SherlockActivity {
 
 	private static final int ACTIVITY_LOGIN = 1;
 
@@ -31,20 +30,10 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		// Show the Up button in the action bar.
-		setupActionBar();
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		Intent intent = new Intent(this, BrowserLoginActivity.class);
 		startActivityForResult(intent, LoginActivity.ACTIVITY_LOGIN);
-	}
-
-	/**
-	 * Set up the {@link android.app.ActionBar}, if the API is available.
-	 */
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-	private void setupActionBar() {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			getActionBar().setDisplayHomeAsUpEnabled(true);
-		}
 	}
 
 	@Override
@@ -124,11 +113,14 @@ public class LoginActivity extends Activity {
 				alertDialog.setMessage(this.context.getResources().getString(
 						R.string.error_device_setup_failed,
 						this.exception.getMessage()));
-				alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, this.context
-						.getResources().getString(R.string.dialog_button_okay),
+				alertDialog.setButton(
+						DialogInterface.BUTTON_POSITIVE,
+						this.context.getResources().getString(
+								R.string.dialog_button_okay),
 						new DialogInterface.OnClickListener() {
 							@Override
-							public void onClick(DialogInterface dialog, int which) {
+							public void onClick(DialogInterface dialog,
+									int which) {
 
 							}
 						});
@@ -141,7 +133,7 @@ public class LoginActivity extends Activity {
 					this.context.getResources().getString(
 							R.string.text_login_successful), Toast.LENGTH_SHORT)
 					.show();
-			
+
 			super.onPostExecute(result);
 
 			LoginActivity.this.finish();
