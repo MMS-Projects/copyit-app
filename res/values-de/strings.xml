@@ -18,7 +18,8 @@
     <string name="title_activity_welcome">Willkommen bei CopyIt</string>
     <string name="title_activity_settings">Institutionen</string>
     <string name="title_activity_about">@string/pref_about</string>
-    <string name="title_activity_update">UpdateActivity</string>
+    <string name="title_activity_update">aktualisieren</string>
+    <string name="title_activity_debug">Copy It debug Fenster</string>
     <!-- Other stuff -->
     <string name="text_welcome_message">Danke für die Installation von CopyIt. So starten Sie CopyIt bitte anmelden.</string>
     <string name="desc_app_icon_big">Big CopyIt logo</string>
