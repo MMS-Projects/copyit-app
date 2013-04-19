@@ -42,7 +42,7 @@
     <Button
         android:id="@+id/button_send_app"
         style="@style/DashboardButton"
-        android:drawableTop="@drawable/dashboard_icon_placeholder"
+        android:drawableTop="@drawable/dashboard_icon_send_to_app"
         android:onClick="sendToApp"
         android:text="@string/button_sendtoapp" />
 
