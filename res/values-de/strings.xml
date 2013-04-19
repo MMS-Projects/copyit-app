@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- App settings -->
+    
+   
+   
+    <string name="action_settings">Institutionen</string>
+    <!-- Buttons -->
+    <string name="button_copyit">Copy It!</string>
+    <string name="button_pasteit">Paste It!</string>
+    <string name="button_login">Anmelden</string>
+    <string name="button_sendtoapp">Teilen</string>
+    <!-- Preferences -->
+    <string name="pref_about">Über CopyIt</string>
+    <!-- Activity titles -->
+    <string name="title_activity_login">AnmeldenWe</string>
+    <string name="title_activity_welcome">Willkommen bei CopyIt</string>
+    <string name="title_activity_settings">Institutionen</string>
+    <string name="title_activity_about">@string/pref_about</string>
+    <string name="title_activity_update">UpdateActivity</string>
+    <!-- Other stuff -->
+    <string name="text_welcome_message">Danke für die Installation von CopyIt. So starten Sie CopyIt bitte anmelden.</string>
+    <string name="desc_app_icon_big">Big CopyIt logo</string>
+    <string name="text_logging_in">Am Login&#8230;</string>
+    <string name="text_login_successful">Anmeldung erfolgreich</string>
+    <string name="text_login_question">Wie es aussieht, bist nicht eingeloggt Möchten Sie sich anmelden?</string>
+    <string name="text_content_pushed">Schob den folgenden Inhalt: \'%1$s\'</string>
+    <string name="text_content_pulled">Zog den folgenden Inhalt: \'%1$s\'</string>
+    <string name="text_content_pulling">Ziehen Inhalt&#8230;</string>
+    <string name="text_content_pushing">Pushing Inhalt&#8230;</string>
+    <!-- Dialog -->
+    <string name="dialog_title_error">Fehler</string>
+    <string name="dialog_title_busy">Belegt</string>
+    <string name="dialog_title_select_send_app">Wählen App zu teilen&#8230;</string>
+    <string name="dialog_button_okay">Okay</string>
+    <string name="dialog_button_yes">Ja</string>
+    <string name="dialog_button_no">Nein</string>
+    <!-- Errors -->
+    <string name="error_device_setup_failed">Konnte nicht eingerichtet werden das Gerät: %1$s</string>
+    <string name="error_general">Ein Fehler ist aufgetreten: %1$s</string>
+    <!-- Widgets -->
+    <string name="widget_title_general">CopyIt - Allgemeine</string>
+    <string name="widget_title_copyit">CopyIt - Copy It!</string>
+    <string name="widget_title_pasteit">CopyIt - Paste It!</string>
+    <string name="widget_title_copyit_pasteit">CopyIt - Copy/Paste It!</string>
+    <!-- About information -->
+    <string name="about_version">Ausgabe %1$s</string>
+    <string name="about_copyright">Erstellt von MMS-Projects</string>
+    <!-- Other -->
+    <string name="hello_world">Hallo Welt!</string>
+
+</resources>
