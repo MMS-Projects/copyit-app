@@ -4,6 +4,7 @@
     <!-- App instellingen -->
     
     
+    
     <string name="action_settings">Instellingen</string>
     <!-- Buttons -->
     <string name="button_copyit">Copy It!</string>
@@ -17,6 +18,8 @@
     <string name="title_activity_welcome">Welkom in CopyIt</string>
     <string name="title_activity_settings">Instellingen</string>
     <string name="title_activity_about">@string/pref_about</string>
+    <string name="title_activity_update">Update</string>
+    <string name="title_activity_debug">Copy It debug scherm</string>
     <!-- Other stuff -->
     <string name="text_welcome_message">Bedankt voor het downloaden van CopyIt. Om CopyIt te gebruiken moet je eerst inloggen.</string>
     <string name="desc_app_icon_big">Groot CopyIt logo</string>
