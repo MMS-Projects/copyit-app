@@ -21,8 +21,7 @@
         android:id="@+id/label_device_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/label_server_baseurl"
-        android:layout_alignRight="@+id/label_device_password"
+        android:layout_alignParentLeft="true"
         android:layout_below="@+id/label_server_baseurl"
         android:text="Device id:" />
 
@@ -30,31 +29,48 @@
         android:id="@+id/label_device_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
         android:layout_below="@+id/label_device_id"
         android:text="Device password:" />
+
+    <TextView
+        android:id="@+id/label_build_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/label_device_password"
+        android:text="Build number" />
 
     <TextView
         android:id="@+id/info_server_baseurl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/label_server_baseurl"
         android:layout_alignParentRight="true"
-        android:text="http://..." />
+        android:layout_alignParentTop="true"
+        android:text="@string/default_baseurl" />
 
     <TextView
         android:id="@+id/info_device_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/label_device_id"
         android:layout_alignParentRight="true"
+        android:layout_below="@+id/info_server_baseurl"
         android:text="None" />
 
     <TextView
         android:id="@+id/info_device_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/label_device_password"
         android:layout_alignParentRight="true"
+        android:layout_below="@+id/info_device_id"
+        android:text="None" />
+
+    <TextView
+        android:id="@+id/info_build_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/info_device_password"
         android:text="None" />
 
 </RelativeLayout>

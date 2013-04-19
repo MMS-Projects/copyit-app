@@ -1,6 +1,7 @@
 package net.mms_projects.copyit.ui.android;
 
 import net.mms_projects.copy_it.R;
+import net.mms_projects.copyit.app.CopyItAndroid;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -29,6 +30,9 @@ public class DebugActivity extends Activity {
 		
 		TextView devicePassword = (TextView) findViewById(R.id.info_device_password);
 		devicePassword.setText(preferences.getString("device.password", "None"));
+		
+		TextView buildNumber = (TextView) findViewById(R.id.info_build_number);
+		buildNumber.setText(Integer.toString(CopyItAndroid.getBuildNumber(this)));
 	}
 
 	public static class Launch extends BroadcastReceiver {
