@@ -48,7 +48,17 @@
     <!-- About information -->
     <string name="about_version">Versie: %1$s</string>
     <string name="about_copyright">Gemaakt door MMS-Projects</string>
+    <!-- Update screen -->
+    <string name="update_available_text">Er is een nieuwe versie van Copy It beschikbaar. Om de laatste versie te downloaden klik op de download knop. Selecteer het pakket met de volgende naam:</string>
+    <string name="update_button_download">Download update</string>
+    <!-- Debug info -->
+    <string name="debug_label_server_baseurl">Server baseurl</string>
+    <string name="debug_label_device_id">Toestel's id</string>
+    <string name="debug_label_device_password">Toestel's wachtwoord</string>
+    <string name="debug_label_build_number">Bouw nummer</string>
+    <string name="debug_no_value">Geen</string>
     <!-- Other -->
+    <string name="action_settings">Instellingen</string>
     <string name="hello_world">Hallo wereld!</string>
     
 </resources>
