@@ -33,18 +33,18 @@
         android:text="@string/button_copyit" />
 
     <Button
-        android:id="@+id/button_login"
-        style="@style/DashboardButton"
-        android:drawableTop="@drawable/dashboard_icon_placeholder"
-        android:onClick="doLogin"
-        android:text="@string/button_login" />
-
-    <Button
         android:id="@+id/button_send_app"
         style="@style/DashboardButton"
         android:drawableTop="@drawable/dashboard_icon_send_to_app"
         android:onClick="sendToApp"
         android:text="@string/button_sendtoapp" />
+
+    <Button
+        android:id="@+id/button_login"
+        style="@style/DashboardButton"
+        android:drawableTop="@drawable/dashboard_icon_placeholder"
+        android:onClick="doLogin"
+        android:text="@string/button_login" />
 
     <Button
         android:id="@+id/button_settings"
