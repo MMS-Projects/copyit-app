@@ -2,22 +2,23 @@ package net.mms_projects.copyit.ui.android;
 
 import net.mms_projects.copy_it.R;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.view.MenuItem;
 import android.view.View;
 
-public class WelcomeActivity extends Activity {
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.MenuItem;
+
+public class WelcomeActivity extends SherlockActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_welcome);
 		// Show the Up button in the action bar.
-		setupActionBar();
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	public void doLogin(View view) {
@@ -52,5 +53,5 @@ public class WelcomeActivity extends Activity {
 			getActionBar().setDisplayHomeAsUpEnabled(true);
 		}
 	}
-	
+
 }

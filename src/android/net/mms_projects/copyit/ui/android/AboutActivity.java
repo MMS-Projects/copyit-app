@@ -1,23 +1,22 @@
 package net.mms_projects.copyit.ui.android;
 
 import net.mms_projects.copy_it.R;
-import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.view.MenuItem;
 import android.widget.TextView;
 
-public class AboutActivity extends Activity {
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.MenuItem;
+
+public class AboutActivity extends SherlockActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_about);
 		// Show the Up button in the action bar.
-		setupActionBar();
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		String versionName = null;
 		try {
@@ -29,16 +28,6 @@ public class AboutActivity extends Activity {
 		TextView appVersion = (TextView) this.findViewById(R.id.app_version);
 		appVersion.setText(this.getResources().getString(
 				R.string.about_version, versionName.toString()));
-	}
-
-	/**
-	 * Set up the {@link android.app.ActionBar}, if the API is available.
-	 */
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-	private void setupActionBar() {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			getActionBar().setDisplayHomeAsUpEnabled(true);
-		}
 	}
 
 	@Override
