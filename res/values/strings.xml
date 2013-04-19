@@ -9,7 +9,7 @@
     <string name="button_copyit">Copy It!</string>
     <string name="button_pasteit">Paste It!</string>
     <string name="button_login">Login</string>
-    <string name="button_sendtoapp">Send to app&#8230;</string>
+    <string name="button_sendtoapp">Share&#8230;</string>
     <!-- Preferences -->
     <string name="pref_about">About CopyIt</string>
     <!-- Activity titles -->
@@ -30,7 +30,7 @@
     <!-- Dialog -->
     <string name="dialog_title_error">Error</string>
     <string name="dialog_title_busy">Busy</string>
-    <string name="dialog_title_select_send_app">Select app to send to&#8230;</string>
+    <string name="dialog_title_select_send_app">Select app to share to&#8230;</string>
     <string name="dialog_button_okay">Okay</string>
     <string name="dialog_button_yes">Yes</string>
     <string name="dialog_button_no">No</string>
