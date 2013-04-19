@@ -20,6 +20,10 @@ public abstract class ApiEndpoint {
 		this.api = api;
 		this.endpoint = endpoint;
 	}
+	
+	public ApiEndpoint(ServerApi api) {
+		this.api = api;
+	}
 
 	final protected void setGetResponseType(Class<? extends ApiResponse> responseType) {
 		this.getResponseType = responseType;
@@ -37,6 +41,22 @@ public abstract class ApiEndpoint {
 		this.deleteResponseType = responseType;
 	}
 
+	final protected Class<? extends ApiResponse> getGetResponseType() {
+		return this.getResponseType;
+	}
+	
+	final protected Class<? extends ApiResponse> getCreateResponseType() {
+		return this.createResponseType;
+	}
+	
+	final protected Class<? extends ApiResponse> getUpdateResponseType() {
+		return this.updateResponseType;
+	}
+	
+	final protected Class<? extends ApiResponse> getDeleteResponseType() {
+		return this.deleteResponseType;
+	}
+	
 	public ApiResponse get(String id) throws Exception{
 		ApiResponse response = this.api.doRequest(this.getResponseType,
 				this.endpoint, id, "GET");

@@ -37,7 +37,7 @@ public class MainActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 
 		this.app = new CopyItAndroid();
-		this.app.run(this, new StreamBuilder(this));
+		this.app.run(this);
 
 		setContentView(R.layout.activity_main);
 
@@ -95,7 +95,8 @@ public class MainActivity extends FragmentActivity {
 			api.apiUrl = preferences.getString("server.baseurl", this
 					.getResources().getString(R.string.default_baseurl));
 
-			ClipboardUtils clipboard = new AndroidClipboardUtils(MainActivity.this);
+			ClipboardUtils clipboard = new AndroidClipboardUtils(
+					MainActivity.this);
 
 			CopyItTask task = new HandleShareTask(this, api);
 			task.execute(clipboard.getText());
@@ -220,12 +221,12 @@ public class MainActivity extends FragmentActivity {
 		Intent intent = new Intent(this, LoginActivity.class);
 		startActivity(intent);
 	}
-	
+
 	public void gotoSettings(View view) {
 		Intent intent = new Intent(this, SettingsActivity.class);
 		startActivity(intent);
 	}
-	
+
 	public void gotoAbout(View view) {
 		Intent intent = new Intent(this, AboutActivity.class);
 		startActivity(intent);
