@@ -10,9 +10,9 @@
     <string name="button_copyit">Copy It!</string>
     <string name="button_pasteit">Paste It!</string>
     <string name="button_login">Login</string>
-    <string name="button_sendtoapp">Share</string>
+    <string name="button_sendtoapp">Share it</string>
     <!-- Preferences -->
-    <string name="pref_about">About CopyIt</string>
+    <string name="pref_about">About</string>
     <!-- Activity titles -->
     <string name="title_activity_login">Login</string>
     <string name="title_activity_welcome">Welcome to CopyIt</string>
