@@ -19,6 +19,7 @@
     <string name="title_activity_settings">Settings</string>
     <string name="title_activity_about">@string/pref_about</string>
     <string name="title_activity_update">UpdateActivity</string>
+    <string name="title_activity_debug">Copy It debugscreen</string>
     <!-- Other stuff -->
     <string name="text_welcome_message">Thank you for installing CopyIt. To start using CopyIt please login.</string>
     <string name="desc_app_icon_big">Big CopyIt logo</string>
