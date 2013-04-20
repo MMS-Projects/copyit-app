@@ -60,6 +60,8 @@
     <string name="debug_label_screen_density">Screen density</string>
     <string name="debug_no_value">None</string>
     <string name="debug_unknown">Unknown</string>
+    <string name="debug_available">Available</string>
+    <string name="debug_not_available">Not available</string>
     <!-- Other -->
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>

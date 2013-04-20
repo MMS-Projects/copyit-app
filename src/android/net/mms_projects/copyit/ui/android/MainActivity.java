@@ -130,9 +130,15 @@ public class MainActivity extends SherlockFragmentActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		Intent intent = null;
 		switch (item.getItemId()) {
 		case R.id.action_settings:
-			Intent intent = new Intent(this, SettingsActivity.class);
+			intent = new Intent(this, SettingsActivity.class);
+			startActivity(intent);
+			return true;
+		case R.id.action_feedback:
+			intent = new Intent(this, DebugActivity.class);
+			intent.setAction(Intent.ACTION_SEND);
 			startActivity(intent);
 			return true;
 		default:
