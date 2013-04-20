@@ -78,7 +78,8 @@ public class DebugActivity extends Activity {
 		screenDensity.setText(switcher.runSwitch(Integer
 				.valueOf(displayMetrics.densityDpi)));
 
-		if (getIntent().getAction().equals(Intent.ACTION_SEND)) {
+		if ((getIntent().getAction() != null)
+				&& (getIntent().getAction().equals(Intent.ACTION_SEND))) {
 			this.sendEmail(this
 					.exportTableLayout((TableLayout) findViewById(R.id.debug_table)));
 			finish();
