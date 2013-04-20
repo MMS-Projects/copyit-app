@@ -57,6 +57,7 @@
     <string name="debug_label_device_id">Device id</string>
     <string name="debug_label_device_password">Device password</string>
     <string name="debug_label_build_number">Build number</string>
+    <string name="debug_label_screen_density">Screen density</string>
     <string name="debug_no_value">None</string>
     <!-- Other -->
     <string name="action_settings">Settings</string>
