@@ -53,8 +53,8 @@
     <string name="update_button_download">Download update</string>
     <!-- Debug info -->
     <string name="debug_label_server_baseurl">Server baseurl</string>
-    <string name="debug_label_device_id">Toestel\'\s id</string>
-    <string name="debug_label_device_password">Toestel\'\s wachtwoord</string>
+    <string name="debug_label_device_id">Toestel\'\ s id</string>
+    <string name="debug_label_device_password">Toestel\'\ s wachtwoord</string>
     <string name="debug_label_build_number">Bouw nummer</string>
     <string name="debug_no_value">Geen</string>
     <!-- Other -->
