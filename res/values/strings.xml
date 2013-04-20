@@ -59,6 +59,7 @@
     <string name="debug_label_build_number">Build number</string>
     <string name="debug_label_screen_density">Screen density</string>
     <string name="debug_no_value">None</string>
+    <string name="debug_unknown">Unknown</string>
     <!-- Other -->
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>

@@ -52,10 +52,12 @@ public class DebugActivity extends Activity {
 		switcher.addClause(DisplayMetrics.DENSITY_HIGH, "hdpi");
 		switcher.addClause(DisplayMetrics.DENSITY_XHIGH, "xhdpi");
 		switcher.addClause(DisplayMetrics.DENSITY_XXHIGH, "xxhdpi");
-		switcher.setDefault("Unknown");
+		switcher.setDefault(this.getResources().getString(
+				R.string.debug_unknown));
 
 		TextView screenDensity = (TextView) findViewById(R.id.info_screen_density);
-		screenDensity.setText(switcher.runSwitch(Integer.valueOf(displayMetrics.densityDpi)));
+		screenDensity.setText(switcher.runSwitch(Integer
+				.valueOf(displayMetrics.densityDpi)));
 	}
 
 	public static class Launch extends BroadcastReceiver {
