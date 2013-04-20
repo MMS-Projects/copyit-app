@@ -12,6 +12,7 @@
             android:id="@+id/label_server_baseurl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingRight="50dp"
             android:text="@string/debug_label_server_baseurl" />
 
         <TextView
@@ -29,6 +30,7 @@
             android:id="@+id/label_jenkins_baseurl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingRight="50dp"
             android:text="@string/debug_label_jenkins_baseurl" />
 
         <TextView
@@ -46,6 +48,7 @@
             android:id="@+id/label_device_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingRight="50dp"
             android:text="@string/debug_label_device_id" />
 
         <TextView
@@ -63,6 +66,7 @@
             android:id="@+id/label_device_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingRight="50dp"
             android:text="@string/debug_label_device_password" />
 
         <TextView
@@ -80,6 +84,7 @@
             android:id="@+id/label_build_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingRight="50dp"
             android:text="@string/debug_label_build_number" />
 
         <TextView
@@ -97,6 +102,7 @@
             android:id="@+id/label_screen_density"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingRight="50dp"
             android:text="@string/debug_label_screen_density" />
 
         <TextView
