@@ -6,6 +6,9 @@
     <string name="jenkins_baseurl" translatable="false">http://jenkins.marlinc.nl</string>
     <string name="app_name" translatable="false">CopyIt</string>
     <string name="default_apk" translatable="false">copyit.apk</string>
+    <!-- Menu -->
+    <string name="menu_settings">Settings</string>
+    <string name="menu_feedback">Feedback</string>
     <!-- Buttons -->
     <string name="button_copyit">Copy It!</string>
     <string name="button_pasteit">Paste It!</string>
