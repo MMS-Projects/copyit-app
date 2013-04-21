@@ -56,14 +56,14 @@
     <string name="debug_label_jenkins_baseurl">Jenkins baseurl</string>
     <string name="debug_label_device_id">Device id</string>
     <string name="debug_label_device_password">Device password</string>
-    <string name="debug_label_build_number">Build number</string>
-    <string name="debug_label_screen_density">Screen density</string>
-    <string name="debug_no_value">None</string>
-    <string name="debug_unknown">Unknown</string>
-    <string name="debug_available">Available</string>
-    <string name="debug_not_available">Not available</string>
+    <string name="debug_label_build_number">Bau nummer</string>
+    <string name="debug_label_screen_density">Rasterdichte</string>
+    <string name="debug_no_value">Keine</string>
+    <string name="debug_unknown">Unbekannt</string>
+    <string name="debug_available">Verfügbar</string>
+    <string name="debug_not_available">Nicht verfügbar</string>
     <!-- Other -->
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Einstellungen</string>
     <string name="hello_world">Hallo Welt!</string>
     
 </resources>
