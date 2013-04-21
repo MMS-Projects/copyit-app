@@ -5,12 +5,10 @@
     
    
    
-    <string name="action_settings">Institutionen</string>
     <!-- Buttons -->
     <string name="button_copyit">Copy It!</string>
     <string name="button_pasteit">Paste It!</string>
     <string name="button_login">Anmelden</string>
-    <string name="button_sendtoapp">Teilen</string>
     <!-- Preferences -->
     <string name="pref_about">Über</string>
     <!-- Activity titles -->
@@ -22,7 +20,6 @@
     <string name="title_activity_debug">Copy It debug Fenster</string>
     <!-- Other stuff -->
     <string name="text_welcome_message">Danke für die Installation von CopyIt. So starten Sie CopyIt bitte anmelden.</string>
-    <string name="desc_app_icon_big">Big CopyIt logo</string>
     <string name="text_logging_in">Am Login&#8230;</string>
     <string name="text_login_successful">Anmeldung erfolgreich</string>
     <string name="text_login_question">Wie es aussieht, bist nicht eingeloggt Möchten Sie sich anmelden?</string>
@@ -49,5 +46,4 @@
     <string name="about_version">Ausgabe %1$s</string>
     <string name="about_copyright">Erstellt von MMS-Projects</string>
     <!-- Other -->
-    <string name="hello_world">Hallo Welt!</string>
 </resources>

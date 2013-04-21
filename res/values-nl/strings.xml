@@ -63,7 +63,6 @@
     <string name="debug_available">Beschikbaar</string>
     <string name="debug_not_available">Niet beschikbaar</string>
     <!-- Other -->
-    <string name="action_settings">Instellingen</string>
     <string name="hello_world">Hallo wereld!</string>
     
 </resources>

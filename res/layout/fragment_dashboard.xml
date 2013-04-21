@@ -23,41 +23,41 @@
         style="@style/DashboardButton"
         android:drawableTop="@drawable/dashboard_icon_pull"
         android:onClick="pasteIt"
-        android:text="@string/button_pasteit" />
+        android:text="@string/dashboard_button_pasteit" />
 
     <Button
         android:id="@+id/button_copy"
         style="@style/DashboardButton"
         android:drawableTop="@drawable/dashboard_icon_push"
         android:onClick="copyIt"
-        android:text="@string/button_copyit" />
+        android:text="@string/dashboard_button_copyit" />
 
     <Button
         android:id="@+id/button_send_app"
         style="@style/DashboardButton"
         android:drawableTop="@drawable/dashboard_icon_send_to_app"
         android:onClick="sendToApp"
-        android:text="@string/button_sendtoapp" />
+        android:text="@string/dashboard_button_sendtoapp" />
 
     <Button
         android:id="@+id/button_login"
         style="@style/DashboardButton"
         android:drawableTop="@drawable/dashboard_icon_placeholder"
         android:onClick="doLogin"
-        android:text="@string/button_login" />
+        android:text="@string/dashboard_button_login" />
 
     <Button
         android:id="@+id/button_settings"
         style="@style/DashboardButton"
         android:drawableTop="@drawable/dashboard_icon_placeholder"
         android:onClick="gotoSettings"
-        android:text="@string/action_settings" />
+        android:text="@string/dashboard_button_settings" />
 
     <Button
         android:id="@+id/button_about"
         style="@style/DashboardButton"
         android:drawableTop="@drawable/dashboard_icon_placeholder"
         android:onClick="gotoAbout"
-        android:text="@string/pref_about" />
+        android:text="@string/dashboard_button_about" />
 
 </com.google.android.apps.iosched.ui.widget.DashboardLayout>
