@@ -2,9 +2,12 @@
 <resources>
     
     <!-- App instellingen -->
-    <string name="action_settings">Instellingen</string>
+    
+
+
+
     <!-- Dashboard icons -->
-    <string name="dashboard_bitton_copyit">Copy It!</string>
+    <string name="dashboard_button_copyit">Copy It!</string>
     <string name="dashboard_button_pasteit">Paste It!</string>
     <string name="dashboard_button_sendtoapp">Delen</string>
     <string name="dashboard_button_login">Inloggen</string>
@@ -12,6 +15,7 @@
     <string name="dashboard_button_about">Over</string>
     <!-- Menu -->
     <string name="menu_settings">@string/dashboard_button_settings</string>
+    <string name="menu_feedback">Feedback</string>
     <!-- Buttons -->
     <string name="button_copyit">@string/dashboard_button_copyit</string>
     <string name="button_pasteit">@string/dashboard_button_pasteit</string>
@@ -37,6 +41,7 @@
     <string name="text_content_pushing">Pushing content&#8230;</string>
     <!-- Accessibility -->
     <string name="accessibility_widget_button_app">Deze knop opent Copy It</string>
+    <string name="accessibility_app_icon_big">Big CopyIt logo</string>
     <!-- Dialog -->
     <string name="dialog_title_error">Fout</string>
     <string name="dialog_title_busy">Bezig</string>
