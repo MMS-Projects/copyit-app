@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:contentDescription="@string/desc_app_icon_big"
+        android:contentDescription="@string/accessibility_app_icon_big"
         android:src="@drawable/app_icon_big" />
 
     <TextView
