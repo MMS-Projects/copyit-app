@@ -48,6 +48,22 @@
     <!-- About information -->
     <string name="about_version">Ausgabe %1$s</string>
     <string name="about_copyright">Erstellt von MMS-Projects</string>
+        <!-- Update screen -->
+    <string name="update_available_text">There is a new Copy It version available. To download the latest version click the download button. Select the package with the following name:</string>
+    <string name="update_button_download">Download update</string>
+    <!-- Debug info -->
+    <string name="debug_label_server_baseurl">Server baseurl</string>
+    <string name="debug_label_jenkins_baseurl">Jenkins baseurl</string>
+    <string name="debug_label_device_id">Device id</string>
+    <string name="debug_label_device_password">Device password</string>
+    <string name="debug_label_build_number">Build number</string>
+    <string name="debug_label_screen_density">Screen density</string>
+    <string name="debug_no_value">None</string>
+    <string name="debug_unknown">Unknown</string>
+    <string name="debug_available">Available</string>
+    <string name="debug_not_available">Not available</string>
     <!-- Other -->
+    <string name="action_settings">Settings</string>
     <string name="hello_world">Hallo Welt!</string>
+    
 </resources>
