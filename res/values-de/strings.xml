@@ -2,10 +2,10 @@
 <resources>
 
     <!-- App settings -->
-
-
-
-
+    <string name="default_baseurl" translatable="false">http://copyit.dev.mms-projects.net</string>
+    <string name="jenkins_baseurl" translatable="false">http://jenkins.marlinc.nl</string>
+    <string name="app_name" translatable="false">CopyIt</string>
+    <string name="default_apk" translatable="false">copyit.apk</string>
 	<!-- Dashboard icons -->
     <string name="dashboard_button_copyit">Copy It!</string>
     <string name="dashboard_button_pasteit">Paste It!</string>
