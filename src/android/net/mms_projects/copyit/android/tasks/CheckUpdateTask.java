@@ -6,6 +6,7 @@ import net.mms_projects.copyit.api.endpoints.GetBuildInfo;
 import net.mms_projects.copyit.api.responses.JenkinsBuildResponse;
 import net.mms_projects.copyit.app.CopyItAndroid;
 import net.mms_projects.copyit.ui.android.UpdateActivity;
+import android.annotation.SuppressLint;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -25,6 +26,7 @@ public class CheckUpdateTask extends
 		return new GetBuildInfo(api).getLatestStableBuild();
 	}
 
+	@SuppressLint("InlinedApi")
 	@Override
 	protected void onPostExecute(JenkinsBuildResponse result) {
 		try {
@@ -41,8 +43,12 @@ public class CheckUpdateTask extends
 			Intent intent = new Intent(this.context, UpdateActivity.class);
 			intent.putExtra("build_latest", result.number);
 			intent.putExtra("build_url", result.url);
-			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-					| Intent.FLAG_ACTIVITY_CLEAR_TASK);
+			if (android.os.Build.VERSION.SDK_INT >= 11) {
+				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+						| Intent.FLAG_ACTIVITY_CLEAR_TASK);
+			} else {
+				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			}
 
 			NotificationCompat.Builder nBuilder = new NotificationCompat.Builder(
 					this.context)

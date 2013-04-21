@@ -5,6 +5,7 @@ import java.util.UUID;
 import net.mms_projects.copy_it.R;
 import net.mms_projects.copyit.app.CopyItAndroid;
 import net.mms_projects.utils.InlineSwitch;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -18,10 +19,10 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+@SuppressLint("InlinedApi")
 public class DebugActivity extends Activity {
 
 	public final static String ACTION_SEND = "send";
-	private static final String TableRow = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +70,12 @@ public class DebugActivity extends Activity {
 		switcher.addClause(DisplayMetrics.DENSITY_LOW, "ldpi");
 		switcher.addClause(DisplayMetrics.DENSITY_MEDIUM, "mdpi");
 		switcher.addClause(DisplayMetrics.DENSITY_HIGH, "hdpi");
-		switcher.addClause(DisplayMetrics.DENSITY_XHIGH, "xhdpi");
-		switcher.addClause(DisplayMetrics.DENSITY_XXHIGH, "xxhdpi");
+		if (android.os.Build.VERSION.SDK_INT >= 9) {
+			switcher.addClause(DisplayMetrics.DENSITY_XHIGH, "xhdpi");
+		}
+		if (android.os.Build.VERSION.SDK_INT >= 16) {
+			switcher.addClause(DisplayMetrics.DENSITY_XXHIGH, "xxhdpi");
+		}
 		switcher.setDefault(this.getResources().getString(
 				R.string.debug_unknown));
 

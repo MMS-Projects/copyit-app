@@ -2,17 +2,27 @@
 <resources>
 
     <!-- App settings -->
-    
-   
-   
-    <string name="action_settings">Institutionen</string>
+    <string name="default_baseurl" translatable="false">http://copyit.dev.mms-projects.net</string>
+    <string name="jenkins_baseurl" translatable="false">http://jenkins.marlinc.nl</string>
+    <string name="app_name" translatable="false">CopyIt</string>
+    <string name="default_apk" translatable="false">copyit.apk</string>
+	<!-- Dashboard icons -->
+    <string name="dashboard_bitton_copyit">Copy It!</string>
+    <string name="dashboard_button_pasteit">Paste It!</string>
+    <string name="dashboard_button_sendtoapp">Teilen</string>
+    <string name="dashboard_button_login">Anmelden</string>
+    <string name="dashboard_button_settings">Institutionen</string>
+    <string name="dashboard_button_about">Über</string>
+    <!-- Menu -->
+    <string name="menu_settings">@string/dashboard_button_settings</string>
+    <string name="menu_feedback">Rückkopplung</string>
     <!-- Buttons -->
-    <string name="button_copyit">Copy It!</string>
-    <string name="button_pasteit">Paste It!</string>
-    <string name="button_login">Anmelden</string>
-    <string name="button_sendtoapp">Teilen</string>
-    <!-- Preferences -->
-    <string name="pref_about">Über</string>
+    <string name="button_copyit">@string/dashboard_button_copyit</string>
+    <string name="button_pasteit">@string/dashboard_button_pasteit</string>
+    <string name="button_login">@string/dashboard_button_login</string>
+    <!-- Preferenties -->
+    <string name="pref_login">@string/dashboard_button_login</string>
+    <string name="pref_about">@string/dashboard_button_about</string>
     <!-- Activity titles -->
     <string name="title_activity_login">AnmeldenWe</string>
     <string name="title_activity_welcome">Willkommen bei CopyIt</string>
@@ -22,7 +32,6 @@
     <string name="title_activity_debug">Copy It debug Fenster</string>
     <!-- Other stuff -->
     <string name="text_welcome_message">Danke für die Installation von CopyIt. So starten Sie CopyIt bitte anmelden.</string>
-    <string name="desc_app_icon_big">Big CopyIt logo</string>
     <string name="text_logging_in">Am Login&#8230;</string>
     <string name="text_login_successful">Anmeldung erfolgreich</string>
     <string name="text_login_question">Wie es aussieht, bist nicht eingeloggt Möchten Sie sich anmelden?</string>
@@ -30,6 +39,9 @@
     <string name="text_content_pulled">Zog den folgenden Inhalt: \'%1$s\'</string>
     <string name="text_content_pulling">Ziehen Inhalt&#8230;</string>
     <string name="text_content_pushing">Pushing Inhalt&#8230;</string>
+    <!-- Accessibility -->
+    <string name="accessibility_widget_button_app">This button opens Copy It</string>
+    <string name="accessibility_app_icon_big">Big CopyIt logo</string>
     <!-- Dialog -->
     <string name="dialog_title_error">Fehler</string>
     <string name="dialog_title_busy">Belegt</string>
@@ -46,9 +58,9 @@
     <string name="widget_title_pasteit">CopyIt - Paste It!</string>
     <string name="widget_title_copyit_pasteit">CopyIt - Copy/Paste It!</string>
     <!-- About information -->
-    <string name="about_version">Ausgabe %1$s</string>
+    <string name="about_version">Ausgabe: %1$s</string>
     <string name="about_copyright">Erstellt von MMS-Projects</string>
-        <!-- Update screen -->
+    <!-- Update screen -->
     <string name="update_available_text">Es gibt eine neue Version des Copy It zur Verfügung. Zum Herunterladen der neuesten Version auf den Download-Button. Wählen Sie das Paket mit dem folgenden Namen.</string>
     <string name="update_button_download">Aktualisieren herunterladen</string>
     <!-- Debug info -->
@@ -62,8 +74,5 @@
     <string name="debug_unknown">Unbekannt</string>
     <string name="debug_available">Verfügbar</string>
     <string name="debug_not_available">Nicht verfügbar</string>
-    <!-- Other -->
-    <string name="action_settings">Einstellungen</string>
-    <string name="hello_world">Hallo Welt!</string>
-    
+
 </resources>
