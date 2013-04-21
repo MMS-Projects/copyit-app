@@ -4,11 +4,9 @@
         <ignore path="src/main/net/mms_projects/utils/OSValidator.java" />
     </issue>
     <issue id="InvalidPackage">
-        <ignore path="libs/desktop/*" />
         <ignore path="libs/desktop/swt-4.2.1-gtk-linux-x86_64.jar" />
     </issue>
     <issue id="UseSparseArrays">
-        <ignore path="src/desktop/*" />
         <ignore path="src/desktop/org/eclipse/wb/swt/SWTResourceManager.java" />
     </issue>
 </lint>

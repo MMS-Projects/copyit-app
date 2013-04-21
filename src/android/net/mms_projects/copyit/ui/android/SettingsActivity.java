@@ -1,6 +1,7 @@
 package net.mms_projects.copyit.ui.android;
 
 import net.mms_projects.copy_it.R;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -120,6 +121,7 @@ public class SettingsActivity extends SherlockPreferenceActivity implements
 	 * Helper method to determine if the device has an extra-large screen. For
 	 * example, 10" tablets are extra-large.
 	 */
+	@SuppressLint("InlinedApi")
 	private static boolean isXLargeTablet(Context context) {
 		return (context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_XLARGE;
 	}
