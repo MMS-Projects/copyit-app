@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
-    <!-- App instellingen -->
-    <string name="default_baseurl" translatable="false">http://copyit.dev.mms-projects.net</string>
-    <string name="jenkins_baseurl" translatable="false">http://jenkins.marlinc.nl</string>
-    <string name="app_name" translatable="false">CopyIt</string>
-    <string name="default_apk" translatable="false">copyit.apk</string>
     <!-- Dashboard icons -->
     <string name="dashboard_button_copyit">Copy It!</string>
     <string name="dashboard_button_pasteit">Paste It!</string>
@@ -74,5 +69,6 @@
     <string name="debug_unknown">Niet bekend</string>
     <string name="debug_available">Beschikbaar</string>
     <string name="debug_not_available">Niet beschikbaar</string>
+    <!-- App settings -->
     
 </resources>
