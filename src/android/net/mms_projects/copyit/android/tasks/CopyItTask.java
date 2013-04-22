@@ -9,6 +9,9 @@ import android.widget.Toast;
 public class CopyItTask extends ServerApiUiTask<String, Void, Boolean> {
 	public CopyItTask(Context context, ServerApi api) {
 		super(context, api);
+
+		this.setProgressDialigMessage(context.getResources().getString(
+				R.string.text_content_pushing));
 	}
 
 	private String content;

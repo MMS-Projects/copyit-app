@@ -11,6 +11,9 @@ import android.widget.Toast;
 public class PasteItTask extends ServerApiUiTask<Void, Void, String> {
 	public PasteItTask(Context context, ServerApi api) {
 		super(context, api);
+
+		this.setProgressDialigMessage(context.getResources().getString(
+				R.string.text_content_pulling));
 	}
 
 	@Override

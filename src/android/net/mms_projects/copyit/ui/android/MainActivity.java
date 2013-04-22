@@ -117,6 +117,7 @@ public class MainActivity extends SherlockFragmentActivity {
 					MainActivity.this);
 
 			CopyItTask task = new HandleShareTask(this, api);
+			task.setUseProgressDialog(true);
 			task.execute(clipboard.getText());
 		}
 	}
@@ -180,6 +181,7 @@ public class MainActivity extends SherlockFragmentActivity {
 		ClipboardUtils clipboard = new AndroidClipboardUtils(MainActivity.this);
 
 		CopyItTask task = new CopyItTask(this, api);
+		task.setUseProgressDialog(true);
 		task.execute(clipboard.getText());
 	}
 
@@ -209,6 +211,7 @@ public class MainActivity extends SherlockFragmentActivity {
 				.getResources().getString(R.string.default_baseurl));
 
 		PasteItTask task = new PasteItTask(this, api);
+		task.setUseProgressDialog(true);
 		task.execute();
 	}
 
@@ -238,6 +241,7 @@ public class MainActivity extends SherlockFragmentActivity {
 				.getResources().getString(R.string.default_baseurl));
 
 		SendToAppTask task = new SendToAppTask(this, api);
+		task.setUseProgressDialog(true);
 		task.execute();
 	}
 
