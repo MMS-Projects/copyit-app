@@ -103,7 +103,7 @@ public class LoginActivity extends SherlockActivity {
 			super(context, api);
 
 			this.setProgressDialigMessage(context.getResources().getString(
-					R.string.text_login_question));
+					R.string.text_logging_in));
 		}
 
 		@Override
