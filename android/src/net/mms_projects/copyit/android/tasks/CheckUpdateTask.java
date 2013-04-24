@@ -52,7 +52,7 @@ public class CheckUpdateTask extends
 
 			NotificationCompat.Builder nBuilder = new NotificationCompat.Builder(
 					this.context)
-					.setSmallIcon(R.drawable.notification_icon)
+					.setSmallIcon(R.drawable.ic_launcher)
 					.setContentTitle(
 							this.context.getResources().getString(
 									R.string.app_name))
