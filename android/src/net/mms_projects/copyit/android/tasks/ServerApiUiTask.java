@@ -10,12 +10,12 @@ abstract public class ServerApiUiTask<Params, Progress, Result> extends
 
 	final protected Context context;
 
-	protected ProgressDialog progress;
-	protected boolean useProgressDialog = false;
-	protected String progressDialogTitle;
-	protected String progressDialogMessage;
+	private ProgressDialog progress;
+	private boolean useProgressDialog = false;
+	private String progressDialogTitle;
+	private String progressDialogMessage;
 
-	protected Exception exception;
+	private Exception exception;
 
 	public ServerApiUiTask(Context context, ServerApi api) {
 		super(api);

@@ -101,20 +101,34 @@ public class LoginActivity extends SherlockActivity {
 	private class LoginTask extends SetupDeviceTask {
 		public LoginTask(Context context, ServerApi api) {
 			super(context, api);
-			
-			this.setProgressDialigMessage(context.getResources().getString(R.string.text_logging_in));
+
+			this.setProgressDialigMessage(context.getResources().getString(
+					R.string.text_logging_in));
 		}
 
 		@Override
 		protected void onPostExecute(Boolean result) {
-			if (!result) {
+			try {
+				this.doExceptionCheck();
+
+				if (result) {
+					Toast.makeText(
+							this.context,
+							this.context.getResources().getString(
+									R.string.text_login_successful),
+							Toast.LENGTH_SHORT).show();
+				}
+			} catch (Exception exception) {
+				// TODO Auto-generated catch block
+				exception.printStackTrace();
+
 				AlertDialog alertDialog = new AlertDialog.Builder(this.context)
 						.create();
 				alertDialog.setTitle(this.context.getResources().getString(
 						R.string.dialog_title_error));
 				alertDialog.setMessage(this.context.getResources().getString(
 						R.string.error_device_setup_failed,
-						this.exception.getMessage()));
+						exception.getMessage()));
 				alertDialog.setButton(
 						DialogInterface.BUTTON_POSITIVE,
 						this.context.getResources().getString(
@@ -130,12 +144,7 @@ public class LoginActivity extends SherlockActivity {
 				alertDialog.show();
 				return;
 			}
-			Toast.makeText(
-					this.context,
-					this.context.getResources().getString(
-							R.string.text_login_successful), Toast.LENGTH_SHORT)
-					.show();
-
+			
 			super.onPostExecute(result);
 
 			LoginActivity.this.finish();
