@@ -54,6 +54,8 @@ public class MainActivity extends SherlockFragmentActivity {
 		if (!preferences.contains("device.id")) {
 			Intent intent = new Intent(this, WelcomeActivity.class);
 			startActivity(intent);
+			finish();
+			return;
 		}
 
 		// Get intent, action and MIME type
