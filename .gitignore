@@ -2,7 +2,8 @@ build
 bin
 gen
 *~
-
 local.properties
-
 options.properties
+project.properties
+.idea
+*.iml
