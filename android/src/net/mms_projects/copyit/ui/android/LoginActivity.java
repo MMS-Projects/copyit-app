@@ -101,6 +101,8 @@ public class LoginActivity extends SherlockActivity {
 	private class LoginTask extends SetupDeviceTask {
 		public LoginTask(Context context, ServerApi api) {
 			super(context, api);
+			
+			this.setProgressDialigMessage(context.getResources().getString(R.string.text_logging_in));
 		}
 
 		@Override
