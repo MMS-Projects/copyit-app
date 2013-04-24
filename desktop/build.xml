@@ -1,8 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project name="desktop" default="all">
+
     <dirname property="imported.basedir" file="${ant.file.desktop}"/>
 
-    <target name="windows-binary" depends="windows-x86-binary, windows-x86_64-binary" />
+    <target name="windows-binary">
+          <property name="build.windows.binary" value="true" />
+    </target>
+
+    <target name="desktop" depends="linux, windows, macosx" />
+
+    <target name="linux" depends="linux-x86, linux-x86_64" />
+    <target name="windows" depends="windows-x86, windows-x86_64">
+        <if>
+            <isset property="build.windows.binary"/>
+            <then>
+                <antcall>
+                    <target name="windows-x86-binary" />
+                    <target name="windows-x86_64-binary" />
+                </antcall>
+            </then>
+        </if>
+    </target>
+    <target name="macosx" depends="macosx-x86, macosx-x86_64" />
 
     <target name="linux-x86_64" depends="linux-x86_64-jar" />
     <target name="linux-x86" depends="linux-x86-jar" />
@@ -49,6 +68,10 @@
         <path refid="global-classpath" />
         <fileset file="desktop/libs/swt-4.2.1-cocoa-macosx-x86_64.jar" />
     </path>
+
+    <target name="load-launch4j" depends="windows-x86-compile, global-manifest">
+        <taskdef name="launch4j" classname="net.sf.launch4j.ant.Launch4jTask" classpath="${launch4j.dir}/launch4j.jar:${launch4j.dir}/lib/xstream.jar" />
+    </target>
 
     <target name="linux-x86-compile" depends="clean">
         <mkdir dir="build/classes" />

@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project name="Create Runnable Jar" default="all">
+
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+        <classpath>
+            <fileset dir="${basedir}/antlib"/>
+        </classpath>
+    </taskdef>
+
     <import file="desktop/build.xml" />
     <import file="android/build-call.xml" />
     <property name="version" value="0.0.1" />
@@ -11,16 +18,8 @@
         <isset property="env.BUILD_NUMBER" />
     </condition>
     
-    <target name="load-launch4j" depends="windows-x86-compile, global-manifest">
-        <taskdef name="launch4j" classname="net.sf.launch4j.ant.Launch4jTask" classpath="${launch4j.dir}/launch4j.jar:${launch4j.dir}/lib/xstream.jar" />
-    </target>
-    
-    <target name="all" depends="linux, windows, macosx, android" />
+    <target name="all" depends="desktop, android" />
     
     <target name="version-update" depends="android-update-version-name" />
-
-    <target name="linux" depends="linux-x86, linux-x86_64" />
-    <target name="windows" depends="windows-x86, windows-x86_64" />
-    <target name="macosx" depends="macosx-x86, macosx-x86_64" />
 
 </project>

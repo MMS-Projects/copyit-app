@@ -19,13 +19,13 @@
     
     <target name="android-update-version-name" description="Update VersionName in AndroidManifest.xml">
 	
-	<xmlproperty file="AndroidManifest.xml" collapseattributes="true" />
+	<xmlproperty file="android/AndroidManifest.xml" collapseattributes="true" />
 	
     	<property name="versionName" value="${version}-${build.number}" />
     	
     	<echo>Android version name changed from ${manifest.android:versionName} to ${versionName}</echo>
     	
-	<replaceregexp file="AndroidManifest.xml"
+	<replaceregexp file="android/AndroidManifest.xml"
 		match='android:versionName="[^"]*"'
 		replace='android:versionName="${versionName}"'
     	/>
@@ -33,13 +33,13 @@
     
     <target name="android-update-version-code" description="Update VersionName in AndroidManifest.xml">
 	
-	<xmlproperty file="AndroidManifest.xml" collapseattributes="true" />
+	<xmlproperty file="android/AndroidManifest.xml" collapseattributes="true" />
     	
     	<property name="versionCode" value="${build.number}" />
     	
         <echo>Android version code changed from ${manifest.android:versionCode} to ${versionCode}</echo>
     
-	<replaceregexp file="AndroidManifest.xml"
+	<replaceregexp file="android/AndroidManifest.xml"
 		match='android:versionCode="[^"]*"'
 		replace='android:versionCode="${versionCode}"'
     	/>
