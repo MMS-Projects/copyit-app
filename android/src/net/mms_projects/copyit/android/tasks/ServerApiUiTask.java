@@ -27,6 +27,7 @@ abstract public class ServerApiUiTask<Params, Progress, Result> extends
 				R.string.dialog_title_busy);
 	}
 
+	@Override
 	protected Result doInBackground(Params... params) {
 		try {
 			return this.doInBackgroundWithException(params);
