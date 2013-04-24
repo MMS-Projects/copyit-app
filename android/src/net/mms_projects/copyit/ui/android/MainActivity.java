@@ -39,6 +39,15 @@ public class MainActivity extends SherlockFragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		SharedPreferences preferences = PreferenceManager
+										.getDefaultSharedPreferences(this);
+
+		if (!preferences.contains("device.id")) {
+			Intent intent = new Intent(this, WelcomeActivity.class);
+			startActivity(intent);
+			finish();
+			return;
+		}
 
 		this.app = new CopyItAndroid();
 		this.app.run(this);
@@ -46,15 +55,7 @@ public class MainActivity extends SherlockFragmentActivity {
 		setContentView(R.layout.activity_main);
 
 		// Show the Up button in the action bar.
-		getSupportActionBar();
-
-		SharedPreferences preferences = PreferenceManager
-				.getDefaultSharedPreferences(this);
-
-		if (!preferences.contains("device.id")) {
-			Intent intent = new Intent(this, WelcomeActivity.class);
-			startActivity(intent);
-		}
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		// Get intent, action and MIME type
 		Intent intent = getIntent();
