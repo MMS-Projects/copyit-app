@@ -69,7 +69,7 @@
         <fileset file="desktop/libs/swt-4.2.1-cocoa-macosx-x86_64.jar" />
     </path>
 
-    <target name="load-launch4j" depends="windows-x86-compile, global-manifest">
+    <target name="load-launch4j">
         <taskdef name="launch4j" classname="net.sf.launch4j.ant.Launch4jTask" classpath="${launch4j.dir}/launch4j.jar:${launch4j.dir}/lib/xstream.jar" />
     </target>
 
@@ -140,7 +140,7 @@
         </jar>
     </target>
     
-    <target name="windows-x86-binary" depends="load-launch4j, windows-x86-jar">
+    <target name="windows-x86-binary" if="build.windows.binary" depends="load-launch4j">
         <launch4j configFile="desktop/launch4j.xml" outfile="build/copyit-windows-x86.exe" jar="build/copyit-windows-x86.jar"/>
     </target>
 
@@ -166,7 +166,7 @@
         </jar>
     </target>
     
-    <target name="windows-x86_64-binary" depends="load-launch4j, windows-x86_64-jar">
+    <target name="windows-x86_64-binary" if="build.windows.binary" depends="load-launch4j">
         <launch4j configFile="desktop/launch4j.xml" outfile="build/copyit-windows-x86_64.exe" jar="build/copyit-windows-x86_64.jar"/>
     </target>
     
