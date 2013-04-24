@@ -12,12 +12,14 @@ public class SendToAppTask extends ServerApiUiTask<Void, Void, String> {
 	public SendToAppTask(Context context, ServerApi api) {
 		super(context, api);
 
-		this.progressDialogMessage = context.getResources().getString(
-				R.string.text_content_pulling);
+		this.setProgressDialigMessage(context.getResources().getString(
+				R.string.text_content_pushing));
+		this.setUseProgressDialog(true);
 	}
 
 	@Override
-	protected String doInBackgroundWithException(Void... params) throws Exception {
+	protected String doInBackgroundWithException(Void... params)
+			throws Exception {
 		return new ClipboardContentEndpoint(api).get();
 	}
 
