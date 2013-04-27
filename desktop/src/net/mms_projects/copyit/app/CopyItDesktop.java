@@ -4,12 +4,24 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
 
 import net.mms_projects.copyit.FileStreamBuilder;
 import net.mms_projects.copyit.PathBuilder;
 import net.mms_projects.copyit.Settings;
 import net.mms_projects.copyit.ui.AbstractUi;
 import net.mms_projects.copyit.ui.SwtGui;
+
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ubuntu.UnityLauncher;
+import org.freedesktop.Notifications;
+import org.freedesktop.dbus.DBusConnection;
+import org.freedesktop.dbus.UInt32;
+import org.freedesktop.dbus.Variant;
+import org.freedesktop.dbus.exceptions.DBusException;
 
 public class CopyItDesktop extends CopyIt {
 
@@ -49,6 +61,21 @@ public class CopyItDesktop extends CopyIt {
 	}
 
 	public void run() {
+		DBusConnection conn = null;
+		Notifications notify = null;
+		try {
+			conn = DBusConnection.getConnection(DBusConnection.SESSION);
+			conn.requestBusName("net.mms_projects.copy_it");
+			notify = conn.getRemoteObject(
+					"org.freedesktop.Notifications",
+					"/org/freedesktop/Notifications", Notifications.class);
+		} catch (DBusException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		// the actual calling of the method would be here.
+
 		this.settings = new Settings();
 		try {
 			this.settings.setFileStreamBuilder(new StreamBuilder());
@@ -60,9 +87,15 @@ public class CopyItDesktop extends CopyIt {
 		this.settings.loadProperties();
 		this.lockFile = new File(PathBuilder.getConfigDirectory(), ".lock");
 		if (this.lockFile.exists()) {
-			System.out.println("An instance is already running. "
+			String message = "An instance is already running. "
 					+ "If not please remove the following lock file: "
-					+ this.lockFile.getAbsolutePath());
+					+ this.lockFile.getAbsolutePath();
+			Map<String, Variant<Byte>> hints = new HashMap<String, Variant<Byte>>();
+			hints.put("urgency", new Variant<Byte>((byte) 2));
+			notify.Notify("CopyIt", new UInt32(0), "", "CopyIt",
+					message, new LinkedList<String>(),
+					hints, -1);
+			System.out.println(message);
 			System.exit(0);
 		} else {
 			try {
