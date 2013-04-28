@@ -38,7 +38,7 @@ public class DebugActivity extends Activity {
 
 		TextView jenkinsBaseUrl = (TextView) findViewById(R.id.info_jenkins_baseurl);
 		jenkinsBaseUrl.setText(this.getResources().getString(
-				R.string.jenkins_baseurl));
+				R.string.jenkins_joburl));
 
 		TextView deviceId = (TextView) findViewById(R.id.info_device_id);
 		try {
