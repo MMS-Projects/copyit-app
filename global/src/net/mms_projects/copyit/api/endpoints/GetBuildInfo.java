@@ -24,7 +24,7 @@ public class GetBuildInfo extends ApiEndpoint {
 	@Override
 	public JenkinsBuildResponse get(String id) throws Exception {
 		ApiResponse response = this.api.doRawRequest(this.getGetResponseType(),
-				this.api.apiUrl + "/job/CopyIt-App/" + id + "/api/json",
+				this.api.apiUrl + "/" + id + "/api/json",
 				"GET", new ArrayList<NameValuePair>());
 		return (JenkinsBuildResponse) response;
 	}

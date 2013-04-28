@@ -69,7 +69,7 @@ public class MainActivity extends SherlockFragmentActivity {
 		}
 
 		ServerApi api = new ServerApi();
-		api.apiUrl = this.getResources().getString(R.string.jenkins_baseurl);
+		api.apiUrl = this.getResources().getString(R.string.jenkins_joburl);
 
 		if (CopyItAndroid.getBuildNumber(this) != 0) {
 			CheckUpdateTask task = new CheckUpdateTask(this, api);
