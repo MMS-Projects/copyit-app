@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project name="android" default="all">
+
+    <target name="android">
+        <ant dir="android" target="debug" />
+	<copy file="android/bin/android-build-debug-unaligned.apk" tofile="build/copyit-android-unaligned.apk" />
+	    <antcall target="copy-signed" />
+    </target>
+    <target name="copy-signed" if="out.final.file.exists" depends="check-out.final.file.exists">
+    		<copy file="android/bin/android-build-debug.apk" tofile="build/copyit-android.apk" />
+    	</target>
+    <target name="check-out.final.file.exists">
+       <condition property="out.final.file.exists">
+               <available file="android/bin/android-build-debug.apk" property="out.final.file.exists" />
+       </condition>
+   </target>
+
+    
+    
+    <target name="android-update-version-name" description="Update VersionName in AndroidManifest.xml">
+	
+	<xmlproperty file="android/AndroidManifest.xml" collapseattributes="true" />
+	
+    	<property name="versionName" value="${version}-${build.number}" />
+    	
+    	<echo>Android version name changed from ${manifest.android:versionName} to ${versionName}</echo>
+    	
+	<replaceregexp file="android/AndroidManifest.xml"
+		match='android:versionName="[^"]*"'
+		replace='android:versionName="${versionName}"'
+    	/>
+    </target>
+    
+    <target name="android-update-version-code" description="Update VersionName in AndroidManifest.xml">
+	
+	<xmlproperty file="android/AndroidManifest.xml" collapseattributes="true" />
+    	
+    	<property name="versionCode" value="${build.number}" />
+    	
+        <echo>Android version code changed from ${manifest.android:versionCode} to ${versionCode}</echo>
+    
+	<replaceregexp file="android/AndroidManifest.xml"
+		match='android:versionCode="[^"]*"'
+		replace='android:versionCode="${versionCode}"'
+    	/>
+    </target>
+    
+</project>

@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project name="desktop" default="all">
+
+    <dirname property="imported.basedir" file="${ant.file.desktop}"/>
+
+    <target name="windows-binary">
+          <property name="build.windows.binary" value="true" />
+    </target>
+
+    <target name="desktop" depends="linux, windows, macosx" />
+
+    <target name="linux" depends="linux-x86, linux-x86_64" />
+    <target name="windows" depends="windows-x86, windows-x86_64">
+        <if>
+            <isset property="build.windows.binary"/>
+            <then>
+                <antcall>
+                    <target name="windows-x86-binary" />
+                    <target name="windows-x86_64-binary" />
+                </antcall>
+            </then>
+        </if>
+    </target>
+    <target name="macosx" depends="macosx-x86, macosx-x86_64" />
+
+    <target name="linux-x86_64" depends="linux-x86_64-jar" />
+    <target name="linux-x86" depends="linux-x86-jar" />
+    <target name="windows-x86" depends="windows-x86-jar" />
+    <target name="windows-x86_64" depends="windows-x86_64-jar" />
+    <target name="macosx-x86" depends="macosx-x86-jar" />
+    <target name="macosx-x86_64" depends="macosx-x86_64-jar" />
+
+    <path id="global-classpath">
+        <fileset file="desktop/libs/swing2swt.jar" />
+        <fileset file="global/libs/commons-io-2.4.jar" />
+        <fileset file="global/libs/commons-logging-1.1.1.jar" />
+        <fileset file="global/libs/httpcore-4.2.2.jar" />
+        <fileset file="global/libs/httpclient-4.2.3.jar" />
+    	<fileset file="global/libs/gson-2.2.2.jar" />
+    </path>
+
+    <path id="linux-x86-classpath">
+        <path refid="global-classpath" />
+        <fileset file="desktop/libs/swt-4.2.1-gtk-linux-x86.jar" />
+    </path>
+
+    <path id="linux-x86_64-classpath">
+        <path refid="global-classpath" />
+        <fileset file="desktop/libs/swt-4.2.1-gtk-linux-x86_64.jar" />
+    </path>
+
+    <path id="windows-x86-classpath">
+        <path refid="global-classpath" />
+        <fileset file="desktop/libs/swt-4.2.1-win32-win32-x86.jar" />
+    </path>
+
+    <path id="windows-x86_64-classpath">
+        <path refid="global-classpath" />
+        <fileset file="desktop/libs/swt-4.2.1-win32-win32-x86_64.jar" />
+    </path>
+    
+    <path id="macosx-x86-classpath">
+        <path refid="global-classpath" />
+        <fileset file="desktop/libs/swt-4.2.1-cocoa-macosx-x86.jar" />
+    </path>
+    
+    <path id="macosx-x86_64-classpath">
+        <path refid="global-classpath" />
+        <fileset file="desktop/libs/swt-4.2.1-cocoa-macosx-x86_64.jar" />
+    </path>
+
+    <target name="load-launch4j">
+        <taskdef name="launch4j" classname="net.sf.launch4j.ant.Launch4jTask" classpath="${launch4j.dir}/launch4j.jar:${launch4j.dir}/lib/xstream.jar" />
+    </target>
+
+    <target name="linux-x86-compile" depends="clean">
+        <mkdir dir="build/classes" />
+        <javac srcdir="global/src:desktop/src" destdir="build/classes" classpathref="linux-x86-classpath" />
+    </target>
+
+    <target name="linux-x86-jar" depends="linux-x86-compile, global-manifest">
+        <jar manifest="build/META-INF/MANIFEST.MF" destfile="build/copyit-linux-x86.jar" filesetmanifest="mergewithoutmain" basedir="build/classes">        
+            <zipfileset excludes="META-INF/*.SF" src="desktop/libs/swt-4.2.1-gtk-linux-x86.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="desktop/libs/swing2swt.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="global/libs/commons-io-2.4.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="global/libs/commons-logging-1.1.1.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="global/libs/httpcore-4.2.2.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="global/libs/httpclient-4.2.3.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="global/libs/gson-2.2.2.jar" />
+            <fileset dir="android">
+               <include name="**/res/**.properties" />
+               <include name="**/res/mmsprojects-copyit-**.png" />
+            </fileset>
+            <fileset dir="android/res" />
+        </jar>
+    </target>
+
+    <target name="linux-x86_64-compile" depends="clean">
+        <mkdir dir="build/classes" />
+        <!-- . is used for pointing to the current directory -->
+        <javac srcdir="global/src:desktop/src" destdir="build/classes" classpathref="linux-x86_64-classpath" />
+    </target>
+
+    <target name="linux-x86_64-jar" depends="linux-x86_64-compile, global-manifest">
+        <jar manifest="build/META-INF/MANIFEST.MF" destfile="build/copyit-linux-x86_64.jar" filesetmanifest="mergewithoutmain" basedir="build/classes">
+            <zipfileset excludes="META-INF/*.SF" src="desktop/libs/swt-4.2.1-gtk-linux-x86_64.jar" />
+        	<zipfileset excludes="META-INF/*.SF" src="desktop/libs/swing2swt.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="global/libs/commons-io-2.4.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="global/libs/commons-logging-1.1.1.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="global/libs/httpcore-4.2.2.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="global/libs/httpclient-4.2.3.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="global/libs/gson-2.2.2.jar" />
+            <fileset dir="android">
+               <include name="**/res/**.properties" />
+               <include name="**/res/mmsprojects-copyit-**.png" />
+            </fileset>
+            <fileset dir="android/res" />
+        </jar>
+    </target>
+
+    <target name="windows-x86-compile" depends="clean">
+        <mkdir dir="build/classes" />
+        <javac srcdir="global/src:desktop/src" destdir="build/classes" classpathref="windows-x86-classpath" />
+    </target>
+
+    <target name="windows-x86-jar" depends="windows-x86-compile, global-manifest">
+        <jar manifest="build/META-INF/MANIFEST.MF" destfile="build/copyit-windows-x86.jar" filesetmanifest="mergewithoutmain" basedir="build/classes">
+            <zipfileset excludes="META-INF/*.SF" src="desktop/libs/swt-4.2.1-win32-win32-x86.jar" />
+        	<zipfileset excludes="META-INF/*.SF" src="desktop/libs/swing2swt.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="global/libs/commons-io-2.4.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="global/libs/commons-logging-1.1.1.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="global/libs/httpcore-4.2.2.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="global/libs/httpclient-4.2.3.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="global/libs/gson-2.2.2.jar" />
+            <fileset dir="android">
+               <include name="**/res/**.properties" />
+               <include name="**/res/mmsprojects-copyit-**.png" />
+            </fileset>
+            <fileset dir="android/res" />
+        </jar>
+    </target>
+    
+    <target name="windows-x86-binary" if="build.windows.binary" depends="load-launch4j">
+        <launch4j configFile="desktop/launch4j.xml" outfile="build/copyit-windows-x86.exe" jar="build/copyit-windows-x86.jar"/>
+    </target>
+
+    <target name="windows-x86_64-compile" depends="clean">
+        <mkdir dir="build/classes" />
+        <javac srcdir="global/src:desktop/src" destdir="build/classes" classpathref="windows-x86_64-classpath" />
+    </target>
+
+    <target name="windows-x86_64-jar" depends="windows-x86_64-compile, global-manifest">
+        <jar manifest="build/META-INF/MANIFEST.MF" destfile="build/copyit-windows-x86_64.jar" filesetmanifest="mergewithoutmain" basedir="build/classes">
+            <zipfileset excludes="META-INF/*.SF" src="desktop/libs/swt-4.2.1-win32-win32-x86_64.jar" />
+        	<zipfileset excludes="META-INF/*.SF" src="desktop/libs/swing2swt.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="global/libs/commons-io-2.4.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="global/libs/commons-logging-1.1.1.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="global/libs/httpcore-4.2.2.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="global/libs/httpclient-4.2.3.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="global/libs/gson-2.2.2.jar" />
+            <fileset dir="android">
+               <include name="**/res/**.properties" />
+               <include name="**/res/mmsprojects-copyit-**.png" />
+            </fileset>
+            <fileset dir="android/res" />
+        </jar>
+    </target>
+    
+    <target name="windows-x86_64-binary" if="build.windows.binary" depends="load-launch4j">
+        <launch4j configFile="desktop/launch4j.xml" outfile="build/copyit-windows-x86_64.exe" jar="build/copyit-windows-x86_64.jar"/>
+    </target>
+    
+    <target name="macosx-x86-compile" depends="clean">
+        <mkdir dir="build/classes" />
+        <javac srcdir="global/src:desktop/src" destdir="build/classes" classpathref="macosx-x86-classpath" />
+    </target>
+
+    <target name="macosx-x86-jar" depends="macosx-x86-compile, global-manifest">
+        <jar manifest="build/META-INF/MANIFEST.MF" destfile="build/copyit-macosx-x86.jar" filesetmanifest="mergewithoutmain" basedir="build/classes">
+            <zipfileset excludes="META-INF/*.SF" src="desktop/libs/swt-4.2.1-cocoa-macosx-x86.jar" />
+        	<zipfileset excludes="META-INF/*.SF" src="desktop/libs/swing2swt.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="global/libs/commons-io-2.4.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="global/libs/commons-logging-1.1.1.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="global/libs/httpcore-4.2.2.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="global/libs/httpclient-4.2.3.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="global/libs/gson-2.2.2.jar" />
+            <fileset dir="android">
+               <include name="**/res/**.properties" />
+               <include name="**/res/mmsprojects-copyit-**.png" />
+            </fileset>
+            <fileset dir="android/res" />
+        </jar>
+    </target>
+    
+    <target name="macosx-x86_64-compile" depends="clean">
+        <mkdir dir="build/classes" />
+        <javac srcdir="global/src:desktop/src" destdir="build/classes" classpathref="macosx-x86_64-classpath" />
+    </target>
+
+    <target name="macosx-x86_64-jar" depends="macosx-x86_64-compile, global-manifest">
+        <jar manifest="build/META-INF/MANIFEST.MF" destfile="build/copyit-macosx-x86_64.jar" filesetmanifest="mergewithoutmain" basedir="build/classes">
+            <zipfileset excludes="META-INF/*.SF" src="desktop/libs/swt-4.2.1-cocoa-macosx-x86_64.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="desktop/libs/swing2swt.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="global/libs/commons-io-2.4.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="global/libs/commons-logging-1.1.1.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="global/libs/httpcore-4.2.2.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="global/libs/httpclient-4.2.3.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="global/libs/gson-2.2.2.jar" />
+            <fileset dir="android">
+               <include name="**/res/**.properties" />
+               <include name="**/res/mmsprojects-copyit-**.png" />
+            </fileset>
+            <fileset dir="android/res" />
+        </jar>
+    </target>
+
+    <target name="clean">
+        <delete dir="build" />
+    </target>
+
+    <target name="global-manifest">
+        <mkdir dir="build/META-INF"/>
+        <manifest file="build/META-INF/MANIFEST.MF">
+            <attribute name="Main-Class" value="net.mms_projects.copyit.app.CopyItDesktop" />
+            <attribute name="Class-Path" value="." />
+            <attribute name="Specification-Version" value="${version}" />
+            <attribute name="Implementation-Version" value="${build.number}" />
+        </manifest>
+    </target>
+
+</project>
