@@ -38,6 +38,9 @@ public class AndroidResourceLoader {
 					+ " for reference " + name;
 		}
 		String text = strings.get(name);
+		if (text == null) {
+			return null;
+		}
 		if (isReference(text)) {
 			if (getReferenceType(text).equals("string")) {
 				return getString(resolveReference(text));
@@ -74,6 +77,8 @@ public class AndroidResourceLoader {
 
 		Node root = (Node) xpath.evaluate("/", source, XPathConstants.NODE);
 
+		System.out.println(root.toString());
+		
 		NodeList xmlStrings = null;
 
 		xmlStrings = (NodeList) xpath.evaluate("//string", root,
