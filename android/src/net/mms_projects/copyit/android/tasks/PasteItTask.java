@@ -14,7 +14,6 @@ public class PasteItTask extends ServerApiUiTask<Void, Void, String> {
 
 		this.setProgressDialigMessage(context.getResources().getString(
 				R.string.text_content_pulling));
-		this.setUseProgressDialog(true);
 	}
 
 	@Override
