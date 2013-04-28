@@ -82,7 +82,7 @@ public class TrayEntry {
 		this.menu = new Menu(this.activityShell, SWT.POP_UP);
 
 		this.menuItemCopyIt = new MenuItem(menu, SWT.PUSH);
-		this.menuItemCopyIt.setText("Copy it");
+		this.menuItemCopyIt.setText("▲ Copy it");
 		this.menuItemCopyIt.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
 				ServerApi api = new ServerApi();
@@ -112,7 +112,7 @@ public class TrayEntry {
 		});
 
 		this.menuItemPasteIt = new MenuItem(menu, SWT.PUSH);
-		this.menuItemPasteIt.setText("Paste it");
+		this.menuItemPasteIt.setText("▼ Paste it");
 		this.menuItemPasteIt.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
 				ServerApi api = new ServerApi();
