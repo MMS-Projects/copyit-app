@@ -13,10 +13,8 @@ import net.mms_projects.copyit.PathBuilder;
 import net.mms_projects.copyit.Settings;
 import net.mms_projects.copyit.ui.AbstractUi;
 import net.mms_projects.copyit.ui.SwtGui;
+import net.mms_projects.utils.OSValidator;
 
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ubuntu.UnityLauncher;
 import org.freedesktop.Notifications;
 import org.freedesktop.dbus.DBusConnection;
 import org.freedesktop.dbus.UInt32;
@@ -27,6 +25,7 @@ public class CopyItDesktop extends CopyIt {
 
 	protected Settings settings;
 	protected File lockFile;
+	static public DBusConnection dbusConnection;
 
 	/**
 	 * @param args
@@ -61,21 +60,6 @@ public class CopyItDesktop extends CopyIt {
 	}
 
 	public void run() {
-		DBusConnection conn = null;
-		Notifications notify = null;
-		try {
-			conn = DBusConnection.getConnection(DBusConnection.SESSION);
-			conn.requestBusName("net.mms_projects.copy_it");
-			notify = conn.getRemoteObject(
-					"org.freedesktop.Notifications",
-					"/org/freedesktop/Notifications", Notifications.class);
-		} catch (DBusException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-		// the actual calling of the method would be here.
-
 		this.settings = new Settings();
 		try {
 			this.settings.setFileStreamBuilder(new StreamBuilder());
@@ -85,16 +69,42 @@ public class CopyItDesktop extends CopyIt {
 			System.exit(1);
 		}
 		this.settings.loadProperties();
+
+		if (OSValidator.isUnix()) {
+			try {
+				CopyItDesktop.dbusConnection = DBusConnection
+						.getConnection(DBusConnection.SESSION);
+			} catch (DBusException e1) {
+				// TODO Auto-generated catch block
+				System.out
+						.println("Ahh could not connect to D-Bus. All kinds of explosions n'stuff. Fix it!");
+				e1.printStackTrace();
+				System.exit(1);
+			}
+		}
+
 		this.lockFile = new File(PathBuilder.getConfigDirectory(), ".lock");
 		if (this.lockFile.exists()) {
 			String message = "An instance is already running. "
 					+ "If not please remove the following lock file: "
 					+ this.lockFile.getAbsolutePath();
-			Map<String, Variant<Byte>> hints = new HashMap<String, Variant<Byte>>();
-			hints.put("urgency", new Variant<Byte>((byte) 2));
-			notify.Notify("CopyIt", new UInt32(0), "", "CopyIt",
-					message, new LinkedList<String>(),
-					hints, -1);
+
+			if (OSValidator.isUnix()) {
+				try {
+					Notifications notify = CopyItDesktop.dbusConnection
+							.getRemoteObject("org.freedesktop.Notifications",
+									"/org/freedesktop/Notifications",
+									Notifications.class);
+					Map<String, Variant<Byte>> hints = new HashMap<String, Variant<Byte>>();
+					hints.put("urgency", new Variant<Byte>((byte) 2));
+					notify.Notify("CopyIt", new UInt32(0), "", "CopyIt",
+							message, new LinkedList<String>(), hints, -1);
+				} catch (DBusException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
 			System.out.println(message);
 			System.exit(0);
 		} else {
@@ -108,7 +118,6 @@ public class CopyItDesktop extends CopyIt {
 				System.exit(1);
 			}
 		}
-		;
 
 		AbstractUi ui = new SwtGui(this.settings);
 		ui.open();
