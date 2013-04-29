@@ -69,7 +69,7 @@ public class MainActivity extends SherlockFragmentActivity {
 		}
 
 		ServerApi api = new ServerApi();
-		api.apiUrl = this.getResources().getString(R.string.jenkins_baseurl);
+		api.apiUrl = this.getResources().getString(R.string.jenkins_joburl);
 
 		if (CopyItAndroid.getBuildNumber(this) != 0) {
 			CheckUpdateTask task = new CheckUpdateTask(this, api);
@@ -181,6 +181,7 @@ public class MainActivity extends SherlockFragmentActivity {
 		ClipboardUtils clipboard = new AndroidClipboardUtils(MainActivity.this);
 
 		CopyItTask task = new CopyItTask(this, api);
+		task.setUseProgressDialog(true);
 		task.execute(clipboard.getText());
 	}
 
@@ -210,6 +211,7 @@ public class MainActivity extends SherlockFragmentActivity {
 				.getResources().getString(R.string.default_baseurl));
 
 		PasteItTask task = new PasteItTask(this, api);
+		task.setUseProgressDialog(true);
 		task.execute();
 	}
 

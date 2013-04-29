@@ -12,7 +12,6 @@ public class CopyItTask extends ServerApiUiTask<String, Void, Boolean> {
 		
 		this.setProgressDialigMessage(context.getResources().getString(
 				R.string.text_content_pushing));
-		this.setUseProgressDialog(true);
 	}
 
 	private String content;
