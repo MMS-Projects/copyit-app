@@ -27,7 +27,6 @@ public abstract class GeneralDialog extends Dialog {
 				display.sleep();
 			}
 		}
-
 	}
 
 	/**

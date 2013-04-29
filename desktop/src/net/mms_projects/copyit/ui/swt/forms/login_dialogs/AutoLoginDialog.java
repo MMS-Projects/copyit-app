@@ -13,11 +13,16 @@ import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.browser.LocationEvent;
 import org.eclipse.swt.browser.LocationListener;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 public class AutoLoginDialog extends AbstractLoginDialog {
 
-	private Settings settings;
+	protected Settings settings;
+
+	private Browser browser;
+
+	private Shell windowBuilderShell;
 
 	public AutoLoginDialog(Shell parent, Settings settings) {
 		super(parent);
@@ -27,34 +32,36 @@ public class AutoLoginDialog extends AbstractLoginDialog {
 		setText(Messages.getString("title_activity_login"));
 	}
 
+	/**
+	 * Open the dialog.
+	 */
+	public void open() {
+		this.createContents();
+		this.updateForm();
+
+		this.shell.open();
+		this.shell.layout();
+		Display display = getParent().getDisplay();
+		while (!this.shell.isDisposed()) {
+			if (!display.readAndDispatch()) {
+				display.sleep();
+			}
+		}
+	}
+
+	/**
+	 * Create contents of the dialog.
+	 */
 	@Override
 	protected void createContents() {
-		/*
-		 * Definitions
-		 */
+		this.windowBuilderShell = new Shell(getParent());
+		this.windowBuilderShell.setSize(800, 600);
+		this.windowBuilderShell.setText(getText());
+		this.windowBuilderShell.setLayout(new FillLayout(SWT.HORIZONTAL));
 
-		// Shell
-		this.shell = new Shell(this.getParent());
-		// Browser
-		Browser browser = new Browser(this.shell, SWT.NONE);
-
-		/*
-		 * Layout and settings
-		 */
-
-		// Window
-		this.shell.setSize(800, 600);
-		this.shell.setText(getText());
-		this.shell.setLayout(new FillLayout(SWT.HORIZONTAL));
-		// Browser
+		browser = new Browser(windowBuilderShell, SWT.NONE);
 		browser.setUrl(this.settings.get("server.baseurl")
 				+ "/app-setup/setup?device_password=" + this.getPassword());
-
-		/*
-		 * Listeners
-		 */
-
-		// Browser
 		browser.addLocationListener(new LocationListener() {
 			@Override
 			public void changing(LocationEvent event) {
@@ -65,47 +72,29 @@ public class AutoLoginDialog extends AbstractLoginDialog {
 					e.printStackTrace();
 					return;
 				}
-
 				System.out.println("Changing: " + location.getPath());
-
+				System.out.println(location.getPath());
 				if (location.getPath().startsWith("/app-setup/done/")) {
+					String deviceId = location.getPath().substring(16);
 					LoginResponse response = new LoginResponse();
-					response.deviceId = UUID.fromString(location.getPath()
-							.substring(16));
 					response.devicePassword = AutoLoginDialog.this
 							.getPassword();
+					response.deviceId = UUID.fromString(deviceId);
 					AutoLoginDialog.this.setResponse(response);
 				}
 			}
 
 			@Override
 			public void changed(LocationEvent event) {
-				URL location = null;
-				try {
-					location = new URL(event.location);
-				} catch (MalformedURLException e) {
-					e.printStackTrace();
-					return;
-				}
 
-				System.out.println("Changed: " + location.getPath());
-
-				if (location.getPath().startsWith("/app-setup/done/")) {
-					LoginResponse response = new LoginResponse();
-					response.deviceId = UUID.fromString(location.getPath()
-							.substring(16));
-					response.devicePassword = AutoLoginDialog.this
-							.getPassword();
-					AutoLoginDialog.this.setResponse(response);
-				}
 			}
 		});
+		this.shell = this.windowBuilderShell;
 	}
 
 	@Override
 	protected void updateForm() {
 		// TODO Auto-generated method stub
-		
-	}
 
+	}
 }

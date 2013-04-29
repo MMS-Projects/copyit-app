@@ -5,34 +5,15 @@ import net.mms_projects.copyit.PasswordGenerator;
 import net.mms_projects.copyit.ui.swt.forms.GeneralDialog;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 public abstract class AbstractLoginDialog extends GeneralDialog {
-
-	protected Shell shell;
 
 	private LoginResponse response;
 	private String password;
 
 	public AbstractLoginDialog(Shell parent) {
 		super(parent, SWT.DIALOG_TRIM | SWT.MIN | SWT.PRIMARY_MODAL);
-	}
-
-	/**
-	 * Open the dialog.
-	 */
-	final public void open() {
-		Display display = this.getParent().getDisplay();
-
-		this.createContents();
-		this.shell.open();
-		this.shell.layout();
-		while (!this.shell.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				display.sleep();
-			}
-		}
 	}
 
 	/**
