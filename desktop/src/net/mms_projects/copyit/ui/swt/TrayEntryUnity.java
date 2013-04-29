@@ -45,7 +45,15 @@ public class TrayEntryUnity extends TrayEntry implements DBusSigHandler {
 		command[0] = "python";
 		command[1] = "scripts/desktop-integration.py";
 		try {
-			Runtime.getRuntime().exec(command);
+			final Process process = Runtime.getRuntime().exec(command);
+
+			Runtime.getRuntime().addShutdownHook(new Thread() {
+				@Override
+				public void run() {
+					System.out.println("Stopping desktop integration script");
+					process.destroy();
+				}
+			});
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
