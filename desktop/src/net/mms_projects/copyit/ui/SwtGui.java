@@ -76,7 +76,7 @@ public class SwtGui extends AbstractUi {
 		}
 
 		this.checkVersion();
-
+		
 		while (!this.activityShell.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();
