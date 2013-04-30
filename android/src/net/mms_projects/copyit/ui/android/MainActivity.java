@@ -40,7 +40,7 @@ public class MainActivity extends SherlockFragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		SharedPreferences preferences = PreferenceManager
-										.getDefaultSharedPreferences(this);
+				.getDefaultSharedPreferences(this);
 
 		if (!preferences.contains("device.id")) {
 			Intent intent = new Intent(this, WelcomeActivity.class);
@@ -114,11 +114,8 @@ public class MainActivity extends SherlockFragmentActivity {
 			api.apiUrl = preferences.getString("server.baseurl", this
 					.getResources().getString(R.string.default_baseurl));
 
-			ClipboardUtils clipboard = new AndroidClipboardUtils(
-					MainActivity.this);
-
 			CopyItTask task = new HandleShareTask(this, api);
-			task.execute(clipboard.getText());
+			task.execute(sharedText);
 		}
 	}
 
