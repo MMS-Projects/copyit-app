@@ -77,10 +77,6 @@ public class CopyItDesktop extends CopyIt {
 				System.exit(1);
 			}
 		}
-		;
-
-		Thread syncThread = new SyncingThread(this.settings);
-		syncThread.start();
 
 		AbstractUi ui = new SwtGui(this.settings);
 		ui.open();

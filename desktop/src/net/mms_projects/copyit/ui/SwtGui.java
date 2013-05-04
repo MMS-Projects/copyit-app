@@ -5,11 +5,13 @@ import javax.swing.JOptionPane;
 
 import net.mms_projects.copyit.OpenBrowser;
 import net.mms_projects.copyit.Settings;
+import net.mms_projects.copyit.SyncingThread;
 import net.mms_projects.copyit.api.ServerApi;
 import net.mms_projects.copyit.api.endpoints.GetBuildInfo;
 import net.mms_projects.copyit.api.responses.JenkinsBuildResponse;
 import net.mms_projects.copyit.app.CopyItDesktop;
 import net.mms_projects.copyit.ui.swt.TrayEntry;
+import net.mms_projects.copyit.ui.swt.forms.DataQueue;
 import net.mms_projects.copyit.ui.swt.forms.PreferencesDialog;
 
 import org.eclipse.swt.SWT;
@@ -20,6 +22,7 @@ import org.eclipse.swt.widgets.Tray;
 
 public class SwtGui extends AbstractUi {
 
+	protected DataQueue queueWindow;
 	protected Display display;
 	protected Tray tray;
 
@@ -48,6 +51,7 @@ public class SwtGui extends AbstractUi {
 
 		this.trayEntry = new TrayEntry(this.tray, this.settings,
 				this.activityShell);
+		this.queueWindow = new DataQueue(this.activityShell, SWT.DIALOG_TRIM);
 	}
 
 	@Override
@@ -64,6 +68,12 @@ public class SwtGui extends AbstractUi {
 		}
 
 		this.checkVersion();
+		
+		SyncingThread syncThread = new SyncingThread(this.settings);
+		syncThread.start();
+		syncThread.addListener(queueWindow);
+		this.queueWindow.setup();
+		this.queueWindow.setEnabled(true);
 		
 		while (!this.activityShell.isDisposed()) {
 			if (!display.readAndDispatch()) {
