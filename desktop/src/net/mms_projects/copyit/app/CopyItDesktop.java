@@ -8,9 +8,11 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
+import net.mms_projects.copyit.DesktopClipboardUtils;
 import net.mms_projects.copyit.FileStreamBuilder;
 import net.mms_projects.copyit.PathBuilder;
 import net.mms_projects.copyit.Settings;
+import net.mms_projects.copyit.SyncingThread;
 import net.mms_projects.copyit.ui.AbstractUi;
 import net.mms_projects.copyit.ui.SwtGui;
 import net.mms_projects.utils.OSValidator;

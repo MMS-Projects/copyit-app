@@ -1,12 +1,9 @@
 package net.mms_projects.copyit.ui.swt.forms;
 
 import org.eclipse.swt.widgets.Dialog;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 public abstract class GeneralDialog extends Dialog {
-
-	protected Shell shell;
 
 	public GeneralDialog(Shell parent, int style) {
 		super(parent, style);
@@ -15,19 +12,7 @@ public abstract class GeneralDialog extends Dialog {
 	/**
 	 * Open the dialog.
 	 */
-	public void open() {
-		this.createContents();
-		this.updateForm();
-
-		this.shell.open();
-		this.shell.layout();
-		Display display = getParent().getDisplay();
-		while (!this.shell.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				display.sleep();
-			}
-		}
-	}
+	abstract public void open();
 
 	/**
 	 * Create contents of the dialog.

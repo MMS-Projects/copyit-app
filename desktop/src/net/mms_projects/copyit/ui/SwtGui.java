@@ -1,10 +1,16 @@
 package net.mms_projects.copyit.ui;
 
+import java.util.Date;
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import net.mms_projects.copyit.ClipboardUtils;
+import net.mms_projects.copyit.DesktopClipboardUtils;
 import net.mms_projects.copyit.OpenBrowser;
 import net.mms_projects.copyit.Settings;
+import net.mms_projects.copyit.SyncingListener;
+import net.mms_projects.copyit.SyncingThread;
 import net.mms_projects.copyit.api.ServerApi;
 import net.mms_projects.copyit.api.endpoints.GetBuildInfo;
 import net.mms_projects.copyit.api.responses.JenkinsBuildResponse;
@@ -12,6 +18,7 @@ import net.mms_projects.copyit.app.CopyItDesktop;
 import net.mms_projects.copyit.ui.swt.TrayEntry;
 import net.mms_projects.copyit.ui.swt.TrayEntrySwt;
 import net.mms_projects.copyit.ui.swt.TrayEntryUnity;
+import net.mms_projects.copyit.ui.swt.forms.DataQueue;
 import net.mms_projects.copyit.ui.swt.forms.PreferencesDialog;
 import net.mms_projects.utils.OSValidator;
 
@@ -23,6 +30,7 @@ import org.eclipse.swt.widgets.Tray;
 
 public class SwtGui extends AbstractUi {
 
+	protected DataQueue queueWindow;
 	protected Display display;
 	protected Tray tray;
 
@@ -60,6 +68,7 @@ public class SwtGui extends AbstractUi {
 			this.trayEntry = new TrayEntrySwt(this.settings,
 					this.activityShell, this.tray);
 		}
+		this.queueWindow = new DataQueue(this.activityShell, SWT.DIALOG_TRIM);
 	}
 
 	@Override
@@ -76,7 +85,29 @@ public class SwtGui extends AbstractUi {
 		}
 
 		this.checkVersion();
-		
+
+		SyncingThread syncThread = new SyncingThread(this.settings);
+		syncThread.start();
+		syncThread.addListener(new SyncingListener() {
+			@Override
+			public void onClipboardChange(String data, Date date) {
+				final ClipboardUtils clipboard = new DesktopClipboardUtils();
+
+				if (!SwtGui.this.settings.getBoolean("sync.queue.enabled")) {
+					clipboard.setText(data);
+				}
+			}
+		});
+		syncThread.addListener(queueWindow);
+		syncThread.setEnabled(this.settings.getBoolean("sync.polling.enabled"));
+
+		this.queueWindow.setup();
+		this.queueWindow.setEnabled(this.settings
+				.getBoolean("sync.queue.enabled"));
+
+		this.settings.addListener("sync.polling.enabled", syncThread);
+		this.settings.addListener("sync.queue.enabled", this.queueWindow);
+
 		while (!this.activityShell.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();
