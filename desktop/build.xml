@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project name="desktop" default="all">
+<project name="desktop">
 
     <dirname property="imported.basedir" file="${ant.file.desktop}"/>
 
@@ -42,11 +42,17 @@
     <path id="linux-x86-classpath">
         <path refid="global-classpath" />
         <fileset file="desktop/libs/swt-4.2.1-gtk-linux-x86.jar" />
+    	<fileset file="desktop/libs/linux/hexdump-0.2.jar" />
+    	<fileset file="desktop/libs/linux/libdbus-java-2.7.jar" />
+    	<fileset file="desktop/libs/linux/unix-0.5.jar" />
     </path>
 
     <path id="linux-x86_64-classpath">
         <path refid="global-classpath" />
         <fileset file="desktop/libs/swt-4.2.1-gtk-linux-x86_64.jar" />
+    	<fileset file="desktop/libs/linux/hexdump-0.2.jar" />
+        <fileset file="desktop/libs/linux/libdbus-java-2.7.jar" />
+        <fileset file="desktop/libs/linux/unix-0.5.jar" />
     </path>
 
     <path id="windows-x86-classpath">
@@ -87,11 +93,17 @@
             <zipfileset excludes="META-INF/*.SF" src="global/libs/httpcore-4.2.2.jar" />
             <zipfileset excludes="META-INF/*.SF" src="global/libs/httpclient-4.2.3.jar" />
             <zipfileset excludes="META-INF/*.SF" src="global/libs/gson-2.2.2.jar" />
+        	<zipfileset excludes="META-INF/*.SF" src="desktop/libs/linux/hexdump-0.2.jar" />
+        	<zipfileset excludes="META-INF/*.SF" src="desktop/libs/linux/libdbus-java-2.7.jar" />
+        	<zipfileset excludes="META-INF/*.SF" src="desktop/libs/linux/unix-0.5.jar" />
             <fileset dir="android">
                <include name="**/res/**.properties" />
                <include name="**/res/mmsprojects-copyit-**.png" />
             </fileset>
             <fileset dir="android/res" />
+        	<fileset dir="desktop/libs/linux">
+                <include name="**/*.so" />
+            </fileset>
         </jar>
     </target>
 
@@ -110,11 +122,17 @@
             <zipfileset excludes="META-INF/*.SF" src="global/libs/httpcore-4.2.2.jar" />
             <zipfileset excludes="META-INF/*.SF" src="global/libs/httpclient-4.2.3.jar" />
             <zipfileset excludes="META-INF/*.SF" src="global/libs/gson-2.2.2.jar" />
+        	<zipfileset excludes="META-INF/*.SF" src="desktop/libs/linux/hexdump-0.2.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="desktop/libs/linux/libdbus-java-2.7.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="desktop/libs/linux/unix-0.5.jar" />
             <fileset dir="android">
                <include name="**/res/**.properties" />
                <include name="**/res/mmsprojects-copyit-**.png" />
             </fileset>
             <fileset dir="android/res" />
+        	<fileset dir="desktop/libs/linux">
+		        <include name="**/*.so" />
+            </fileset>
         </jar>
     </target>
 

@@ -4,20 +4,20 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
-import net.mms_projects.copyit.DesktopClipboardUtils;
 import net.mms_projects.copyit.FileStreamBuilder;
 import net.mms_projects.copyit.PathBuilder;
 import net.mms_projects.copyit.Settings;
-import net.mms_projects.copyit.SyncingThread;
 import net.mms_projects.copyit.ui.AbstractUi;
 import net.mms_projects.copyit.ui.SwtGui;
 import net.mms_projects.utils.OSValidator;
 
+import org.apache.commons.io.FileUtils;
 import org.freedesktop.Notifications;
 import org.freedesktop.dbus.DBusConnection;
 import org.freedesktop.dbus.UInt32;
@@ -28,7 +28,10 @@ public class CopyItDesktop extends CopyIt {
 
 	protected Settings settings;
 	protected File lockFile;
+
 	static public DBusConnection dbusConnection;
+
+	private boolean nativeLoadingInitialized;
 
 	/**
 	 * @param args
@@ -74,6 +77,7 @@ public class CopyItDesktop extends CopyIt {
 		this.settings.loadProperties();
 
 		if (OSValidator.isUnix()) {
+			this.exportResource("unix-java.so");
 			try {
 				CopyItDesktop.dbusConnection = DBusConnection
 						.getConnection(DBusConnection.SESSION);
@@ -151,6 +155,53 @@ public class CopyItDesktop extends CopyIt {
 			return new FileOutputStream(this.settingsFile);
 		}
 
+	}
+
+	public void exportResource(String resource) {
+		if (!this.nativeLoadingInitialized) {
+			System.setProperty(
+					"java.library.path",
+					System.getProperty("java.library.path")
+							+ System.getProperty("path.separator")
+							+ PathBuilder.getCacheDirectory().getAbsolutePath());
+			System.out.println(System.getProperty("java.library.path"));
+
+			Field fieldSysPath = null;
+			try {
+				fieldSysPath = ClassLoader.class.getDeclaredField("sys_paths");
+				fieldSysPath.setAccessible(true);
+				fieldSysPath.set(null, null);
+			} catch (SecurityException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			} catch (NoSuchFieldException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			this.nativeLoadingInitialized = true;
+		}
+		System.out.println("Exporting resource " + resource);
+		URL inputUrl = getClass().getResource("/" + resource);
+		File dest = new File(PathBuilder.getCacheDirectory(), resource);
+		if (inputUrl == null) {
+			System.out
+					.println("No input resource available while exporting resource "
+							+ resource + ". " + "Ignoring it.");
+			return;
+		}
+		try {
+			FileUtils.copyURLToFile(inputUrl, dest);
+		} catch (IOException e1) {
+			System.out.println("Could not copy " + resource
+					+ ". This might cause issues.");
+			e1.printStackTrace();
+		}
 	}
 
 }
