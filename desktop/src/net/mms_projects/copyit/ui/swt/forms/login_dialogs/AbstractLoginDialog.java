@@ -9,6 +9,8 @@ import org.eclipse.swt.widgets.Shell;
 
 public abstract class AbstractLoginDialog extends GeneralDialog {
 
+	protected Shell shell;
+
 	private LoginResponse response;
 	private String password;
 

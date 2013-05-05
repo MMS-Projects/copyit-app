@@ -14,6 +14,7 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
@@ -22,6 +23,8 @@ import org.eclipse.swt.widgets.Text;
 
 public class PreferencesDialog extends GeneralDialog {
 
+	protected Shell shell;
+	
 	private Settings settings;
 
 	private Text textEncryptionPassphrase;
@@ -46,7 +49,17 @@ public class PreferencesDialog extends GeneralDialog {
 
 	@Override
 	public void open() {
-		super.open();
+		this.createContents();
+		this.updateForm();
+
+		this.shell.open();
+		this.shell.layout();
+		Display display = getParent().getDisplay();
+		while (!this.shell.isDisposed()) {
+			if (!display.readAndDispatch()) {
+				display.sleep();
+			}
+		}
 
 		this.settings.saveProperties();
 	}
