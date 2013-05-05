@@ -56,10 +56,15 @@ public class TrayEntryUnity extends TrayEntry implements DBusSigHandler {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		
+		File script = CopyItDesktop.exportResource("desktop-integration.py");
+		if (script == null) {
+			script = new File("scripts/desktop-integration.py");
+		}
 
 		String[] command = new String[2];
 		command[0] = "python";
-		command[1] = "scripts/desktop-integration.py";
+		command[1] = script.getAbsolutePath();
 		try {
 			final Process process = Runtime.getRuntime().exec(command);
 

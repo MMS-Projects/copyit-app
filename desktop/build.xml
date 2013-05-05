@@ -101,6 +101,7 @@
                <include name="**/res/mmsprojects-copyit-**.png" />
             </fileset>
             <fileset dir="android/res" />
+        	<fileset dir="desktop/scripts" />
         	<fileset dir="desktop/libs/linux">
                 <include name="**/*.so" />
             </fileset>
@@ -130,6 +131,7 @@
                <include name="**/res/mmsprojects-copyit-**.png" />
             </fileset>
             <fileset dir="android/res" />
+        	<fileset dir="desktop/scripts" />
         	<fileset dir="desktop/libs/linux">
 		        <include name="**/*.so" />
             </fileset>
