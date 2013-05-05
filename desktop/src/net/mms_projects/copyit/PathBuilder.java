@@ -24,5 +24,18 @@ public class PathBuilder {
 
 		return directory;
 	}
+	
+	public static File getCacheDirectory() {
+		File directory = new File("." + File.separator);
+		if (OSValidator.isUnix()) {
+			directory = new File(System.getenv("HOME") + File.separator
+					+ ".cache" + File.separator + "copyit");
+			if (!directory.exists()) {
+				directory.mkdir();
+			}
+		}
+
+		return directory;
+	}
 
 }
