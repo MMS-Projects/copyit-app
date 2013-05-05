@@ -1,10 +1,15 @@
 package net.mms_projects.copyit.ui;
 
+import java.util.Date;
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import net.mms_projects.copyit.ClipboardUtils;
+import net.mms_projects.copyit.DesktopClipboardUtils;
 import net.mms_projects.copyit.OpenBrowser;
 import net.mms_projects.copyit.Settings;
+import net.mms_projects.copyit.SyncingListener;
 import net.mms_projects.copyit.SyncingThread;
 import net.mms_projects.copyit.api.ServerApi;
 import net.mms_projects.copyit.api.endpoints.GetBuildInfo;
@@ -71,6 +76,16 @@ public class SwtGui extends AbstractUi {
 
 		SyncingThread syncThread = new SyncingThread(this.settings);
 		syncThread.start();
+		syncThread.addListener(new SyncingListener() {
+			@Override
+			public void onClipboardChange(String data, Date date) {
+				final ClipboardUtils clipboard = new DesktopClipboardUtils();
+
+				if (!SwtGui.this.settings.getBoolean("sync.queue.enabled")) {
+					clipboard.setText(data);
+				}
+			}
+		});
 		syncThread.addListener(queueWindow);
 		syncThread.setEnabled(this.settings.getBoolean("sync.polling.enabled"));
 

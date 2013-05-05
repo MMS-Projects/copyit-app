@@ -11,15 +11,16 @@ import net.mms_projects.copyit.api.endpoints.ClipboardContentEndpoint;
 import org.eclipse.swt.widgets.Display;
 
 public class SyncingThread extends Thread implements SettingsListener {
-	
+
 	private boolean enabled;
 	private int delay = 5;
 	private Settings settings;
 	private List<SyncingListener> listeners = new ArrayList<SyncingListener>();
+	private String currentContent;
 
 	public SyncingThread(Settings settings) {
 		this.settings = settings;
-		
+
 		this.addListener(new SyncingListener() {
 			@Override
 			public void onClipboardChange(String data, Date date) {
@@ -28,11 +29,11 @@ public class SyncingThread extends Thread implements SettingsListener {
 			}
 		});
 	}
-	
+
 	public void setEnabled(boolean state) {
 		this.enabled = state;
 	}
-	
+
 	public void addListener(SyncingListener listener) {
 		this.listeners.add(listener);
 	}
@@ -42,7 +43,7 @@ public class SyncingThread extends Thread implements SettingsListener {
 		while (!isInterrupted()) {
 			try {
 				Thread.sleep(this.delay * 1000);
-				
+
 				if (!this.enabled) {
 					return;
 				}
@@ -58,19 +59,16 @@ public class SyncingThread extends Thread implements SettingsListener {
 			}
 		}
 	}
-	
+
 	private class RefreshClipboard implements Runnable {
 		private ServerApi api;
-		
+
 		public RefreshClipboard(ServerApi api) {
 			this.api = api;
 		}
-		
+
 		@Override
 		public void run() {
-			final ClipboardUtils clipboard = new DesktopClipboardUtils();
-			
-			String currentData = clipboard.getText();
 			String newData = "";
 			try {
 				newData = new ClipboardContentEndpoint(api).get();
@@ -78,17 +76,16 @@ public class SyncingThread extends Thread implements SettingsListener {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			if ((currentData != null) && (currentData.equals(newData))) {
+
+			if ((SyncingThread.this.currentContent != null)
+					&& (SyncingThread.this.currentContent.equals(newData))) {
 				return;
 			}
+
+			SyncingThread.this.currentContent = newData;
 			
 			for (SyncingListener listener : listeners) {
 				listener.onClipboardChange(newData, new Date());
-			}
-
-			if (!newData.isEmpty()) {
-				clipboard.setText(newData);
 			}
 		}
 	}
