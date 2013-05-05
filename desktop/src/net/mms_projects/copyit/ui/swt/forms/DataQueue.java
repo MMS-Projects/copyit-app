@@ -2,6 +2,8 @@ package net.mms_projects.copyit.ui.swt.forms;
 
 import java.util.Date;
 
+import net.mms_projects.copyit.ClipboardUtils;
+import net.mms_projects.copyit.DesktopClipboardUtils;
 import net.mms_projects.copyit.SettingsListener;
 import net.mms_projects.copyit.SyncingListener;
 
@@ -13,12 +15,15 @@ import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
-public class DataQueue extends Dialog implements SyncingListener, SettingsListener {
+public class DataQueue extends Dialog implements SyncingListener,
+		SettingsListener {
 
 	protected Object result;
 	protected Shell shell;
@@ -48,7 +53,7 @@ public class DataQueue extends Dialog implements SyncingListener, SettingsListen
 
 	public void setup() {
 		createContents();
-		
+
 		this.shell.addListener(SWT.Close, new Listener() {
 			public void handleEvent(Event e) {
 				e.doit = false;
@@ -100,6 +105,19 @@ public class DataQueue extends Dialog implements SyncingListener, SettingsListen
 		TableColumn tblclmnDate = new TableColumn(table, SWT.NONE);
 		tblclmnDate.setWidth(100);
 		tblclmnDate.setText("Date");
+
+		Menu menu = new Menu(table);
+		MenuItem itemPaste = new MenuItem(menu, SWT.PUSH);
+		itemPaste.setText("Paste");
+		itemPaste.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				TableItem tableItem = table.getSelection()[0];
+				String data = tableItem.getText(0);
+				ClipboardUtils clipboard = new DesktopClipboardUtils();
+				clipboard.setText(data);
+			}
+		});
+		table.setMenu(menu);
 	}
 
 	@Override
