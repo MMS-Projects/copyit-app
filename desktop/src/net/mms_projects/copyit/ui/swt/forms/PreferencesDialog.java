@@ -32,6 +32,10 @@ public class PreferencesDialog extends GeneralDialog {
 	private Button btnLogin;
 	private Button btnManualLogin;
 
+	private Button btnEnablePolling;
+
+	private Button btnEnableQueue;
+
 	/**
 	 * Create the dialog.
 	 * 
@@ -93,7 +97,12 @@ public class PreferencesDialog extends GeneralDialog {
 				SWT.CHECK);
 		Label lblEncryptionPassphrase = new Label(compositeSecurity, SWT.NONE);
 		this.textEncryptionPassphrase = new Text(compositeSecurity, SWT.BORDER);
-
+		// Sync tab
+		TabItem tbtmSync = new TabItem(tabFolder, SWT.NONE);
+		Composite compositeSync = new Composite(tabFolder, SWT.NONE);
+		btnEnablePolling = new Button(compositeSync, SWT.CHECK);
+		btnEnableQueue = new Button(compositeSync, SWT.CHECK);
+		
 		/*
 		 * Layout and settings
 		 */
@@ -129,6 +138,13 @@ public class PreferencesDialog extends GeneralDialog {
 		lblEncryptionPassphrase.setBounds(10, 44, 184, 17);
 		lblEncryptionPassphrase.setText("Encryption passphrase:");
 		this.textEncryptionPassphrase.setBounds(200, 40, 200, 27);
+		// Sync tab
+		tbtmSync.setText("Sync");
+		tbtmSync.setControl(compositeSync);
+		btnEnablePolling.setBounds(10, 10, 168, 24);
+		btnEnablePolling.setText(Messages.getString("PreferencesDialog.btnEnablePolling.text")); //$NON-NLS-1$
+		btnEnableQueue.setBounds(10, 40, 115, 24);
+		btnEnableQueue.setText(Messages.getString("PreferencesDialog.btnEnableQueue.text")); //$NON-NLS-1$
 
 		/*
 		 * Listeners
@@ -166,6 +182,21 @@ public class PreferencesDialog extends GeneralDialog {
 				PreferencesDialog.this.shell.close();
 			}
 		});
+		// Sync tab
+		btnEnablePolling.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				PreferencesDialog.this.settings.set("sync.polling.enabled", btnEnablePolling.getSelection());
+				PreferencesDialog.this.updateForm();
+			}
+		});
+		btnEnableQueue.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				PreferencesDialog.this.settings.set("sync.queue.enabled", btnEnableQueue.getSelection());
+				PreferencesDialog.this.updateForm();
+			}
+		});
 	}
 
 	protected void updateForm() {
@@ -181,6 +212,9 @@ public class PreferencesDialog extends GeneralDialog {
 		if (this.settings.get("device.id") != null) {
 			this.btnManualLogin.setText("Relogin (manual)");
 		}
+		btnEnablePolling.setSelection(this.settings.getBoolean("sync.polling.enabled"));
+		btnEnableQueue.setSelection(this.settings.getBoolean("sync.queue.enabled"));
+		btnEnableQueue.setEnabled(this.settings.getBoolean("sync.polling.enabled"));
 	}
 
 	private abstract class LoginSectionAdapter extends SelectionAdapter {

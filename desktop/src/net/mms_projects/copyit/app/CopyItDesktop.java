@@ -5,9 +5,11 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import net.mms_projects.copyit.DesktopClipboardUtils;
 import net.mms_projects.copyit.FileStreamBuilder;
 import net.mms_projects.copyit.PathBuilder;
 import net.mms_projects.copyit.Settings;
+import net.mms_projects.copyit.SyncingThread;
 import net.mms_projects.copyit.ui.AbstractUi;
 import net.mms_projects.copyit.ui.SwtGui;
 
@@ -75,7 +77,6 @@ public class CopyItDesktop extends CopyIt {
 				System.exit(1);
 			}
 		}
-		;
 
 		AbstractUi ui = new SwtGui(this.settings);
 		ui.open();
