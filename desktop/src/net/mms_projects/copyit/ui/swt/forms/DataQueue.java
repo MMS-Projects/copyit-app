@@ -2,6 +2,7 @@ package net.mms_projects.copyit.ui.swt.forms;
 
 import java.util.Date;
 
+import net.mms_projects.copyit.SettingsListener;
 import net.mms_projects.copyit.SyncingListener;
 
 import org.eclipse.swt.SWT;
@@ -17,7 +18,7 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
-public class DataQueue extends Dialog implements SyncingListener {
+public class DataQueue extends Dialog implements SyncingListener, SettingsListener {
 
 	protected Object result;
 	protected Shell shell;
@@ -108,5 +109,12 @@ public class DataQueue extends Dialog implements SyncingListener {
 		}
 		tableItem = new TableItem(table, SWT.NONE);
 		tableItem.setText(new String[] { data, date.toString() });
+	}
+
+	@Override
+	public void onChange(String key, String value) {
+		if ("sync.queue.enabled".equals(key)) {
+			this.setEnabled(Boolean.parseBoolean(value));
+		}
 	}
 }

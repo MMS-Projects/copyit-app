@@ -68,13 +68,19 @@ public class SwtGui extends AbstractUi {
 		}
 
 		this.checkVersion();
-		
+
 		SyncingThread syncThread = new SyncingThread(this.settings);
 		syncThread.start();
 		syncThread.addListener(queueWindow);
+		syncThread.setEnabled(this.settings.getBoolean("sync.polling.enabled"));
+
 		this.queueWindow.setup();
-		this.queueWindow.setEnabled(true);
-		
+		this.queueWindow.setEnabled(this.settings
+				.getBoolean("sync.queue.enabled"));
+
+		this.settings.addListener("sync.polling.enabled", syncThread);
+		this.settings.addListener("sync.queue.enabled", this.queueWindow);
+
 		while (!this.activityShell.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();

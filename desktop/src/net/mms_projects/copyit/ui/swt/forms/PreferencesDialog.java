@@ -212,6 +212,8 @@ public class PreferencesDialog extends GeneralDialog {
 		if (this.settings.get("device.id") != null) {
 			this.btnManualLogin.setText("Relogin (manual)");
 		}
+		btnEnablePolling.setSelection(this.settings.getBoolean("sync.polling.enabled"));
+		btnEnableQueue.setSelection(this.settings.getBoolean("sync.queue.enabled"));
 		btnEnableQueue.setEnabled(this.settings.getBoolean("sync.polling.enabled"));
 	}
 

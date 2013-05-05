@@ -10,7 +10,10 @@ import net.mms_projects.copyit.api.endpoints.ClipboardContentEndpoint;
 
 import org.eclipse.swt.widgets.Display;
 
-public class SyncingThread extends Thread {
+public class SyncingThread extends Thread implements SettingsListener {
+	
+	private boolean enabled;
+	private int delay = 5;
 	private Settings settings;
 	private List<SyncingListener> listeners = new ArrayList<SyncingListener>();
 
@@ -26,6 +29,10 @@ public class SyncingThread extends Thread {
 		});
 	}
 	
+	public void setEnabled(boolean state) {
+		this.enabled = state;
+	}
+	
 	public void addListener(SyncingListener listener) {
 		this.listeners.add(listener);
 	}
@@ -34,7 +41,11 @@ public class SyncingThread extends Thread {
 	public void run() {
 		while (!isInterrupted()) {
 			try {
-				Thread.sleep(5 * 1000);
+				Thread.sleep(this.delay * 1000);
+				
+				if (!this.enabled) {
+					return;
+				}
 
 				ServerApi api = new ServerApi();
 				api.deviceId = UUID.fromString(this.settings.get("device.id"));
@@ -79,6 +90,13 @@ public class SyncingThread extends Thread {
 			if (!newData.isEmpty()) {
 				clipboard.setText(newData);
 			}
+		}
+	}
+
+	@Override
+	public void onChange(String key, String value) {
+		if ("sync.polling.enabled".equals(key)) {
+			this.setEnabled(Boolean.parseBoolean(value));
 		}
 	}
 }
