@@ -12,16 +12,8 @@ import sys
 
 class DesktopIntegration(dbus.service.Object):
     def __init__(self):
-        self.bus_name = dbus.service.BusName('net.mms_projects.copyit.desktop_integration', bus=dbus.SessionBus())
+        self.bus_name = dbus.service.BusName('net.mms_projects.copyit.DesktopIntegration', bus=dbus.SessionBus())
         dbus.service.Object.__init__(self, self.bus_name, '/')
-        self.ind = appindicator.Indicator("new-gmail-indicator",
-                                           "indicator-messages",
-                                           appindicator.CATEGORY_APPLICATION_STATUS)
-        self.ind.set_status(appindicator.STATUS_ACTIVE)
-        self.ind.set_attention_icon("new-messages-red")
-
-        self.menu_setup()
-        self.ind.set_menu(self.menu)
 
     def menu_setup(self):
         self.menu = gtk.Menu()
@@ -78,9 +70,13 @@ class DesktopIntegration(dbus.service.Object):
     @dbus.service.signal('net.mms_projects.copyit.DesktopIntegration')
     def action_quit(self):
         pass
+    @dbus.service.signal('net.mms_projects.copyit.DesktopIntegration')
+    def ready(self):
+        pass
 
 
     def main(self):
+        self.ready()
         gtk.main()
             
     @dbus.service.method('net.mms_projects.copyit.DesktopIntegration')
@@ -88,6 +84,17 @@ class DesktopIntegration(dbus.service.Object):
         self.HelloSignal('Hello')
         self.ind.set_status(appindicator.STATUS_ATTENTION)
         return "Hello,World!"
+    
+    @dbus.service.method('net.mms_projects.copyit.DesktopIntegration', in_signature='ss')
+    def setup(self, icon, attention_icon):
+        self.ind = appindicator.Indicator("new-gmail-indicator",
+                                           icon,
+                                           appindicator.CATEGORY_APPLICATION_STATUS)
+        self.ind.set_status(appindicator.STATUS_ACTIVE)
+        self.ind.set_attention_icon(attention_icon)
+
+        self.menu_setup()
+        self.ind.set_menu(self.menu)
 
 if __name__ == "__main__":
     DBusGMainLoop(set_as_default=True)

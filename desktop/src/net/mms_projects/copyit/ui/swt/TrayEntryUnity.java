@@ -1,11 +1,14 @@
 package net.mms_projects.copyit.ui.swt;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.UUID;
 
 import net.mms_projects.copyit.ClipboardUtils;
 import net.mms_projects.copyit.DesktopClipboardUtils;
 import net.mms_projects.copyit.DesktopIntegration;
+import net.mms_projects.copyit.PathBuilder;
 import net.mms_projects.copyit.Settings;
 import net.mms_projects.copyit.api.ServerApi;
 import net.mms_projects.copyit.api.endpoints.ClipboardContentEndpoint;
@@ -13,6 +16,7 @@ import net.mms_projects.copyit.app.CopyItDesktop;
 import net.mms_projects.copyit.ui.swt.forms.AboutDialog;
 import net.mms_projects.copyit.ui.swt.forms.PreferencesDialog;
 
+import org.apache.commons.io.FileUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -27,6 +31,8 @@ public class TrayEntryUnity extends TrayEntry implements DBusSigHandler {
 
 		try {
 			CopyItDesktop.dbusConnection.addSigHandler(
+					DesktopIntegration.ready.class, this);
+			CopyItDesktop.dbusConnection.addSigHandler(
 					DesktopIntegration.action_pull.class, this);
 			CopyItDesktop.dbusConnection.addSigHandler(
 					DesktopIntegration.action_push.class, this);
@@ -39,6 +45,16 @@ public class TrayEntryUnity extends TrayEntry implements DBusSigHandler {
 		} catch (DBusException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+
+		URL inputUrl = getClass().getResource(
+				"/drawable-xxhdpi/app_icon_small_mono.png");
+		File dest = new File(PathBuilder.getCacheDirectory(), "tray_icon.png");
+		try {
+			FileUtils.copyURLToFile(inputUrl, dest);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 
 		String[] command = new String[2];
@@ -62,7 +78,22 @@ public class TrayEntryUnity extends TrayEntry implements DBusSigHandler {
 
 	@Override
 	public void handle(DBusSignal signal) {
-		if (signal instanceof DesktopIntegration.action_push) {
+		if (signal instanceof DesktopIntegration.ready) {
+			String icon = new File(PathBuilder.getCacheDirectory(),
+					"tray_icon.png").getAbsolutePath();
+			try {
+				DesktopIntegration integration = CopyItDesktop.dbusConnection
+						.getRemoteObject(
+								"net.mms_projects.copyit.DesktopIntegration",
+								"/", DesktopIntegration.class);
+				integration.setup(icon, icon);
+			} catch (DBusException e) {
+				System.out
+						.println("Could not connect to desktop integration script while it reported as ready. Exiting...");
+				System.exit(1);
+			}
+
+		} else if (signal instanceof DesktopIntegration.action_push) {
 			final ServerApi api = new ServerApi();
 			api.deviceId = UUID.fromString(this.settings.get("device.id"));
 			api.devicePassword = this.settings.get("device.password");
