@@ -16,8 +16,11 @@ import net.mms_projects.copyit.api.endpoints.GetBuildInfo;
 import net.mms_projects.copyit.api.responses.JenkinsBuildResponse;
 import net.mms_projects.copyit.app.CopyItDesktop;
 import net.mms_projects.copyit.ui.swt.TrayEntry;
+import net.mms_projects.copyit.ui.swt.TrayEntrySwt;
+import net.mms_projects.copyit.ui.swt.TrayEntryUnity;
 import net.mms_projects.copyit.ui.swt.forms.DataQueue;
 import net.mms_projects.copyit.ui.swt.forms.PreferencesDialog;
+import net.mms_projects.utils.OSValidator;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
@@ -54,8 +57,17 @@ public class SwtGui extends AbstractUi {
 		this.tray = display.getSystemTray();
 		this.activityShell = new Shell(this.display);
 
-		this.trayEntry = new TrayEntry(this.tray, this.settings,
-				this.activityShell);
+		if (OSValidator.isUnix()) {
+			String desktop = System.getenv("XDG_CURRENT_DESKTOP");
+			if (desktop.equalsIgnoreCase("Unity")) {
+				this.trayEntry = new TrayEntryUnity(this.settings,
+						this.activityShell);
+			}
+		}
+		if (this.trayEntry == null) {
+			this.trayEntry = new TrayEntrySwt(this.settings,
+					this.activityShell, this.tray);
+		}
 		this.queueWindow = new DataQueue(this.activityShell, SWT.DIALOG_TRIM);
 	}
 
