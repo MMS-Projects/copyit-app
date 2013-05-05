@@ -31,7 +31,7 @@ public class CopyItDesktop extends CopyIt {
 
 	static public DBusConnection dbusConnection;
 
-	private boolean nativeLoadingInitialized;
+	static private boolean nativeLoadingInitialized;
 
 	/**
 	 * @param args
@@ -157,8 +157,8 @@ public class CopyItDesktop extends CopyIt {
 
 	}
 
-	public void exportResource(String resource) {
-		if (!this.nativeLoadingInitialized) {
+	public static File exportResource(String resource) {
+		if (!CopyItDesktop.nativeLoadingInitialized) {
 			System.setProperty(
 					"java.library.path",
 					System.getProperty("java.library.path")
@@ -184,16 +184,16 @@ public class CopyItDesktop extends CopyIt {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			this.nativeLoadingInitialized = true;
+			CopyItDesktop.nativeLoadingInitialized = true;
 		}
 		System.out.println("Exporting resource " + resource);
-		URL inputUrl = getClass().getResource("/" + resource);
+		URL inputUrl = CopyItDesktop.class.getResource("/" + resource);
 		File dest = new File(PathBuilder.getCacheDirectory(), resource);
 		if (inputUrl == null) {
 			System.out
 					.println("No input resource available while exporting resource "
 							+ resource + ". " + "Ignoring it.");
-			return;
+			return null;
 		}
 		try {
 			FileUtils.copyURLToFile(inputUrl, dest);
@@ -202,6 +202,7 @@ public class CopyItDesktop extends CopyIt {
 					+ ". This might cause issues.");
 			e1.printStackTrace();
 		}
+		return dest;
 	}
 
 }
