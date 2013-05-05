@@ -25,9 +25,17 @@ public class Settings {
 		this.properties.setProperty(key, value);
 		saveProperties();
 	}
+	
+	public void set(String key, boolean value) {
+		this.set(key, Boolean.toString(value));
+	}
 
 	public String get(String key) {
 		return this.properties.getProperty(key);
+	}
+	
+	public boolean getBoolean(String key) {
+		return Boolean.parseBoolean(this.get(key));
 	}
 
 	public void loadProperties() {
