@@ -15,15 +15,25 @@ import dbus
 import dbus.service
 import gtk
 import sys
+import time
 
 class DesktopIntegrationSyncMenu:
     def __init__(self, main):
         self.main = main
         self.main_loop = GObject.MainLoop()
-    def set_sync_state(self, state):
-        print "Syncing has been set to " + ("paused" if not state else "running") + " by the app"
+    def set_enabled(self, state):
+        print "Syncing has been " + ("enabled" if state else "disabled")
         self._ignore_status_event = True
         self.app.set_paused(not state)
+    def set_state(self, state):
+        print "Sync state has been set to " + state
+        self._ignore_status_event = True
+        if state == "idle":
+            self.app.set_state(SyncMenu.State.IDLE)
+        elif state == "syncing":
+            self.app.set_state(SyncMenu.State.SYNCING)
+        elif state == "error":
+            self.app.set_state(SyncMenu.State.ERROR)            
     def loop(self):
         self.main_loop.run()
     def setup(self, icon, attention_icon):
@@ -73,13 +83,20 @@ class DesktopIntegrationSyncMenu:
         if self._ignore_status_event:
             self._ignore_status_event = False
             return
-        self.main.on_sync_state_change(not self.main.get_sync_state())
+        self.main.on_enable_change(not self.main.get_enabled())
         
 class DesktopIntegrationAppIndicator:
     def __init__(self, main):
         self.main = main
-    def set_sync_state(self, state):
+    def set_enabled(self, state):
         pass
+    def set_state(self, state):
+        if state == "idle":
+            self.ind.set_status(appindicator.STATUS_ACTIVE)
+        elif state == "syncing":
+            pass
+        elif state == "error":
+            self.ind.set_status(appindicator.STATUS_ATTENTION)
     def loop(self):
         gtk.main()
     def setup(self, icon, attention_icon):
@@ -134,17 +151,18 @@ class DesktopIntegrationDummy:
     def __init__(self, main):
         self.main = main
         self.main_loop = GObject.MainLoop()
-    def set_sync_state(self, state):
-        print "Syncing has been " + ("enabled" if state else "disabled") + " by the app"
+    def set_enabled(self, state):
+        print "Syncing has been " + ("enabled" if state else "disabled")
+    def set_state(self, state):
+        print "Sync state has been set to " + state
     def setup(self, icon, attention_icon):
         pass
     def loop(self):
         self.main_loop.run()
 
 class DesktopIntegration(dbus.service.Object):
-    
-    syncing = None
-    
+    enabled = None
+    state = None
     def __init__(self):
         self.bus_name = dbus.service.BusName('net.mms_projects.copyit.DesktopIntegration', bus=dbus.SessionBus())
         dbus.service.Object.__init__(self, self.bus_name, '/')
@@ -153,24 +171,31 @@ class DesktopIntegration(dbus.service.Object):
             self.integration = DesktopIntegrationSyncMenu(self)
         else:
             self.integration = DesktopIntegrationAppIndicator(self)
-        #self.integration = DesktopIntegrationDummy(self)
-    
+        # self.integration = DesktopIntegrationDummy(self)
     @dbus.service.method('net.mms_projects.copyit.DesktopIntegration', in_signature='b')
-    def set_sync_state(self, state):
-        if state == self.syncing:
-            print "Sync state already set to " + ("enabled" if state else "disabled") + ". Not changing it"
+    def set_enabled(self, state):
+        if state == self.enabled:
+            print "Sync already set to " + ("enabled" if state else "disabled") + ". Not changing it"
             return
-        self.syncing = state
-        self.integration.set_sync_state(state)
-    def get_sync_state(self):
-        return self.syncing    
-    def on_sync_state_change(self, state):
-        self.syncing = state
-        if self.syncing:
+        self.enabled = state
+        self.integration.set_enabled(state)
+    def get_enabled(self):
+        return self.enabled    
+    @dbus.service.method('net.mms_projects.copyit.DesktopIntegration', in_signature='s')
+    def set_state(self, state):
+        if state == self.state:
+            print "Sync state already set to " + state + ". Not changing it"
+            return
+        self.state = state
+        self.integration.set_state(state)
+    def get_state(self):
+        return self.state    
+    def on_enable_change(self, state):
+        self.enabled = state
+        if self.enabled:
             self.action_enable_sync()
         else:
             self.action_disable_sync()
-        
     @dbus.service.signal('net.mms_projects.copyit.DesktopIntegration')
     def action_push(self):
         pass
@@ -197,21 +222,34 @@ class DesktopIntegration(dbus.service.Object):
     @dbus.service.signal('net.mms_projects.copyit.DesktopIntegration')
     def ready(self):
         pass
-
-
     def main(self):
         self.ready()
         self.integration.loop()
-            
     @dbus.service.method('net.mms_projects.copyit.DesktopIntegration')
-    def hello(self):
-        self.HelloSignal('Hello')
-        self.ind.set_status(appindicator.STATUS_ATTENTION)
-        return "Hello,World!"
-    
+    def test(self):
+        delay = 1
+        actual_enabled = self.enabled;
+        actual_state = self.state
+        
+        self.set_enabled(True)
+        time.sleep(delay)
+        self.set_enabled(False)
+        time.sleep(delay)
+        self.set_enabled(actual_enabled)
+        time.sleep(delay)
+        
+        self.set_state("idle")
+        time.sleep(delay)
+        self.set_state("syncing")
+        time.sleep(delay)
+        self.set_state("error")
+        time.sleep(delay)
+        self.set_state(actual_state)
+        time.sleep(delay)
     @dbus.service.method('net.mms_projects.copyit.DesktopIntegration', in_signature='ss')
     def setup(self, icon, attention_icon):
         self.integration.setup(icon, attention_icon)
+        self.set_state("idle")
 
 if __name__ == "__main__":
     DBusGMainLoop(set_as_default=True)

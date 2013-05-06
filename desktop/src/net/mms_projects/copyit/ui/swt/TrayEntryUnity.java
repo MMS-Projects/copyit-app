@@ -88,7 +88,6 @@ public class TrayEntryUnity extends TrayEntry implements DBusSigHandler,
 		} catch (IOException e) {
 			// TODO Auto-generated catch block e.printStackTrace(); }
 		}
-
 	}
 
 	@Override
@@ -101,7 +100,7 @@ public class TrayEntryUnity extends TrayEntry implements DBusSigHandler,
 						"net.mms_projects.copyit.DesktopIntegration", "/",
 						DesktopIntegration.class);
 				integration.setup(icon, icon);
-				integration.set_sync_state(this.settings
+				integration.set_enabled(this.settings
 						.getBoolean("sync.polling.enabled"));
 			} catch (DBusException e) {
 				System.out
@@ -176,17 +175,17 @@ public class TrayEntryUnity extends TrayEntry implements DBusSigHandler,
 			});
 		} else if (signal instanceof DesktopIntegration.action_enable_sync) {
 			this.settings.set("sync.polling.enabled", true);
-			this.integration.set_sync_state(true);
+			this.integration.set_enabled(true);
 		} else if (signal instanceof DesktopIntegration.action_disable_sync) {
 			this.settings.set("sync.polling.enabled", false);
-			this.integration.set_sync_state(false);
+			this.integration.set_enabled(false);
 		}
 	}
 
 	@Override
 	public void onChange(String key, String value) {
 		if ("sync.polling.enabled".equals(key)) {
-			this.integration.set_sync_state(Boolean.parseBoolean(value));
+			this.integration.set_enabled(Boolean.parseBoolean(value));
 		}
 	}
 

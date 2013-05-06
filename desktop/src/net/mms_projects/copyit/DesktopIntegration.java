@@ -7,7 +7,9 @@ import org.freedesktop.dbus.exceptions.DBusException;
 public interface DesktopIntegration extends DBusInterface {
 	public void setup(String icon, String attention_icon);
 
-	public void set_sync_state(boolean state);
+	public void set_enabled(boolean state);
+
+	public void set_state(String state);
 
 	public class ready extends DBusSignal {
 		public ready(String path) throws DBusException {
