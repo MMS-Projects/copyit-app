@@ -10,6 +10,7 @@ import net.mms_projects.copyit.DesktopClipboardUtils;
 import net.mms_projects.copyit.DesktopIntegration;
 import net.mms_projects.copyit.PathBuilder;
 import net.mms_projects.copyit.Settings;
+import net.mms_projects.copyit.SettingsListener;
 import net.mms_projects.copyit.api.ServerApi;
 import net.mms_projects.copyit.api.endpoints.ClipboardContentEndpoint;
 import net.mms_projects.copyit.app.CopyItDesktop;
@@ -24,10 +25,15 @@ import org.freedesktop.dbus.DBusSigHandler;
 import org.freedesktop.dbus.DBusSignal;
 import org.freedesktop.dbus.exceptions.DBusException;
 
-public class TrayEntryUnity extends TrayEntry implements DBusSigHandler {
+public class TrayEntryUnity extends TrayEntry implements DBusSigHandler,
+		SettingsListener {
+
+	private DesktopIntegration integration;
 
 	public TrayEntryUnity(Settings settings, Shell activityShell) {
 		super(settings, activityShell);
+
+		this.settings.addListener("sync.polling.enabled", this);
 
 		try {
 			CopyItDesktop.dbusConnection.addSigHandler(
@@ -42,6 +48,10 @@ public class TrayEntryUnity extends TrayEntry implements DBusSigHandler {
 					DesktopIntegration.action_open_about.class, this);
 			CopyItDesktop.dbusConnection.addSigHandler(
 					DesktopIntegration.action_quit.class, this);
+			CopyItDesktop.dbusConnection.addSigHandler(
+					DesktopIntegration.action_enable_sync.class, this);
+			CopyItDesktop.dbusConnection.addSigHandler(
+					DesktopIntegration.action_disable_sync.class, this);
 		} catch (DBusException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -56,7 +66,7 @@ public class TrayEntryUnity extends TrayEntry implements DBusSigHandler {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
+
 		File script = CopyItDesktop.exportResource("desktop-integration.py");
 		if (script == null) {
 			script = new File("scripts/desktop-integration.py");
@@ -76,9 +86,9 @@ public class TrayEntryUnity extends TrayEntry implements DBusSigHandler {
 				}
 			});
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// TODO Auto-generated catch block e.printStackTrace(); }
 		}
+
 	}
 
 	@Override
@@ -87,11 +97,12 @@ public class TrayEntryUnity extends TrayEntry implements DBusSigHandler {
 			String icon = new File(PathBuilder.getCacheDirectory(),
 					"tray_icon.png").getAbsolutePath();
 			try {
-				DesktopIntegration integration = CopyItDesktop.dbusConnection
-						.getRemoteObject(
-								"net.mms_projects.copyit.DesktopIntegration",
-								"/", DesktopIntegration.class);
+				integration = CopyItDesktop.dbusConnection.getRemoteObject(
+						"net.mms_projects.copyit.DesktopIntegration", "/",
+						DesktopIntegration.class);
 				integration.setup(icon, icon);
+				integration.set_sync_state(this.settings
+						.getBoolean("sync.polling.enabled"));
 			} catch (DBusException e) {
 				System.out
 						.println("Could not connect to desktop integration script while it reported as ready. Exiting...");
@@ -163,6 +174,17 @@ public class TrayEntryUnity extends TrayEntry implements DBusSigHandler {
 					System.exit(0);
 				}
 			});
+		} else if (signal instanceof DesktopIntegration.action_enable_sync) {
+			this.settings.set("sync.polling.enabled", true);
+		} else if (signal instanceof DesktopIntegration.action_disable_sync) {
+			this.settings.set("sync.polling.enabled", false);
+		}
+	}
+
+	@Override
+	public void onChange(String key, String value) {
+		if ("sync.polling.enabled".equals(key)) {
+			this.integration.set_sync_state(Boolean.parseBoolean(value));
 		}
 	}
 
