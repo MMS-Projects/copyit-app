@@ -176,8 +176,10 @@ public class TrayEntryUnity extends TrayEntry implements DBusSigHandler,
 			});
 		} else if (signal instanceof DesktopIntegration.action_enable_sync) {
 			this.settings.set("sync.polling.enabled", true);
+			this.integration.set_sync_state(true);
 		} else if (signal instanceof DesktopIntegration.action_disable_sync) {
 			this.settings.set("sync.polling.enabled", false);
+			this.integration.set_sync_state(false);
 		}
 	}
 

@@ -6,6 +6,7 @@ import org.freedesktop.dbus.exceptions.DBusException;
 
 public interface DesktopIntegration extends DBusInterface {
 	public void setup(String icon, String attention_icon);
+
 	public void set_sync_state(boolean state);
 
 	public class ready extends DBusSignal {
@@ -43,13 +44,13 @@ public interface DesktopIntegration extends DBusInterface {
 			super(path);
 		}
 	}
-	
+
 	public class action_enable_sync extends DBusSignal {
 		public action_enable_sync(String path) throws DBusException {
 			super(path);
 		}
 	}
-	
+
 	public class action_disable_sync extends DBusSignal {
 		public action_disable_sync(String path) throws DBusException {
 			super(path);
