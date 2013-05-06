@@ -101,6 +101,7 @@
                <include name="**/res/mmsprojects-copyit-**.png" />
             </fileset>
             <fileset dir="android/res" />
+        	<fileset dir="desktop/res" />
         	<fileset dir="desktop/scripts" />
         	<fileset dir="desktop/libs/linux">
                 <include name="**/*.so" />
@@ -131,6 +132,7 @@
                <include name="**/res/mmsprojects-copyit-**.png" />
             </fileset>
             <fileset dir="android/res" />
+        	<fileset dir="desktop/res" />
         	<fileset dir="desktop/scripts" />
         	<fileset dir="desktop/libs/linux">
 		        <include name="**/*.so" />
@@ -157,6 +159,7 @@
                <include name="**/res/mmsprojects-copyit-**.png" />
             </fileset>
             <fileset dir="android/res" />
+        	<fileset dir="desktop/res" />
         </jar>
     </target>
     
@@ -183,6 +186,7 @@
                <include name="**/res/mmsprojects-copyit-**.png" />
             </fileset>
             <fileset dir="android/res" />
+        	<fileset dir="desktop/res" />
         </jar>
     </target>
     
@@ -209,6 +213,7 @@
                <include name="**/res/mmsprojects-copyit-**.png" />
             </fileset>
             <fileset dir="android/res" />
+        	<fileset dir="desktop/res" />
         </jar>
     </target>
     
@@ -231,6 +236,7 @@
                <include name="**/res/mmsprojects-copyit-**.png" />
             </fileset>
             <fileset dir="android/res" />
+        	<fileset dir="desktop/res" />
         </jar>
     </target>
 
