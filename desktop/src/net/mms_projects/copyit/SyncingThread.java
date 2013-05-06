@@ -27,6 +27,14 @@ public class SyncingThread extends Thread implements SettingsListener {
 				System.out.println("New clipboard content: " + data);
 				System.out.println("Date: " + date.toString());
 			}
+
+			@Override
+			public void onPreSync() {
+			}
+
+			@Override
+			public void onPostSync() {
+			}
 		});
 	}
 
@@ -48,12 +56,20 @@ public class SyncingThread extends Thread implements SettingsListener {
 					return;
 				}
 
+				for (SyncingListener listener : listeners) {
+					listener.onPreSync();
+				}
+
 				ServerApi api = new ServerApi();
 				api.deviceId = UUID.fromString(this.settings.get("device.id"));
 				api.devicePassword = this.settings.get("device.password");
 				api.apiUrl = this.settings.get("server.baseurl");
 
 				Display.getDefault().asyncExec(new RefreshClipboard(api));
+
+				for (SyncingListener listener : listeners) {
+					listener.onPostSync();
+				}
 			} catch (InterruptedException e) {
 				this.interrupt();
 			}
@@ -83,7 +99,7 @@ public class SyncingThread extends Thread implements SettingsListener {
 			}
 
 			SyncingThread.this.currentContent = newData;
-			
+
 			for (SyncingListener listener : listeners) {
 				listener.onClipboardChange(newData, new Date());
 			}

@@ -3,6 +3,7 @@ package net.mms_projects.copyit.ui.swt;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Date;
 import java.util.UUID;
 
 import net.mms_projects.copyit.ClipboardUtils;
@@ -77,7 +78,6 @@ public class TrayEntryUnity extends TrayEntry implements DBusSigHandler,
 		command[1] = script.getAbsolutePath();
 		try {
 			final Process process = Runtime.getRuntime().exec(command);
-
 			Runtime.getRuntime().addShutdownHook(new Thread() {
 				@Override
 				public void run() {
@@ -86,8 +86,10 @@ public class TrayEntryUnity extends TrayEntry implements DBusSigHandler,
 				}
 			});
 		} catch (IOException e) {
-			// TODO Auto-generated catch block e.printStackTrace(); }
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+
 	}
 
 	@Override
@@ -187,6 +189,20 @@ public class TrayEntryUnity extends TrayEntry implements DBusSigHandler,
 		if ("sync.polling.enabled".equals(key)) {
 			this.integration.set_enabled(Boolean.parseBoolean(value));
 		}
+	}
+
+	@Override
+	public void onPreSync() {
+		this.integration.set_state("syncing");
+	}
+
+	@Override
+	public void onClipboardChange(String data, Date date) {
+	}
+
+	@Override
+	public void onPostSync() {
+		this.integration.set_state("idle");
 	}
 
 }

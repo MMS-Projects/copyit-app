@@ -97,8 +97,17 @@ public class SwtGui extends AbstractUi {
 					clipboard.setText(data);
 				}
 			}
+
+			@Override
+			public void onPreSync() {
+			}
+
+			@Override
+			public void onPostSync() {
+			}
 		});
 		syncThread.addListener(queueWindow);
+		syncThread.addListener(this.trayEntry);
 		syncThread.setEnabled(this.settings.getBoolean("sync.polling.enabled"));
 
 		this.queueWindow.setup();

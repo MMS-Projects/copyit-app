@@ -135,4 +135,12 @@ public class DataQueue extends Dialog implements SyncingListener,
 			this.setEnabled(Boolean.parseBoolean(value));
 		}
 	}
+
+	@Override
+	public void onPreSync() {
+	}
+
+	@Override
+	public void onPostSync() {
+	}
 }
