@@ -20,6 +20,9 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.layout.FormLayout;
+import org.eclipse.swt.layout.FormData;
+import org.eclipse.swt.layout.FormAttachment;
 
 public class PreferencesDialog extends GeneralDialog {
 
@@ -78,9 +81,21 @@ public class PreferencesDialog extends GeneralDialog {
 
 		// Shell
 		this.shell = new Shell(this.getParent(), SWT.DIALOG_TRIM);
+		shell.setLayout(new FormLayout());
 		// Elements
 		TabFolder tabFolder = new TabFolder(shell, SWT.NONE);
+		FormData fd_tabFolder = new FormData();
+		fd_tabFolder.left = new FormAttachment(0, 10);
+		fd_tabFolder.right = new FormAttachment(100, -6);
+		fd_tabFolder.top = new FormAttachment(0, 10);
+		fd_tabFolder.bottom = new FormAttachment(0, 358);
+		tabFolder.setLayoutData(fd_tabFolder);
 		Button btnClose = new Button(shell, SWT.NONE);
+		FormData fd_btnClose = new FormData();
+		fd_btnClose.top = new FormAttachment(tabFolder, 6);
+		fd_btnClose.right = new FormAttachment(tabFolder, 0, SWT.RIGHT);
+		fd_btnClose.left = new FormAttachment(0, 457);
+		btnClose.setLayoutData(fd_btnClose);
 		// Account tab
 		TabItem tbtmAccount = new TabItem(tabFolder, SWT.NONE);
 		Composite compositeAccount = new Composite(tabFolder, SWT.NONE);
@@ -108,11 +123,8 @@ public class PreferencesDialog extends GeneralDialog {
 		 */
 
 		// Shell
-		this.shell.setSize(558, 403);
+		this.shell.setSize(552, 434);
 		this.shell.setText(getText());
-		// Elements
-		tabFolder.setBounds(10, 10, 538, 348);
-		btnClose.setBounds(457, 364, 91, 29);
 		btnClose.setText("Close");
 		// Account tab
 		tbtmAccount.setText("Account");
