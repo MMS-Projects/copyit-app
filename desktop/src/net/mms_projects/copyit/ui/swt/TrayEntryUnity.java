@@ -106,7 +106,7 @@ public class TrayEntryUnity extends TrayEntry implements DBusSigHandler,
 						.getBoolean("sync.polling.enabled"));
 			} catch (DBusException e) {
 				System.out
-						.println("Could not connect to desktop integration script while it reported as ready. Exiting...");
+						.println("Could not connect to desktop integration script although it reported as ready. Exiting...");
 				System.exit(1);
 			}
 
