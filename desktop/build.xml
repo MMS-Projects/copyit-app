@@ -4,7 +4,13 @@
     <dirname property="imported.basedir" file="${ant.file.desktop}"/>
 
     <target name="windows-binary">
-          <property name="build.windows.binary" value="true" />
+        <property name="build.windows.binary" value="true" />
+    	<if>
+            <equals arg1="${env.LAUNCH4J_HOME}" arg2=""/>
+            <else>
+            	<property name="launch4j.dir" value="${env.LAUNCH4J_HOME}" />
+            </else>
+        </if>
     </target>
 
     <target name="desktop" depends="linux, windows, macosx" />
