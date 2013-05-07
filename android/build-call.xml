@@ -14,9 +14,11 @@
                <available file="android/bin/android-build-debug.apk" property="out.final.file.exists" />
        </condition>
    </target>
+   
+   <target name="android-lint">
+        <ant dir="android" target="lint" />
+    </target>
 
-    
-    
     <target name="android-update-version-name" description="Update VersionName in AndroidManifest.xml">
 	
 	<xmlproperty file="android/AndroidManifest.xml" collapseattributes="true" />
