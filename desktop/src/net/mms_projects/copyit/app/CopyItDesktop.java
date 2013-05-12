@@ -6,13 +6,22 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.URL;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.UUID;
 
 import net.mms_projects.copyit.FileStreamBuilder;
 import net.mms_projects.copyit.PathBuilder;
 import net.mms_projects.copyit.Settings;
+import net.mms_projects.copyit.SettingsListener;
+import net.mms_projects.copyit.SyncListener;
+import net.mms_projects.copyit.SyncManager;
+import net.mms_projects.copyit.api.ServerApi;
+import net.mms_projects.copyit.api.endpoints.ClipboardContentEndpoint;
+import net.mms_projects.copyit.sync_services.ApiService;
+import net.mms_projects.copyit.sync_services.TestService;
 import net.mms_projects.copyit.ui.AbstractUi;
 import net.mms_projects.copyit.ui.SwtGui;
 import net.mms_projects.utils.OSValidator;
@@ -76,6 +85,46 @@ public class CopyItDesktop extends CopyIt {
 		}
 		this.settings.loadProperties();
 
+		SyncManager syncManager = new SyncManager();
+
+		ServerApi api = new ServerApi();
+		api.deviceId = UUID.fromString(settings.get("device.id"));
+		api.devicePassword = settings.get("device.password");
+
+		TestService testService = new TestService(syncManager);
+		final ApiService apiService = new ApiService(syncManager,
+				new ClipboardContentEndpoint(api));
+		SettingsListener apiServiceListener = new SettingsListener() {
+
+			@Override
+			public void onChange(String key, String value) {
+				ServerApi api = new ServerApi();
+				api.deviceId = UUID.fromString(settings.get("device.id"));
+				api.devicePassword = settings.get("device.password");
+				apiService.setEndpoint(new ClipboardContentEndpoint(api));
+			}
+		};
+		this.settings.addListener("device.id", apiServiceListener);
+		this.settings.addListener("device.password", apiServiceListener);
+
+		syncManager.addPushService(apiService);
+		syncManager.addPullService(apiService);
+		syncManager.addPushService(testService);
+		syncManager.addPullingService(testService);
+		syncManager.addListener(new SyncListener() {
+
+			@Override
+			public void onPushed(String content, Date date) {
+				System.out.println("Content pushed");
+			}
+
+			@Override
+			public void onPulled(String content, Date date) {
+				System.out.println("The following content was pulled: "
+						+ content);
+			}
+		});
+
 		if (OSValidator.isUnix()) {
 			this.exportResource("unix-java.so");
 			try {
@@ -126,7 +175,7 @@ public class CopyItDesktop extends CopyIt {
 			}
 		}
 
-		AbstractUi ui = new SwtGui(this.settings);
+		AbstractUi ui = new SwtGui(this.settings, syncManager);
 		ui.open();
 
 		this.settings.saveProperties();

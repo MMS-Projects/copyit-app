@@ -12,6 +12,8 @@ import net.mms_projects.copyit.DesktopIntegration;
 import net.mms_projects.copyit.PathBuilder;
 import net.mms_projects.copyit.Settings;
 import net.mms_projects.copyit.SettingsListener;
+import net.mms_projects.copyit.SyncListener;
+import net.mms_projects.copyit.SyncManager;
 import net.mms_projects.copyit.api.ServerApi;
 import net.mms_projects.copyit.api.endpoints.ClipboardContentEndpoint;
 import net.mms_projects.copyit.app.CopyItDesktop;
@@ -27,12 +29,12 @@ import org.freedesktop.dbus.DBusSignal;
 import org.freedesktop.dbus.exceptions.DBusException;
 
 public class TrayEntryUnity extends TrayEntry implements DBusSigHandler,
-		SettingsListener {
+		SettingsListener, SyncListener {
 
 	private DesktopIntegration integration;
 
-	public TrayEntryUnity(Settings settings, Shell activityShell) {
-		super(settings, activityShell);
+	public TrayEntryUnity(Settings settings, Shell activityShell, SyncManager syncManager) {
+		super(settings, activityShell, syncManager);
 
 		this.settings.addListener("sync.polling.enabled", this);
 
@@ -89,7 +91,8 @@ public class TrayEntryUnity extends TrayEntry implements DBusSigHandler,
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
+		this.syncManager.addListener(this);
 	}
 
 	@Override
@@ -111,46 +114,15 @@ public class TrayEntryUnity extends TrayEntry implements DBusSigHandler,
 			}
 
 		} else if (signal instanceof DesktopIntegration.action_push) {
-			final ServerApi api = new ServerApi();
-			api.deviceId = UUID.fromString(this.settings.get("device.id"));
-			api.devicePassword = this.settings.get("device.password");
-			api.apiUrl = this.settings.get("server.baseurl");
-
 			Display.getDefault().asyncExec(new Runnable() {
 				@Override
 				public void run() {
 					ClipboardUtils clipboard = new DesktopClipboardUtils();
-					String data = clipboard.getText();
-					if (data != null) {
-						try {
-							new ClipboardContentEndpoint(api).update(data);
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
+					syncManager.doPush(clipboard.getText(), new Date());
 				}
 			});
-
 		} else if (signal instanceof DesktopIntegration.action_pull) {
-			final ServerApi api = new ServerApi();
-			api.deviceId = UUID.fromString(this.settings.get("device.id"));
-			api.devicePassword = this.settings.get("device.password");
-			api.apiUrl = this.settings.get("server.baseurl");
-
-			Display.getDefault().asyncExec(new Runnable() {
-				@Override
-				public void run() {
-					ClipboardUtils clipboard = new DesktopClipboardUtils();
-					String data;
-					try {
-						data = new ClipboardContentEndpoint(api).get();
-					} catch (Exception e) {
-						e.printStackTrace();
-						return;
-					}
-					clipboard.setText(data);
-				}
-			});
+			syncManager.doPull();
 		} else if (signal instanceof DesktopIntegration.action_open_preferences) {
 			Display.getDefault().asyncExec(new Runnable() {
 				@Override
@@ -203,6 +175,23 @@ public class TrayEntryUnity extends TrayEntry implements DBusSigHandler,
 	@Override
 	public void onPostSync() {
 		this.integration.set_state("idle");
+	}
+
+	@Override
+	public void onPushed(String content, Date date) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onPulled(final String content, Date date) {
+		Display.getDefault().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				ClipboardUtils clipboard = new DesktopClipboardUtils();
+				clipboard.setText(content);
+			}
+		});
 	}
 
 }

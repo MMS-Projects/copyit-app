@@ -9,6 +9,7 @@ import net.mms_projects.copyit.ClipboardUtils;
 import net.mms_projects.copyit.DesktopClipboardUtils;
 import net.mms_projects.copyit.OpenBrowser;
 import net.mms_projects.copyit.Settings;
+import net.mms_projects.copyit.SyncManager;
 import net.mms_projects.copyit.SyncingListener;
 import net.mms_projects.copyit.SyncingThread;
 import net.mms_projects.copyit.api.ServerApi;
@@ -39,7 +40,7 @@ public class SwtGui extends AbstractUi {
 
 	protected Shell activityShell;
 
-	public SwtGui(Settings settings) {
+	public SwtGui(Settings settings, SyncManager syncManager) {
 		super(settings);
 
 		try {
@@ -61,12 +62,12 @@ public class SwtGui extends AbstractUi {
 			String desktop = System.getenv("XDG_CURRENT_DESKTOP");
 			if (desktop.equalsIgnoreCase("Unity")) {
 				this.trayEntry = new TrayEntryUnity(this.settings,
-						this.activityShell);
+						this.activityShell, syncManager);
 			}
 		}
 		if (this.trayEntry == null) {
 			this.trayEntry = new TrayEntrySwt(this.settings,
-					this.activityShell, this.tray);
+					this.activityShell, this.tray, syncManager);
 		}
 		this.queueWindow = new DataQueue(this.activityShell, SWT.DIALOG_TRIM);
 	}
