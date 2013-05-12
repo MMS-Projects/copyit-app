@@ -117,11 +117,6 @@ public class SwtGui extends AbstractUi {
 		});
 		syncManager.addListener(queueWindow);
 		syncManager.addListener(this.trayEntry);
-		if (this.settings.getBoolean("sync.polling.enabled")) {
-			this.syncManager.activatePulling();
-		} else {
-			this.syncManager.deactivatePulling();
-		}
 
 		this.queueWindow.setup();
 		this.queueWindow.setEnabled(this.settings

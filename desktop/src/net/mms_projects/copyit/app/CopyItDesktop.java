@@ -86,7 +86,7 @@ public class CopyItDesktop extends CopyIt {
 		}
 		this.settings.loadProperties();
 
-		SyncManager syncManager = new SyncManager();
+		final SyncManager syncManager = new SyncManager();
 
 		ServerApi api = new ServerApi();
 		api.deviceId = UUID.fromString(settings.get("device.id"));
@@ -132,6 +132,23 @@ public class CopyItDesktop extends CopyIt {
 			}
 		});
 
+
+		this.settings.addListener("sync.polling.enabled", new SettingsListener() {
+			@Override
+			public void onChange(String key, String value) {
+				if (Boolean.parseBoolean(value)) {
+					syncManager.activatePulling();
+				} else {
+					syncManager.deactivatePulling();
+				}
+			}
+		});
+		if (this.settings.getBoolean("sync.polling.enabled")) {
+			syncManager.activatePulling();
+		} else {
+			syncManager.deactivatePulling();
+		}
+		
 		if (OSValidator.isUnix()) {
 			this.exportResource("unix-java.so");
 			try {
