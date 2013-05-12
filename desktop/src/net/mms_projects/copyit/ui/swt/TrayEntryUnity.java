@@ -4,11 +4,15 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
 import java.util.UUID;
 
 import net.mms_projects.copyit.ClipboardUtils;
 import net.mms_projects.copyit.DesktopClipboardUtils;
 import net.mms_projects.copyit.DesktopIntegration;
+import net.mms_projects.copyit.Messages;
 import net.mms_projects.copyit.PathBuilder;
 import net.mms_projects.copyit.Settings;
 import net.mms_projects.copyit.SettingsListener;
@@ -22,8 +26,11 @@ import org.apache.commons.io.FileUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.freedesktop.Notifications;
 import org.freedesktop.dbus.DBusSigHandler;
 import org.freedesktop.dbus.DBusSignal;
+import org.freedesktop.dbus.UInt32;
+import org.freedesktop.dbus.Variant;
 import org.freedesktop.dbus.exceptions.DBusException;
 
 public class TrayEntryUnity extends TrayEntry implements DBusSigHandler,
@@ -127,6 +134,20 @@ public class TrayEntryUnity extends TrayEntry implements DBusSigHandler,
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
+						
+						try {
+							Notifications notify = CopyItDesktop.dbusConnection
+									.getRemoteObject("org.freedesktop.Notifications",
+											"/org/freedesktop/Notifications",
+											Notifications.class);
+							Map<String, Variant<Byte>> hints = new HashMap<String, Variant<Byte>>();
+							hints.put("urgency", new Variant<Byte>((byte) 2));
+							notify.Notify("CopyIt", new UInt32(0), "", "CopyIt",
+									Messages.getString("text_content_pushed", data), new LinkedList<String>(), hints, -1);
+						} catch (DBusException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				}
 			});
@@ -149,6 +170,20 @@ public class TrayEntryUnity extends TrayEntry implements DBusSigHandler,
 						return;
 					}
 					clipboard.setText(data);
+					
+					try {
+						Notifications notify = CopyItDesktop.dbusConnection
+								.getRemoteObject("org.freedesktop.Notifications",
+										"/org/freedesktop/Notifications",
+										Notifications.class);
+						Map<String, Variant<Byte>> hints = new HashMap<String, Variant<Byte>>();
+						hints.put("urgency", new Variant<Byte>((byte) 2));
+						notify.Notify("CopyIt", new UInt32(0), "", "CopyIt",
+								Messages.getString("text_content_pulled", data), new LinkedList<String>(), hints, -1);
+					} catch (DBusException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			});
 		} else if (signal instanceof DesktopIntegration.action_open_preferences) {
