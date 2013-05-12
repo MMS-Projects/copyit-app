@@ -7,7 +7,6 @@ import net.mms_projects.copyit.ClipboardUtils;
 import net.mms_projects.copyit.DesktopClipboardUtils;
 import net.mms_projects.copyit.Messages;
 import net.mms_projects.copyit.Settings;
-import net.mms_projects.copyit.SyncListener;
 import net.mms_projects.copyit.SyncManager;
 import net.mms_projects.copyit.ui.swt.forms.AboutDialog;
 import net.mms_projects.copyit.ui.swt.forms.PreferencesDialog;
@@ -25,7 +24,7 @@ import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.swt.widgets.Tray;
 import org.eclipse.swt.widgets.TrayItem;
 
-public class TrayEntrySwt extends TrayEntry implements SyncListener {
+public class TrayEntrySwt extends TrayEntry {
 
 	protected Display display = Display.getDefault();
 	protected Menu menu;

@@ -8,6 +8,8 @@ public interface PushServiceInterface extends ServiceInterface {
 
 	public void deactivatePush();
 
+	public boolean isPushActivated();
+	
 	public void doPush(String content, Date date);
 
 }

@@ -9,9 +9,9 @@ import net.mms_projects.copyit.ClipboardUtils;
 import net.mms_projects.copyit.DesktopClipboardUtils;
 import net.mms_projects.copyit.OpenBrowser;
 import net.mms_projects.copyit.Settings;
+import net.mms_projects.copyit.SettingsListener;
+import net.mms_projects.copyit.SyncListener;
 import net.mms_projects.copyit.SyncManager;
-import net.mms_projects.copyit.SyncingListener;
-import net.mms_projects.copyit.SyncingThread;
 import net.mms_projects.copyit.api.ServerApi;
 import net.mms_projects.copyit.api.endpoints.GetBuildInfo;
 import net.mms_projects.copyit.api.responses.JenkinsBuildResponse;
@@ -40,8 +40,12 @@ public class SwtGui extends AbstractUi {
 
 	protected Shell activityShell;
 
+	protected SyncManager syncManager;
+
 	public SwtGui(Settings settings, SyncManager syncManager) {
 		super(settings);
+
+		this.syncManager = syncManager;
 
 		try {
 			this.display = Display.getDefault();
@@ -87,35 +91,54 @@ public class SwtGui extends AbstractUi {
 
 		this.checkVersion();
 
-		SyncingThread syncThread = new SyncingThread(this.settings);
-		syncThread.start();
-		syncThread.addListener(new SyncingListener() {
-			@Override
-			public void onClipboardChange(String data, Date date) {
-				final ClipboardUtils clipboard = new DesktopClipboardUtils();
+		syncManager.addListener(new SyncListener() {
 
-				if (!SwtGui.this.settings.getBoolean("sync.queue.enabled")) {
-					clipboard.setText(data);
-				}
+			@Override
+			public void onPushed(String content, Date date) {
+				// TODO Auto-generated method stub
+
 			}
 
 			@Override
-			public void onPreSync() {
-			}
+			public void onPulled(final String content, Date date) {
+				display.asyncExec(new Runnable() {
 
-			@Override
-			public void onPostSync() {
+					@Override
+					public void run() {
+						final ClipboardUtils clipboard = new DesktopClipboardUtils();
+
+						if (!SwtGui.this.settings
+								.getBoolean("sync.queue.enabled")) {
+							clipboard.setText(content);
+						}
+					}
+				});
 			}
 		});
-		syncThread.addListener(queueWindow);
-		syncThread.addListener(this.trayEntry);
-		syncThread.setEnabled(this.settings.getBoolean("sync.polling.enabled"));
+		syncManager.addListener(queueWindow);
+		syncManager.addListener(this.trayEntry);
+		if (this.settings.getBoolean("sync.polling.enabled")) {
+			this.syncManager.activatePulling();
+		} else {
+			this.syncManager.deactivatePulling();
+		}
 
 		this.queueWindow.setup();
 		this.queueWindow.setEnabled(this.settings
 				.getBoolean("sync.queue.enabled"));
 
-		this.settings.addListener("sync.polling.enabled", syncThread);
+		this.settings.addListener("sync.polling.enabled",
+				new SettingsListener() {
+
+					@Override
+					public void onChange(String key, String value) {
+						if (Boolean.parseBoolean(value)) {
+							syncManager.activatePulling();
+						} else {
+							syncManager.deactivatePulling();
+						}
+					}
+				});
 		this.settings.addListener("sync.queue.enabled", this.queueWindow);
 
 		while (!this.activityShell.isDisposed()) {

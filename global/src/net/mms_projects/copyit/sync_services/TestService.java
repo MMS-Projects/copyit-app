@@ -6,7 +6,11 @@ import net.mms_projects.copyit.SyncListener;
 
 public class TestService implements PushServiceInterface, PullingServiceInterface {
 
+	public static String SERVICE_NAME = "test";
+	
 	protected SyncListener listener;
+	private boolean pushEnabled;
+	private boolean pullingEnabled;
 
 	public TestService(SyncListener listener) {
 		this.listener = listener;
@@ -14,11 +18,12 @@ public class TestService implements PushServiceInterface, PullingServiceInterfac
 
 	@Override
 	public String getServiceName() {
-		return "test";
+		return SERVICE_NAME;
 	}
 	
 	@Override
 	public void activatePulling() {
+		this.pullingEnabled = true;
 		System.out.println("Activated! Faking pulls");
 		
 		new Thread(new Runnable() {
@@ -43,15 +48,18 @@ public class TestService implements PushServiceInterface, PullingServiceInterfac
 
 	@Override
 	public void deactivatePulling() {
+		this.pullingEnabled = false;
 		System.out.println("Deactivated!");
 	}
 	
 	@Override
 	public void activatePush() {
+		this.pushEnabled = true;
 	}
 
 	@Override
 	public void deactivatePush() {
+		this.pushEnabled = false;
 	}
 
 	@Override
@@ -73,6 +81,16 @@ public class TestService implements PushServiceInterface, PullingServiceInterfac
 				listener.onPushed(content, date);
 			}
 		}).start();
+	}
+
+	@Override
+	public boolean isPullingActivated() {
+		return this.pullingEnabled;
+	}
+
+	@Override
+	public boolean isPushActivated() {
+		return this.pushEnabled;
 	}
 
 }

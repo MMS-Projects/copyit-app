@@ -5,5 +5,7 @@ public interface PullingServiceInterface extends ServiceInterface {
 	public void activatePulling();
 
 	public void deactivatePulling();
+	
+	public boolean isPullingActivated();
 
 }

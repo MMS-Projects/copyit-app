@@ -6,6 +6,8 @@ public interface PullServiceInterface extends ServiceInterface {
 
 	public void deactivatePull();
 
+	public boolean isPullActivated();
+
 	public void doPull();
 
 }

@@ -74,4 +74,14 @@ public class ApiService implements PullServiceInterface, PushServiceInterface {
 		}).start();
 	}
 
+	@Override
+	public boolean isPushActivated() {
+		return true;
+	}
+
+	@Override
+	public boolean isPullActivated() {
+		return true;
+	}
+
 }

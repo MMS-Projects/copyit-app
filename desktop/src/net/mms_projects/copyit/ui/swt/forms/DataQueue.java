@@ -5,7 +5,7 @@ import java.util.Date;
 import net.mms_projects.copyit.ClipboardUtils;
 import net.mms_projects.copyit.DesktopClipboardUtils;
 import net.mms_projects.copyit.SettingsListener;
-import net.mms_projects.copyit.SyncingListener;
+import net.mms_projects.copyit.SyncListener;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FormAttachment;
@@ -22,7 +22,7 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
-public class DataQueue extends Dialog implements SyncingListener,
+public class DataQueue extends Dialog implements SyncListener,
 		SettingsListener {
 
 	protected Object result;
@@ -121,12 +121,25 @@ public class DataQueue extends Dialog implements SyncingListener,
 	}
 
 	@Override
-	public void onClipboardChange(String data, Date date) {
-		if (this.enabled) {
-			this.shell.setVisible(true);
-		}
-		tableItem = new TableItem(table, SWT.NONE);
-		tableItem.setText(new String[] { data, date.toString() });
+	public void onPushed(String content, Date date) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void onPulled(final String content, final Date date) {
+		Display.getDefault().asyncExec(new Runnable() {
+			
+			@Override
+			public void run() {
+				if (enabled) {
+					shell.setVisible(true);
+				}
+				tableItem = new TableItem(table, SWT.NONE);
+				tableItem.setText(new String[] { content, date.toString() });
+			}
+		});
+		
 	}
 
 	@Override
@@ -134,13 +147,5 @@ public class DataQueue extends Dialog implements SyncingListener,
 		if ("sync.queue.enabled".equals(key)) {
 			this.setEnabled(Boolean.parseBoolean(value));
 		}
-	}
-
-	@Override
-	public void onPreSync() {
-	}
-
-	@Override
-	public void onPostSync() {
 	}
 }

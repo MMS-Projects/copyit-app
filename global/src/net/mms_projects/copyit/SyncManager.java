@@ -53,27 +53,27 @@ public class SyncManager implements PushServiceInterface, PullServiceInterface,
 		if (!this.pushServices.containsKey(service)) {
 			return;
 		}
-		this.pushServices.get(this.pushService).deactivatePush();
+		this.deactivatePush();
 		this.pushService = service;
-		this.pushServices.get(this.pushService).activatePush();
+		this.activatePush();
 	}
 
 	public void setPullService(String service) {
 		if (!this.pullServices.containsKey(service)) {
 			return;
 		}
-		this.pullServices.get(this.pullService).deactivatePull();
+		this.deactivatePull();
 		this.pullService = service;
-		this.pullServices.get(this.pullService).activatePull();
+		this.activatePull();
 	}
 
 	public void setPullingService(String service) {
 		if (!this.pullingServices.containsKey(service)) {
 			return;
 		}
-		this.pullingServices.get(this.pullingService).deactivatePulling();
+		this.deactivatePulling();
 		this.pullingService = service;
-		this.pullingServices.get(this.pullingService).activatePulling();
+		this.activatePulling();
 	}
 
 	@Override
@@ -119,32 +119,60 @@ public class SyncManager implements PushServiceInterface, PullServiceInterface,
 
 	@Override
 	public void activatePush() {
-		this.pushServices.get(this.pushService).activatePush();
+		if (!this.isPushActivated()) {
+			this.pushServices.get(this.pushService).activatePush();
+		}
 	}
 
 	@Override
 	public void deactivatePush() {
-		this.pushServices.get(this.pushService).deactivatePush();
+		if (this.isPushActivated()) {
+			this.pushServices.get(this.pushService).deactivatePush();
+		}
+	}
+
+	@Override
+	public boolean isPushActivated() {
+		return this.pushServices.get(this.pushService).isPushActivated();
 	}
 
 	@Override
 	public void activatePull() {
-		this.pullServices.get(this.pullService).activatePull();
+		if (!isPullActivated()) {
+			this.pullServices.get(this.pullService).activatePull();
+		}
 	}
 
 	@Override
 	public void deactivatePull() {
-		this.pullServices.get(this.pullService).deactivatePull();
+		if (isPullActivated()) {
+			this.pullServices.get(this.pullService).deactivatePull();
+		}
+	}
+
+	@Override
+	public boolean isPullActivated() {
+		return this.pullServices.get(this.pullService).isPullActivated();
 	}
 
 	@Override
 	public void activatePulling() {
-		this.pullingServices.get(this.pullingService).activatePulling();
+		if (!isPullingActivated()) {
+			this.pullingServices.get(this.pullingService).activatePulling();
+		}
 	}
 
 	@Override
 	public void deactivatePulling() {
-		this.pullingServices.get(this.pullingService).deactivatePulling();
+		if (isPullingActivated()) {
+			this.pullingServices.get(this.pullingService).deactivatePulling();
+		}
+	}
+
+	@Override
+	public boolean isPullingActivated() {
+		return this.pullingServices.get(this.pullingService)
+				.isPullingActivated();
 	}
 
 }

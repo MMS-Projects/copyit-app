@@ -3,12 +3,12 @@ package net.mms_projects.copyit.ui.swt;
 import java.util.Date;
 
 import net.mms_projects.copyit.Settings;
+import net.mms_projects.copyit.SyncListener;
 import net.mms_projects.copyit.SyncManager;
-import net.mms_projects.copyit.SyncingListener;
 
 import org.eclipse.swt.widgets.Shell;
 
-public class TrayEntry implements SyncingListener {
+public class TrayEntry implements SyncListener {
 
 	protected Settings settings;
 	protected Shell activityShell;
@@ -21,15 +21,15 @@ public class TrayEntry implements SyncingListener {
 	}
 
 	@Override
-	public void onPreSync() {
+	public void onPushed(String content, Date date) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
-	public void onClipboardChange(String data, Date date) {
-	}
-
-	@Override
-	public void onPostSync() {
+	public void onPulled(String content, Date date) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

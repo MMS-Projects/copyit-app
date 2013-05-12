@@ -18,6 +18,7 @@ import net.mms_projects.copyit.Settings;
 import net.mms_projects.copyit.SettingsListener;
 import net.mms_projects.copyit.SyncListener;
 import net.mms_projects.copyit.SyncManager;
+import net.mms_projects.copyit.SyncingThread;
 import net.mms_projects.copyit.api.ServerApi;
 import net.mms_projects.copyit.api.endpoints.ClipboardContentEndpoint;
 import net.mms_projects.copyit.sync_services.ApiService;
@@ -94,6 +95,8 @@ public class CopyItDesktop extends CopyIt {
 		TestService testService = new TestService(syncManager);
 		final ApiService apiService = new ApiService(syncManager,
 				new ClipboardContentEndpoint(api));
+		final SyncingThread syncThread = new SyncingThread(syncManager,
+				new ClipboardContentEndpoint(api));
 		SettingsListener apiServiceListener = new SettingsListener() {
 
 			@Override
@@ -101,7 +104,10 @@ public class CopyItDesktop extends CopyIt {
 				ServerApi api = new ServerApi();
 				api.deviceId = UUID.fromString(settings.get("device.id"));
 				api.devicePassword = settings.get("device.password");
-				apiService.setEndpoint(new ClipboardContentEndpoint(api));
+				ClipboardContentEndpoint endpoint = new ClipboardContentEndpoint(
+						api);
+				apiService.setEndpoint(endpoint);
+				syncThread.setEndpoint(endpoint);
 			}
 		};
 		this.settings.addListener("device.id", apiServiceListener);
@@ -110,6 +116,7 @@ public class CopyItDesktop extends CopyIt {
 		syncManager.addPushService(apiService);
 		syncManager.addPullService(apiService);
 		syncManager.addPushService(testService);
+		syncManager.addPullingService(syncThread);
 		syncManager.addPullingService(testService);
 		syncManager.addListener(new SyncListener() {
 

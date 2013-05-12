@@ -15,7 +15,6 @@ import net.mms_projects.copyit.Messages;
 import net.mms_projects.copyit.PathBuilder;
 import net.mms_projects.copyit.Settings;
 import net.mms_projects.copyit.SettingsListener;
-import net.mms_projects.copyit.SyncListener;
 import net.mms_projects.copyit.SyncManager;
 import net.mms_projects.copyit.app.CopyItDesktop;
 import net.mms_projects.copyit.ui.swt.forms.AboutDialog;
@@ -33,7 +32,7 @@ import org.freedesktop.dbus.Variant;
 import org.freedesktop.dbus.exceptions.DBusException;
 
 public class TrayEntryUnity extends TrayEntry implements DBusSigHandler,
-		SettingsListener, SyncListener {
+		SettingsListener {
 
 	private DesktopIntegration integration;
 
@@ -166,20 +165,6 @@ public class TrayEntryUnity extends TrayEntry implements DBusSigHandler,
 		if ("sync.polling.enabled".equals(key)) {
 			this.integration.set_enabled(Boolean.parseBoolean(value));
 		}
-	}
-
-	@Override
-	public void onPreSync() {
-		this.integration.set_state("syncing");
-	}
-
-	@Override
-	public void onClipboardChange(String data, Date date) {
-	}
-
-	@Override
-	public void onPostSync() {
-		this.integration.set_state("idle");
 	}
 
 	@Override
