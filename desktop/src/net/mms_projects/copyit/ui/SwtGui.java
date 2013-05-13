@@ -122,18 +122,6 @@ public class SwtGui extends AbstractUi {
 		this.queueWindow.setEnabled(this.settings
 				.getBoolean("sync.queue.enabled"));
 
-		this.settings.addListener("sync.polling.enabled",
-				new SettingsListener() {
-
-					@Override
-					public void onChange(String key, String value) {
-						if (Boolean.parseBoolean(value)) {
-							syncManager.activatePulling();
-						} else {
-							syncManager.deactivatePulling();
-						}
-					}
-				});
 		this.settings.addListener("sync.queue.enabled", this.queueWindow);
 
 		while (!this.activityShell.isDisposed()) {
