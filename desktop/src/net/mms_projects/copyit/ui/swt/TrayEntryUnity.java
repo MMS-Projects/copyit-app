@@ -94,8 +94,6 @@ public class TrayEntryUnity extends TrayEntry implements DBusSigHandler,
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		this.syncManager.addListener(this);
 	}
 
 	@Override
