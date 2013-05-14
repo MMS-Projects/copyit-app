@@ -3,11 +3,10 @@ package net.mms_projects.copyit;
 import java.util.Date;
 
 import net.mms_projects.copyit.api.endpoints.ClipboardContentEndpoint;
-import net.mms_projects.copyit.sync_services.PullingServiceInterface;
 
 import org.eclipse.swt.widgets.Display;
 
-public class SyncingThread extends Thread implements PullingServiceInterface {
+public class SyncingThread extends Thread implements PollingServiceInterface {
 
 	public static String SERVICE_NAME = "polling";
 
@@ -85,17 +84,17 @@ public class SyncingThread extends Thread implements PullingServiceInterface {
 	}
 
 	@Override
-	public void activatePulling() {
+	public void activatePolling() {
 		this.enabled = true;
 	}
 
 	@Override
-	public void deactivatePulling() {
+	public void deactivatePolling() {
 		this.enabled = false;
 	}
 
 	@Override
-	public boolean isPullingActivated() {
+	public boolean isPollingActivated() {
 		return this.enabled;
 	}
 

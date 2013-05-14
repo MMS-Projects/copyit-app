@@ -7,15 +7,14 @@ import java.util.List;
 import java.util.Map;
 
 import net.mms_projects.copyit.sync_services.PullServiceInterface;
-import net.mms_projects.copyit.sync_services.PullingServiceInterface;
 import net.mms_projects.copyit.sync_services.PushServiceInterface;
 
 public class SyncManager implements PushServiceInterface, PullServiceInterface,
-		PullingServiceInterface, SyncListener {
+		PollingServiceInterface, SyncListener {
 
 	private Map<String, PushServiceInterface> pushServices = new HashMap<String, PushServiceInterface>();
 	private Map<String, PullServiceInterface> pullServices = new HashMap<String, PullServiceInterface>();
-	private Map<String, PullingServiceInterface> pullingServices = new HashMap<String, PullingServiceInterface>();
+	private Map<String, PollingServiceInterface> pullingServices = new HashMap<String, PollingServiceInterface>();
 	private String pushService;
 	private String pullService;
 	private String pullingService;
@@ -37,11 +36,11 @@ public class SyncManager implements PushServiceInterface, PullServiceInterface,
 		}
 	}
 
-	public void addPullingService(PullingServiceInterface service) {
+	public void addPullingService(PollingServiceInterface service) {
 		this.pullingServices.put(service.getServiceName(), service);
 		if (this.pullingService == null) {
 			this.pullingService = service.getServiceName();
-			this.pullingServices.get(this.pullingService).activatePulling();
+			this.pullingServices.get(this.pullingService).activatePolling();
 		}
 	}
 
@@ -71,9 +70,9 @@ public class SyncManager implements PushServiceInterface, PullServiceInterface,
 		if (!this.pullingServices.containsKey(service)) {
 			return;
 		}
-		this.deactivatePulling();
+		this.deactivatePolling();
 		this.pullingService = service;
-		this.activatePulling();
+		this.activatePolling();
 	}
 
 	@Override
@@ -156,23 +155,23 @@ public class SyncManager implements PushServiceInterface, PullServiceInterface,
 	}
 
 	@Override
-	public void activatePulling() {
-		if (!isPullingActivated()) {
-			this.pullingServices.get(this.pullingService).activatePulling();
+	public void activatePolling() {
+		if (!isPollingActivated()) {
+			this.pullingServices.get(this.pullingService).activatePolling();
 		}
 	}
 
 	@Override
-	public void deactivatePulling() {
-		if (isPullingActivated()) {
-			this.pullingServices.get(this.pullingService).deactivatePulling();
+	public void deactivatePolling() {
+		if (isPollingActivated()) {
+			this.pullingServices.get(this.pullingService).deactivatePolling();
 		}
 	}
 
 	@Override
-	public boolean isPullingActivated() {
+	public boolean isPollingActivated() {
 		return this.pullingServices.get(this.pullingService)
-				.isPullingActivated();
+				.isPollingActivated();
 	}
 
 }

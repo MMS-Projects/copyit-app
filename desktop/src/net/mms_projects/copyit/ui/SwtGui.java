@@ -65,6 +65,7 @@ public class SwtGui extends AbstractUi {
 		
 		this.clipboardManager.addCopyService(swtClipboard);
 		this.clipboardManager.addPasteService(swtClipboard);
+		this.clipboardManager.addPollingService(swtClipboard);
 		
 		this.tray = display.getSystemTray();
 		this.activityShell = new Shell(this.display);

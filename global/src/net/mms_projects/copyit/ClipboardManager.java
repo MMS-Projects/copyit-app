@@ -9,12 +9,14 @@ import net.mms_projects.copyit.clipboard_services.CopyServiceInterface;
 import net.mms_projects.copyit.clipboard_services.PasteServiceInterface;
 
 public class ClipboardManager implements CopyServiceInterface,
-		PasteServiceInterface, ClipboardListener {
+		PasteServiceInterface, PollingServiceInterface, ClipboardListener {
 
 	private Map<String, CopyServiceInterface> copyServices = new HashMap<String, CopyServiceInterface>();
 	private Map<String, PasteServiceInterface> pasteServices = new HashMap<String, PasteServiceInterface>();
+	private Map<String, PollingServiceInterface> pollingServices = new HashMap<String, PollingServiceInterface>();
 	private String copyService;
 	private String pasteService;
+	private String pollingService;
 	private List<ClipboardListener> listeners = new ArrayList<ClipboardListener>();
 
 	public void addCopyService(CopyServiceInterface service) {
@@ -30,6 +32,14 @@ public class ClipboardManager implements CopyServiceInterface,
 		if (this.pasteService == null) {
 			this.pasteService = service.getServiceName();
 			this.pasteServices.get(this.pasteService).activatePaste();
+		}
+	}
+
+	public void addPollingService(PollingServiceInterface service) {
+		this.pollingServices.put(service.getServiceName(), service);
+		if (this.pollingService == null) {
+			this.pollingService = service.getServiceName();
+			this.pollingServices.get(this.pollingService).activatePolling();
 		}
 	}
 
@@ -53,6 +63,15 @@ public class ClipboardManager implements CopyServiceInterface,
 		this.deactivatePaste();
 		this.pasteService = service;
 		this.activatePaste();
+	}
+	
+	public void setPollingService(String service) {
+		if (!this.pollingServices.containsKey(service)) {
+			return;
+		}
+		this.deactivatePolling();
+		this.pollingService = service;
+		this.activatePolling();
 	}
 
 	@Override
@@ -132,6 +151,26 @@ public class ClipboardManager implements CopyServiceInterface,
 	@Override
 	public boolean isPasteActivated() {
 		return this.pasteServices.get(this.pasteService).isPasteActivated();
+	}
+	
+	@Override
+	public void activatePolling() {
+		if (!isPollingActivated()) {
+			this.pollingServices.get(this.pollingService).activatePolling();
+		}
+	}
+
+	@Override
+	public void deactivatePolling() {
+		if (isPollingActivated()) {
+			this.pollingServices.get(this.pollingService).deactivatePolling();
+		}
+	}
+
+	@Override
+	public boolean isPollingActivated() {
+		return this.pollingServices.get(this.pollingService)
+				.isPollingActivated();
 	}
 
 }

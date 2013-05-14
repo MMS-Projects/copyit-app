@@ -2,9 +2,10 @@ package net.mms_projects.copyit.sync_services;
 
 import java.util.Date;
 
+import net.mms_projects.copyit.PollingServiceInterface;
 import net.mms_projects.copyit.SyncListener;
 
-public class TestService implements PushServiceInterface, PullingServiceInterface {
+public class TestService implements PushServiceInterface, PollingServiceInterface {
 
 	public static String SERVICE_NAME = "test";
 	
@@ -22,7 +23,7 @@ public class TestService implements PushServiceInterface, PullingServiceInterfac
 	}
 	
 	@Override
-	public void activatePulling() {
+	public void activatePolling() {
 		this.pullingEnabled = true;
 		System.out.println("Activated! Faking pulls");
 		
@@ -47,7 +48,7 @@ public class TestService implements PushServiceInterface, PullingServiceInterfac
 	}
 
 	@Override
-	public void deactivatePulling() {
+	public void deactivatePolling() {
 		this.pullingEnabled = false;
 		System.out.println("Deactivated!");
 	}
@@ -84,7 +85,7 @@ public class TestService implements PushServiceInterface, PullingServiceInterfac
 	}
 
 	@Override
-	public boolean isPullingActivated() {
+	public boolean isPollingActivated() {
 		return this.pullingEnabled;
 	}
 
