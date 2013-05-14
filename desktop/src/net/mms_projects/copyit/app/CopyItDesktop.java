@@ -12,7 +12,6 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.UUID;
 
-import net.mms_projects.copyit.ClipboardListener;
 import net.mms_projects.copyit.ClipboardManager;
 import net.mms_projects.copyit.FileStreamBuilder;
 import net.mms_projects.copyit.PathBuilder;
@@ -88,7 +87,9 @@ public class CopyItDesktop extends CopyIt {
 		}
 		this.settings.loadProperties();
 
-		final SyncManager syncManager = new SyncManager();
+		final ClipboardManager clipboardManager = new ClipboardManager();
+
+		final SyncManager syncManager = new SyncManager(clipboardManager);
 
 		ServerApi api = new ServerApi();
 		api.deviceId = UUID.fromString(settings.get("device.id"));
@@ -150,8 +151,6 @@ public class CopyItDesktop extends CopyIt {
 		} else {
 			syncManager.deactivatePolling();
 		}
-
-		final ClipboardManager clipboardManager = new ClipboardManager();
 
 		if (OSValidator.isUnix()) {
 			this.exportResource("unix-java.so");

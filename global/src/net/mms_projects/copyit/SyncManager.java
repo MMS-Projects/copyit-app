@@ -10,7 +10,7 @@ import net.mms_projects.copyit.sync_services.PullServiceInterface;
 import net.mms_projects.copyit.sync_services.PushServiceInterface;
 
 public class SyncManager implements PushServiceInterface, PullServiceInterface,
-		PollingServiceInterface, SyncListener {
+		PollingServiceInterface, SyncListener, ClipboardListener {
 
 	private Map<String, PushServiceInterface> pushServices = new HashMap<String, PushServiceInterface>();
 	private Map<String, PullServiceInterface> pullServices = new HashMap<String, PullServiceInterface>();
@@ -19,6 +19,14 @@ public class SyncManager implements PushServiceInterface, PullServiceInterface,
 	private String pullService;
 	private String pullingService;
 	private List<SyncListener> listeners = new ArrayList<SyncListener>();
+
+	private ClipboardManager clipboardManager;
+	private String currentContent;
+
+	public SyncManager(ClipboardManager clipboardManager) {
+		this.clipboardManager = clipboardManager;
+		this.clipboardManager.addListener(this);
+	}
 
 	public void addPushService(PushServiceInterface service) {
 		this.pushServices.put(service.getServiceName(), service);
@@ -106,6 +114,9 @@ public class SyncManager implements PushServiceInterface, PullServiceInterface,
 
 	@Override
 	public void onPulled(String content, Date date) {
+		if (content.equals(this.currentContent)) {
+			return;
+		}
 		for (SyncListener listener : this.listeners) {
 			listener.onPulled(content, date);
 		}
@@ -172,6 +183,16 @@ public class SyncManager implements PushServiceInterface, PullServiceInterface,
 	public boolean isPollingActivated() {
 		return this.pullingServices.get(this.pullingService)
 				.isPollingActivated();
+	}
+
+	@Override
+	public void onContentSet(String content) {
+		this.currentContent = content;
+	}
+
+	@Override
+	public void onContentGet(String content) {
+		this.currentContent = content;
 	}
 
 }
