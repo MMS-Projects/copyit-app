@@ -8,7 +8,7 @@ public class TestService implements CopyServiceInterface, PasteServiceInterface 
 
 	protected ClipboardListener listener;
 
-	private String testContent;
+	private String testContent = "bla";
 
 	public TestService(ClipboardListener listener) {
 		this.listener = listener;
@@ -22,6 +22,7 @@ public class TestService implements CopyServiceInterface, PasteServiceInterface 
 
 	@Override
 	public void getContent() {
+		System.out.println("Requested content: " + this.testContent);
 		this.listener.onContentGet(this.testContent);
 	}
 

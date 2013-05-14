@@ -2,8 +2,7 @@ package net.mms_projects.copyit.ui.swt.forms;
 
 import java.util.Date;
 
-import net.mms_projects.copyit.ClipboardUtils;
-import net.mms_projects.copyit.DesktopClipboardUtils;
+import net.mms_projects.copyit.ClipboardManager;
 import net.mms_projects.copyit.SettingsListener;
 import net.mms_projects.copyit.SyncListener;
 
@@ -22,14 +21,14 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
-public class DataQueue extends Dialog implements SyncListener,
-		SettingsListener {
+public class DataQueue extends Dialog implements SyncListener, SettingsListener {
 
 	protected Object result;
 	protected Shell shell;
 	private Table table;
 	private TableItem tableItem;
 	private boolean enabled;
+	private ClipboardManager clipboardManager;
 
 	/**
 	 * Create the dialog.
@@ -37,8 +36,11 @@ public class DataQueue extends Dialog implements SyncListener,
 	 * @param parent
 	 * @param style
 	 */
-	public DataQueue(Shell parent, int style) {
+	public DataQueue(Shell parent, int style, ClipboardManager clipboardManager) {
 		super(parent, style);
+
+		this.clipboardManager = clipboardManager;
+
 		setText("SWT Dialog");
 	}
 
@@ -113,8 +115,7 @@ public class DataQueue extends Dialog implements SyncListener,
 			public void handleEvent(Event event) {
 				TableItem tableItem = table.getSelection()[0];
 				String data = tableItem.getText(0);
-				ClipboardUtils clipboard = new DesktopClipboardUtils();
-				clipboard.setText(data);
+				clipboardManager.setContent(data);
 			}
 		});
 		table.setMenu(menu);
@@ -123,13 +124,13 @@ public class DataQueue extends Dialog implements SyncListener,
 	@Override
 	public void onPushed(String content, Date date) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	@Override
 	public void onPulled(final String content, final Date date) {
 		Display.getDefault().asyncExec(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				if (enabled) {
@@ -139,7 +140,7 @@ public class DataQueue extends Dialog implements SyncListener,
 				tableItem.setText(new String[] { content, date.toString() });
 			}
 		});
-		
+
 	}
 
 	@Override

@@ -8,8 +8,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
-import net.mms_projects.copyit.ClipboardUtils;
-import net.mms_projects.copyit.DesktopClipboardUtils;
+import net.mms_projects.copyit.ClipboardManager;
 import net.mms_projects.copyit.DesktopIntegration;
 import net.mms_projects.copyit.Messages;
 import net.mms_projects.copyit.PathBuilder;
@@ -37,8 +36,8 @@ public class TrayEntryUnity extends TrayEntry implements DBusSigHandler,
 	private DesktopIntegration integration;
 
 	public TrayEntryUnity(Settings settings, Shell activityShell,
-			SyncManager syncManager) {
-		super(settings, activityShell, syncManager);
+			SyncManager syncManager, ClipboardManager clipboardManager) {
+		super(settings, activityShell, syncManager, clipboardManager);
 
 		this.settings.addListener("sync.polling.enabled", this);
 
@@ -118,13 +117,7 @@ public class TrayEntryUnity extends TrayEntry implements DBusSigHandler,
 			}
 
 		} else if (signal instanceof DesktopIntegration.action_push) {
-			Display.getDefault().asyncExec(new Runnable() {
-				@Override
-				public void run() {
-					ClipboardUtils clipboard = new DesktopClipboardUtils();
-					syncManager.doPush(clipboard.getText(), new Date());
-				}
-			});
+			clipboardManager.getContent();
 		} else if (signal instanceof DesktopIntegration.action_pull) {
 			syncManager.doPull();
 		} else if (signal instanceof DesktopIntegration.action_open_preferences) {
@@ -190,8 +183,7 @@ public class TrayEntryUnity extends TrayEntry implements DBusSigHandler,
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override
 			public void run() {
-				ClipboardUtils clipboard = new DesktopClipboardUtils();
-				clipboard.setText(content);
+				clipboardManager.setContent(content);
 			}
 		});
 		try {

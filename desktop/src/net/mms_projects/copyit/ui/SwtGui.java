@@ -5,17 +5,16 @@ import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import net.mms_projects.copyit.ClipboardUtils;
-import net.mms_projects.copyit.DesktopClipboardUtils;
+import net.mms_projects.copyit.ClipboardManager;
 import net.mms_projects.copyit.OpenBrowser;
 import net.mms_projects.copyit.Settings;
-import net.mms_projects.copyit.SettingsListener;
 import net.mms_projects.copyit.SyncListener;
 import net.mms_projects.copyit.SyncManager;
 import net.mms_projects.copyit.api.ServerApi;
 import net.mms_projects.copyit.api.endpoints.GetBuildInfo;
 import net.mms_projects.copyit.api.responses.JenkinsBuildResponse;
 import net.mms_projects.copyit.app.CopyItDesktop;
+import net.mms_projects.copyit.clipboard_backends.SwtBackend;
 import net.mms_projects.copyit.ui.swt.TrayEntry;
 import net.mms_projects.copyit.ui.swt.TrayEntrySwt;
 import net.mms_projects.copyit.ui.swt.TrayEntryUnity;
@@ -41,12 +40,15 @@ public class SwtGui extends AbstractUi {
 	protected Shell activityShell;
 
 	protected SyncManager syncManager;
+	protected ClipboardManager clipboardManager;
 
-	public SwtGui(Settings settings, SyncManager syncManager) {
+	public SwtGui(Settings settings, SyncManager syncManager,
+			ClipboardManager clipboardManager) {
 		super(settings);
 
 		this.syncManager = syncManager;
-
+		this.clipboardManager = clipboardManager;
+		
 		try {
 			this.display = Display.getDefault();
 		} catch (UnsatisfiedLinkError error) {
@@ -59,6 +61,11 @@ public class SwtGui extends AbstractUi {
 					JOptionPane.ERROR_MESSAGE);
 			System.exit(1);
 		}
+		SwtBackend swtClipboard = new SwtBackend(this.clipboardManager);
+		
+		this.clipboardManager.addCopyService(swtClipboard);
+		this.clipboardManager.addPasteService(swtClipboard);
+		
 		this.tray = display.getSystemTray();
 		this.activityShell = new Shell(this.display);
 
@@ -66,14 +73,16 @@ public class SwtGui extends AbstractUi {
 			String desktop = System.getenv("XDG_CURRENT_DESKTOP");
 			if (desktop.equalsIgnoreCase("Unity")) {
 				this.trayEntry = new TrayEntryUnity(this.settings,
-						this.activityShell, syncManager);
+						this.activityShell, syncManager, clipboardManager);
 			}
 		}
 		if (this.trayEntry == null) {
 			this.trayEntry = new TrayEntrySwt(this.settings,
-					this.activityShell, this.tray, syncManager);
+					this.activityShell, this.tray, syncManager,
+					clipboardManager);
 		}
-		this.queueWindow = new DataQueue(this.activityShell, SWT.DIALOG_TRIM);
+		this.queueWindow = new DataQueue(this.activityShell, SWT.DIALOG_TRIM,
+				this.clipboardManager);
 	}
 
 	@Override
@@ -101,18 +110,9 @@ public class SwtGui extends AbstractUi {
 
 			@Override
 			public void onPulled(final String content, Date date) {
-				display.asyncExec(new Runnable() {
-
-					@Override
-					public void run() {
-						final ClipboardUtils clipboard = new DesktopClipboardUtils();
-
-						if (!SwtGui.this.settings
-								.getBoolean("sync.queue.enabled")) {
-							clipboard.setText(content);
-						}
-					}
-				});
+				if (!SwtGui.this.settings.getBoolean("sync.queue.enabled")) {
+					clipboardManager.setContent(content);
+				}
 			}
 		});
 		syncManager.addListener(queueWindow);

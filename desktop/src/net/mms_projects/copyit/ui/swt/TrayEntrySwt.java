@@ -3,8 +3,7 @@ package net.mms_projects.copyit.ui.swt;
 import java.util.Date;
 
 import net.mms_projects.copyit.AndroidResourceLoader;
-import net.mms_projects.copyit.ClipboardUtils;
-import net.mms_projects.copyit.DesktopClipboardUtils;
+import net.mms_projects.copyit.ClipboardManager;
 import net.mms_projects.copyit.Messages;
 import net.mms_projects.copyit.Settings;
 import net.mms_projects.copyit.SyncManager;
@@ -36,8 +35,8 @@ public class TrayEntrySwt extends TrayEntry {
 	private MenuItem menuItemPasteIt;
 
 	public TrayEntrySwt(Settings settings, Shell activityShell, Tray tray,
-			SyncManager syncManager) {
-		super(settings, activityShell, syncManager);
+			SyncManager syncManager, ClipboardManager clipboardManager) {
+		super(settings, activityShell, syncManager, clipboardManager);
 		this.tray = tray;
 		this.trayItem = new TrayItem(tray, 0);
 
@@ -84,8 +83,7 @@ public class TrayEntrySwt extends TrayEntry {
 		this.menuItemCopyIt.setText("Copy it ▲");
 		this.menuItemCopyIt.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				ClipboardUtils clipboard = new DesktopClipboardUtils();
-				syncManager.doPush(clipboard.getText(), new Date());
+				clipboardManager.getContent();
 			}
 		});
 
@@ -152,9 +150,8 @@ public class TrayEntrySwt extends TrayEntry {
 		this.display.asyncExec(new Runnable() {
 			@Override
 			public void run() {
-				ClipboardUtils clipboard = new DesktopClipboardUtils();
-				clipboard.setText(content);
-				
+				clipboardManager.setContent(content);
+
 				final ToolTip tip = new ToolTip(
 						TrayEntrySwt.this.activityShell, SWT.BALLOON
 								| SWT.ICON_INFORMATION);
