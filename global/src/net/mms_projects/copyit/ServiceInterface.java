@@ -1,4 +1,4 @@
-package net.mms_projects.copyit.sync_services;
+package net.mms_projects.copyit;
 
 public interface ServiceInterface {
 	
