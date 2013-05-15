@@ -3,9 +3,15 @@
 
     <target name="android">
         <ant dir="android" target="debug" />
-	<copy file="android/bin/android-build-debug-unaligned.apk" tofile="build/copyit-android-unaligned.apk" />
-	    <antcall target="copy-signed" />
+		<copy file="android/bin/android-build-debug.apk" tofile="build/copyit-android-debug.apk" />
+	    <!-- <antcall target="copy-signed" /> -->
     </target>
+    <target name="android-release">
+        <ant dir="android" target="release" />
+		<copy file="android/bin/android-build-release.apk" tofile="build/copyit-android-release.apk" />
+	    <!-- <antcall target="copy-signed" /> -->
+    </target>
+    <!--
     <target name="copy-signed" if="out.final.file.exists" depends="check-out.final.file.exists">
     		<copy file="android/bin/android-build-debug.apk" tofile="build/copyit-android.apk" />
     	</target>
@@ -14,6 +20,7 @@
                <available file="android/bin/android-build-debug.apk" property="out.final.file.exists" />
        </condition>
    </target>
+   -->
    
    <target name="android-lint">
         <ant dir="android" target="lint" />
