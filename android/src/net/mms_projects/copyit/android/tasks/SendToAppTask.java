@@ -13,7 +13,7 @@ public class SendToAppTask extends ServerApiUiTask<Void, Void, String> {
 		super(context, api);
 
 		this.setProgressDialigMessage(context.getResources().getString(
-				R.string.text_content_pushing));
+				R.string.text_content_pulling));
 		this.setUseProgressDialog(true);
 	}
 
