@@ -77,7 +77,7 @@ public class CopyItDesktop extends CopyIt {
 		this.settings.loadProperties();
 
 		if (OSValidator.isUnix()) {
-			this.exportResource("unix-java.so");
+			this.exportResource("libunix-java.so");
 			try {
 				CopyItDesktop.dbusConnection = DBusConnection
 						.getConnection(DBusConnection.SESSION);
