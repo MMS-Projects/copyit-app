@@ -84,7 +84,7 @@ public class SwtGui extends AbstractUi {
 			this.settings.set("run.firsttime", "nope");
 		}
 
-		this.checkVersion();
+		//this.checkVersion();
 
 		SyncingThread syncThread = new SyncingThread(this.settings);
 		syncThread.start();
