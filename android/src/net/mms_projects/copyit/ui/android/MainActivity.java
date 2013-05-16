@@ -54,9 +54,6 @@ public class MainActivity extends SherlockFragmentActivity {
 
 		setContentView(R.layout.activity_main);
 
-		// Show the Up button in the action bar.
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 		// Get intent, action and MIME type
 		Intent intent = getIntent();
 		String action = intent.getAction();
