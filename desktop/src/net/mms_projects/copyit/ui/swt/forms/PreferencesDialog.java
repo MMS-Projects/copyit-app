@@ -133,6 +133,7 @@ public class PreferencesDialog extends GeneralDialog {
 		this.btnManualLogin = new Button(compositeAccount, SWT.NONE);
 		fd_btnLogin.right = new FormAttachment(btnManualLogin, -6);
 		FormData fd_btnManualLogin = new FormData();
+		fd_btnManualLogin.bottom = new FormAttachment(btnLogin, 0, SWT.BOTTOM);
 		fd_btnManualLogin.left = new FormAttachment(0, 364);
 		fd_btnManualLogin.right = new FormAttachment(100, -10);
 		fd_btnManualLogin.top = new FormAttachment(lblDeviceIdHere, 6);
