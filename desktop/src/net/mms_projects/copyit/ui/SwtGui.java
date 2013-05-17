@@ -94,6 +94,10 @@ public class SwtGui extends AbstractUi {
 				final ClipboardUtils clipboard = new DesktopClipboardUtils();
 
 				if (!SwtGui.this.settings.getBoolean("sync.queue.enabled")) {
+					if (data.length() == 0) {
+						return;
+					}
+					
 					clipboard.setText(data);
 				}
 			}
