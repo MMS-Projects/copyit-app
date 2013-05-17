@@ -126,15 +126,16 @@ public class PreferencesDialog extends GeneralDialog {
 		lblDeviceIdHere.setLayoutData(fd_lblDeviceIdHere);
 		this.btnLogin = new Button(compositeAccount, SWT.NONE);
 		FormData fd_btnLogin = new FormData();
-		fd_btnLogin.right = new FormAttachment(0, 358);
-		fd_btnLogin.top = new FormAttachment(0, 56);
 		fd_btnLogin.left = new FormAttachment(0, 200);
+		fd_btnLogin.top = new FormAttachment(lblDeviceIdHere, 6);
+		fd_btnLogin.bottom = new FormAttachment(0, 85);
 		btnLogin.setLayoutData(fd_btnLogin);
 		this.btnManualLogin = new Button(compositeAccount, SWT.NONE);
+		fd_btnLogin.right = new FormAttachment(btnManualLogin, -6);
 		FormData fd_btnManualLogin = new FormData();
-		fd_btnManualLogin.right = new FormAttachment(0, 524);
-		fd_btnManualLogin.top = new FormAttachment(0, 56);
 		fd_btnManualLogin.left = new FormAttachment(0, 364);
+		fd_btnManualLogin.right = new FormAttachment(100, -10);
+		fd_btnManualLogin.top = new FormAttachment(lblDeviceIdHere, 6);
 		btnManualLogin.setLayoutData(fd_btnManualLogin);
 		// Security tab
 		TabItem tbtmSecurity = new TabItem(tabFolder, SWT.NONE);
