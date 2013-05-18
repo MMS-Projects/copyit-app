@@ -99,10 +99,9 @@ public class SwtGui extends AbstractUi {
 			this.settings.set("run.firsttime", "nope");
 		}
 
-		this.checkVersion();
+		//this.checkVersion();
 
 		syncManager.addListener(new SyncListener() {
-
 			@Override
 			public void onPushed(String content, Date date) {
 				// TODO Auto-generated method stub
