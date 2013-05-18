@@ -17,13 +17,18 @@ public class ClipboardManager implements CopyServiceInterface,
 	private String copyService;
 	private String pasteService;
 	private String pollingService;
+	private boolean copyEnabled = true;
+	private boolean pasteEnabled = true;
+	private boolean pollingEnabled = true;
 	private List<ClipboardListener> listeners = new ArrayList<ClipboardListener>();
 
 	public void addCopyService(CopyServiceInterface service) {
 		this.copyServices.put(service.getServiceName(), service);
 		if (this.copyService == null) {
 			this.copyService = service.getServiceName();
-			this.copyServices.get(this.copyService).activateCopy();
+			if (this.isCopyActivated()) {
+				this.copyServices.get(this.copyService).activateCopy();
+			}
 		}
 	}
 
@@ -31,7 +36,9 @@ public class ClipboardManager implements CopyServiceInterface,
 		this.pasteServices.put(service.getServiceName(), service);
 		if (this.pasteService == null) {
 			this.pasteService = service.getServiceName();
-			this.pasteServices.get(this.pasteService).activatePaste();
+			if (this.isPasteActivated()) {
+				this.pasteServices.get(this.pasteService).activatePaste();
+			}
 		}
 	}
 
@@ -39,7 +46,9 @@ public class ClipboardManager implements CopyServiceInterface,
 		this.pollingServices.put(service.getServiceName(), service);
 		if (this.pollingService == null) {
 			this.pollingService = service.getServiceName();
-			this.pollingServices.get(this.pollingService).activatePolling();
+			if (this.isPollingActivated()) {
+				this.pollingServices.get(this.pollingService).activatePolling();
+			}
 		}
 	}
 
@@ -53,25 +62,61 @@ public class ClipboardManager implements CopyServiceInterface,
 		}
 		this.deactivateCopy();
 		this.copyService = service;
-		this.activateCopy();
+		if (this.isCopyActivated()) {
+			this.activateCopy();
+		}
 	}
 
-	public void setPullService(String service) {
+	public boolean isCopyServiceDefined() {
+		if (this.copyServices.isEmpty()) {
+			return false;
+		}
+		if (!this.copyServices.containsKey(this.copyService)) {
+			return false;
+		}
+		return true;
+	}
+
+	public void setPasteService(String service) {
 		if (!this.pasteServices.containsKey(service)) {
 			return;
 		}
 		this.deactivatePaste();
 		this.pasteService = service;
-		this.activatePaste();
+		if (this.isPasteActivated()) {
+			this.activatePaste();
+		}
 	}
-	
+
+	public boolean isPasteServiceDefined() {
+		if (this.pasteServices.isEmpty()) {
+			return false;
+		}
+		if (!this.pasteServices.containsKey(this.pasteService)) {
+			return false;
+		}
+		return true;
+	}
+
 	public void setPollingService(String service) {
 		if (!this.pollingServices.containsKey(service)) {
 			return;
 		}
 		this.deactivatePolling();
 		this.pollingService = service;
-		this.activatePolling();
+		if (this.isPollingActivated()) {
+			this.activatePolling();
+		}
+	}
+
+	public boolean isPollingServiceDefined() {
+		if (this.pollingServices.isEmpty()) {
+			return false;
+		}
+		if (!this.pollingServices.containsKey(this.pollingService)) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override
@@ -117,60 +162,74 @@ public class ClipboardManager implements CopyServiceInterface,
 
 	@Override
 	public void activateCopy() {
-		if (!this.isCopyActivated()) {
+		if (this.isCopyServiceDefined()
+				&& !this.copyServices.get(this.copyService).isCopyActivated()) {
 			this.copyServices.get(this.copyService).activateCopy();
 		}
+		this.copyEnabled = true;
 	}
 
 	@Override
 	public void deactivateCopy() {
-		if (this.isCopyActivated()) {
+		if (this.isCopyServiceDefined()
+				&& this.copyServices.get(this.copyService).isCopyActivated()) {
 			this.copyServices.get(this.pasteService).deactivateCopy();
 		}
+		this.copyEnabled = false;
 	}
 
 	@Override
 	public boolean isCopyActivated() {
-		return this.copyServices.get(this.copyService).isCopyActivated();
+		return this.copyEnabled;
 	}
 
 	@Override
 	public void activatePaste() {
-		if (!this.isPasteActivated()) {
+		if (this.isPasteServiceDefined()
+				&& !this.pasteServices.get(this.pasteService)
+						.isPasteActivated()) {
 			this.pasteServices.get(this.pasteService).activatePaste();
 		}
+		this.pasteEnabled = true;
 	}
 
 	@Override
 	public void deactivatePaste() {
-		if (!this.isPasteActivated()) {
+		if (this.isPasteServiceDefined()
+				&& this.pasteServices.get(this.pasteService).isPasteActivated()) {
 			this.pasteServices.get(this.pasteService).deactivatePaste();
 		}
+		this.pasteEnabled = false;
 	}
 
 	@Override
 	public boolean isPasteActivated() {
-		return this.pasteServices.get(this.pasteService).isPasteActivated();
+		return this.pasteEnabled;
 	}
-	
+
 	@Override
 	public void activatePolling() {
-		if (!isPollingActivated()) {
+		if (this.isPollingServiceDefined()
+				&& !this.pollingServices.get(this.pollingService)
+						.isPollingActivated()) {
 			this.pollingServices.get(this.pollingService).activatePolling();
 		}
+		this.pollingEnabled = true;
 	}
 
 	@Override
 	public void deactivatePolling() {
-		if (isPollingActivated()) {
+		if (this.isPollingServiceDefined()
+				&& this.pollingServices.get(this.pollingService)
+						.isPollingActivated()) {
 			this.pollingServices.get(this.pollingService).deactivatePolling();
 		}
+		this.pollingEnabled = false;
 	}
 
 	@Override
 	public boolean isPollingActivated() {
-		return this.pollingServices.get(this.pollingService)
-				.isPollingActivated();
+		return this.pollingEnabled;
 	}
 
 }
