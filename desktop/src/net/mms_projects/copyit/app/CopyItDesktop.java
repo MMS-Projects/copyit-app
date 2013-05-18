@@ -141,15 +141,19 @@ public class CopyItDesktop extends CopyIt {
 					public void onChange(String key, String value) {
 						if (Boolean.parseBoolean(value)) {
 							syncManager.activatePolling();
+							clipboardManager.activatePolling();
 						} else {
 							syncManager.deactivatePolling();
+							clipboardManager.deactivatePolling();
 						}
 					}
 				});
 		if (this.settings.getBoolean("sync.polling.enabled")) {
 			syncManager.activatePolling();
+			clipboardManager.activatePolling();
 		} else {
 			syncManager.deactivatePolling();
+			clipboardManager.deactivatePolling();
 		}
 
 		if (OSValidator.isUnix()) {
