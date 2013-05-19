@@ -74,5 +74,8 @@
     <string name="jenkins_joburl" translatable="false">http://jenkins.marlinc.nl/job/CopyIt-App-Beta</string>
     <string name="app_name" translatable="false">CopyIt</string>
     <string name="default_apk" translatable="false">copyit.apk</string>
+    <string name="ga_trackingId" translatable="false">UA-37152392-6</string>
+    <bool name="ga_autoActivityTracking" translatable="false">true</bool>
+    <bool name="ga_reportUncaughtExceptions" translatable="false">true</bool>
 
 </resources>

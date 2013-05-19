@@ -17,6 +17,7 @@ import android.support.v4.app.NavUtils;
 
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.actionbarsherlock.view.MenuItem;
+import com.google.analytics.tracking.android.EasyTracker;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -46,6 +47,20 @@ public class SettingsActivity extends SherlockPreferenceActivity implements
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
+	@Override
+	protected void onStart() {
+		super.onStart();
+		
+		EasyTracker.getInstance().activityStart(this);
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+		
+		EasyTracker.getInstance().activityStop(this);
+	}
+	
 	@Override
 	protected void onResume() {
 		super.onResume();
