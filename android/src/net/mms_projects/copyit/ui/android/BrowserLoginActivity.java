@@ -17,6 +17,7 @@ import android.webkit.WebViewClient;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
+import com.google.analytics.tracking.android.EasyTracker;
 
 public class BrowserLoginActivity extends SherlockActivity {
 
@@ -75,6 +76,20 @@ public class BrowserLoginActivity extends SherlockActivity {
 				return true;
 			}
 		});
+	}
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		
+		EasyTracker.getInstance().activityStart(this);
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+		
+		EasyTracker.getInstance().activityStop(this);
 	}
 
 	@Override
