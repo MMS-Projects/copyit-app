@@ -3,6 +3,7 @@ package net.mms_projects.copyit.clipboard_backends;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
+import net.mms_projects.copy_it.R;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class HoneycombBackend extends AbstractAndroidClipboardBackend {

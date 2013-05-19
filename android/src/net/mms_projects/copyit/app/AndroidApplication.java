@@ -1,6 +1,7 @@
 package net.mms_projects.copyit.app;
 
 import android.app.Application;
+import net.mms_projects.copy_it.R;
 
 public class AndroidApplication extends Application {
 

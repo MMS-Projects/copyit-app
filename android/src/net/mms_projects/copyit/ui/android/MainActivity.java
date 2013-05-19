@@ -26,6 +26,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
@@ -78,6 +79,16 @@ public class MainActivity extends SherlockFragmentActivity {
 		}
 	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		ClipboardUtils clipboard = new AndroidClipboardUtils(MainActivity.this);
+		
+		TextView clipboardContent = (TextView) this.findViewById(R.id.clipboard_content);
+		clipboardContent.setText(clipboard.getText());
+	}
+	
 	@Override
 	protected void onStart() {
 		super.onStart();

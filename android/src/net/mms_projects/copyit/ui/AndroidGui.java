@@ -1,5 +1,6 @@
 package net.mms_projects.copyit.ui;
 
+import net.mms_projects.copy_it.R;
 import net.mms_projects.copyit.Settings;
 import net.mms_projects.copyit.ui.android.MainActivity;
 
