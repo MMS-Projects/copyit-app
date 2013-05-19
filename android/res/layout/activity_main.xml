@@ -5,6 +5,15 @@
     android:layout_height="match_parent"
     android:orientation="horizontal" >
 
+    <fragment
+        android:id="@+id/fragment_dashboard"
+        android:name="com.google.android.apps.iosched.ui.DashboardFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/label_clipboard_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" />
+
     <View
         android:id="@+id/ad_view"
         android:layout_width="match_parent"
@@ -13,13 +22,24 @@
         android:layout_alignParentLeft="true"
         android:background="@android:color/transparent" />
 
-    <fragment
-        android:id="@+id/fragment_dashboard"
-        android:name="com.google.android.apps.iosched.ui.DashboardFragment"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/label_clipboard_content"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/ad_view"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" />
+        android:text="@string/text_content" />
+
+    <TextView
+        android:id="@+id/clipboard_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/label_clipboard_content"
+        android:layout_alignBottom="@+id/label_clipboard_content"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/label_clipboard_content"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textIsSelectable="true" />
 
 </RelativeLayout>

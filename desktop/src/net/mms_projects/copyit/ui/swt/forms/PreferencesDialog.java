@@ -99,24 +99,83 @@ public class PreferencesDialog extends GeneralDialog {
 		// Account tab
 		TabItem tbtmAccount = new TabItem(tabFolder, SWT.NONE);
 		Composite compositeAccount = new Composite(tabFolder, SWT.NONE);
+		compositeAccount.setLayout(new FormLayout());
 		Label lblAccountName = new Label(compositeAccount, SWT.NONE);
+		FormData fd_lblAccountName = new FormData();
+		fd_lblAccountName.right = new FormAttachment(0, 170);
+		fd_lblAccountName.top = new FormAttachment(0, 10);
+		fd_lblAccountName.left = new FormAttachment(0, 10);
+		lblAccountName.setLayoutData(fd_lblAccountName);
 		Label lblAccountNameHere = new Label(compositeAccount, SWT.NONE);
+		FormData fd_lblAccountNameHere = new FormData();
+		fd_lblAccountNameHere.right = new FormAttachment(0, 380);
+		fd_lblAccountNameHere.top = new FormAttachment(0, 10);
+		fd_lblAccountNameHere.left = new FormAttachment(0, 200);
+		lblAccountNameHere.setLayoutData(fd_lblAccountNameHere);
 		Label lblDeviceId = new Label(compositeAccount, SWT.NONE);
+		FormData fd_lblDeviceId = new FormData();
+		fd_lblDeviceId.right = new FormAttachment(0, 80);
+		fd_lblDeviceId.top = new FormAttachment(0, 33);
+		fd_lblDeviceId.left = new FormAttachment(0, 10);
+		lblDeviceId.setLayoutData(fd_lblDeviceId);
 		this.lblDeviceIdHere = new Label(compositeAccount, SWT.NONE);
+		FormData fd_lblDeviceIdHere = new FormData();
+		fd_lblDeviceIdHere.right = new FormAttachment(0, 380);
+		fd_lblDeviceIdHere.top = new FormAttachment(0, 33);
+		fd_lblDeviceIdHere.left = new FormAttachment(0, 200);
+		lblDeviceIdHere.setLayoutData(fd_lblDeviceIdHere);
 		this.btnLogin = new Button(compositeAccount, SWT.NONE);
+		FormData fd_btnLogin = new FormData();
+		fd_btnLogin.left = new FormAttachment(0, 200);
+		fd_btnLogin.top = new FormAttachment(lblDeviceIdHere, 6);
+		fd_btnLogin.bottom = new FormAttachment(0, 85);
+		btnLogin.setLayoutData(fd_btnLogin);
 		this.btnManualLogin = new Button(compositeAccount, SWT.NONE);
+		fd_btnLogin.right = new FormAttachment(btnManualLogin, -6);
+		FormData fd_btnManualLogin = new FormData();
+		fd_btnManualLogin.bottom = new FormAttachment(btnLogin, 0, SWT.BOTTOM);
+		fd_btnManualLogin.left = new FormAttachment(0, 364);
+		fd_btnManualLogin.right = new FormAttachment(100, -10);
+		fd_btnManualLogin.top = new FormAttachment(lblDeviceIdHere, 6);
+		btnManualLogin.setLayoutData(fd_btnManualLogin);
 		// Security tab
 		TabItem tbtmSecurity = new TabItem(tabFolder, SWT.NONE);
 		Composite compositeSecurity = new Composite(tabFolder, SWT.NONE);
+		compositeSecurity.setLayout(new FormLayout());
 		final Button btnEnableLocalEncryption = new Button(compositeSecurity,
 				SWT.CHECK);
+		FormData fd_btnEnableLocalEncryption = new FormData();
+		fd_btnEnableLocalEncryption.right = new FormAttachment(0, 194);
+		fd_btnEnableLocalEncryption.top = new FormAttachment(0, 10);
+		fd_btnEnableLocalEncryption.left = new FormAttachment(0, 10);
+		btnEnableLocalEncryption.setLayoutData(fd_btnEnableLocalEncryption);
 		Label lblEncryptionPassphrase = new Label(compositeSecurity, SWT.NONE);
+		FormData fd_lblEncryptionPassphrase = new FormData();
+		fd_lblEncryptionPassphrase.right = new FormAttachment(0, 194);
+		fd_lblEncryptionPassphrase.top = new FormAttachment(0, 44);
+		fd_lblEncryptionPassphrase.left = new FormAttachment(0, 10);
+		lblEncryptionPassphrase.setLayoutData(fd_lblEncryptionPassphrase);
 		this.textEncryptionPassphrase = new Text(compositeSecurity, SWT.BORDER);
+		FormData fd_textEncryptionPassphrase = new FormData();
+		fd_textEncryptionPassphrase.right = new FormAttachment(0, 400);
+		fd_textEncryptionPassphrase.top = new FormAttachment(0, 40);
+		fd_textEncryptionPassphrase.left = new FormAttachment(0, 200);
+		textEncryptionPassphrase.setLayoutData(fd_textEncryptionPassphrase);
 		// Sync tab
 		TabItem tbtmSync = new TabItem(tabFolder, SWT.NONE);
 		Composite compositeSync = new Composite(tabFolder, SWT.NONE);
+		compositeSync.setLayout(new FormLayout());
 		btnEnablePolling = new Button(compositeSync, SWT.CHECK);
+		FormData fd_btnEnablePolling = new FormData();
+		fd_btnEnablePolling.right = new FormAttachment(0, 178);
+		fd_btnEnablePolling.top = new FormAttachment(0, 10);
+		fd_btnEnablePolling.left = new FormAttachment(0, 10);
+		btnEnablePolling.setLayoutData(fd_btnEnablePolling);
 		btnEnableQueue = new Button(compositeSync, SWT.CHECK);
+		FormData fd_btnEnableQueue = new FormData();
+		fd_btnEnableQueue.top = new FormAttachment(0, 40);
+		fd_btnEnableQueue.left = new FormAttachment(0, 10);
+		btnEnableQueue.setLayoutData(fd_btnEnableQueue);
 		
 		/*
 		 * Layout and settings
@@ -129,33 +188,21 @@ public class PreferencesDialog extends GeneralDialog {
 		// Account tab
 		tbtmAccount.setText("Account");
 		tbtmAccount.setControl(compositeAccount);
-		compositeAccount.setLayout(null);
-		lblAccountName.setBounds(10, 10, 160, 17);
 		lblAccountName.setText("Account name:");
-		lblAccountNameHere.setBounds(200, 10, 180, 17);
 		lblAccountNameHere.setText("Account name here...");
-		lblDeviceId.setBounds(10, 33, 70, 17);
 		lblDeviceId.setText("Device id:");
-		this.lblDeviceIdHere.setBounds(200, 33, 180, 17);
 		this.lblDeviceIdHere.setText("Device id here...");
-		this.btnLogin.setBounds(200, 56, 158, 29);
 		this.btnLogin.setText(Messages.getString("button_login"));
-		this.btnManualLogin.setBounds(364, 56, 160, 29);
 		this.btnManualLogin.setText("Manual login ");
 		// Security tab
 		tbtmSecurity.setText("Security");
 		tbtmSecurity.setControl(compositeSecurity);
-		btnEnableLocalEncryption.setBounds(10, 10, 184, 24);
 		btnEnableLocalEncryption.setText("Enable local encryption");
-		lblEncryptionPassphrase.setBounds(10, 44, 184, 17);
 		lblEncryptionPassphrase.setText("Encryption passphrase:");
-		this.textEncryptionPassphrase.setBounds(200, 40, 200, 27);
 		// Sync tab
 		tbtmSync.setText("Sync");
 		tbtmSync.setControl(compositeSync);
-		btnEnablePolling.setBounds(10, 10, 168, 24);
-		btnEnablePolling.setText(Messages.getString("PreferencesDialog.btnEnablePolling.text")); //$NON-NLS-1$
-		btnEnableQueue.setBounds(10, 40, 115, 24);
+		btnEnablePolling.setText(Messages.getString("PreferencesDialog.btnEnablePolling.text"));
 		btnEnableQueue.setText(Messages.getString("PreferencesDialog.btnEnableQueue.text")); //$NON-NLS-1$
 
 		/*

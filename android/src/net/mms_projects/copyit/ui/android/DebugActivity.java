@@ -2,6 +2,8 @@ package net.mms_projects.copyit.ui.android;
 
 import java.util.UUID;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
 import net.mms_projects.copy_it.R;
 import net.mms_projects.copyit.app.CopyItAndroid;
 import net.mms_projects.utils.InlineSwitch;
@@ -89,6 +91,20 @@ public class DebugActivity extends Activity {
 					.exportTableLayout((TableLayout) findViewById(R.id.debug_table)));
 			finish();
 		}
+	}
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		
+		EasyTracker.getInstance().activityStart(this);
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+		
+		EasyTracker.getInstance().activityStop(this);
 	}
 
 	protected String exportTableLayout(TableLayout table) {

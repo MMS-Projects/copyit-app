@@ -26,11 +26,13 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.google.analytics.tracking.android.EasyTracker;
 
 public class MainActivity extends SherlockFragmentActivity {
 
@@ -53,9 +55,6 @@ public class MainActivity extends SherlockFragmentActivity {
 		this.app.run(this);
 
 		setContentView(R.layout.activity_main);
-
-		// Show the Up button in the action bar.
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		// Get intent, action and MIME type
 		Intent intent = getIntent();
@@ -80,6 +79,30 @@ public class MainActivity extends SherlockFragmentActivity {
 		}
 	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		ClipboardUtils clipboard = new AndroidClipboardUtils(MainActivity.this);
+		
+		TextView clipboardContent = (TextView) this.findViewById(R.id.clipboard_content);
+		clipboardContent.setText(clipboard.getText());
+	}
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		
+		EasyTracker.getInstance().activityStart(this);
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+		
+		EasyTracker.getInstance().activityStop(this);
+	}
+	
 	private void handleSendText(Intent intent) {
 		String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
 		if (sharedText != null) {

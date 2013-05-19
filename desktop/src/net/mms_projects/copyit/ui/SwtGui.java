@@ -84,7 +84,7 @@ public class SwtGui extends AbstractUi {
 			this.settings.set("run.firsttime", "nope");
 		}
 
-		this.checkVersion();
+		//this.checkVersion();
 
 		SyncingThread syncThread = new SyncingThread(this.settings);
 		syncThread.start();
@@ -94,6 +94,10 @@ public class SwtGui extends AbstractUi {
 				final ClipboardUtils clipboard = new DesktopClipboardUtils();
 
 				if (!SwtGui.this.settings.getBoolean("sync.queue.enabled")) {
+					if (data.length() == 0) {
+						return;
+					}
+					
 					clipboard.setText(data);
 				}
 			}

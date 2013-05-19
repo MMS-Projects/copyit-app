@@ -1,5 +1,7 @@
 package net.mms_projects.copyit.ui.android;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
 import net.mms_projects.copy_it.R;
 import android.app.Activity;
 import android.app.NotificationManager;
@@ -30,6 +32,20 @@ public class UpdateActivity extends Activity {
 
 		TextView artifactName = (TextView) findViewById(R.id.label_artifact_name);
 		artifactName.setText("copyit-android.apk");
+	}
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		
+		EasyTracker.getInstance().activityStart(this);
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+		
+		EasyTracker.getInstance().activityStop(this);
 	}
 
 	public void doDownload(View view) {
