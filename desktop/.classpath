@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+    <classpathentry kind="src" path="src">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="native"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="android-res"/>
+	<classpathentry kind="src" path="res"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/global"/>
+	<classpathentry kind="lib" path="/global/libs/commons-io-2.4.jar"/>
+	<classpathentry kind="lib" path="/global/libs/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="/global/libs/gson-2.2.2.jar"/>
+	<classpathentry kind="lib" path="/global/libs/httpclient-4.2.3.jar"/>
+	<classpathentry kind="lib" path="/global/libs/httpcore-4.2.2.jar"/>
+	<classpathentry kind="lib" path="libs/linux/libdbus-java-2.7.jar"/>
+	<classpathentry kind="lib" path="libs/linux/unix-0.5.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="desktop/libs/linux"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="libs/linux/hexdump-0.2.jar"/>
+	<classpathentry kind="var" path="SWT_LIB"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
