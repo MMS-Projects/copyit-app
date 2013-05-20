@@ -26,6 +26,7 @@
     <string name="title_activity_update">Update</string>
     <string name="title_activity_debug">Copy It debug screen</string>
     <!-- Other stuff -->
+    <string name="text_content">Content: </string>
     <string name="text_welcome_message">Thank you for installing CopyIt. To start using CopyIt please login.</string>
     <string name="text_logging_in">Logging in&#8230;</string>
     <string name="text_login_successful">Login successful</string>

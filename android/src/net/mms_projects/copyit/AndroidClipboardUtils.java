@@ -1,5 +1,6 @@
 package net.mms_projects.copyit;
 
+import net.mms_projects.copy_it.R;
 import net.mms_projects.copyit.clipboard_backends.HoneycombBackend;
 import net.mms_projects.copyit.clipboard_backends.PreHoneycombBackend;
 import android.content.Context;
