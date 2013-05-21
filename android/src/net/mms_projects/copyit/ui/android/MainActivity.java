@@ -82,27 +82,28 @@ public class MainActivity extends SherlockFragmentActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
+
 		ClipboardUtils clipboard = new AndroidClipboardUtils(MainActivity.this);
-		
-		TextView clipboardContent = (TextView) this.findViewById(R.id.clipboard_content);
+
+		TextView clipboardContent = (TextView) this
+				.findViewById(R.id.clipboard_content);
 		clipboardContent.setText(clipboard.getText());
 	}
-	
+
 	@Override
 	protected void onStart() {
 		super.onStart();
-		
+
 		EasyTracker.getInstance().activityStart(this);
 	}
-	
+
 	@Override
 	protected void onStop() {
 		super.onStop();
-		
+
 		EasyTracker.getInstance().activityStop(this);
 	}
-	
+
 	private void handleSendText(Intent intent) {
 		String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
 		if (sharedText != null) {
@@ -168,6 +169,9 @@ public class MainActivity extends SherlockFragmentActivity {
 	}
 
 	public void copyIt(View view) {
+		EasyTracker.getTracker().sendEvent("ui_action", "button_press",
+				"push_button", null);
+
 		SharedPreferences preferences = PreferenceManager
 				.getDefaultSharedPreferences(this);
 
@@ -206,6 +210,9 @@ public class MainActivity extends SherlockFragmentActivity {
 	}
 
 	public void pasteIt(View view) {
+		EasyTracker.getTracker().sendEvent("ui_action", "button_press",
+				"pull_button", null);
+		
 		SharedPreferences preferences = PreferenceManager
 				.getDefaultSharedPreferences(this);
 		if (preferences.getString("device.id", null) == null) {
@@ -236,6 +243,8 @@ public class MainActivity extends SherlockFragmentActivity {
 	}
 
 	public void sendToApp(View view) {
+		EasyTracker.getTracker().sendEvent("ui_action", "button_press", "send_to_app_button", null);
+		
 		SharedPreferences preferences = PreferenceManager
 				.getDefaultSharedPreferences(this);
 		if (preferences.getString("device.id", null) == null) {
@@ -270,11 +279,15 @@ public class MainActivity extends SherlockFragmentActivity {
 	}
 
 	public void gotoSettings(View view) {
+		EasyTracker.getTracker().sendEvent("ui_action", "button_press", "settings_button", null);
+		
 		Intent intent = new Intent(this, SettingsActivity.class);
 		startActivity(intent);
 	}
 
 	public void gotoAbout(View view) {
+		EasyTracker.getTracker().sendEvent("ui_action", "button_press", "about_button", null);
+		
 		Intent intent = new Intent(this, AboutActivity.class);
 		startActivity(intent);
 	}
