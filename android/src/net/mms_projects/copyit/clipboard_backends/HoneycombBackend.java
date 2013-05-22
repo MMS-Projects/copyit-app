@@ -16,7 +16,10 @@ public class HoneycombBackend extends AbstractAndroidClipboardBackend {
 	public String getText() {
 		android.content.ClipboardManager clipboard = (android.content.ClipboardManager) this.context.getSystemService(Context.CLIPBOARD_SERVICE);
 		android.content.ClipData clip = clipboard.getPrimaryClip();
-		return clip.getItemAt(0).getText().toString();
+		if (clip.getItemCount() != 0) {
+			return clip.getItemAt(0).getText().toString();
+		}
+		return null;
 	}
 
 	@Override
