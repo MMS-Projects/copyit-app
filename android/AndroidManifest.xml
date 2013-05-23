@@ -104,6 +104,14 @@
             android:name="net.mms_projects.copyit.ui.android.DebugActivity"
             android:label="@string/title_activity_debug"
             android:screenOrientation="landscape" />
+        <activity
+            android:name="net.mms_projects.copyit.ui.android.TestActivity"
+            android:label="@string/title_activity_test"
+            android:parentActivityName="net.mms_projects.copyit.ui.android.DebugActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="net.mms_projects.copyit.ui.android.DebugActivity" />
+        </activity>
 
         <receiver
             android:name="net.mms_projects.copyit.ui.android.widgets.WidgetGeneral"

@@ -2,13 +2,10 @@ package net.mms_projects.copyit.ui.android;
 
 import java.util.UUID;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
 import net.mms_projects.copy_it.R;
 import net.mms_projects.copyit.app.CopyItAndroid;
 import net.mms_projects.utils.InlineSwitch;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -21,8 +18,14 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+import com.google.analytics.tracking.android.EasyTracker;
+
 @SuppressLint("InlinedApi")
-public class DebugActivity extends Activity {
+public class DebugActivity extends SherlockActivity {
 
 	public final static String ACTION_SEND = "send";
 
@@ -92,18 +95,38 @@ public class DebugActivity extends Activity {
 			finish();
 		}
 	}
-	
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getSupportMenuInflater();
+		inflater.inflate(R.menu.debug, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		Intent intent = null;
+		switch (item.getItemId()) {
+		case R.id.action_open_activity_test:
+			intent = new Intent(this, TestActivity.class);
+			this.startActivity(intent);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+
 	@Override
 	protected void onStart() {
 		super.onStart();
-		
+
 		EasyTracker.getInstance().activityStart(this);
 	}
-	
+
 	@Override
 	protected void onStop() {
 		super.onStop();
-		
+
 		EasyTracker.getInstance().activityStop(this);
 	}
 
