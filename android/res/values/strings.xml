@@ -11,6 +11,7 @@
     <!-- Menu -->
     <string name="menu_settings">@string/dashboard_button_settings</string>
     <string name="menu_feedback">Feedback</string>
+    <string name="menu_logout">Logout</string>
     <!-- Buttons -->
     <string name="button_copyit">@string/dashboard_button_copyit</string>
     <string name="button_pasteit">@string/dashboard_button_pasteit</string>
@@ -31,6 +32,7 @@
     <string name="text_welcome_message">Thank you for installing CopyIt. To start using CopyIt please login.</string>
     <string name="text_logging_in">Logging in&#8230;</string>
     <string name="text_login_successful">Login successful</string>
+    <string name="text_logout_successful">Logout successful</string>
     <string name="text_login_question">It looks like you\'re not logged in. Do you want to login in?</string>
     <string name="text_content_pushed">Pushed the following content: \'%1$s\'</string>
     <string name="text_content_pulled">Pulled the following content: \'%1$s\'</string>

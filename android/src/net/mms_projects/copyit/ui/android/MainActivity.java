@@ -22,11 +22,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
@@ -164,6 +166,28 @@ public class MainActivity extends SherlockFragmentActivity {
 			intent.setAction(Intent.ACTION_SEND);
 			startActivity(intent);
 			return true;
+		case R.id.action_logout:
+			SharedPreferences preferences = PreferenceManager
+					.getDefaultSharedPreferences(this);
+
+			try {
+				Editor preferenceEditor = preferences.edit();
+				preferenceEditor.remove("device.id");
+				preferenceEditor.remove("device.password");
+				preferenceEditor.commit();
+			} catch (Exception event) {
+				// TODO Auto-generated catch block
+				event.printStackTrace();
+			}
+
+			Toast.makeText(
+					this,
+					this.getResources().getString(
+							R.string.text_logout_successful), Toast.LENGTH_LONG)
+					.show();
+
+			finish();
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -213,7 +237,7 @@ public class MainActivity extends SherlockFragmentActivity {
 	public void pasteIt(View view) {
 		EasyTracker.getTracker().sendEvent("ui_action", "button_press",
 				"pull_button", null);
-		
+
 		SharedPreferences preferences = PreferenceManager
 				.getDefaultSharedPreferences(this);
 		if (preferences.getString("device.id", null) == null) {
@@ -244,8 +268,9 @@ public class MainActivity extends SherlockFragmentActivity {
 	}
 
 	public void sendToApp(View view) {
-		EasyTracker.getTracker().sendEvent("ui_action", "button_press", "send_to_app_button", null);
-		
+		EasyTracker.getTracker().sendEvent("ui_action", "button_press",
+				"send_to_app_button", null);
+
 		SharedPreferences preferences = PreferenceManager
 				.getDefaultSharedPreferences(this);
 		if (preferences.getString("device.id", null) == null) {
@@ -280,15 +305,17 @@ public class MainActivity extends SherlockFragmentActivity {
 	}
 
 	public void gotoSettings(View view) {
-		EasyTracker.getTracker().sendEvent("ui_action", "button_press", "settings_button", null);
-		
+		EasyTracker.getTracker().sendEvent("ui_action", "button_press",
+				"settings_button", null);
+
 		Intent intent = new Intent(this, SettingsActivity.class);
 		startActivity(intent);
 	}
 
 	public void gotoAbout(View view) {
-		EasyTracker.getTracker().sendEvent("ui_action", "button_press", "about_button", null);
-		
+		EasyTracker.getTracker().sendEvent("ui_action", "button_press",
+				"about_button", null);
+
 		Intent intent = new Intent(this, AboutActivity.class);
 		startActivity(intent);
 	}
