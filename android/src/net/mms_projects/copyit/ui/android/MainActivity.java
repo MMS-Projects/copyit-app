@@ -54,6 +54,7 @@ public class MainActivity extends SherlockFragmentActivity {
 		this.app = new CopyItAndroid();
 		this.app.run(this);
 
+		setTheme(R.style.AppTheme);
 		setContentView(R.layout.activity_main);
 
 		// Get intent, action and MIME type
