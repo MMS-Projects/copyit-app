@@ -26,13 +26,13 @@
     <string name="title_activity_about">@string/pref_about</string>
     <string name="title_activity_update">Update</string>
     <string name="title_activity_debug">Copy It debug screen</string>
-    <string name="title_activity_test">Tests</string>
+    <string name="title_activity_test">Tests EN</string>
     <!-- Other stuff -->
     <string name="text_content">Content: </string>
     <string name="text_welcome_message">Thank you for installing CopyIt. To start using CopyIt please login.</string>
     <string name="text_logging_in">Logging in&#8230;</string>
-    <string name="text_login_successful">Login successful</string>
-    <string name="text_logout_successful">Logout successful</string>
+    <string name="text_login_successful">Login successful!</string>
+    <string name="text_logout_successful">Logout successful!</string>
     <string name="text_login_question">It looks like you\'re not logged in. Do you want to login in?</string>
     <string name="text_content_pushed">Pushed the following content: \'%1$s\'</string>
     <string name="text_content_pulled">Pulled the following content: \'%1$s\'</string>

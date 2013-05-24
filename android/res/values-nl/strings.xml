@@ -11,6 +11,7 @@
     <!-- Menu -->
     <string name="menu_settings">@string/dashboard_button_settings</string>
     <string name="menu_feedback">Feedback</string>
+    <string name="menu_logout">Uitloggen</string>
     <!-- Buttons -->
     <string name="button_copyit">@string/dashboard_button_copyit</string>
     <string name="button_pasteit">@string/dashboard_button_pasteit</string>
@@ -25,10 +26,13 @@
     <string name="title_activity_about">@string/pref_about</string>
     <string name="title_activity_update">Update</string>
     <string name="title_activity_debug">Copy It debug scherm</string>
+    <string name="title_activity_test">Tests NL</string>
     <!-- Other stuff -->
+    <string name="text_content">Inhoud: </string>
     <string name="text_welcome_message">Bedankt voor het downloaden van CopyIt. Om CopyIt te gebruiken moet je eerst inloggen.</string>
     <string name="text_logging_in">Inloggen&#8230;</string>
     <string name="text_login_successful">Succesvol ingelogt!</string>
+    <string name="text_logout_successful">Succesvol uitgelogt!</string>
     <string name="text_login_question">U bent niet ingelogt. Wilt u inloggen?</string>
     <string name="text_content_pushed">Volgende inhoud word verstuurd: \'%1$s\'</string>
     <string name="text_content_pulled">Volgende inhoud is ontvangen: \'%1$s\'</string>
