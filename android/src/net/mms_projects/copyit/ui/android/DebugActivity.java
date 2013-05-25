@@ -1,5 +1,7 @@
 package net.mms_projects.copyit.ui.android;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.UUID;
 
 import net.mms_projects.copy_it.R;
@@ -37,37 +39,32 @@ public class DebugActivity extends SherlockActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_debug);
 
-		TextView baseUrl = (TextView) findViewById(R.id.info_server_baseurl);
-		baseUrl.setText(preferences.getString("server.baseurl", this
-				.getResources().getString(R.string.default_baseurl)));
-
-		TextView jenkinsBaseUrl = (TextView) findViewById(R.id.info_jenkins_baseurl);
-		jenkinsBaseUrl.setText(this.getResources().getString(
-				R.string.jenkins_joburl));
-
-		TextView deviceId = (TextView) findViewById(R.id.info_device_id);
+		Map<String, String> info = new LinkedHashMap<String, String>();
+		info.put(getString(R.string.debug_label_server_baseurl),
+				preferences.getString("server.baseurl", this.getResources()
+						.getString(R.string.default_baseurl)));
+		info.put(getString(R.string.debug_label_jenkins_baseurl), this
+				.getResources().getString(R.string.jenkins_joburl));
+		info.put(getString(R.string.debug_label_device_id), this.getResources()
+				.getString(R.string.jenkins_joburl));
 		try {
 			UUID.fromString(preferences.getString("device.id", null));
-			deviceId.setText(this.getResources().getString(
-					R.string.debug_available));
+			info.put(getString(R.string.debug_label_device_id),
+					getString(R.string.debug_available));
 		} catch (Exception e) {
-			deviceId.setText(this.getResources().getString(
-					R.string.debug_not_available));
+			info.put(getString(R.string.debug_label_device_id),
+					getString(R.string.debug_not_available));
 		}
-
-		TextView devicePassword = (TextView) findViewById(R.id.info_device_password);
-		if (preferences.getString("device.password", null) != null) {
-			devicePassword.setText(this.getResources().getString(
-					R.string.debug_available));
-		} else {
-			devicePassword.setText(this.getResources().getString(
-					R.string.debug_not_available));
+		try {
+			UUID.fromString(preferences.getString("device.password", null));
+			info.put(getString(R.string.debug_label_device_password),
+					getString(R.string.debug_available));
+		} catch (Exception e) {
+			info.put(getString(R.string.debug_label_device_password),
+					getString(R.string.debug_not_available));
 		}
-
-		TextView buildNumber = (TextView) findViewById(R.id.info_build_number);
-		buildNumber
-				.setText(Integer.toString(CopyItAndroid.getBuildNumber(this)));
-
+		info.put(this.getString(R.string.debug_label_build_number),
+				Integer.toString(CopyItAndroid.getBuildNumber(this)));
 		DisplayMetrics displayMetrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
@@ -84,14 +81,30 @@ public class DebugActivity extends SherlockActivity {
 		switcher.setDefault(this.getResources().getString(
 				R.string.debug_unknown));
 
-		TextView screenDensity = (TextView) findViewById(R.id.info_screen_density);
-		screenDensity.setText(switcher.runSwitch(Integer
-				.valueOf(displayMetrics.densityDpi)));
+		info.put(this.getString(R.string.debug_label_screen_density),
+				switcher.runSwitch(Integer.valueOf(displayMetrics.densityDpi)));
+		
+		TableLayout table = (TableLayout) findViewById(R.id.debug_table);
+		for (String key : info.keySet()) {
+			TextView label = new TextView(this);
+			label.setText(key);
+			TextView value = new TextView(this);
+			value.setText(info.get(key));
+			
+			TableRow row = new TableRow(this);
+			row.addView(label);
+			row.addView(value);
+			
+			table.addView(row);
+		}
 
 		if ((getIntent().getAction() != null)
 				&& (getIntent().getAction().equals(Intent.ACTION_SEND))) {
-			this.sendEmail(this
-					.exportTableLayout((TableLayout) findViewById(R.id.debug_table)));
+			String text = "";
+			for (String key : info.keySet()) {
+				text += key + " - " + info.get(key) + "\n";
+			}
+			this.sendEmail(text);
 			finish();
 		}
 	}
@@ -128,23 +141,6 @@ public class DebugActivity extends SherlockActivity {
 		super.onStop();
 
 		EasyTracker.getInstance().activityStop(this);
-	}
-
-	protected String exportTableLayout(TableLayout table) {
-		String string = "";
-		TextView keyView;
-		TextView valueView;
-		String key;
-		String value;
-		for (int i = 1; i < table.getChildCount(); i++) {
-			TableRow row = (TableRow) table.getChildAt(i);
-			keyView = (TextView) row.getChildAt(0);
-			valueView = (TextView) row.getChildAt(1);
-			key = keyView.getText().toString();
-			value = valueView.getText().toString();
-			string += key + " - " + value + "\n";
-		}
-		return string;
 	}
 
 	protected void sendEmail(String text) {
