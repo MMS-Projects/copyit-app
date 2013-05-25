@@ -14,6 +14,7 @@ public class ApplicationLockTest extends TestCase {
 	private ApplicationLock appLock;
 	private File path;
 
+	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
 
@@ -71,21 +72,20 @@ public class ApplicationLockTest extends TestCase {
 	}
 
 	public static File createTempDirectory() throws IOException {
-		final File temp;
+		File temp = File.createTempFile("test",
+				Long.toString(System.nanoTime()));
 
-		temp = File.createTempFile("temp", Long.toString(System.nanoTime()));
-
-		if (!(temp.delete())) {
+		if (!temp.delete()) {
 			throw new IOException("Could not delete temp file: "
 					+ temp.getAbsolutePath());
 		}
 
-		if (!(temp.mkdir())) {
+		if (!temp.mkdir()) {
 			throw new IOException("Could not create temp directory: "
 					+ temp.getAbsolutePath());
 		}
 
-		return (temp);
+		return temp;
 	}
 
 }
