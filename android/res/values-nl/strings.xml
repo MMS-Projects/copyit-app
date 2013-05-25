@@ -28,7 +28,7 @@
     <string name="title_activity_debug">Copy It debug scherm</string>
     <string name="title_activity_test">Tests NL</string>
     <!-- Other stuff -->
-    <string name="text_content">Inhoud: </string>
+    <string name="text_content">Inhoud:</string>
     <string name="text_welcome_message">Bedankt voor het downloaden van CopyIt. Om CopyIt te gebruiken moet je eerst inloggen.</string>
     <string name="text_logging_in">Inloggen&#8230;</string>
     <string name="text_login_successful">Succesvol ingelogt!</string>

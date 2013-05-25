@@ -20,7 +20,7 @@
     <string name="pref_login">@string/dashboard_button_login</string>
     <string name="pref_about">@string/dashboard_button_about</string>
     <!-- Activity titles -->
-    <string name="title_activity_login">AnmeldenWe</string>
+    <string name="title_activity_login">Anmelden</string>
     <string name="title_activity_welcome">Willkommen bei CopyIt</string>
     <string name="title_activity_settings">Institutionen</string>
     <string name="title_activity_about">@string/pref_about</string>
@@ -28,7 +28,7 @@
     <string name="title_activity_debug">Copy It debug Fenster</string>
     <string name="title_activity_test">Tests DE</string>
     <!-- Other stuff -->
-    <string name="text_content">Inhalt: </string>
+    <string name="text_content">Inhalt:</string>
     <string name="text_welcome_message">Danke für die Installation von CopyIt. So starten Sie CopyIt bitte anmelden.</string>
     <string name="text_logging_in">Am Login&#8230;</string>
     <string name="text_login_successful">Anmeldung erfolgreich</string>
