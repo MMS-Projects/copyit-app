@@ -1,7 +1,7 @@
 package net.mms_projects.copyit.ui.android;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import net.mms_projects.copy_it.R;
