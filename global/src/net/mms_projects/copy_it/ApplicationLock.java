@@ -30,7 +30,7 @@ public class ApplicationLock {
 		BufferedWriter writer = null;
 		try {
 			this.server = new ServerSocket(0);
-			
+
 			this.thread = new ServerThread();
 			this.thread.start();
 
@@ -61,7 +61,7 @@ public class ApplicationLock {
 		}
 		this.locked = false;
 	}
-	
+
 	public boolean isLocked() {
 		return this.locked;
 	}
@@ -74,8 +74,12 @@ public class ApplicationLock {
 				return false;
 			}
 			reader = new BufferedReader(new FileReader(this.lockFile));
+			String content = reader.readLine();
+			if (content == null) {
+				return false;
+			}
 			SocketAddress sockaddr = new InetSocketAddress("127.0.0.1",
-					Integer.parseInt(reader.readLine()));
+					Integer.parseInt(content));
 			socket = new Socket();
 			socket.connect(sockaddr, 100);
 			if (socket.isConnected()) {
@@ -104,12 +108,12 @@ public class ApplicationLock {
 		public LockException(String message) {
 			super(message);
 		}
-		
+
 		public LockException(Throwable clause) {
 			super(clause);
 		}
 	}
-	
+
 	private class ServerThread extends Thread {
 		@Override
 		public void run() {
