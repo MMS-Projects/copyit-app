@@ -13,15 +13,15 @@ public class Messages {
 	}
 
 	public static String getString(String key) {
+		try {
+			return RESOURCE_BUNDLE.getString(key);
+		} catch (MissingResourceException e) {
+		}
 		String text = AndroidResourceLoader.getString("@string/" + key);
 		if (text != null) {
 			return text;
 		}
-		try {
-			return RESOURCE_BUNDLE.getString(key);
-		} catch (MissingResourceException e) {
-			return '!' + key + '!';
-		}
+		return '!' + key + '!';
 	}
 
 	public static String getString(String key, Object... formatArgs) {
