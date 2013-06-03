@@ -10,7 +10,9 @@ import net.mms_projects.copyit.api.ServerApi;
 import net.mms_projects.copyit.api.endpoints.ClipboardContentEndpoint;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 public class CopyItTask extends ServerApiUiTask<String, Void, Boolean> {
@@ -31,19 +33,24 @@ public class CopyItTask extends ServerApiUiTask<String, Void, Boolean> {
 			throws Exception {
 		this.content = params[0];
 
-		HistoryItemsDbHelper dbHelper = new HistoryItemsDbHelper(context);
-		this.database = dbHelper.getWritableDatabase();
+		SharedPreferences prefences = PreferenceManager
+				.getDefaultSharedPreferences(this.context);
+		if (prefences.getBoolean("history.tracking_state", true)) {
+			HistoryItemsDbHelper dbHelper = new HistoryItemsDbHelper(context);
+			this.database = dbHelper.getWritableDatabase();
 
-		ContentValues values = new ContentValues();
-		values.put(HistoryContract.ItemEntry.COLUMN_NAME_CONTENT, this.content);
-		values.put(HistoryContract.ItemEntry.COLUMN_NAME_DATE,
-				new Date().getTime());
-		values.put(HistoryContract.ItemEntry.COLUMN_NAME_CHANGE,
-				this.historyChangeType.toString());
+			ContentValues values = new ContentValues();
+			values.put(HistoryContract.ItemEntry.COLUMN_NAME_CONTENT,
+					this.content);
+			values.put(HistoryContract.ItemEntry.COLUMN_NAME_DATE,
+					new Date().getTime());
+			values.put(HistoryContract.ItemEntry.COLUMN_NAME_CHANGE,
+					this.historyChangeType.toString());
 
-		this.database
-				.insert(HistoryContract.ItemEntry.TABLE_NAME, null, values);
-		this.database.close();
+			this.database.insert(HistoryContract.ItemEntry.TABLE_NAME, null,
+					values);
+			this.database.close();
+		}
 
 		return new ClipboardContentEndpoint(api).update(this.content);
 	}

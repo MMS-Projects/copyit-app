@@ -53,8 +53,8 @@ public class HistoryItemsDbHelper extends SQLiteOpenHelper {
 
 		List<HistoryItem> items = HistoryListFactory.buildList(cursor);
 
-		database.execSQL(SQL_DELETE_ENTRIES);
-		onCreate(database);
+		this.clearDatabase(database);
+		this.onCreate(database);
 
 		for (HistoryItem item : items) {
 			System.out.println("Upgrading: " + item.date);
@@ -74,6 +74,10 @@ public class HistoryItemsDbHelper extends SQLiteOpenHelper {
 	@Override
 	public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		onUpgrade(db, oldVersion, newVersion);
+	}
+	
+	public void clearDatabase(SQLiteDatabase database) {
+		database.execSQL(SQL_DELETE_ENTRIES);
 	}
 
 }

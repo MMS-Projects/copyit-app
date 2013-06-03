@@ -3,14 +3,11 @@ package net.mms_projects.copyit.ui.android;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 
 import net.mms_projects.copy_it.R;
 import net.mms_projects.copy_it.activities.HistoryActivity;
-import net.mms_projects.copy_it.databases.HistoryItemsDbHelper;
-import net.mms_projects.copy_it.models.HistoryContract;
 import net.mms_projects.copy_it.models.HistoryItem.Change;
 import net.mms_projects.copyit.AndroidClipboardUtils;
 import net.mms_projects.copyit.ClipboardUtils;
@@ -23,12 +20,10 @@ import net.mms_projects.copyit.api.ServerApi;
 import net.mms_projects.copyit.app.CopyItAndroid;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -344,7 +339,7 @@ public class MainActivity extends SherlockFragmentActivity {
 	private class HandleShareTask extends CopyItTask {
 		public HandleShareTask(Context context, ServerApi api) {
 			super(context, api);
-			
+
 			this.historyChangeType = Change.RECEIVED_FROM_APP;
 		}
 

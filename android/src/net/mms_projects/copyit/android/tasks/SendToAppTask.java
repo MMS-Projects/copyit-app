@@ -11,7 +11,9 @@ import net.mms_projects.copyit.api.endpoints.ClipboardContentEndpoint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 public class SendToAppTask extends ServerApiUiTask<Void, Void, String> {
@@ -57,8 +59,12 @@ public class SendToAppTask extends ServerApiUiTask<Void, Void, String> {
 			values.put(HistoryContract.ItemEntry.COLUMN_NAME_CHANGE,
 					Change.SEND_TO_APP.toString());
 
-			this.database.insert(HistoryContract.ItemEntry.TABLE_NAME, null,
-					values);
+			SharedPreferences prefences = PreferenceManager
+					.getDefaultSharedPreferences(this.context);
+			if (prefences.getBoolean("history.tracking_state", true)) {
+				this.database.insert(HistoryContract.ItemEntry.TABLE_NAME,
+						null, values);
+			}
 			this.database.close();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

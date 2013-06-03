@@ -17,8 +17,13 @@
     <string name="button_pasteit">@string/dashboard_button_pasteit</string>
     <string name="button_login">@string/dashboard_button_login</string>
     <!-- Preferences -->
+    <string name="pref_category_history">History</string>
     <string name="pref_category_account">Account</string>
     <string name="pref_category_information">Information</string>
+    <string name="pref_history_tracking_state">Track actions for the history</string>
+    <string name="pref_history_tracking_state_summary_on">Actions are tracked</string>
+    <string name="pref_history_tracking_state_summary_off">Actions are not tracked</string>
+    <string name="pref_history_clear">Clear history</string>
     <string name="pref_login">@string/dashboard_button_login</string>
     <string name="pref_logout">Logout</string>
     <string name="pref_about">@string/dashboard_button_about</string>
@@ -43,6 +48,7 @@
     <string name="text_content_pulled">Pulled the following content: \'%1$s\'</string>
     <string name="text_content_pulling">Pulling content&#8230;</string>
     <string name="text_content_pushing">Pushing content&#8230;</string>
+    <string name="text_history_cleared">The history has been cleared</string>
     <!-- Accessibility -->
     <string name="accessibility_widget_button_app">This button opens Copy It</string>
     <string name="accessibility_app_icon_big">Big CopyIt logo</string>

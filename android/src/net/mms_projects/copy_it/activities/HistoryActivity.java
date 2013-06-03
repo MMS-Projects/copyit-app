@@ -15,6 +15,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.google.analytics.tracking.android.EasyTracker;
@@ -25,6 +26,15 @@ public class HistoryActivity extends SherlockActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		if ("net.mms_projects.copy_it.history.clear".equals(this.getIntent()
+				.getAction())) {
+			new ListClear(this).execute();
+
+			finish();
+
+			return;
+		}
+
 		setTheme(R.style.AppTheme);
 		setContentView(R.layout.activity_history);
 
@@ -34,10 +44,10 @@ public class HistoryActivity extends SherlockActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
+
 		new ListLoader(this).execute();
 	}
-	
+
 	@Override
 	protected void onStart() {
 		super.onStart();
@@ -53,13 +63,12 @@ public class HistoryActivity extends SherlockActivity {
 	}
 
 	public class ListLoader extends AsyncTask<Void, Void, Cursor> {
-
 		private Activity activity;
 		private SQLiteDatabase database;
 
 		public ListLoader(Activity activity) {
 			this.activity = activity;
-			
+
 			HistoryItemsDbHelper dbHelper = new HistoryItemsDbHelper(
 					this.activity);
 			this.database = dbHelper.getReadableDatabase();
@@ -93,7 +102,31 @@ public class HistoryActivity extends SherlockActivity {
 
 			this.database.close();
 		}
+	}
 
+	public class ListClear extends AsyncTask<Void, Void, Void> {
+		private Activity activity;
+
+		public ListClear(Activity activity) {
+			this.activity = activity;
+		}
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			HistoryItemsDbHelper dbHelper = new HistoryItemsDbHelper(
+					this.activity);
+			dbHelper.clearDatabase(dbHelper.getReadableDatabase());
+			dbHelper.onCreate(dbHelper.getReadableDatabase());
+			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(Void result) {
+			super.onPostExecute(result);
+			
+			Toast.makeText(this.activity, this.activity.getString(R.string.text_history_cleared),
+					Toast.LENGTH_LONG).show();
+		}
 	}
 
 }

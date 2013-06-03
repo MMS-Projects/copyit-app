@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
+    <PreferenceCategory android:title="@string/pref_category_history" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="history.tracking_state"
+            android:summaryOff="@string/pref_history_tracking_state_summary_off"
+            android:summaryOn="@string/pref_history_tracking_state_summary_on"
+            android:title="@string/pref_history_tracking_state" />
+
+        <Preference android:title="@string/pref_history_clear" >
+            <intent android:action="net.mms_projects.copy_it.history.clear" />
+        </Preference>
+    </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_category_account" >
         <Preference android:title="@string/pref_login" >
             <intent android:action="net.mms_projects.copyit.ui.android.LoginActivity" />

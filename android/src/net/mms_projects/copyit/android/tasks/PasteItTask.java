@@ -12,7 +12,9 @@ import net.mms_projects.copyit.api.ServerApi;
 import net.mms_projects.copyit.api.endpoints.ClipboardContentEndpoint;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 public class PasteItTask extends ServerApiUiTask<Void, Void, String> {
@@ -30,7 +32,7 @@ public class PasteItTask extends ServerApiUiTask<Void, Void, String> {
 			throws Exception {
 		HistoryItemsDbHelper dbHelper = new HistoryItemsDbHelper(context);
 		this.database = dbHelper.getWritableDatabase();
-		
+
 		return new ClipboardContentEndpoint(api).get();
 	}
 
@@ -47,7 +49,7 @@ public class PasteItTask extends ServerApiUiTask<Void, Void, String> {
 							R.string.text_content_pulled, content),
 					Toast.LENGTH_LONG).show();
 			clipboard.setText(content);
-			
+
 			ContentValues values = new ContentValues();
 			values.put(HistoryContract.ItemEntry.COLUMN_NAME_CONTENT, content);
 			values.put(HistoryContract.ItemEntry.COLUMN_NAME_DATE,
@@ -55,8 +57,12 @@ public class PasteItTask extends ServerApiUiTask<Void, Void, String> {
 			values.put(HistoryContract.ItemEntry.COLUMN_NAME_CHANGE,
 					Change.PULLED.toString());
 
-			this.database.insert(HistoryContract.ItemEntry.TABLE_NAME, null,
-					values);
+			SharedPreferences prefences = PreferenceManager
+					.getDefaultSharedPreferences(this.context);
+			if (prefences.getBoolean("history.tracking_state", true)) {
+				this.database.insert(HistoryContract.ItemEntry.TABLE_NAME,
+						null, values);
+			}
 			this.database.close();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
