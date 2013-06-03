@@ -11,13 +11,15 @@
     <!-- Menu -->
     <string name="menu_settings">@string/dashboard_button_settings</string>
     <string name="menu_feedback">Rückkopplung</string>
-    <string name="menu_logout">Abmelden</string>
     <!-- Buttons -->
     <string name="button_copyit">@string/dashboard_button_copyit</string>
     <string name="button_pasteit">@string/dashboard_button_pasteit</string>
     <string name="button_login">@string/dashboard_button_login</string>
     <!-- Preferenties -->
+    <string name="pref_category_account">Benutzer</string>
+    <string name="pref_category_information">Informationen</string>
     <string name="pref_login">@string/dashboard_button_login</string>
+    <string name="pref_logout">Abmelden</string>
     <string name="pref_about">@string/dashboard_button_about</string>
     <!-- Activity titles -->
     <string name="title_activity_login">Anmelden</string>
@@ -27,6 +29,7 @@
     <string name="title_activity_update">aktualisieren</string>
     <string name="title_activity_debug">Copy It debug Fenster</string>
     <string name="title_activity_test">Tests DE</string>
+    <string name="title_activity_logged_out">Abgemeldet</string>
     <!-- Other stuff -->
     <string name="text_content">Inhalt:</string>
     <string name="text_welcome_message">Danke für die Installation von CopyIt. So starten Sie CopyIt bitte anmelden.</string>
