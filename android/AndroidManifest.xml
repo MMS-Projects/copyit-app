@@ -125,6 +125,20 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="net.mms_projects.copy_it.activities.HistoryActivity"
+            android:label="@string/title_activity_history"
+            android:parentActivityName="net.mms_projects.copyit.ui.android.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="net.mms_projects.copyit.ui.android.MainActivity" />
+
+            <intent-filter>
+                <action android:name="net.mms_projects.copy_it.HistoryActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <receiver
             android:name="net.mms_projects.copyit.ui.android.widgets.WidgetGeneral"

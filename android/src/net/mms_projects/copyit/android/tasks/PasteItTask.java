@@ -1,14 +1,23 @@
 package net.mms_projects.copyit.android.tasks;
 
+import java.util.Date;
+
 import net.mms_projects.copy_it.R;
+import net.mms_projects.copy_it.databases.HistoryItemsDbHelper;
+import net.mms_projects.copy_it.models.HistoryContract;
+import net.mms_projects.copy_it.models.HistoryItem.Change;
 import net.mms_projects.copyit.AndroidClipboardUtils;
 import net.mms_projects.copyit.ClipboardUtils;
 import net.mms_projects.copyit.api.ServerApi;
 import net.mms_projects.copyit.api.endpoints.ClipboardContentEndpoint;
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
 public class PasteItTask extends ServerApiUiTask<Void, Void, String> {
+	private SQLiteDatabase database;
+
 	public PasteItTask(Context context, ServerApi api) {
 		super(context, api);
 
@@ -19,6 +28,9 @@ public class PasteItTask extends ServerApiUiTask<Void, Void, String> {
 	@Override
 	protected String doInBackgroundWithException(Void... params)
 			throws Exception {
+		HistoryItemsDbHelper dbHelper = new HistoryItemsDbHelper(context);
+		this.database = dbHelper.getWritableDatabase();
+		
 		return new ClipboardContentEndpoint(api).get();
 	}
 
@@ -35,6 +47,17 @@ public class PasteItTask extends ServerApiUiTask<Void, Void, String> {
 							R.string.text_content_pulled, content),
 					Toast.LENGTH_LONG).show();
 			clipboard.setText(content);
+			
+			ContentValues values = new ContentValues();
+			values.put(HistoryContract.ItemEntry.COLUMN_NAME_CONTENT, content);
+			values.put(HistoryContract.ItemEntry.COLUMN_NAME_DATE,
+					new Date().getTime());
+			values.put(HistoryContract.ItemEntry.COLUMN_NAME_CHANGE,
+					Change.PULLED.toString());
+
+			this.database.insert(HistoryContract.ItemEntry.TABLE_NAME, null,
+					values);
+			this.database.close();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

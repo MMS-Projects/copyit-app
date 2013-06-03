@@ -40,11 +40,11 @@
         android:text="@string/dashboard_button_sendtoapp" />
 
     <Button
-        android:id="@+id/button_login"
+        android:id="@+id/button_history"
         style="@style/DashboardButton"
         android:drawableTop="@drawable/dashboard_icon_placeholder"
-        android:onClick="doLogin"
-        android:text="@string/dashboard_button_login" />
+        android:onClick="gotoHistory"
+        android:text="@string/dashboard_button_history" />
 
     <Button
         android:id="@+id/button_settings"
