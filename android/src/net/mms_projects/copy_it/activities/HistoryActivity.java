@@ -9,6 +9,7 @@ import net.mms_projects.copy_it.models.HistoryContract;
 import net.mms_projects.copy_it.models.HistoryItem;
 import net.mms_projects.copy_it.models.HistoryListFactory;
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
@@ -42,6 +43,27 @@ public class HistoryActivity extends SherlockListActivity {
 		setContentView(R.layout.activity_history);
 
 		new ListLoader(this).execute();
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getSupportMenuInflater();
+		inflater.inflate(R.menu.history, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		Intent intent = null;
+		switch (item.getItemId()) {
+		case R.id.action_history_clear:
+			intent = new Intent(this, this.getClass());
+			intent.setAction("net.mms_projects.copy_it.history.clear");
+			this.startActivity(intent);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 	@Override

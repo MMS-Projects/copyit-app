@@ -12,6 +12,7 @@
     <!-- Menu -->
     <string name="menu_settings">@string/dashboard_button_settings</string>
     <string name="menu_feedback">Feedback</string>
+    <string name="menu_history_clear">Clear</string>
     <!-- Buttons -->
     <string name="button_copyit">@string/dashboard_button_copyit</string>
     <string name="button_pasteit">@string/dashboard_button_pasteit</string>
