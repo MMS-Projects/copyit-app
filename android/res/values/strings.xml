@@ -11,13 +11,15 @@
     <!-- Menu -->
     <string name="menu_settings">@string/dashboard_button_settings</string>
     <string name="menu_feedback">Feedback</string>
-    <string name="menu_logout">Logout</string>
     <!-- Buttons -->
     <string name="button_copyit">@string/dashboard_button_copyit</string>
     <string name="button_pasteit">@string/dashboard_button_pasteit</string>
     <string name="button_login">@string/dashboard_button_login</string>
     <!-- Preferences -->
+    <string name="pref_category_account">Account</string>
+    <string name="pref_category_information">Information</string>
     <string name="pref_login">@string/dashboard_button_login</string>
+    <string name="pref_logout">Logout</string>
     <string name="pref_about">@string/dashboard_button_about</string>
     <!-- Activity titles -->
     <string name="title_activity_login">Login</string>
@@ -27,6 +29,7 @@
     <string name="title_activity_update">Update</string>
     <string name="title_activity_debug">Copy It debug screen</string>
     <string name="title_activity_test">Tests EN</string>
+    <string name="title_activity_logged_out">Logged out</string>
     <!-- Other stuff -->
     <string name="text_content">Content:</string>
     <string name="text_welcome_message">Thank you for installing CopyIt. To start using CopyIt please login.</string>

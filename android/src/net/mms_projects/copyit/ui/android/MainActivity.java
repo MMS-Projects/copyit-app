@@ -22,13 +22,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
@@ -165,28 +163,6 @@ public class MainActivity extends SherlockFragmentActivity {
 			intent = new Intent(this, DebugActivity.class);
 			intent.setAction(Intent.ACTION_SEND);
 			startActivity(intent);
-			return true;
-		case R.id.action_logout:
-			SharedPreferences preferences = PreferenceManager
-					.getDefaultSharedPreferences(this);
-
-			try {
-				Editor preferenceEditor = preferences.edit();
-				preferenceEditor.remove("device.id");
-				preferenceEditor.remove("device.password");
-				preferenceEditor.commit();
-			} catch (Exception event) {
-				// TODO Auto-generated catch block
-				event.printStackTrace();
-			}
-
-			Toast.makeText(
-					this,
-					this.getResources().getString(
-							R.string.text_logout_successful), Toast.LENGTH_LONG)
-					.show();
-
-			finish();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
