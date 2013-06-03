@@ -16,7 +16,7 @@
     <string name="button_pasteit">@string/dashboard_button_pasteit</string>
     <string name="button_login">@string/dashboard_button_login</string>
     <!-- Preferenties -->
-    <string name="pref_category_account">Benutzerkontensteuerung</string>
+    <string name="pref_category_account">Benutzer</string>
     <string name="pref_category_information">Informationen</string>
     <string name="pref_login">@string/dashboard_button_login</string>
     <string name="pref_logout">Abmelden</string>
