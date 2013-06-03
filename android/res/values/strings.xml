@@ -49,6 +49,7 @@
     <string name="text_content_pulling">Pulling content&#8230;</string>
     <string name="text_content_pushing">Pushing content&#8230;</string>
     <string name="text_history_cleared">The history has been cleared</string>
+    <string name="text_history_empty">No history has been recorded yet</string>
     <!-- Accessibility -->
     <string name="accessibility_widget_button_app">This button opens Copy It</string>
     <string name="accessibility_app_icon_big">Big CopyIt logo</string>

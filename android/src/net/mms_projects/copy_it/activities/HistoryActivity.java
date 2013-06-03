@@ -17,10 +17,13 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.app.SherlockListActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.google.analytics.tracking.android.EasyTracker;
 
-public class HistoryActivity extends SherlockActivity {
+public class HistoryActivity extends SherlockListActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +97,7 @@ public class HistoryActivity extends SherlockActivity {
 		@Override
 		protected void onPostExecute(Cursor cursor) {
 			ListView list = (ListView) this.activity
-					.findViewById(R.id.activity_history_list);
+					.findViewById(android.R.id.list);
 
 			List<HistoryItem> items = HistoryListFactory.buildList(cursor);
 			ListAdapter adapter = new HistoryAdapter(this.activity, items);
@@ -119,12 +122,13 @@ public class HistoryActivity extends SherlockActivity {
 			dbHelper.onCreate(dbHelper.getReadableDatabase());
 			return null;
 		}
-		
+
 		@Override
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
-			
-			Toast.makeText(this.activity, this.activity.getString(R.string.text_history_cleared),
+
+			Toast.makeText(this.activity,
+					this.activity.getString(R.string.text_history_cleared),
 					Toast.LENGTH_LONG).show();
 		}
 	}
