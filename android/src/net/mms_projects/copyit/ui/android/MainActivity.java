@@ -238,7 +238,7 @@ public class MainActivity extends SherlockFragmentActivity {
 		api.apiUrl = preferences.getString("server.baseurl", this
 				.getResources().getString(R.string.default_baseurl));
 
-		PasteItTask task = new PasteItTask(this, api);
+		PasteItTask task = new PullContentTask(this, api);
 		task.setUseProgressDialog(true);
 		task.execute();
 	}
@@ -345,5 +345,22 @@ public class MainActivity extends SherlockFragmentActivity {
 
 			MainActivity.this.finish();
 		}
+	}
+	
+	private class PullContentTask extends PasteItTask {
+
+		public PullContentTask(Context context, ServerApi api) {
+			super(context, api);
+		}
+		
+		@Override
+		protected void onPostExecute(String content) {
+			super.onPostExecute(content);
+			
+			TextView clipboardContent = (TextView) MainActivity.this
+					.findViewById(R.id.clipboard_content);
+			clipboardContent.setText(content);
+		}
+		
 	}
 }
