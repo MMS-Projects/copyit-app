@@ -8,6 +8,7 @@
     <string name="dashboard_button_login">Anmelden</string>
     <string name="dashboard_button_settings">Institutionen</string>
     <string name="dashboard_button_about">Über</string>
+    <string name="dashboard_button_history">Geschichte</string>
     <!-- Menu -->
     <string name="menu_settings">@string/dashboard_button_settings</string>
     <string name="menu_feedback">Rückkopplung</string>
