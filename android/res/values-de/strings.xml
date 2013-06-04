@@ -12,13 +12,19 @@
     <!-- Menu -->
     <string name="menu_settings">@string/dashboard_button_settings</string>
     <string name="menu_feedback">Rückkopplung</string>
+    <string name="menu_history_clear">Entleeren</string>
     <!-- Buttons -->
     <string name="button_copyit">@string/dashboard_button_copyit</string>
     <string name="button_pasteit">@string/dashboard_button_pasteit</string>
     <string name="button_login">@string/dashboard_button_login</string>
     <!-- Preferenties -->
+    <string name="pref_category_history">Geschichte</string>
     <string name="pref_category_account">Benutzer</string>
     <string name="pref_category_information">Informationen</string>
+    <string name="pref_history_tracking_state">Speichern Aktionen, um Ihre Geschichte</string>
+    <string name="pref_history_tracking_state_summary_on">Aktionen werden sparen</string>
+    <string name="pref_history_tracking_state_summary_off">Aktionen werden nicht verfolgt</string>
+    <string name="pref_history_clear">Verlauf löschen</string>
     <string name="pref_login">@string/dashboard_button_login</string>
     <string name="pref_logout">Abmelden</string>
     <string name="pref_about">@string/dashboard_button_about</string>
@@ -31,6 +37,7 @@
     <string name="title_activity_debug">Copy It debug Fenster</string>
     <string name="title_activity_test">Tests DE</string>
     <string name="title_activity_logged_out">Abgemeldet</string>
+    <string name="title_activity_history">Geschichte</string>
     <!-- Other stuff -->
     <string name="text_content">Inhalt:</string>
     <string name="text_welcome_message">Danke für die Installation von CopyIt. So starten Sie CopyIt bitte anmelden.</string>
@@ -42,6 +49,8 @@
     <string name="text_content_pulled">Zog den folgenden Inhalt: \'%1$s\'</string>
     <string name="text_content_pulling">Ziehen Inhalt&#8230;</string>
     <string name="text_content_pushing">Pushing Inhalt&#8230;</string>
+    <string name="text_history_cleared">Die Geschichte wurde gelöscht</string>
+    <string name="text_history_empty">Keine Geschichte ist noch nicht registriert</string>
     <!-- Accessibility -->
     <string name="accessibility_widget_button_app">This button opens Copy It</string>
     <string name="accessibility_app_icon_big">Big CopyIt logo</string>

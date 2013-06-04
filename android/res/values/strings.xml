@@ -22,8 +22,8 @@
     <string name="pref_category_account">User account</string>
     <string name="pref_category_information">Information</string>
     <string name="pref_history_tracking_state">Save actions to your history</string>
-    <string name="pref_history_tracking_state_summary_on">Actions are tracked</string>
-    <string name="pref_history_tracking_state_summary_off">Actions are not tracked</string>
+    <string name="pref_history_tracking_state_summary_on">Actions are saved</string>
+    <string name="pref_history_tracking_state_summary_off">Actions are not saved</string>
     <string name="pref_history_clear">Clear history</string>
     <string name="pref_login">@string/dashboard_button_login</string>
     <string name="pref_logout">Logout</string>
