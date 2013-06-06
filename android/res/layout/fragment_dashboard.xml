@@ -46,18 +46,4 @@
         android:onClick="gotoHistory"
         android:text="@string/dashboard_button_history" />
 
-    <Button
-        android:id="@+id/button_settings"
-        style="@style/DashboardButton"
-        android:drawableTop="@drawable/dashboard_icon_placeholder"
-        android:onClick="gotoSettings"
-        android:text="@string/dashboard_button_settings" />
-
-    <Button
-        android:id="@+id/button_about"
-        style="@style/DashboardButton"
-        android:drawableTop="@drawable/dashboard_icon_placeholder"
-        android:onClick="gotoAbout"
-        android:text="@string/dashboard_button_about" />
-
 </com.google.android.apps.iosched.ui.widget.DashboardLayout>
