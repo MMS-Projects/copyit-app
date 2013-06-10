@@ -1,14 +1,13 @@
 package net.mms_projects.copyit.ui.android;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.UUID;
-
-import com.google.analytics.tracking.android.EasyTracker;
 
 import net.mms_projects.copy_it.R;
 import net.mms_projects.copyit.app.CopyItAndroid;
 import net.mms_projects.utils.InlineSwitch;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -21,8 +20,14 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+import com.google.analytics.tracking.android.EasyTracker;
+
 @SuppressLint("InlinedApi")
-public class DebugActivity extends Activity {
+public class DebugActivity extends SherlockActivity {
 
 	public final static String ACTION_SEND = "send";
 
@@ -34,37 +39,32 @@ public class DebugActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_debug);
 
-		TextView baseUrl = (TextView) findViewById(R.id.info_server_baseurl);
-		baseUrl.setText(preferences.getString("server.baseurl", this
-				.getResources().getString(R.string.default_baseurl)));
-
-		TextView jenkinsBaseUrl = (TextView) findViewById(R.id.info_jenkins_baseurl);
-		jenkinsBaseUrl.setText(this.getResources().getString(
-				R.string.jenkins_joburl));
-
-		TextView deviceId = (TextView) findViewById(R.id.info_device_id);
+		Map<String, String> info = new LinkedHashMap<String, String>();
+		info.put(getString(R.string.debug_label_server_baseurl),
+				preferences.getString("server.baseurl", this.getResources()
+						.getString(R.string.default_baseurl)));
+		info.put(getString(R.string.debug_label_jenkins_baseurl), this
+				.getResources().getString(R.string.jenkins_joburl));
+		info.put(getString(R.string.debug_label_device_id), this.getResources()
+				.getString(R.string.jenkins_joburl));
 		try {
 			UUID.fromString(preferences.getString("device.id", null));
-			deviceId.setText(this.getResources().getString(
-					R.string.debug_available));
+			info.put(getString(R.string.debug_label_device_id),
+					getString(R.string.debug_available));
 		} catch (Exception e) {
-			deviceId.setText(this.getResources().getString(
-					R.string.debug_not_available));
+			info.put(getString(R.string.debug_label_device_id),
+					getString(R.string.debug_not_available));
 		}
-
-		TextView devicePassword = (TextView) findViewById(R.id.info_device_password);
-		if (preferences.getString("device.password", null) != null) {
-			devicePassword.setText(this.getResources().getString(
-					R.string.debug_available));
-		} else {
-			devicePassword.setText(this.getResources().getString(
-					R.string.debug_not_available));
+		try {
+			UUID.fromString(preferences.getString("device.password", null));
+			info.put(getString(R.string.debug_label_device_password),
+					getString(R.string.debug_available));
+		} catch (Exception e) {
+			info.put(getString(R.string.debug_label_device_password),
+					getString(R.string.debug_not_available));
 		}
-
-		TextView buildNumber = (TextView) findViewById(R.id.info_build_number);
-		buildNumber
-				.setText(Integer.toString(CopyItAndroid.getBuildNumber(this)));
-
+		info.put(this.getString(R.string.debug_label_build_number),
+				Integer.toString(CopyItAndroid.getBuildNumber(this)));
 		DisplayMetrics displayMetrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
@@ -81,47 +81,66 @@ public class DebugActivity extends Activity {
 		switcher.setDefault(this.getResources().getString(
 				R.string.debug_unknown));
 
-		TextView screenDensity = (TextView) findViewById(R.id.info_screen_density);
-		screenDensity.setText(switcher.runSwitch(Integer
-				.valueOf(displayMetrics.densityDpi)));
+		info.put(this.getString(R.string.debug_label_screen_density),
+				switcher.runSwitch(Integer.valueOf(displayMetrics.densityDpi)));
+		
+		TableLayout table = (TableLayout) findViewById(R.id.debug_table);
+		for (String key : info.keySet()) {
+			TextView label = new TextView(this);
+			label.setText(key);
+			TextView value = new TextView(this);
+			value.setText(info.get(key));
+			
+			TableRow row = new TableRow(this);
+			row.addView(label);
+			row.addView(value);
+			
+			table.addView(row);
+		}
 
 		if ((getIntent().getAction() != null)
 				&& (getIntent().getAction().equals(Intent.ACTION_SEND))) {
-			this.sendEmail(this
-					.exportTableLayout((TableLayout) findViewById(R.id.debug_table)));
+			String text = "";
+			for (String key : info.keySet()) {
+				text += key + " - " + info.get(key) + "\n";
+			}
+			this.sendEmail(text);
 			finish();
 		}
 	}
-	
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getSupportMenuInflater();
+		inflater.inflate(R.menu.debug, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		Intent intent = null;
+		switch (item.getItemId()) {
+		case R.id.action_open_activity_test:
+			intent = new Intent(this, TestActivity.class);
+			this.startActivity(intent);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+
 	@Override
 	protected void onStart() {
 		super.onStart();
-		
+
 		EasyTracker.getInstance().activityStart(this);
 	}
-	
+
 	@Override
 	protected void onStop() {
 		super.onStop();
-		
-		EasyTracker.getInstance().activityStop(this);
-	}
 
-	protected String exportTableLayout(TableLayout table) {
-		String string = "";
-		TextView keyView;
-		TextView valueView;
-		String key;
-		String value;
-		for (int i = 1; i < table.getChildCount(); i++) {
-			TableRow row = (TableRow) table.getChildAt(i);
-			keyView = (TextView) row.getChildAt(0);
-			valueView = (TextView) row.getChildAt(1);
-			key = keyView.getText().toString();
-			value = valueView.getText().toString();
-			string += key + " - " + value + "\n";
-		}
-		return string;
+		EasyTracker.getInstance().activityStop(this);
 	}
 
 	protected void sendEmail(String text) {

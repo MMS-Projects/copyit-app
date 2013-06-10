@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
+import net.mms_projects.copy_it.ApplicationLock;
+import net.mms_projects.copy_it.ApplicationLock.LockException;
 import net.mms_projects.copyit.FileStreamBuilder;
 import net.mms_projects.copyit.PathBuilder;
 import net.mms_projects.copyit.Settings;
@@ -27,7 +29,6 @@ import org.freedesktop.dbus.exceptions.DBusException;
 public class CopyItDesktop extends CopyIt {
 
 	protected Settings settings;
-	protected File lockFile;
 
 	static public DBusConnection dbusConnection;
 
@@ -90,11 +91,10 @@ public class CopyItDesktop extends CopyIt {
 			}
 		}
 
-		this.lockFile = new File(PathBuilder.getConfigDirectory(), ".lock");
-		if (this.lockFile.exists()) {
-			String message = "An instance is already running. "
-					+ "If not please remove the following lock file: "
-					+ this.lockFile.getAbsolutePath();
+		final ApplicationLock appLock = new ApplicationLock(
+				PathBuilder.getConfigDirectory());
+		if (appLock.isRunning()) {
+			String message = "An instance is already running. ";
 
 			if (OSValidator.isUnix()) {
 				try {
@@ -116,14 +116,19 @@ public class CopyItDesktop extends CopyIt {
 			System.exit(0);
 		} else {
 			try {
-				this.lockFile.createNewFile();
-
-				this.lockFile.deleteOnExit();
-			} catch (IOException e) {
+				appLock.lock();
+			} catch (LockException e) {
 				e.printStackTrace();
 
 				System.exit(1);
 			}
+
+			Runtime.getRuntime().addShutdownHook(new Thread() {
+				@Override
+				public void run() {
+					appLock.unlock();
+				}
+			});
 		}
 
 		AbstractUi ui = new SwtGui(this.settings);

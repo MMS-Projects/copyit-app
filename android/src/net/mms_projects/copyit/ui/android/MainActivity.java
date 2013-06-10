@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.UUID;
 
 import net.mms_projects.copy_it.R;
+import net.mms_projects.copy_it.activities.HistoryActivity;
+import net.mms_projects.copy_it.models.HistoryItem.Change;
 import net.mms_projects.copyit.AndroidClipboardUtils;
 import net.mms_projects.copyit.ClipboardUtils;
 import net.mms_projects.copyit.FileStreamBuilder;
@@ -54,6 +56,7 @@ public class MainActivity extends SherlockFragmentActivity {
 		this.app = new CopyItAndroid();
 		this.app.run(this);
 
+		setTheme(R.style.AppTheme);
 		setContentView(R.layout.activity_main);
 
 		// Get intent, action and MIME type
@@ -82,27 +85,28 @@ public class MainActivity extends SherlockFragmentActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
+
 		ClipboardUtils clipboard = new AndroidClipboardUtils(MainActivity.this);
-		
-		TextView clipboardContent = (TextView) this.findViewById(R.id.clipboard_content);
+
+		TextView clipboardContent = (TextView) this
+				.findViewById(R.id.clipboard_content);
 		clipboardContent.setText(clipboard.getText());
 	}
-	
+
 	@Override
 	protected void onStart() {
 		super.onStart();
-		
+
 		EasyTracker.getInstance().activityStart(this);
 	}
-	
+
 	@Override
 	protected void onStop() {
 		super.onStop();
-		
+
 		EasyTracker.getInstance().activityStop(this);
 	}
-	
+
 	private void handleSendText(Intent intent) {
 		String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
 		if (sharedText != null) {
@@ -168,6 +172,9 @@ public class MainActivity extends SherlockFragmentActivity {
 	}
 
 	public void copyIt(View view) {
+		EasyTracker.getTracker().sendEvent("ui_action", "button_press",
+				"push_button", null);
+
 		SharedPreferences preferences = PreferenceManager
 				.getDefaultSharedPreferences(this);
 
@@ -206,6 +213,9 @@ public class MainActivity extends SherlockFragmentActivity {
 	}
 
 	public void pasteIt(View view) {
+		EasyTracker.getTracker().sendEvent("ui_action", "button_press",
+				"pull_button", null);
+
 		SharedPreferences preferences = PreferenceManager
 				.getDefaultSharedPreferences(this);
 		if (preferences.getString("device.id", null) == null) {
@@ -230,12 +240,15 @@ public class MainActivity extends SherlockFragmentActivity {
 		api.apiUrl = preferences.getString("server.baseurl", this
 				.getResources().getString(R.string.default_baseurl));
 
-		PasteItTask task = new PasteItTask(this, api);
+		PasteItTask task = new PullContentTask(this, api);
 		task.setUseProgressDialog(true);
 		task.execute();
 	}
 
 	public void sendToApp(View view) {
+		EasyTracker.getTracker().sendEvent("ui_action", "button_press",
+				"send_to_app_button", null);
+
 		SharedPreferences preferences = PreferenceManager
 				.getDefaultSharedPreferences(this);
 		if (preferences.getString("device.id", null) == null) {
@@ -264,17 +277,23 @@ public class MainActivity extends SherlockFragmentActivity {
 		task.execute();
 	}
 
-	public void doLogin(View view) {
-		Intent intent = new Intent(this, LoginActivity.class);
+	public void gotoHistory(View view) {
+		Intent intent = new Intent(this, HistoryActivity.class);
 		startActivity(intent);
 	}
 
 	public void gotoSettings(View view) {
+		EasyTracker.getTracker().sendEvent("ui_action", "button_press",
+				"settings_button", null);
+
 		Intent intent = new Intent(this, SettingsActivity.class);
 		startActivity(intent);
 	}
 
 	public void gotoAbout(View view) {
+		EasyTracker.getTracker().sendEvent("ui_action", "button_press",
+				"about_button", null);
+
 		Intent intent = new Intent(this, AboutActivity.class);
 		startActivity(intent);
 	}
@@ -320,6 +339,8 @@ public class MainActivity extends SherlockFragmentActivity {
 	private class HandleShareTask extends CopyItTask {
 		public HandleShareTask(Context context, ServerApi api) {
 			super(context, api);
+
+			this.historyChangeType = Change.RECEIVED_FROM_APP;
 		}
 
 		@Override
@@ -329,4 +350,21 @@ public class MainActivity extends SherlockFragmentActivity {
 			MainActivity.this.finish();
 		}
 	}
+
+	private class PullContentTask extends PasteItTask {
+
+		public PullContentTask(Context context, ServerApi api) {
+			super(context, api);
+		}
+
+		@Override
+		protected void onPostExecute(String content) {
+			super.onPostExecute(content);
+
+			TextView clipboardContent = (TextView) MainActivity.this
+					.findViewById(R.id.clipboard_content);
+			clipboardContent.setText(content);
+		}
+	}
+
 }
