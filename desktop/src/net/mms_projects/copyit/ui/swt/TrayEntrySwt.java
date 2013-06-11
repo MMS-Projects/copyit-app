@@ -1,14 +1,12 @@
 package net.mms_projects.copyit.ui.swt;
 
-import java.util.UUID;
+import java.util.Date;
 
 import net.mms_projects.copyit.AndroidResourceLoader;
-import net.mms_projects.copyit.ClipboardUtils;
-import net.mms_projects.copyit.DesktopClipboardUtils;
+import net.mms_projects.copyit.ClipboardManager;
 import net.mms_projects.copyit.Messages;
 import net.mms_projects.copyit.Settings;
-import net.mms_projects.copyit.api.ServerApi;
-import net.mms_projects.copyit.api.endpoints.ClipboardContentEndpoint;
+import net.mms_projects.copyit.SyncManager;
 import net.mms_projects.copyit.ui.swt.forms.AboutDialog;
 import net.mms_projects.copyit.ui.swt.forms.PreferencesDialog;
 import net.mms_projects.utils.OSValidator;
@@ -36,8 +34,9 @@ public class TrayEntrySwt extends TrayEntry {
 	private MenuItem menuItemCopyIt;
 	private MenuItem menuItemPasteIt;
 
-	public TrayEntrySwt(Settings settings, Shell activityShell, Tray tray) {
-		super(settings, activityShell);
+	public TrayEntrySwt(Settings settings, Shell activityShell, Tray tray,
+			SyncManager syncManager, ClipboardManager clipboardManager) {
+		super(settings, activityShell, syncManager, clipboardManager);
 		this.tray = tray;
 		this.trayItem = new TrayItem(tray, 0);
 
@@ -63,6 +62,8 @@ public class TrayEntrySwt extends TrayEntry {
 		this.activityShell = activityShell;
 
 		this.createMenu();
+
+		this.syncManager.addListener(this);
 	}
 
 	public void enableFeatures() {
@@ -82,29 +83,7 @@ public class TrayEntrySwt extends TrayEntry {
 		this.menuItemCopyIt.setText("Copy it ▲");
 		this.menuItemCopyIt.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				ServerApi api = new ServerApi();
-				api.deviceId = UUID.fromString(TrayEntrySwt.this.settings
-						.get("device.id"));
-				api.devicePassword = TrayEntrySwt.this.settings
-						.get("device.password");
-				api.apiUrl = TrayEntrySwt.this.settings.get("server.baseurl");
-
-				ClipboardUtils clipboard = new DesktopClipboardUtils();
-				String data = clipboard.getText();
-				if (data != null) {
-					try {
-						new ClipboardContentEndpoint(api).update(data);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-
-				final ToolTip tip = new ToolTip(TrayEntrySwt.this.activityShell,
-						SWT.BALLOON | SWT.ICON_INFORMATION);
-				tip.setText("Notification");
-				tip.setMessage(Messages.getString("text_content_pushed", data));
-				trayItem.setToolTip(tip);
-				tip.setVisible(true);
+				clipboardManager.getContent();
 			}
 		});
 
@@ -112,29 +91,7 @@ public class TrayEntrySwt extends TrayEntry {
 		this.menuItemPasteIt.setText("Paste it ▼");
 		this.menuItemPasteIt.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				ServerApi api = new ServerApi();
-				api.deviceId = UUID.fromString(TrayEntrySwt.this.settings
-						.get("device.id"));
-				api.devicePassword = TrayEntrySwt.this.settings
-						.get("device.password");
-				api.apiUrl = TrayEntrySwt.this.settings.get("server.baseurl");
-
-				ClipboardUtils clipboard = new DesktopClipboardUtils();
-				String data;
-				try {
-					data = new ClipboardContentEndpoint(api).get();
-				} catch (Exception e) {
-					e.printStackTrace();
-					return;
-				}
-				clipboard.setText(data);
-
-				final ToolTip tip = new ToolTip(TrayEntrySwt.this.activityShell,
-						SWT.BALLOON | SWT.ICON_INFORMATION);
-				tip.setText("Notification");
-				tip.setMessage(Messages.getString("text_content_pulled", data));
-				trayItem.setToolTip(tip);
-				tip.setVisible(true);
+				syncManager.doPull();
 			}
 		});
 
@@ -151,7 +108,8 @@ public class TrayEntrySwt extends TrayEntry {
 		menuItemAbout.setText("About");
 		menuItemAbout.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				new AboutDialog(TrayEntrySwt.this.activityShell, SWT.NONE).open();
+				new AboutDialog(TrayEntrySwt.this.activityShell, SWT.NONE)
+						.open();
 			}
 		});
 
@@ -166,6 +124,42 @@ public class TrayEntrySwt extends TrayEntry {
 		this.trayItem.addListener(SWT.MenuDetect, new Listener() {
 			public void handleEvent(Event event) {
 				TrayEntrySwt.this.menu.setVisible(true);
+			}
+		});
+	}
+
+	@Override
+	public void onPushed(final String content, Date date) {
+		this.display.asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				final ToolTip tip = new ToolTip(
+						TrayEntrySwt.this.activityShell, SWT.BALLOON
+								| SWT.ICON_INFORMATION);
+				tip.setText("Notification");
+				tip.setMessage(Messages.getString("text_content_pushed",
+						content));
+				trayItem.setToolTip(tip);
+				tip.setVisible(true);
+			}
+		});
+	}
+
+	@Override
+	public void onPulled(final String content, Date date) {
+		this.display.asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				clipboardManager.setContent(content);
+
+				final ToolTip tip = new ToolTip(
+						TrayEntrySwt.this.activityShell, SWT.BALLOON
+								| SWT.ICON_INFORMATION);
+				tip.setText("Notification");
+				tip.setMessage(Messages.getString("text_content_pulled",
+						content));
+				trayItem.setToolTip(tip);
+				tip.setVisible(true);
 			}
 		});
 	}

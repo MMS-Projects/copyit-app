@@ -7,17 +7,14 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.UUID;
 
-import net.mms_projects.copyit.ClipboardUtils;
-import net.mms_projects.copyit.DesktopClipboardUtils;
+import net.mms_projects.copyit.ClipboardManager;
 import net.mms_projects.copyit.DesktopIntegration;
 import net.mms_projects.copyit.Messages;
 import net.mms_projects.copyit.PathBuilder;
 import net.mms_projects.copyit.Settings;
 import net.mms_projects.copyit.SettingsListener;
-import net.mms_projects.copyit.api.ServerApi;
-import net.mms_projects.copyit.api.endpoints.ClipboardContentEndpoint;
+import net.mms_projects.copyit.SyncManager;
 import net.mms_projects.copyit.app.CopyItDesktop;
 import net.mms_projects.copyit.ui.swt.forms.AboutDialog;
 import net.mms_projects.copyit.ui.swt.forms.PreferencesDialog;
@@ -38,8 +35,9 @@ public class TrayEntryUnity extends TrayEntry implements DBusSigHandler,
 
 	private DesktopIntegration integration;
 
-	public TrayEntryUnity(Settings settings, Shell activityShell) {
-		super(settings, activityShell);
+	public TrayEntryUnity(Settings settings, Shell activityShell,
+			SyncManager syncManager, ClipboardManager clipboardManager) {
+		super(settings, activityShell, syncManager, clipboardManager);
 
 		this.settings.addListener("sync.polling.enabled", this);
 
@@ -96,7 +94,6 @@ public class TrayEntryUnity extends TrayEntry implements DBusSigHandler,
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
 	@Override
@@ -118,74 +115,9 @@ public class TrayEntryUnity extends TrayEntry implements DBusSigHandler,
 			}
 
 		} else if (signal instanceof DesktopIntegration.action_push) {
-			final ServerApi api = new ServerApi();
-			api.deviceId = UUID.fromString(this.settings.get("device.id"));
-			api.devicePassword = this.settings.get("device.password");
-			api.apiUrl = this.settings.get("server.baseurl");
-
-			Display.getDefault().asyncExec(new Runnable() {
-				@Override
-				public void run() {
-					ClipboardUtils clipboard = new DesktopClipboardUtils();
-					String data = clipboard.getText();
-					if (data != null) {
-						try {
-							new ClipboardContentEndpoint(api).update(data);
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-						
-						try {
-							Notifications notify = CopyItDesktop.dbusConnection
-									.getRemoteObject("org.freedesktop.Notifications",
-											"/org/freedesktop/Notifications",
-											Notifications.class);
-							Map<String, Variant<Byte>> hints = new HashMap<String, Variant<Byte>>();
-							hints.put("urgency", new Variant<Byte>((byte) 2));
-							notify.Notify("CopyIt", new UInt32(0), "", "CopyIt",
-									Messages.getString("text_content_pushed", data), new LinkedList<String>(), hints, -1);
-						} catch (DBusException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				}
-			});
-
+			clipboardManager.getContent();
 		} else if (signal instanceof DesktopIntegration.action_pull) {
-			final ServerApi api = new ServerApi();
-			api.deviceId = UUID.fromString(this.settings.get("device.id"));
-			api.devicePassword = this.settings.get("device.password");
-			api.apiUrl = this.settings.get("server.baseurl");
-
-			Display.getDefault().asyncExec(new Runnable() {
-				@Override
-				public void run() {
-					ClipboardUtils clipboard = new DesktopClipboardUtils();
-					String data;
-					try {
-						data = new ClipboardContentEndpoint(api).get();
-					} catch (Exception e) {
-						e.printStackTrace();
-						return;
-					}
-					clipboard.setText(data);
-					
-					try {
-						Notifications notify = CopyItDesktop.dbusConnection
-								.getRemoteObject("org.freedesktop.Notifications",
-										"/org/freedesktop/Notifications",
-										Notifications.class);
-						Map<String, Variant<Byte>> hints = new HashMap<String, Variant<Byte>>();
-						hints.put("urgency", new Variant<Byte>((byte) 2));
-						notify.Notify("CopyIt", new UInt32(0), "", "CopyIt",
-								Messages.getString("text_content_pulled", data), new LinkedList<String>(), hints, -1);
-					} catch (DBusException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			});
+			syncManager.doPull();
 		} else if (signal instanceof DesktopIntegration.action_open_preferences) {
 			Display.getDefault().asyncExec(new Runnable() {
 				@Override
@@ -227,17 +159,45 @@ public class TrayEntryUnity extends TrayEntry implements DBusSigHandler,
 	}
 
 	@Override
-	public void onPreSync() {
-		this.integration.set_state("syncing");
+	public void onPushed(String content, Date date) {
+		try {
+			Notifications notify = CopyItDesktop.dbusConnection
+					.getRemoteObject("org.freedesktop.Notifications",
+							"/org/freedesktop/Notifications",
+							Notifications.class);
+			Map<String, Variant<Byte>> hints = new HashMap<String, Variant<Byte>>();
+			hints.put("urgency", new Variant<Byte>((byte) 2));
+			notify.Notify("CopyIt", new UInt32(0), "", "CopyIt",
+					Messages.getString("text_content_pushed", content),
+					new LinkedList<String>(), hints, -1);
+		} catch (DBusException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
-	public void onClipboardChange(String data, Date date) {
-	}
-
-	@Override
-	public void onPostSync() {
-		this.integration.set_state("idle");
+	public void onPulled(final String content, Date date) {
+		Display.getDefault().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				clipboardManager.setContent(content);
+			}
+		});
+		try {
+			Notifications notify = CopyItDesktop.dbusConnection
+					.getRemoteObject("org.freedesktop.Notifications",
+							"/org/freedesktop/Notifications",
+							Notifications.class);
+			Map<String, Variant<Byte>> hints = new HashMap<String, Variant<Byte>>();
+			hints.put("urgency", new Variant<Byte>((byte) 2));
+			notify.Notify("CopyIt", new UInt32(0), "", "CopyIt",
+					Messages.getString("text_content_pulled", content),
+					new LinkedList<String>(), hints, -1);
+		} catch (DBusException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

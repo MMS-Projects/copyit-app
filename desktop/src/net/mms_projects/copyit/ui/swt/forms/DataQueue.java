@@ -2,10 +2,9 @@ package net.mms_projects.copyit.ui.swt.forms;
 
 import java.util.Date;
 
-import net.mms_projects.copyit.ClipboardUtils;
-import net.mms_projects.copyit.DesktopClipboardUtils;
+import net.mms_projects.copyit.ClipboardManager;
 import net.mms_projects.copyit.SettingsListener;
-import net.mms_projects.copyit.SyncingListener;
+import net.mms_projects.copyit.SyncListener;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FormAttachment;
@@ -22,14 +21,14 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
-public class DataQueue extends Dialog implements SyncingListener,
-		SettingsListener {
+public class DataQueue extends Dialog implements SyncListener, SettingsListener {
 
 	protected Object result;
 	protected Shell shell;
 	private Table table;
 	private TableItem tableItem;
 	private boolean enabled;
+	private ClipboardManager clipboardManager;
 
 	/**
 	 * Create the dialog.
@@ -37,8 +36,11 @@ public class DataQueue extends Dialog implements SyncingListener,
 	 * @param parent
 	 * @param style
 	 */
-	public DataQueue(Shell parent, int style) {
+	public DataQueue(Shell parent, int style, ClipboardManager clipboardManager) {
 		super(parent, style);
+
+		this.clipboardManager = clipboardManager;
+
 		setText("SWT Dialog");
 	}
 
@@ -113,20 +115,32 @@ public class DataQueue extends Dialog implements SyncingListener,
 			public void handleEvent(Event event) {
 				TableItem tableItem = table.getSelection()[0];
 				String data = tableItem.getText(0);
-				ClipboardUtils clipboard = new DesktopClipboardUtils();
-				clipboard.setText(data);
+				clipboardManager.setContent(data);
 			}
 		});
 		table.setMenu(menu);
 	}
 
 	@Override
-	public void onClipboardChange(String data, Date date) {
-		if (this.enabled) {
-			this.shell.setVisible(true);
-		}
-		tableItem = new TableItem(table, SWT.NONE);
-		tableItem.setText(new String[] { data, date.toString() });
+	public void onPushed(String content, Date date) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onPulled(final String content, final Date date) {
+		Display.getDefault().asyncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				if (enabled) {
+					shell.setVisible(true);
+				}
+				tableItem = new TableItem(table, SWT.NONE);
+				tableItem.setText(new String[] { content, date.toString() });
+			}
+		});
+
 	}
 
 	@Override
@@ -134,13 +148,5 @@ public class DataQueue extends Dialog implements SyncingListener,
 		if ("sync.queue.enabled".equals(key)) {
 			this.setEnabled(Boolean.parseBoolean(value));
 		}
-	}
-
-	@Override
-	public void onPreSync() {
-	}
-
-	@Override
-	public void onPostSync() {
 	}
 }

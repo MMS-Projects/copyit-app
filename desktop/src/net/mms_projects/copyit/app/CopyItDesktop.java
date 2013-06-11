@@ -6,15 +6,26 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.URL;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.UUID;
 
 import net.mms_projects.copy_it.ApplicationLock;
 import net.mms_projects.copy_it.ApplicationLock.LockException;
+import net.mms_projects.copyit.ClipboardManager;
 import net.mms_projects.copyit.FileStreamBuilder;
 import net.mms_projects.copyit.PathBuilder;
 import net.mms_projects.copyit.Settings;
+import net.mms_projects.copyit.SettingsListener;
+import net.mms_projects.copyit.SyncListener;
+import net.mms_projects.copyit.SyncManager;
+import net.mms_projects.copyit.SyncingThread;
+import net.mms_projects.copyit.api.ServerApi;
+import net.mms_projects.copyit.api.endpoints.ClipboardContentEndpoint;
+import net.mms_projects.copyit.sync_services.ApiService;
+import net.mms_projects.copyit.sync_services.TestService;
 import net.mms_projects.copyit.ui.AbstractUi;
 import net.mms_projects.copyit.ui.SwtGui;
 import net.mms_projects.utils.OSValidator;
@@ -77,6 +88,75 @@ public class CopyItDesktop extends CopyIt {
 		}
 		this.settings.loadProperties();
 
+		final ClipboardManager clipboardManager = new ClipboardManager();
+
+		final SyncManager syncManager = new SyncManager(clipboardManager);
+
+		ServerApi api = new ServerApi();
+		api.deviceId = UUID.fromString(settings.get("device.id"));
+		api.devicePassword = settings.get("device.password");
+
+		TestService testService = new TestService(syncManager);
+		final ApiService apiService = new ApiService(syncManager,
+				new ClipboardContentEndpoint(api));
+		final SyncingThread syncThread = new SyncingThread(syncManager,
+				new ClipboardContentEndpoint(api));
+		SettingsListener apiServiceListener = new SettingsListener() {
+
+			@Override
+			public void onChange(String key, String value) {
+				ServerApi api = new ServerApi();
+				api.deviceId = UUID.fromString(settings.get("device.id"));
+				api.devicePassword = settings.get("device.password");
+				ClipboardContentEndpoint endpoint = new ClipboardContentEndpoint(
+						api);
+				apiService.setEndpoint(endpoint);
+				syncThread.setEndpoint(endpoint);
+			}
+		};
+		this.settings.addListener("device.id", apiServiceListener);
+		this.settings.addListener("device.password", apiServiceListener);
+
+		syncManager.addPushService(apiService);
+		syncManager.addPullService(apiService);
+		syncManager.addPushService(testService);
+		syncManager.addPullingService(syncThread);
+		syncManager.addPullingService(testService);
+		syncManager.addListener(new SyncListener() {
+
+			@Override
+			public void onPushed(String content, Date date) {
+				System.out.println("Content pushed");
+			}
+
+			@Override
+			public void onPulled(String content, Date date) {
+				System.out.println("The following content was pulled: "
+						+ content);
+			}
+		});
+
+		this.settings.addListener("sync.polling.enabled",
+				new SettingsListener() {
+					@Override
+					public void onChange(String key, String value) {
+						if (Boolean.parseBoolean(value)) {
+							syncManager.activatePolling();
+							clipboardManager.activatePolling();
+						} else {
+							syncManager.deactivatePolling();
+							clipboardManager.deactivatePolling();
+						}
+					}
+				});
+		if (this.settings.getBoolean("sync.polling.enabled")) {
+			syncManager.activatePolling();
+			clipboardManager.activatePolling();
+		} else {
+			syncManager.deactivatePolling();
+			clipboardManager.deactivatePolling();
+		}
+
 		if (OSValidator.isUnix()) {
 			this.exportResource("libunix-java.so");
 			try {
@@ -131,7 +211,7 @@ public class CopyItDesktop extends CopyIt {
 			});
 		}
 
-		AbstractUi ui = new SwtGui(this.settings);
+		AbstractUi ui = new SwtGui(this.settings, syncManager, clipboardManager);
 		ui.open();
 
 		this.settings.saveProperties();

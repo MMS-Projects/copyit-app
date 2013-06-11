@@ -5,16 +5,16 @@ import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import net.mms_projects.copyit.ClipboardUtils;
-import net.mms_projects.copyit.DesktopClipboardUtils;
+import net.mms_projects.copyit.ClipboardManager;
 import net.mms_projects.copyit.OpenBrowser;
 import net.mms_projects.copyit.Settings;
-import net.mms_projects.copyit.SyncingListener;
-import net.mms_projects.copyit.SyncingThread;
+import net.mms_projects.copyit.SyncListener;
+import net.mms_projects.copyit.SyncManager;
 import net.mms_projects.copyit.api.ServerApi;
 import net.mms_projects.copyit.api.endpoints.GetBuildInfo;
 import net.mms_projects.copyit.api.responses.JenkinsBuildResponse;
 import net.mms_projects.copyit.app.CopyItDesktop;
+import net.mms_projects.copyit.clipboard_backends.SwtBackend;
 import net.mms_projects.copyit.ui.swt.TrayEntry;
 import net.mms_projects.copyit.ui.swt.TrayEntrySwt;
 import net.mms_projects.copyit.ui.swt.TrayEntryUnity;
@@ -39,9 +39,16 @@ public class SwtGui extends AbstractUi {
 
 	protected Shell activityShell;
 
-	public SwtGui(Settings settings) {
+	protected SyncManager syncManager;
+	protected ClipboardManager clipboardManager;
+
+	public SwtGui(Settings settings, SyncManager syncManager,
+			ClipboardManager clipboardManager) {
 		super(settings);
 
+		this.syncManager = syncManager;
+		this.clipboardManager = clipboardManager;
+		
 		try {
 			this.display = Display.getDefault();
 		} catch (UnsatisfiedLinkError error) {
@@ -54,6 +61,12 @@ public class SwtGui extends AbstractUi {
 					JOptionPane.ERROR_MESSAGE);
 			System.exit(1);
 		}
+		SwtBackend swtClipboard = new SwtBackend(this.clipboardManager);
+		
+		this.clipboardManager.addCopyService(swtClipboard);
+		this.clipboardManager.addPasteService(swtClipboard);
+		this.clipboardManager.addPollingService(swtClipboard);
+		
 		this.tray = display.getSystemTray();
 		this.activityShell = new Shell(this.display);
 
@@ -61,14 +74,16 @@ public class SwtGui extends AbstractUi {
 			String desktop = System.getenv("XDG_CURRENT_DESKTOP");
 			if (desktop.equalsIgnoreCase("Unity")) {
 				this.trayEntry = new TrayEntryUnity(this.settings,
-						this.activityShell);
+						this.activityShell, syncManager, clipboardManager);
 			}
 		}
 		if (this.trayEntry == null) {
 			this.trayEntry = new TrayEntrySwt(this.settings,
-					this.activityShell, this.tray);
+					this.activityShell, this.tray, syncManager,
+					clipboardManager);
 		}
-		this.queueWindow = new DataQueue(this.activityShell, SWT.DIALOG_TRIM);
+		this.queueWindow = new DataQueue(this.activityShell, SWT.DIALOG_TRIM,
+				this.clipboardManager);
 	}
 
 	@Override
@@ -86,40 +101,27 @@ public class SwtGui extends AbstractUi {
 
 		//this.checkVersion();
 
-		SyncingThread syncThread = new SyncingThread(this.settings);
-		syncThread.setDaemon(true);
-		syncThread.start();
-		syncThread.addListener(new SyncingListener() {
+		syncManager.addListener(new SyncListener() {
 			@Override
-			public void onClipboardChange(String data, Date date) {
-				final ClipboardUtils clipboard = new DesktopClipboardUtils();
+			public void onPushed(String content, Date date) {
+				// TODO Auto-generated method stub
 
+			}
+
+			@Override
+			public void onPulled(final String content, Date date) {
 				if (!SwtGui.this.settings.getBoolean("sync.queue.enabled")) {
-					if (data.length() == 0) {
-						return;
-					}
-					
-					clipboard.setText(data);
+					clipboardManager.setContent(content);
 				}
 			}
-
-			@Override
-			public void onPreSync() {
-			}
-
-			@Override
-			public void onPostSync() {
-			}
 		});
-		syncThread.addListener(queueWindow);
-		syncThread.addListener(this.trayEntry);
-		syncThread.setEnabled(this.settings.getBoolean("sync.polling.enabled"));
+		syncManager.addListener(queueWindow);
+		syncManager.addListener(this.trayEntry);
 
 		this.queueWindow.setup();
 		this.queueWindow.setEnabled(this.settings
 				.getBoolean("sync.queue.enabled"));
 
-		this.settings.addListener("sync.polling.enabled", syncThread);
 		this.settings.addListener("sync.queue.enabled", this.queueWindow);
 
 		while (!this.activityShell.isDisposed()) {

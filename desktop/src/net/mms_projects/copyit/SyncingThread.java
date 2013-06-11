@@ -1,49 +1,32 @@
 package net.mms_projects.copyit;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.UUID;
 
-import net.mms_projects.copyit.api.ServerApi;
 import net.mms_projects.copyit.api.endpoints.ClipboardContentEndpoint;
 
 import org.eclipse.swt.widgets.Display;
 
-public class SyncingThread extends Thread implements SettingsListener {
+public class SyncingThread extends Thread implements PollingServiceInterface {
+
+	public static String SERVICE_NAME = "polling";
 
 	private boolean enabled;
 	private int delay = 5;
-	private Settings settings;
-	private List<SyncingListener> listeners = new ArrayList<SyncingListener>();
 	private String currentContent;
+	private ClipboardContentEndpoint endpoint;
+	private SyncListener listener;
 
-	public SyncingThread(Settings settings) {
-		this.settings = settings;
+	public SyncingThread(SyncListener listener,
+			ClipboardContentEndpoint endpoint) {
+		this.listener = listener;
+		this.endpoint = endpoint;
 
-		this.addListener(new SyncingListener() {
-			@Override
-			public void onClipboardChange(String data, Date date) {
-				System.out.println("New clipboard content: " + data);
-				System.out.println("Date: " + date.toString());
-			}
-
-			@Override
-			public void onPreSync() {
-			}
-
-			@Override
-			public void onPostSync() {
-			}
-		});
+		this.setDaemon(true);
+		this.start();
 	}
 
-	public void setEnabled(boolean state) {
-		this.enabled = state;
-	}
-
-	public void addListener(SyncingListener listener) {
-		this.listeners.add(listener);
+	public void setEndpoint(ClipboardContentEndpoint endpoint) {
+		this.endpoint = endpoint;
 	}
 
 	@Override
@@ -56,20 +39,8 @@ public class SyncingThread extends Thread implements SettingsListener {
 					return;
 				}
 
-				for (SyncingListener listener : listeners) {
-					listener.onPreSync();
-				}
-
-				ServerApi api = new ServerApi();
-				api.deviceId = UUID.fromString(this.settings.get("device.id"));
-				api.devicePassword = this.settings.get("device.password");
-				api.apiUrl = this.settings.get("server.baseurl");
-
-				Display.getDefault().asyncExec(new RefreshClipboard(api));
-
-				for (SyncingListener listener : listeners) {
-					listener.onPostSync();
-				}
+				Display.getDefault().asyncExec(
+						new RefreshClipboard(this.endpoint));
 			} catch (InterruptedException e) {
 				this.interrupt();
 			}
@@ -77,17 +48,17 @@ public class SyncingThread extends Thread implements SettingsListener {
 	}
 
 	private class RefreshClipboard implements Runnable {
-		private ServerApi api;
+		private ClipboardContentEndpoint endpoint;
 
-		public RefreshClipboard(ServerApi api) {
-			this.api = api;
+		public RefreshClipboard(ClipboardContentEndpoint endpoint) {
+			this.endpoint = endpoint;
 		}
 
 		@Override
 		public void run() {
 			String newData = "";
 			try {
-				newData = new ClipboardContentEndpoint(api).get();
+				newData = this.endpoint.get();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -97,19 +68,35 @@ public class SyncingThread extends Thread implements SettingsListener {
 					&& (SyncingThread.this.currentContent.equals(newData))) {
 				return;
 			}
-
+			
 			SyncingThread.this.currentContent = newData;
-
-			for (SyncingListener listener : listeners) {
-				listener.onClipboardChange(newData, new Date());
+			
+			if (newData.length() == 0) {
+				return;
 			}
+
+			listener.onPulled(newData, new Date());
 		}
 	}
 
 	@Override
-	public void onChange(String key, String value) {
-		if ("sync.polling.enabled".equals(key)) {
-			this.setEnabled(Boolean.parseBoolean(value));
-		}
+	public String getServiceName() {
+		return SERVICE_NAME;
 	}
+
+	@Override
+	public void activatePolling() {
+		this.enabled = true;
+	}
+
+	@Override
+	public void deactivatePolling() {
+		this.enabled = false;
+	}
+
+	@Override
+	public boolean isPollingActivated() {
+		return this.enabled;
+	}
+
 }
