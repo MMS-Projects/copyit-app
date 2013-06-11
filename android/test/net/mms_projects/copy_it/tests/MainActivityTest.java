@@ -1,6 +1,6 @@
 package net.mms_projects.copy_it.tests;
 
-import net.mms_projects.copyit.ui.android.MainActivity;
+import net.mms_projects.copy_it.ui.android.MainActivity;
 import android.content.Intent;
 
 public class MainActivityTest extends

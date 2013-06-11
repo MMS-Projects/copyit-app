@@ -1,6 +1,6 @@
 package net.mms_projects.copy_it.tests;
 
-import net.mms_projects.copyit.PasswordGenerator;
+import net.mms_projects.copy_it.PasswordGenerator;
 import junit.framework.TestCase;
 
 public class PasswordGeneratorTest extends TestCase {
