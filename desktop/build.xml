@@ -38,13 +38,15 @@
 
     <path id="global-classpath">
         <fileset file="desktop/libs/swing2swt.jar" />
+        <fileset file="desktop/libs/slf4j-jdk14-1.7.5.jar" />
         <fileset file="global/libs/commons-io-2.4.jar" />
-        <fileset file="global/libs/commons-logging-1.1.1.jar" />
+        <fileset file="global/libs/jcl-over-slf4j-1.7.5.jar" />
         <fileset file="global/libs/httpcore-4.2.2.jar" />
         <fileset file="global/libs/httpclient-4.2.3.jar" />
     	<fileset file="global/libs/gson-2.2.2.jar" />
-        <fileset file="desktop/libs/linux/hexdump-0.2.jar" />
+    	<fileset file="global/libs/slf4j-api-1.7.5.jar" />
         <fileset file="desktop/libs/linux/libdbus-java-2.7.jar" />
+        <fileset file="desktop/libs/linux/unix-0.5.jar" />
         <fileset file="desktop/libs/linux/unix-0.5.jar" />
     </path>
 
@@ -91,8 +93,9 @@
         <jar manifest="build/META-INF/MANIFEST.MF" destfile="build/copyit-linux-x86.jar" filesetmanifest="mergewithoutmain" basedir="build/classes">        
             <zipfileset excludes="META-INF/*.SF" src="desktop/libs/swt-4.2.1-gtk-linux-x86.jar" />
             <zipfileset excludes="META-INF/*.SF" src="desktop/libs/swing2swt.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="desktop/libs/slf4j-jdk14-1.7.5.jar" />
             <zipfileset excludes="META-INF/*.SF" src="global/libs/commons-io-2.4.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="global/libs/commons-logging-1.1.1.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="global/libs/jcl-over-slf4j-1.7.5.jar" />
             <zipfileset excludes="META-INF/*.SF" src="global/libs/httpcore-4.2.2.jar" />
             <zipfileset excludes="META-INF/*.SF" src="global/libs/httpclient-4.2.3.jar" />
             <zipfileset excludes="META-INF/*.SF" src="global/libs/gson-2.2.2.jar" />
@@ -122,8 +125,9 @@
         <jar manifest="build/META-INF/MANIFEST.MF" destfile="build/copyit-linux-x86_64.jar" filesetmanifest="mergewithoutmain" basedir="build/classes">
             <zipfileset excludes="META-INF/*.SF" src="desktop/libs/swt-4.2.1-gtk-linux-x86_64.jar" />
         	<zipfileset excludes="META-INF/*.SF" src="desktop/libs/swing2swt.jar" />
+        	<zipfileset excludes="META-INF/*.SF" src="desktop/libs/slf4j-jdk14-1.7.5.jar" />
             <zipfileset excludes="META-INF/*.SF" src="global/libs/commons-io-2.4.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="global/libs/commons-logging-1.1.1.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="global/libs/jcl-over-slf4j-1.7.5.jar" />
             <zipfileset excludes="META-INF/*.SF" src="global/libs/httpcore-4.2.2.jar" />
             <zipfileset excludes="META-INF/*.SF" src="global/libs/httpclient-4.2.3.jar" />
             <zipfileset excludes="META-INF/*.SF" src="global/libs/gson-2.2.2.jar" />
@@ -152,8 +156,9 @@
         <jar manifest="build/META-INF/MANIFEST.MF" destfile="build/copyit-windows-x86.jar" filesetmanifest="mergewithoutmain" basedir="build/classes">
             <zipfileset excludes="META-INF/*.SF" src="desktop/libs/swt-4.2.1-win32-win32-x86.jar" />
         	<zipfileset excludes="META-INF/*.SF" src="desktop/libs/swing2swt.jar" />
+        	<zipfileset excludes="META-INF/*.SF" src="desktop/libs/slf4j-jdk14-1.7.5.jar" />
             <zipfileset excludes="META-INF/*.SF" src="global/libs/commons-io-2.4.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="global/libs/commons-logging-1.1.1.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="global/libs/jcl-over-slf4j-1.7.5.jar" />
             <zipfileset excludes="META-INF/*.SF" src="global/libs/httpcore-4.2.2.jar" />
             <zipfileset excludes="META-INF/*.SF" src="global/libs/httpclient-4.2.3.jar" />
             <zipfileset excludes="META-INF/*.SF" src="global/libs/gson-2.2.2.jar" />
@@ -182,8 +187,9 @@
         <jar manifest="build/META-INF/MANIFEST.MF" destfile="build/copyit-windows-x86_64.jar" filesetmanifest="mergewithoutmain" basedir="build/classes">
             <zipfileset excludes="META-INF/*.SF" src="desktop/libs/swt-4.2.1-win32-win32-x86_64.jar" />
         	<zipfileset excludes="META-INF/*.SF" src="desktop/libs/swing2swt.jar" />
+        	<zipfileset excludes="META-INF/*.SF" src="desktop/libs/slf4j-jdk14-1.7.5.jar" />
             <zipfileset excludes="META-INF/*.SF" src="global/libs/commons-io-2.4.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="global/libs/commons-logging-1.1.1.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="global/libs/jcl-over-slf4j-1.7.5.jar" />
             <zipfileset excludes="META-INF/*.SF" src="global/libs/httpcore-4.2.2.jar" />
             <zipfileset excludes="META-INF/*.SF" src="global/libs/httpclient-4.2.3.jar" />
             <zipfileset excludes="META-INF/*.SF" src="global/libs/gson-2.2.2.jar" />
@@ -212,8 +218,9 @@
         <jar manifest="build/META-INF/MANIFEST.MF" destfile="build/copyit-macosx-x86.jar" filesetmanifest="mergewithoutmain" basedir="build/classes">
             <zipfileset excludes="META-INF/*.SF" src="desktop/libs/swt-4.2.1-cocoa-macosx-x86.jar" />
         	<zipfileset excludes="META-INF/*.SF" src="desktop/libs/swing2swt.jar" />
+        	<zipfileset excludes="META-INF/*.SF" src="desktop/libs/slf4j-jdk14-1.7.5.jar" />
             <zipfileset excludes="META-INF/*.SF" src="global/libs/commons-io-2.4.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="global/libs/commons-logging-1.1.1.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="global/libs/jcl-over-slf4j-1.7.5.jar" />
             <zipfileset excludes="META-INF/*.SF" src="global/libs/httpcore-4.2.2.jar" />
             <zipfileset excludes="META-INF/*.SF" src="global/libs/httpclient-4.2.3.jar" />
             <zipfileset excludes="META-INF/*.SF" src="global/libs/gson-2.2.2.jar" />
@@ -238,8 +245,8 @@
         <jar manifest="build/META-INF/MANIFEST.MF" destfile="build/copyit-macosx-x86_64.jar" filesetmanifest="mergewithoutmain" basedir="build/classes">
             <zipfileset excludes="META-INF/*.SF" src="desktop/libs/swt-4.2.1-cocoa-macosx-x86_64.jar" />
             <zipfileset excludes="META-INF/*.SF" src="desktop/libs/swing2swt.jar" />
+            <zipfileset excludes="META-INF/*.SF" src="desktop/libs/slf4j-jdk14-1.7.5.jar" />
             <zipfileset excludes="META-INF/*.SF" src="global/libs/commons-io-2.4.jar" />
-            <zipfileset excludes="META-INF/*.SF" src="global/libs/commons-logging-1.1.1.jar" />
             <zipfileset excludes="META-INF/*.SF" src="global/libs/httpcore-4.2.2.jar" />
             <zipfileset excludes="META-INF/*.SF" src="global/libs/httpclient-4.2.3.jar" />
             <zipfileset excludes="META-INF/*.SF" src="global/libs/gson-2.2.2.jar" />

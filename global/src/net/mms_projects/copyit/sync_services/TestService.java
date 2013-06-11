@@ -2,6 +2,9 @@ package net.mms_projects.copyit.sync_services;
 
 import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.mms_projects.copyit.PollingServiceInterface;
 import net.mms_projects.copyit.SyncListener;
 
@@ -12,6 +15,7 @@ public class TestService implements PushServiceInterface, PollingServiceInterfac
 	protected SyncListener listener;
 	private boolean pushEnabled;
 	private boolean pullingEnabled;
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public TestService(SyncListener listener) {
 		this.listener = listener;
@@ -25,7 +29,7 @@ public class TestService implements PushServiceInterface, PollingServiceInterfac
 	@Override
 	public void activatePolling() {
 		this.pullingEnabled = true;
-		System.out.println("Activated! Faking pulls");
+		log.debug("Activated! Faking pulls");
 		
 		new Thread(new Runnable() {
 
@@ -50,7 +54,7 @@ public class TestService implements PushServiceInterface, PollingServiceInterfac
 	@Override
 	public void deactivatePolling() {
 		this.pullingEnabled = false;
-		System.out.println("Deactivated!");
+		log.debug("Deactivated!");
 	}
 	
 	@Override

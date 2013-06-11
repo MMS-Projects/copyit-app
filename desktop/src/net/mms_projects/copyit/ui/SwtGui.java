@@ -27,6 +27,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tray;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SwtGui extends AbstractUi {
 
@@ -41,6 +43,8 @@ public class SwtGui extends AbstractUi {
 
 	protected SyncManager syncManager;
 	protected ClipboardManager clipboardManager;
+	
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public SwtGui(Settings settings, SyncManager syncManager,
 			ClipboardManager clipboardManager) {
@@ -152,8 +156,7 @@ public class SwtGui extends AbstractUi {
 					}
 
 					if (latestBuildNumber > currentBuildNumber) {
-						System.out.println("Latest version: "
-								+ latestBuildNumber);
+						log.info("A new version is available: {} ", latestBuildNumber);
 						MessageBox box = new MessageBox(activityShell,
 								SWT.ICON_INFORMATION | SWT.YES | SWT.NO);
 						box.setMessage("There is a new version available! Click yes to download the latest version.");

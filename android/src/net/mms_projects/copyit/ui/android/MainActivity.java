@@ -3,7 +3,6 @@ package net.mms_projects.copyit.ui.android;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Map;
 import java.util.UUID;
 
 import net.mms_projects.copy_it.R;
@@ -113,11 +112,6 @@ public class MainActivity extends SherlockFragmentActivity {
 			SharedPreferences preferences = PreferenceManager
 					.getDefaultSharedPreferences(this);
 
-			Map<String, ?> settings = preferences.getAll();
-			for (String key : settings.keySet()) {
-				System.out.println(key + ": " + settings.get(key));
-			}
-
 			if (preferences.getString("device.id", null) == null) {
 				AlertDialog.Builder builder = new AlertDialog.Builder(this);
 				builder.setMessage(
@@ -177,11 +171,6 @@ public class MainActivity extends SherlockFragmentActivity {
 
 		SharedPreferences preferences = PreferenceManager
 				.getDefaultSharedPreferences(this);
-
-		Map<String, ?> settings = preferences.getAll();
-		for (String key : settings.keySet()) {
-			System.out.println(key + ": " + settings.get(key));
-		}
 
 		if (preferences.getString("device.id", null) == null) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);

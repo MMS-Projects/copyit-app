@@ -2,6 +2,9 @@ package net.mms_projects.copy_it.databases;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.mms_projects.copy_it.models.HistoryContract;
 import net.mms_projects.copy_it.models.HistoryItem;
 import net.mms_projects.copy_it.models.HistoryListFactory;
@@ -31,6 +34,7 @@ public class HistoryItemsDbHelper extends SQLiteOpenHelper {
 
 	private static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS "
 			+ HistoryContract.ItemEntry.TABLE_NAME;
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public HistoryItemsDbHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -57,7 +61,7 @@ public class HistoryItemsDbHelper extends SQLiteOpenHelper {
 		this.onCreate(database);
 
 		for (HistoryItem item : items) {
-			System.out.println("Upgrading: " + item.date);
+			log.debug("Upgrading item: {}, " + item.date);
 
 			ContentValues values = new ContentValues();
 			values.put(HistoryContract.ItemEntry.COLUMN_NAME_CONTENT,

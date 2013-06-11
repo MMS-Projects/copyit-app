@@ -20,6 +20,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 
@@ -29,6 +31,7 @@ public class ServerApi {
 	public String devicePassword;
 	public String apiUrl = "http://copyit.dev.mms-projects.net";
 
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	URL apiUrlObject;
 
 	public ServerApi() {
@@ -90,11 +93,11 @@ public class ServerApi {
 	public ApiResponse doRawRequest(Class<? extends ApiResponse> apiResponse,
 			String url, String method, List<NameValuePair> parameters)
 			throws Exception {
-		System.out.println(method);
-		System.out.println(url);
+		log.debug("Requesting data from url: {}", url);
+		log.trace("Requesting using method: {}", method);
 		for (NameValuePair parameter : parameters) {
-			System.out.println(parameter.getName() + ": "
-					+ parameter.getValue());
+			log.trace("Request parameter info: {} = {}", parameter.getName(),
+					parameter.getValue());
 		}
 
 		HttpResponse response = null;
@@ -112,6 +115,8 @@ public class ServerApi {
 			HttpPut request = new HttpPut(url);
 			request.setEntity(new UrlEncodedFormEntity(parameters));
 			response = httpclient.execute(request);
+		} else {
+			log.warn("Unknown method type: {}", method);
 		}
 
 		HttpEntity entity = response.getEntity();
@@ -128,6 +133,8 @@ public class ServerApi {
 		} catch (com.google.gson.JsonSyntaxException exception) {
 			throw new Exception(exception);
 		}
+		
+		log.trace("Response from request: {}", responseText);
 
 		return data;
 	}

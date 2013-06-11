@@ -36,10 +36,14 @@ import org.freedesktop.dbus.DBusConnection;
 import org.freedesktop.dbus.UInt32;
 import org.freedesktop.dbus.Variant;
 import org.freedesktop.dbus.exceptions.DBusException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CopyItDesktop extends CopyIt {
 
 	protected Settings settings;
+
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	static public DBusConnection dbusConnection;
 
@@ -78,6 +82,7 @@ public class CopyItDesktop extends CopyIt {
 	}
 
 	public void run() {
+		log.info("The application is launched");
 		this.settings = new Settings();
 		try {
 			this.settings.setFileStreamBuilder(new StreamBuilder());
@@ -126,13 +131,12 @@ public class CopyItDesktop extends CopyIt {
 
 			@Override
 			public void onPushed(String content, Date date) {
-				System.out.println("Content pushed");
+				log.debug("The following content was pushed: {}", content);
 			}
 
 			@Override
 			public void onPulled(String content, Date date) {
-				System.out.println("The following content was pulled: "
-						+ content);
+				log.debug("The following content was pulled: {}", content);
 			}
 		});
 
@@ -164,8 +168,9 @@ public class CopyItDesktop extends CopyIt {
 						.getConnection(DBusConnection.SESSION);
 			} catch (DBusException e1) {
 				// TODO Auto-generated catch block
-				System.out
-						.println("Ahh could not connect to D-Bus. All kinds of explosions n'stuff. Fix it!");
+				log.error(
+						"Ahh could not connect to D-Bus. All kinds of explosions n'stuff. Fix it!",
+						e1);
 				e1.printStackTrace();
 				System.exit(1);
 			}
@@ -192,7 +197,7 @@ public class CopyItDesktop extends CopyIt {
 				}
 			}
 
-			System.out.println(message);
+			log.info(message);
 			System.exit(0);
 		} else {
 			try {
@@ -226,7 +231,7 @@ public class CopyItDesktop extends CopyIt {
 			this.settingsFile = new File(PathBuilder.getConfigDirectory(),
 					"options.properties");
 			if (!this.settingsFile.exists()) {
-				System.out.println("No settings file. Creating it.");
+				log.info("No settings file. Creating it.");
 				this.settingsFile.createNewFile();
 			}
 		}
@@ -244,13 +249,16 @@ public class CopyItDesktop extends CopyIt {
 	}
 
 	public static File exportResource(String resource) {
+		Logger log = LoggerFactory.getLogger(CopyItDesktop.class);
+
 		if (!CopyItDesktop.nativeLoadingInitialized) {
 			System.setProperty(
 					"java.library.path",
 					System.getProperty("java.library.path")
 							+ System.getProperty("path.separator")
 							+ PathBuilder.getCacheDirectory().getAbsolutePath());
-			System.out.println(System.getProperty("java.library.path"));
+			log.trace("Set the library path to: {}",
+					System.getProperty("java.library.path"));
 
 			Field fieldSysPath = null;
 			try {
@@ -272,21 +280,19 @@ public class CopyItDesktop extends CopyIt {
 			}
 			CopyItDesktop.nativeLoadingInitialized = true;
 		}
-		System.out.println("Exporting resource " + resource);
+		log.debug("Exporting resource {}", resource);
 		URL inputUrl = CopyItDesktop.class.getResource("/" + resource);
 		File dest = new File(PathBuilder.getCacheDirectory(), resource);
 		if (inputUrl == null) {
-			System.out
-					.println("No input resource available while exporting resource "
-							+ resource + ". " + "Ignoring it.");
+			log.warn(
+					"No input resource available while exporting resource {}. Ignoring it.",
+					resource);
 			return null;
 		}
 		try {
 			FileUtils.copyURLToFile(inputUrl, dest);
 		} catch (IOException e1) {
-			System.out.println("Could not copy " + resource
-					+ ". This might cause issues.");
-			e1.printStackTrace();
+			log.warn("Could not copy resource. This might cause issues.", e1);
 		}
 		return dest;
 	}

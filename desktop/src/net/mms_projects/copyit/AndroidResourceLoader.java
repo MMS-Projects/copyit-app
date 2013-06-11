@@ -20,7 +20,6 @@ public class AndroidResourceLoader {
 	private static Map<String, String> strings;
 
 	public static Image getImage(String path) {
-		System.out.println(AndroidResourceLoader.class.getPackage());
 		String basePath = "/";
 		return SWTResourceManager.getImage(AndroidResourceLoader.class,
 				basePath + path);
@@ -76,8 +75,6 @@ public class AndroidResourceLoader {
 		XPath xpath = XPathFactory.newInstance().newXPath();
 
 		Node root = (Node) xpath.evaluate("/", source, XPathConstants.NODE);
-
-		System.out.println(root.toString());
 		
 		NodeList xmlStrings = null;
 

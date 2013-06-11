@@ -29,11 +29,14 @@ import org.freedesktop.dbus.DBusSignal;
 import org.freedesktop.dbus.UInt32;
 import org.freedesktop.dbus.Variant;
 import org.freedesktop.dbus.exceptions.DBusException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TrayEntryUnity extends TrayEntry implements DBusSigHandler,
 		SettingsListener {
 
 	private DesktopIntegration integration;
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public TrayEntryUnity(Settings settings, Shell activityShell,
 			SyncManager syncManager, ClipboardManager clipboardManager) {
@@ -83,10 +86,11 @@ public class TrayEntryUnity extends TrayEntry implements DBusSigHandler,
 		command[1] = script.getAbsolutePath();
 		try {
 			final Process process = Runtime.getRuntime().exec(command);
+			log.info("Started desktop integration script");
 			Runtime.getRuntime().addShutdownHook(new Thread() {
 				@Override
 				public void run() {
-					System.out.println("Stopping desktop integration script");
+					log.debug("Stopping desktop integration script");
 					process.destroy();
 				}
 			});

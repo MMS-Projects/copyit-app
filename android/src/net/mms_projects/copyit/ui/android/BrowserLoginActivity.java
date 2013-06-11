@@ -4,6 +4,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.mms_projects.copy_it.R;
 import net.mms_projects.copyit.LoginResponse;
 import net.mms_projects.copyit.PasswordGenerator;
@@ -22,6 +25,8 @@ import com.google.analytics.tracking.android.EasyTracker;
 public class BrowserLoginActivity extends SherlockActivity {
 
 	protected LoginResponse response = new LoginResponse();
+	
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +59,7 @@ public class BrowserLoginActivity extends SherlockActivity {
 					e.printStackTrace();
 				}
 
-				System.out.println(url);
+				log.debug("Switching to url: {}", url);
 
 				if (location.getPath().startsWith("/app-setup/done/")) {
 					response.deviceId = UUID.fromString(location.getPath()
@@ -65,10 +70,12 @@ public class BrowserLoginActivity extends SherlockActivity {
 					returnIntent.putExtra("device_password",
 							response.devicePassword);
 					setResult(RESULT_OK, returnIntent);
+					log.debug("Login successful");
 					finish();
 				} else if (location.getPath().startsWith("/app-setup/fail/")) {
 					Intent returnIntent = new Intent();
 					setResult(RESULT_CANCELED, returnIntent);
+					log.debug("Login failed");
 					finish();
 				} else {
 					view.loadUrl(url);

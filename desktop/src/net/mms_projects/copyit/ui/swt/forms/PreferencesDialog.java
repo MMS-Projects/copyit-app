@@ -12,6 +12,9 @@ import net.mms_projects.copyit.ui.swt.forms.login_dialogs.LoginDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.FormAttachment;
+import org.eclipse.swt.layout.FormData;
+import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -20,14 +23,13 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.layout.FormLayout;
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.FormAttachment;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PreferencesDialog extends GeneralDialog {
 
 	protected Shell shell;
-	
+
 	private Settings settings;
 
 	private Text textEncryptionPassphrase;
@@ -38,6 +40,8 @@ public class PreferencesDialog extends GeneralDialog {
 	private Button btnEnablePolling;
 
 	private Button btnEnableQueue;
+
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	/**
 	 * Create the dialog.
@@ -176,7 +180,7 @@ public class PreferencesDialog extends GeneralDialog {
 		fd_btnEnableQueue.top = new FormAttachment(0, 40);
 		fd_btnEnableQueue.left = new FormAttachment(0, 10);
 		btnEnableQueue.setLayoutData(fd_btnEnableQueue);
-		
+
 		/*
 		 * Layout and settings
 		 */
@@ -202,8 +206,10 @@ public class PreferencesDialog extends GeneralDialog {
 		// Sync tab
 		tbtmSync.setText("Sync");
 		tbtmSync.setControl(compositeSync);
-		btnEnablePolling.setText(Messages.getString("PreferencesDialog.btnEnablePolling.text"));
-		btnEnableQueue.setText(Messages.getString("PreferencesDialog.btnEnableQueue.text")); //$NON-NLS-1$
+		btnEnablePolling.setText(Messages
+				.getString("PreferencesDialog.btnEnablePolling.text"));
+		btnEnableQueue.setText(Messages
+				.getString("PreferencesDialog.btnEnableQueue.text")); //$NON-NLS-1$
 
 		/*
 		 * Listeners
@@ -245,14 +251,16 @@ public class PreferencesDialog extends GeneralDialog {
 		btnEnablePolling.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				PreferencesDialog.this.settings.set("sync.polling.enabled", btnEnablePolling.getSelection());
+				PreferencesDialog.this.settings.set("sync.polling.enabled",
+						btnEnablePolling.getSelection());
 				PreferencesDialog.this.updateForm();
 			}
 		});
 		btnEnableQueue.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				PreferencesDialog.this.settings.set("sync.queue.enabled", btnEnableQueue.getSelection());
+				PreferencesDialog.this.settings.set("sync.queue.enabled",
+						btnEnableQueue.getSelection());
 				PreferencesDialog.this.updateForm();
 			}
 		});
@@ -271,9 +279,12 @@ public class PreferencesDialog extends GeneralDialog {
 		if (this.settings.get("device.id") != null) {
 			this.btnManualLogin.setText("Relogin (manual)");
 		}
-		btnEnablePolling.setSelection(this.settings.getBoolean("sync.polling.enabled"));
-		btnEnableQueue.setSelection(this.settings.getBoolean("sync.queue.enabled"));
-		btnEnableQueue.setEnabled(this.settings.getBoolean("sync.polling.enabled"));
+		btnEnablePolling.setSelection(this.settings
+				.getBoolean("sync.polling.enabled"));
+		btnEnableQueue.setSelection(this.settings
+				.getBoolean("sync.queue.enabled"));
+		btnEnableQueue.setEnabled(this.settings
+				.getBoolean("sync.polling.enabled"));
 	}
 
 	private abstract class LoginSectionAdapter extends SelectionAdapter {
@@ -287,7 +298,7 @@ public class PreferencesDialog extends GeneralDialog {
 			LoginResponse response = dialog.getResponse();
 
 			if (response == null) {
-				System.out.println("No login response returned.");
+				log.debug("No login response returned.");
 				return;
 			}
 

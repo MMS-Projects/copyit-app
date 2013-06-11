@@ -9,12 +9,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class Settings {
 
 	private Properties defaults = new Properties();
 	private Properties properties;
 	private FileStreamBuilder fileStreamBuider;
 	private Map<String, List<SettingsListener>> listeners = new HashMap<String, List<SettingsListener>>();
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public Settings() {
 		this.defaults.setProperty("server.baseurl",
@@ -34,6 +38,8 @@ public class Settings {
 	}
 
 	public void set(String key, String value) {
+		log.debug("Setting {} changed to {}", key, value);
+
 		this.properties.setProperty(key, value);
 		saveProperties();
 		this.notifyChangeListeners(key, value);
@@ -41,7 +47,6 @@ public class Settings {
 
 	public void set(String key, boolean value) {
 		this.set(key, Boolean.toString(value));
-		
 	}
 
 	public String get(String key) {
@@ -53,7 +58,7 @@ public class Settings {
 	}
 
 	public void loadProperties() {
-		System.out.println("Loading settings...");
+		log.info("Loading settings...");
 		BufferedInputStream stream;
 		try {
 			stream = new BufferedInputStream(
@@ -67,7 +72,7 @@ public class Settings {
 	}
 
 	public void saveProperties() {
-		System.out.println("Saving settings...");
+		log.info("Saving settings...");
 		try {
 			this.properties.store(new BufferedOutputStream(
 					this.fileStreamBuider.getOutputStream()), "");
@@ -76,7 +81,7 @@ public class Settings {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void notifyChangeListeners(String key, String value) {
 		if (!this.listeners.containsKey(key)) {
 			return;

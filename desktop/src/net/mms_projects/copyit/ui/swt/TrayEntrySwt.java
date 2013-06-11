@@ -22,6 +22,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.swt.widgets.Tray;
 import org.eclipse.swt.widgets.TrayItem;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TrayEntrySwt extends TrayEntry {
 
@@ -33,6 +35,7 @@ public class TrayEntrySwt extends TrayEntry {
 
 	private MenuItem menuItemCopyIt;
 	private MenuItem menuItemPasteIt;
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public TrayEntrySwt(Settings settings, Shell activityShell, Tray tray,
 			SyncManager syncManager, ClipboardManager clipboardManager) {
@@ -45,8 +48,7 @@ public class TrayEntrySwt extends TrayEntry {
 		if (OSValidator.isUnix()) {
 			String desktop = System.getenv("XDG_CURRENT_DESKTOP");
 			if (desktop.equalsIgnoreCase("Unity")) {
-				System.out.println("Running on " + desktop
-						+ " using the monochrome icon");
+				log.debug("Running on {} using the monochrome icon", desktop);
 				trayImage = AndroidResourceLoader
 						.getImage("drawable-xxhdpi/app_icon_small_mono.png");
 			}
@@ -55,7 +57,7 @@ public class TrayEntrySwt extends TrayEntry {
 		this.trayItem.setImage(trayImage);
 		this.trayItem.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				System.out.println("selection");
+				log.debug("selection");
 			}
 		});
 
