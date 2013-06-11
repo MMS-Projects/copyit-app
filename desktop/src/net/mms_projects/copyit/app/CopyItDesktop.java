@@ -135,6 +135,7 @@ public class CopyItDesktop extends CopyIt {
 		ui.open();
 
 		this.settings.saveProperties();
+		CopyItDesktop.dbusConnection.disconnect();
 	}
 
 	class StreamBuilder extends FileStreamBuilder {

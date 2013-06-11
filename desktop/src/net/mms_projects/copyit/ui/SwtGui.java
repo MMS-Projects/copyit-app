@@ -87,6 +87,7 @@ public class SwtGui extends AbstractUi {
 		//this.checkVersion();
 
 		SyncingThread syncThread = new SyncingThread(this.settings);
+		syncThread.setDaemon(true);
 		syncThread.start();
 		syncThread.addListener(new SyncingListener() {
 			@Override

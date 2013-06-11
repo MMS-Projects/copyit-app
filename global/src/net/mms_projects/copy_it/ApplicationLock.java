@@ -32,6 +32,7 @@ public class ApplicationLock {
 			this.server = new ServerSocket(0);
 
 			this.thread = new ServerThread();
+			this.thread.setDaemon(true);
 			this.thread.start();
 
 			writer = new BufferedWriter(new FileWriter(this.lockFile));
