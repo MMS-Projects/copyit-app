@@ -50,17 +50,17 @@ public class SettingsActivity extends SherlockPreferenceActivity implements
 	@Override
 	protected void onStart() {
 		super.onStart();
-		
+
 		EasyTracker.getInstance().activityStart(this);
 	}
-	
+
 	@Override
 	protected void onStop() {
 		super.onStop();
-		
+
 		EasyTracker.getInstance().activityStop(this);
 	}
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -122,8 +122,7 @@ public class SettingsActivity extends SherlockPreferenceActivity implements
 		// In the simplified UI, fragments are not used at all and we instead
 		// use the older PreferenceActivity APIs.
 
-		addPreferencesFromResource(R.xml.pref_account);
-		addPreferencesFromResource(R.xml.pref_about);
+		addPreferencesFromResource(R.xml.preferences);
 	}
 
 	/** {@inheritDoc} */
