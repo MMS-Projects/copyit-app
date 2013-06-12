@@ -171,7 +171,6 @@ public class PreferencesDialog extends GeneralDialog {
 		compositeSync.setLayout(new FormLayout());
 		btnEnablePolling = new Button(compositeSync, SWT.CHECK);
 		FormData fd_btnEnablePolling = new FormData();
-		fd_btnEnablePolling.right = new FormAttachment(0, 178);
 		fd_btnEnablePolling.top = new FormAttachment(0, 10);
 		fd_btnEnablePolling.left = new FormAttachment(0, 10);
 		btnEnablePolling.setLayoutData(fd_btnEnablePolling);
