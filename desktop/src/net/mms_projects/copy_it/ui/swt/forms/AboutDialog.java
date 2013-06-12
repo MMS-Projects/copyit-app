@@ -55,54 +55,48 @@ public class AboutDialog extends Dialog {
 	 */
 	private void createContents() {
 		shell = new Shell(getParent(), SWT.DIALOG_TRIM);
-		shell.setSize(300, 250);
+		shell.setSize(300, 221);
 		shell.setText(getText());
 		shell.setLayout(new FormLayout());
 
 		Label appIcon = new Label(shell, SWT.NONE);
+		FormData fd_appIcon = new FormData();
+		fd_appIcon.right = new FormAttachment(0, 199);
+		fd_appIcon.top = new FormAttachment(0, 10);
+		fd_appIcon.left = new FormAttachment(0, 99);
+		appIcon.setLayoutData(fd_appIcon);
 		appIcon.setImage(AndroidResourceLoader
 				.getImage("drawable-xhdpi/ic_launcher.png"));
 		Label appName = new Label(shell, SWT.NONE);
+		FormData fd_appName = new FormData();
+		fd_appName.right = new FormAttachment(0, 283);
+		fd_appName.top = new FormAttachment(0, 116);
+		fd_appName.left = new FormAttachment(0, 10);
+		appName.setLayoutData(fd_appName);
 		appName.setAlignment(SWT.CENTER);
 		Label appVersion = new Label(shell, SWT.NONE);
+		FormData fd_appVersion = new FormData();
+		fd_appVersion.right = new FormAttachment(0, 283);
+		fd_appVersion.top = new FormAttachment(0, 139);
+		fd_appVersion.left = new FormAttachment(0, 10);
+		appVersion.setLayoutData(fd_appVersion);
 		appVersion.setAlignment(SWT.CENTER);
 		Label appCopyright = new Label(shell, SWT.NONE);
+		FormData fd_appCopyright = new FormData();
+		fd_appCopyright.right = new FormAttachment(0, 283);
+		fd_appCopyright.top = new FormAttachment(0, 162);
+		fd_appCopyright.left = new FormAttachment(0, 10);
+		appCopyright.setLayoutData(fd_appCopyright);
 		appCopyright.setAlignment(SWT.CENTER);
 		Button btnClose = new Button(shell, SWT.NONE);
-		
-		FormData fd_appIcon = new FormData();
-		fd_appIcon.top = new FormAttachment(0, 10);
-		fd_appIcon.left = new FormAttachment(50, -50);
-		fd_appIcon.right = new FormAttachment(50, 50);
-		appIcon.setLayoutData(fd_appIcon);
-		
-		FormData fd_appName = new FormData();
-		
-		fd_appName.top = new FormAttachment(appIcon, 10);
-		fd_appName.left = new FormAttachment(0, SWT.LEFT, 10);
-		fd_appName.right = new FormAttachment(0, 283);
-		appName.setLayoutData(fd_appName);
-		appName.setText(Messages.getString("app_name"));
-		
-		FormData fd_appVersion = new FormData();
-		fd_appVersion.left = new FormAttachment(appName, 0, SWT.LEFT);
-		fd_appVersion.right = new FormAttachment(appName, 0, SWT.RIGHT);
-		fd_appVersion.top = new FormAttachment(appName, 6);
-		appVersion.setLayoutData(fd_appVersion);
-		appVersion.setText(Messages.getString("about_version", CopyItDesktop.getVersion()));
-
-		FormData fd_appCopyright = new FormData();
-		fd_appCopyright.left = new FormAttachment(appName, 0, SWT.LEFT);
-		fd_appCopyright.top = new FormAttachment(appVersion, 6);
-		fd_appCopyright.right = new FormAttachment(appName, 0, SWT.RIGHT);
-		appCopyright.setLayoutData(fd_appCopyright);
-		appCopyright.setText(Messages.getString("about_copyright"));
-		
 		FormData fd_btnClose = new FormData();
-		fd_btnClose.bottom = new FormAttachment(100, -10);
-		fd_btnClose.right = new FormAttachment(appIcon, -7);
-		fd_btnClose.left = new FormAttachment(appName, 0, SWT.LEFT);
+		fd_btnClose.right = new FormAttachment(appIcon, 0, SWT.RIGHT);
+		fd_btnClose.top = new FormAttachment(appCopyright, 3);
+		fd_btnClose.left = new FormAttachment(appIcon, 0, SWT.LEFT);
 		btnClose.setLayoutData(fd_btnClose);
+		appName.setText(Messages.getString("app_name"));
+		appVersion.setText(Messages.getString("about_version", CopyItDesktop.getVersion()));
+		appCopyright.setText(Messages.getString("about_copyright"));
 		btnClose.setText("Close");
 		btnClose.addSelectionListener(new SelectionAdapter() {
 			@Override
