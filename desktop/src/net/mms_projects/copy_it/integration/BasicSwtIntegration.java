@@ -1,11 +1,15 @@
-package net.mms_projects.copy_it.ui.swt;
+package net.mms_projects.copy_it.integration;
 
 import java.util.Date;
 
 import net.mms_projects.copy_it.AndroidResourceLoader;
+import net.mms_projects.copy_it.ClipboardListener;
 import net.mms_projects.copy_it.ClipboardManager;
+import net.mms_projects.copy_it.EnvironmentIntegration;
+import net.mms_projects.copy_it.EnvironmentIntegration.NotificationManager.NotificationUrgency;
 import net.mms_projects.copy_it.Messages;
 import net.mms_projects.copy_it.Settings;
+import net.mms_projects.copy_it.SyncListener;
 import net.mms_projects.copy_it.SyncManager;
 import net.mms_projects.copy_it.ui.swt.forms.AboutDialog;
 import net.mms_projects.copy_it.ui.swt.forms.PreferencesDialog;
@@ -25,11 +29,15 @@ import org.eclipse.swt.widgets.TrayItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TrayEntrySwt extends TrayEntry {
+public class BasicSwtIntegration extends EnvironmentIntegration implements SyncListener, ClipboardListener {
 
 	protected Display display = Display.getDefault();
 	protected Menu menu;
 	protected TrayItem trayItem;
+	protected Settings settings;
+	protected Shell activityShell;
+	protected SyncManager syncManager;
+	protected ClipboardManager clipboardManager;
 
 	protected Tray tray;
 
@@ -37,11 +45,14 @@ public class TrayEntrySwt extends TrayEntry {
 	private MenuItem menuItemPasteIt;
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-	public TrayEntrySwt(Settings settings, Shell activityShell, Tray tray,
+	public BasicSwtIntegration(Settings settings, Shell activityShell,
 			SyncManager syncManager, ClipboardManager clipboardManager) {
-		super(settings, activityShell, syncManager, clipboardManager);
-		this.tray = tray;
+		this.tray = display.getSystemTray();
 		this.trayItem = new TrayItem(tray, 0);
+		this.settings = settings;
+		this.activityShell = activityShell;
+		this.syncManager = syncManager;
+		this.clipboardManager = clipboardManager;
 
 		Image trayImage = AndroidResourceLoader
 				.getImage("drawable-xxhdpi/app_icon_small.png");
@@ -63,9 +74,10 @@ public class TrayEntrySwt extends TrayEntry {
 
 		this.activityShell = activityShell;
 
-		this.createMenu();
-
-		this.syncManager.addListener(this);
+		this.createMenu();		
+		
+		this.setNotificationManager(new NotificationManagerSwt(this.display,
+				this.trayItem));
 	}
 
 	public void enableFeatures() {
@@ -101,8 +113,7 @@ public class TrayEntrySwt extends TrayEntry {
 		menuItemPreferences.setText("Preferences");
 		menuItemPreferences.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				new PreferencesDialog(TrayEntrySwt.this.activityShell,
-						TrayEntrySwt.this.settings).open();
+				new PreferencesDialog(activityShell, settings).open();
 			}
 		});
 
@@ -110,8 +121,7 @@ public class TrayEntrySwt extends TrayEntry {
 		menuItemAbout.setText("About");
 		menuItemAbout.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				new AboutDialog(TrayEntrySwt.this.activityShell, SWT.NONE)
-						.open();
+				new AboutDialog(activityShell, SWT.NONE).open();
 			}
 		});
 
@@ -119,50 +129,69 @@ public class TrayEntrySwt extends TrayEntry {
 		menuItemExit.setText("Exit");
 		menuItemExit.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				TrayEntrySwt.this.activityShell.close();
+				activityShell.close();
 			}
 		});
 
 		this.trayItem.addListener(SWT.MenuDetect, new Listener() {
 			public void handleEvent(Event event) {
-				TrayEntrySwt.this.menu.setVisible(true);
+				menu.setVisible(true);
 			}
 		});
 	}
 
 	@Override
 	public void onPushed(final String content, Date date) {
-		this.display.asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				final ToolTip tip = new ToolTip(
-						TrayEntrySwt.this.activityShell, SWT.BALLOON
-								| SWT.ICON_INFORMATION);
-				tip.setText("Notification");
-				tip.setMessage(Messages.getString("text_content_pushed",
-						content));
-				trayItem.setToolTip(tip);
-				tip.setVisible(true);
-			}
-		});
+		this.getNotificationManager().notify(10, NotificationUrgency.NORMAL,
+				"", "Notification",
+				Messages.getString("text_content_pushed", content));
 	}
 
 	@Override
 	public void onPulled(final String content, Date date) {
-		this.display.asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				clipboardManager.setContent(content);
+		clipboardManager.setContent(content);
+		
+		this.getNotificationManager().notify(10, NotificationUrgency.NORMAL,
+				"", "Notification",
+				Messages.getString("text_content_pulled", content));
+	}
 
-				final ToolTip tip = new ToolTip(
-						TrayEntrySwt.this.activityShell, SWT.BALLOON
-								| SWT.ICON_INFORMATION);
-				tip.setText("Notification");
-				tip.setMessage(Messages.getString("text_content_pulled",
-						content));
-				trayItem.setToolTip(tip);
-				tip.setVisible(true);
-			}
-		});
+	private class NotificationManagerSwt implements NotificationManager {
+
+		protected TrayItem trayItem;
+		protected Display display;
+
+		public NotificationManagerSwt(Display display, TrayItem trayItem) {
+			this.display = display;
+			this.trayItem = trayItem;
+		}
+
+		@Override
+		public void notify(int id, NotificationUrgency urgency, String icon,
+				final String summary, final String body) {
+			this.display.asyncExec(new Runnable() {
+				@Override
+				public void run() {
+					final ToolTip tip = new ToolTip(activityShell, SWT.BALLOON
+							| SWT.ICON_INFORMATION);
+					tip.setText(summary);
+					tip.setMessage(body);
+					trayItem.setToolTip(tip);
+					tip.setVisible(true);
+				}
+			});
+		}
+
+	}
+
+	@Override
+	public void onContentSet(String content) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onContentGet(String content) {
+		syncManager.doPush(content, new Date());
 	}
 }

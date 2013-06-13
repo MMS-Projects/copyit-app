@@ -1,4 +1,4 @@
-package net.mms_projects.copy_it.ui.swt;
+package net.mms_projects.copy_it.integration;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -7,18 +7,20 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
 
+import net.mms_projects.copy_it.ClipboardListener;
 import net.mms_projects.copy_it.ClipboardManager;
 import net.mms_projects.copy_it.DesktopIntegration;
+import net.mms_projects.copy_it.EnvironmentIntegration;
+import net.mms_projects.copy_it.EnvironmentIntegration.NotificationManager.NotificationUrgency;
 import net.mms_projects.copy_it.Messages;
 import net.mms_projects.copy_it.PathBuilder;
 import net.mms_projects.copy_it.Settings;
 import net.mms_projects.copy_it.SettingsListener;
+import net.mms_projects.copy_it.SyncListener;
 import net.mms_projects.copy_it.SyncManager;
 import net.mms_projects.copy_it.app.CopyItDesktop;
+import net.mms_projects.copy_it.integration.notifications.FreedesktopNotificationManager;
 import net.mms_projects.copy_it.ui.swt.forms.AboutDialog;
 import net.mms_projects.copy_it.ui.swt.forms.PreferencesDialog;
 
@@ -26,24 +28,39 @@ import org.apache.commons.io.FileUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.freedesktop.Notifications;
+import org.freedesktop.dbus.DBusConnection;
 import org.freedesktop.dbus.DBusSigHandler;
 import org.freedesktop.dbus.DBusSignal;
-import org.freedesktop.dbus.UInt32;
-import org.freedesktop.dbus.Variant;
 import org.freedesktop.dbus.exceptions.DBusException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TrayEntryUnity extends TrayEntry implements DBusSigHandler,
-		SettingsListener {
+public class UnityIntegration extends EnvironmentIntegration implements SyncListener,
+		DBusSigHandler, SettingsListener, ClipboardListener {
+
+	protected Settings settings;
+	protected Shell activityShell;
+	protected SyncManager syncManager;
+	protected ClipboardManager clipboardManager;
 
 	private DesktopIntegration integration;
+
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-	public TrayEntryUnity(Settings settings, Shell activityShell,
-			SyncManager syncManager, ClipboardManager clipboardManager) {
-		super(settings, activityShell, syncManager, clipboardManager);
+	public UnityIntegration(DBusConnection dbusConnection, Settings settings,
+			Shell activityShell, SyncManager syncManager,
+			ClipboardManager clipboardManager) {
+		try {
+			this.setNotificationManager(new FreedesktopNotificationManager(
+					dbusConnection));
+		} catch (DBusException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.settings = settings;
+		this.activityShell = activityShell;
+		this.syncManager = syncManager;
+		this.clipboardManager = clipboardManager;
 
 		this.settings.addListener("sync.polling.enabled", this);
 
@@ -115,6 +132,24 @@ public class TrayEntryUnity extends TrayEntry implements DBusSigHandler,
 	}
 
 	@Override
+	public void onPushed(String content, Date date) {
+		getNotificationManager().notify(10, NotificationUrgency.NORMAL, "",
+				"CopyIt", Messages.getString("text_content_pushed", content));
+	}
+
+	@Override
+	public void onPulled(final String content, Date date) {
+		Display.getDefault().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				clipboardManager.setContent(content);
+			}
+		});
+		getNotificationManager().notify(10, NotificationUrgency.NORMAL, "",
+				"CopyIt", Messages.getString("text_content_pulled", content));
+	}
+
+	@Override
 	public void handle(DBusSignal signal) {
 		if (signal instanceof DesktopIntegration.ready) {
 			String icon = new File(PathBuilder.getCacheDirectory(),
@@ -127,8 +162,7 @@ public class TrayEntryUnity extends TrayEntry implements DBusSigHandler,
 				integration.set_enabled(this.settings
 						.getBoolean("sync.polling.enabled"));
 			} catch (DBusException e) {
-				System.out
-						.println("Could not connect to desktop integration script although it reported as ready. Exiting...");
+				log.error("Could not connect to desktop integration script although it reported as ready. Exiting...");
 				System.exit(1);
 			}
 
@@ -140,23 +174,21 @@ public class TrayEntryUnity extends TrayEntry implements DBusSigHandler,
 			Display.getDefault().asyncExec(new Runnable() {
 				@Override
 				public void run() {
-					new PreferencesDialog(TrayEntryUnity.this.activityShell,
-							TrayEntryUnity.this.settings).open();
+					new PreferencesDialog(activityShell, settings).open();
 				}
 			});
 		} else if (signal instanceof DesktopIntegration.action_open_about) {
 			Display.getDefault().asyncExec(new Runnable() {
 				@Override
 				public void run() {
-					new AboutDialog(TrayEntryUnity.this.activityShell, SWT.NONE)
-							.open();
+					new AboutDialog(activityShell, SWT.NONE).open();
 				}
 			});
 		} else if (signal instanceof DesktopIntegration.action_quit) {
 			Display.getDefault().asyncExec(new Runnable() {
 				@Override
 				public void run() {
-					TrayEntryUnity.this.activityShell.close();
+					activityShell.close();
 					System.exit(0);
 				}
 			});
@@ -173,48 +205,6 @@ public class TrayEntryUnity extends TrayEntry implements DBusSigHandler,
 	public void onChange(String key, String value) {
 		if ("sync.polling.enabled".equals(key)) {
 			this.integration.set_enabled(Boolean.parseBoolean(value));
-		}
-	}
-
-	@Override
-	public void onPushed(String content, Date date) {
-		try {
-			Notifications notify = CopyItDesktop.dbusConnection
-					.getRemoteObject("org.freedesktop.Notifications",
-							"/org/freedesktop/Notifications",
-							Notifications.class);
-			Map<String, Variant<Byte>> hints = new HashMap<String, Variant<Byte>>();
-			hints.put("urgency", new Variant<Byte>((byte) 2));
-			notify.Notify("CopyIt", new UInt32(0), "", "CopyIt",
-					Messages.getString("text_content_pushed", content),
-					new LinkedList<String>(), hints, -1);
-		} catch (DBusException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	@Override
-	public void onPulled(final String content, Date date) {
-		Display.getDefault().asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				clipboardManager.setContent(content);
-			}
-		});
-		try {
-			Notifications notify = CopyItDesktop.dbusConnection
-					.getRemoteObject("org.freedesktop.Notifications",
-							"/org/freedesktop/Notifications",
-							Notifications.class);
-			Map<String, Variant<Byte>> hints = new HashMap<String, Variant<Byte>>();
-			hints.put("urgency", new Variant<Byte>((byte) 2));
-			notify.Notify("CopyIt", new UInt32(0), "", "CopyIt",
-					Messages.getString("text_content_pulled", content),
-					new LinkedList<String>(), hints, -1);
-		} catch (DBusException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 
@@ -274,6 +264,17 @@ public class TrayEntryUnity extends TrayEntry implements DBusSigHandler,
 		}
 
 		abstract protected void log(String output);
+	}
+
+	@Override
+	public void onContentSet(String content) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onContentGet(String content) {
+		syncManager.doPush(content, new Date());
 	}
 
 }

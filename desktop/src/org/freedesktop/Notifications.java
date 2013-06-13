@@ -3,7 +3,6 @@ package org.freedesktop;
 import java.util.List;
 import java.util.Map;
 
-import org.freedesktop.dbus.DBusConnection;
 import org.freedesktop.dbus.DBusInterface;
 import org.freedesktop.dbus.UInt32;
 import org.freedesktop.dbus.Variant;
