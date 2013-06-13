@@ -1,7 +1,10 @@
 package net.mms_projects.copy_it.ui.swt;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Date;
 import java.util.HashMap;
@@ -87,6 +90,17 @@ public class TrayEntryUnity extends TrayEntry implements DBusSigHandler,
 		try {
 			final Process process = Runtime.getRuntime().exec(command);
 			log.info("Started desktop integration script");
+			log.debug("Integration script path: " + script.getAbsolutePath());
+
+			Thread ouputReadingthread = new ScriptOutputStreamReader(
+					process.getInputStream());
+			ouputReadingthread.setDaemon(true);
+			ouputReadingthread.start();
+			Thread errorReadingthread = new ScriptErrorStreamReader(
+					process.getErrorStream());
+			errorReadingthread.setDaemon(true);
+			errorReadingthread.start();
+
 			Runtime.getRuntime().addShutdownHook(new Thread() {
 				@Override
 				public void run() {
@@ -202,6 +216,64 @@ public class TrayEntryUnity extends TrayEntry implements DBusSigHandler,
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	private class ScriptOutputStreamReader extends ScriptOutputReadingThread {
+
+		public ScriptOutputStreamReader(InputStream stream) {
+			super(stream);
+		}
+
+		@Override
+		protected void log(String output) {
+			log.debug("Integration script returned: {}", output);
+		}
+
+	}
+
+	private class ScriptErrorStreamReader extends ScriptOutputReadingThread {
+
+		public ScriptErrorStreamReader(InputStream stream) {
+			super(stream);
+		}
+
+		@Override
+		protected void log(String output) {
+			log.warn("Integration script returned: {}", output);
+		}
+
+	}
+
+	abstract private class ScriptOutputReadingThread extends Thread {
+
+		protected final Logger log = LoggerFactory.getLogger(this.getClass());
+
+		private InputStream stream;
+
+		public ScriptOutputReadingThread(InputStream stream) {
+			super();
+
+			this.stream = stream;
+		}
+
+		@Override
+		public void run() {
+			super.run();
+
+			BufferedReader inputStream = new BufferedReader(
+					new InputStreamReader(this.stream));
+			String line = null;
+			try {
+				while ((line = inputStream.readLine()) != null) {
+					this.log(line);
+				}
+			} catch (IOException exception) {
+				log.warn("Couldn't listen for integration script output",
+						exception);
+			}
+		}
+
+		abstract protected void log(String output);
 	}
 
 }
