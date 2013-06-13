@@ -47,7 +47,6 @@
 		<fileset file="global/libs/slf4j-api-1.7.5.jar" />
 		<fileset file="desktop/libs/linux/libdbus-java-2.7.jar" />
 		<fileset file="desktop/libs/linux/unix-0.5.jar" />
-		<fileset file="desktop/libs/linux/unix-0.5.jar" />
 	</path>
 
 	<path id="linux-x86-classpath">
@@ -85,6 +84,42 @@
 			classpath="${launch4j.dir}/launch4j.jar:${launch4j.dir}/lib/xstream.jar" />
 	</target>
 
+	<target name="zip" depends="zip-jar">
+		<zip destfile="build/copyit.zip">
+			<path refid="linux-x86-classpath" />
+			<path refid="linux-x86_64-classpath" />
+			<path refid="windows-x86-classpath" />
+			<path refid="windows-x86_64-classpath" />
+			<path refid="macosx-x86-classpath" />
+			<path refid="macosx-x86_64-classpath" />
+			<fileset file="desktop/libs/linux/hexdump-0.2.jar" />
+			<fileset file="desktop/libs/linux/libdbus-java-2.7.jar" />
+			<fileset file="build/copyit-general.jar" />
+			<fileset file="desktop/scripts/copyit.sh" />
+			<fileset dir="android">
+				<include name="**/res/**.properties" />
+				<include name="**/res/mmsprojects-copyit-**.png" />
+			</fileset>
+			<fileset dir="android/res" />
+			<fileset dir="desktop/res" />
+			<fileset dir="desktop/scripts" />
+			<fileset dir="desktop/libs/linux">
+				<include name="**/*.so" />
+			</fileset>
+		</zip>
+	</target>
+
+	<target name="zip-compile" depends="clean">
+		<mkdir dir="build/classes" />
+		<javac srcdir="global/src:desktop/src" destdir="build/classes"
+			classpathref="linux-x86-classpath" />
+	</target>
+
+	<target name="zip-jar" depends="zip-compile, zip-manifest">
+		<jar manifest="build/META-INF/MANIFEST.MF" destfile="build/copyit-general.jar"
+			filesetmanifest="mergewithoutmain" basedir="build/classes" />
+	</target>
+
 	<target name="linux-x86-compile" depends="clean">
 		<mkdir dir="build/classes" />
 		<javac srcdir="global/src:desktop/src" destdir="build/classes"
@@ -106,9 +141,6 @@
 			<zipfileset excludes="META-INF/*.SF" src="global/libs/httpclient-4.2.3.jar" />
 			<zipfileset excludes="META-INF/*.SF" src="global/libs/gson-2.2.2.jar" />
 			<zipfileset excludes="META-INF/*.SF" src="desktop/libs/linux/hexdump-0.2.jar" />
-			<zipfileset excludes="META-INF/*.SF"
-				src="desktop/libs/linux/libdbus-java-2.7.jar" />
-			<zipfileset excludes="META-INF/*.SF" src="desktop/libs/linux/unix-0.5.jar" />
 			<fileset dir="android">
 				<include name="**/res/**.properties" />
 				<include name="**/res/mmsprojects-copyit-**.png" />
@@ -311,6 +343,17 @@
 		<manifest file="build/META-INF/MANIFEST.MF">
 			<attribute name="Main-Class"
 				value="net.mms_projects.copy_it.run_configurations.AllInOneJar" />
+			<attribute name="Class-Path" value="." />
+			<attribute name="Specification-Version" value="${version}" />
+			<attribute name="Implementation-Version" value="${build.number}" />
+		</manifest>
+	</target>
+
+	<target name="zip-manifest">
+		<mkdir dir="build/META-INF" />
+		<manifest file="build/META-INF/MANIFEST.MF">
+			<attribute name="Main-Class"
+				value="net.mms_projects.copy_it.run_configurations.Zip" />
 			<attribute name="Class-Path" value="." />
 			<attribute name="Specification-Version" value="${version}" />
 			<attribute name="Implementation-Version" value="${build.number}" />
