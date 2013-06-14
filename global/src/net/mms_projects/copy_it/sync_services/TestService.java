@@ -1,6 +1,7 @@
 package net.mms_projects.copy_it.sync_services;
 
 import java.util.Date;
+import java.util.concurrent.Executor;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,14 +9,16 @@ import org.slf4j.LoggerFactory;
 import net.mms_projects.copy_it.PollingServiceInterface;
 import net.mms_projects.copy_it.SyncListener;
 
-public class TestService implements PushServiceInterface, PollingServiceInterface {
+public class TestService implements PushServiceInterface,
+		PollingServiceInterface {
 
 	public static String SERVICE_NAME = "test";
-	
+
 	protected SyncListener listener;
 	private boolean pushEnabled;
 	private boolean pullingEnabled;
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
+	private Executor executor;
 
 	public TestService(SyncListener listener) {
 		this.listener = listener;
@@ -25,13 +28,23 @@ public class TestService implements PushServiceInterface, PollingServiceInterfac
 	public String getServiceName() {
 		return SERVICE_NAME;
 	}
-	
+
+	@Override
+	public void setExecutor(Executor executor) {
+		this.executor = executor;
+	}
+
+	@Override
+	public Executor getExecutor() {
+		return this.executor;
+	}
+
 	@Override
 	public void activatePolling() {
 		this.pullingEnabled = true;
 		log.debug("Activated! Faking pulls");
-		
-		new Thread(new Runnable() {
+
+		this.executor.execute(new Runnable() {
 
 			@Override
 			public void run() {
@@ -47,8 +60,8 @@ public class TestService implements PushServiceInterface, PollingServiceInterfac
 					e.printStackTrace();
 				}
 			}
-			
-		}).start();
+
+		});
 	}
 
 	@Override
@@ -56,7 +69,7 @@ public class TestService implements PushServiceInterface, PollingServiceInterfac
 		this.pullingEnabled = false;
 		log.debug("Deactivated!");
 	}
-	
+
 	@Override
 	public void activatePush() {
 		this.pushEnabled = true;
@@ -69,7 +82,7 @@ public class TestService implements PushServiceInterface, PollingServiceInterfac
 
 	@Override
 	public void doPush(final String content, final Date date) {
-		new Thread(new Runnable() {
+		this.executor.execute(new Runnable() {
 
 			@Override
 			public void run() {
@@ -85,7 +98,7 @@ public class TestService implements PushServiceInterface, PollingServiceInterfac
 
 				listener.onPushed(content, date);
 			}
-		}).start();
+		});
 	}
 
 	@Override

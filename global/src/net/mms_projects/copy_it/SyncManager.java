@@ -5,6 +5,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executor;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import net.mms_projects.copy_it.sync_services.PullServiceInterface;
 import net.mms_projects.copy_it.sync_services.PushServiceInterface;
@@ -22,6 +26,8 @@ public class SyncManager implements PushServiceInterface, PullServiceInterface,
 
 	private ClipboardManager clipboardManager;
 	private String currentContent;
+	private Executor executor;
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public SyncManager(ClipboardManager clipboardManager) {
 		this.clipboardManager = clipboardManager;
@@ -29,6 +35,12 @@ public class SyncManager implements PushServiceInterface, PullServiceInterface,
 	}
 
 	public void addPushService(PushServiceInterface service) {
+		if (this.executor == null) {
+			log.error("Before adding a service please define a executor");
+			return;
+		}
+		service.setExecutor(executor);
+		
 		this.pushServices.put(service.getServiceName(), service);
 		if (this.pushService == null) {
 			this.pushService = service.getServiceName();
@@ -37,6 +49,12 @@ public class SyncManager implements PushServiceInterface, PullServiceInterface,
 	}
 
 	public void addPullService(PullServiceInterface service) {
+		if (this.executor == null) {
+			log.error("Before adding a service please define a executor");
+			return;
+		}
+		service.setExecutor(executor);
+		
 		this.pullServices.put(service.getServiceName(), service);
 		if (this.pullService == null) {
 			this.pullService = service.getServiceName();
@@ -45,6 +63,12 @@ public class SyncManager implements PushServiceInterface, PullServiceInterface,
 	}
 
 	public void addPullingService(PollingServiceInterface service) {
+		if (this.executor == null) {
+			log.error("Before adding a service please define a executor");
+			return;
+		}
+		service.setExecutor(executor);
+		
 		this.pullingServices.put(service.getServiceName(), service);
 		if (this.pullingService == null) {
 			this.pullingService = service.getServiceName();
@@ -127,6 +151,26 @@ public class SyncManager implements PushServiceInterface, PullServiceInterface,
 		return "manager";
 	}
 
+	@Override
+	public void setExecutor(Executor executor) {
+		this.executor = executor;
+		
+		for (ServiceInterface service : this.pushServices.values()) {
+			service.setExecutor(executor);
+		}
+		for (ServiceInterface service : this.pullServices.values()) {
+			service.setExecutor(executor);
+		}
+		for (ServiceInterface service : this.pullingServices.values()) {
+			service.setExecutor(executor);
+		}
+	}
+
+	@Override
+	public Executor getExecutor() {
+		return this.executor;
+	}
+	
 	@Override
 	public void activatePush() {
 		if (!this.isPushActivated()) {
