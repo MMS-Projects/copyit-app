@@ -56,6 +56,7 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements SyncL
 
 		Image trayImage = AndroidResourceLoader
 				.getImage("drawable-xxhdpi/app_icon_small.png");
+		
 		if (OSValidator.isUnix()) {
 			String desktop = System.getenv("XDG_CURRENT_DESKTOP");
 			if (desktop.equalsIgnoreCase("Unity")) {

@@ -5,6 +5,8 @@ import net.mms_projects.copy_it.Messages;
 import net.mms_projects.copy_it.Settings;
 import net.mms_projects.copy_it.api.ServerApi;
 import net.mms_projects.copy_it.api.endpoints.DeviceEndpoint;
+import net.mms_projects.copy_it.resource_loading.ResourceLoaderInterface;
+import net.mms_projects.copy_it.resource_loading.factories.BasicResourceLoaderFactory;
 import net.mms_projects.copy_it.ui.swt.forms.login_dialogs.AbstractLoginDialog;
 import net.mms_projects.copy_it.ui.swt.forms.login_dialogs.AutoLoginDialog;
 import net.mms_projects.copy_it.ui.swt.forms.login_dialogs.LoginDialog;
@@ -42,6 +44,8 @@ public class PreferencesDialog extends GeneralDialog {
 	private Button btnEnableQueue;
 
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
+	private final ResourceLoaderInterface resourceLoader = BasicResourceLoaderFactory
+			.getResourceLoader();
 
 	/**
 	 * Create the dialog.
@@ -55,7 +59,7 @@ public class PreferencesDialog extends GeneralDialog {
 
 		this.settings = settings;
 
-		setText(Messages.getString("title_activity_settings"));
+		this.setText(this.resourceLoader.getString("title_activity_settings"));
 	}
 
 	@Override
