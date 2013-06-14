@@ -74,7 +74,11 @@ public class SwtBackend implements CopyServiceInterface, PasteServiceInterface,
 			public void run() {
 				TextTransfer transfer = TextTransfer.getInstance();
 				String data = (String) clipboard.getContents(transfer);
-				if ((data == null) && (!allowNull)) {
+				if (data == null) {
+					if (allowNull) {
+						listener.onContentGet(data);
+						return;
+					}
 					return;
 				}
 				if (!data.equals(currentContent)) {
