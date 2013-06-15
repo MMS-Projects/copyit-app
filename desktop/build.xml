@@ -310,7 +310,7 @@
 		<mkdir dir="build/META-INF" />
 		<manifest file="build/META-INF/MANIFEST.MF">
 			<attribute name="Main-Class"
-				value="net.mms_projects.copy_it.app.CopyItDesktop" />
+				value="net.mms_projects.copy_it.run_configurations.AllInOneJar" />
 			<attribute name="Class-Path" value="." />
 			<attribute name="Specification-Version" value="${version}" />
 			<attribute name="Implementation-Version" value="${build.number}" />

@@ -11,8 +11,11 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import net.mms_projects.copy_it.ApplicationLock;
+import net.mms_projects.copy_it.ApplicationLock.LockException;
 import net.mms_projects.copy_it.ClipboardManager;
 import net.mms_projects.copy_it.FileStreamBuilder;
 import net.mms_projects.copy_it.PathBuilder;
@@ -21,10 +24,8 @@ import net.mms_projects.copy_it.SettingsListener;
 import net.mms_projects.copy_it.SyncListener;
 import net.mms_projects.copy_it.SyncManager;
 import net.mms_projects.copy_it.SyncingThread;
-import net.mms_projects.copy_it.ApplicationLock.LockException;
 import net.mms_projects.copy_it.api.ServerApi;
 import net.mms_projects.copy_it.api.endpoints.ClipboardContentEndpoint;
-import net.mms_projects.copy_it.app.CopyIt;
 import net.mms_projects.copy_it.sync_services.ApiService;
 import net.mms_projects.copy_it.sync_services.TestService;
 import net.mms_projects.copy_it.ui.AbstractUi;
@@ -94,9 +95,13 @@ public class CopyItDesktop extends CopyIt {
 		}
 		this.settings.loadProperties();
 
+		Executor executor = Executors.newSingleThreadExecutor(Executors
+				.defaultThreadFactory());
 		final ClipboardManager clipboardManager = new ClipboardManager();
+		clipboardManager.setExecutor(executor);
 
 		final SyncManager syncManager = new SyncManager(clipboardManager);
+		syncManager.setExecutor(executor);
 
 		ServerApi api = new ServerApi();
 		api.deviceId = UUID.fromString(settings.get("device.id"));
@@ -148,9 +153,11 @@ public class CopyItDesktop extends CopyIt {
 						if (Boolean.parseBoolean(value)) {
 							syncManager.activatePolling();
 							clipboardManager.activatePolling();
+							log.debug("The sync manager and clipboard manager have been enabled");
 						} else {
 							syncManager.deactivatePolling();
 							clipboardManager.deactivatePolling();
+							log.debug("The sync manager and clipboard manager have been disabled");
 						}
 					}
 				});

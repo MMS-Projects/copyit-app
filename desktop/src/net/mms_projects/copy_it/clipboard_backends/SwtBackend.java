@@ -1,5 +1,7 @@
 package net.mms_projects.copy_it.clipboard_backends;
 
+import java.util.concurrent.Executor;
+
 import net.mms_projects.copy_it.ClipboardListener;
 import net.mms_projects.copy_it.PollingServiceInterface;
 import net.mms_projects.copy_it.clipboard_services.CopyServiceInterface;
@@ -19,6 +21,7 @@ public class SwtBackend implements CopyServiceInterface, PasteServiceInterface,
 	private ClipboardListener listener;
 	private boolean pollingEnabled;
 	private String currentContent;
+	private Executor executor;
 
 	public SwtBackend(final ClipboardListener listener) {
 		this.listener = listener;
@@ -71,7 +74,11 @@ public class SwtBackend implements CopyServiceInterface, PasteServiceInterface,
 			public void run() {
 				TextTransfer transfer = TextTransfer.getInstance();
 				String data = (String) clipboard.getContents(transfer);
-				if ((data == null) && (!allowNull)) {
+				if (data == null) {
+					if (allowNull) {
+						listener.onContentGet(data);
+						return;
+					}
 					return;
 				}
 				if (!data.equals(currentContent)) {
@@ -86,6 +93,16 @@ public class SwtBackend implements CopyServiceInterface, PasteServiceInterface,
 	@Override
 	public String getServiceName() {
 		return SERVICE_NAME;
+	}
+	
+	@Override
+	public void setExecutor(Executor executor) {
+		this.executor = executor;
+	}
+
+	@Override
+	public Executor getExecutor() {
+		return this.executor;
 	}
 
 	@Override

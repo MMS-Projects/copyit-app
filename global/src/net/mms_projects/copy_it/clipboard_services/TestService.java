@@ -1,5 +1,7 @@
 package net.mms_projects.copy_it.clipboard_services;
 
+import java.util.concurrent.Executor;
+
 import net.mms_projects.copy_it.ClipboardListener;
 
 public class TestService implements CopyServiceInterface, PasteServiceInterface {
@@ -9,6 +11,7 @@ public class TestService implements CopyServiceInterface, PasteServiceInterface 
 	protected ClipboardListener listener;
 
 	private String testContent = "bla";
+	private Executor executor;
 
 	public TestService(ClipboardListener listener) {
 		this.listener = listener;
@@ -29,6 +32,16 @@ public class TestService implements CopyServiceInterface, PasteServiceInterface 
 	@Override
 	public String getServiceName() {
 		return SERVICE_NAME;
+	}
+	
+	@Override
+	public void setExecutor(Executor executor) {
+		this.executor = executor;
+	}
+
+	@Override
+	public Executor getExecutor() {
+		return this.executor;
 	}
 
 	@Override
