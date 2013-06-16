@@ -12,18 +12,23 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketAddress;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class ApplicationLock {
 
 	private File lockFile;
 	private ServerSocket server;
 	private ServerThread thread;
 	private boolean locked = false;
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public ApplicationLock(File path) {
 		this.lockFile = new File(path, ".lock");
 	}
 
 	public void lock() throws LockException {
+		log.info("Application locked");
 		if (this.isLocked()) {
 			throw new LockException("The app is already locked");
 		}
@@ -32,6 +37,7 @@ public class ApplicationLock {
 			this.server = new ServerSocket(0);
 
 			this.thread = new ServerThread();
+			this.thread.setDaemon(true);
 			this.thread.start();
 
 			writer = new BufferedWriter(new FileWriter(this.lockFile));
@@ -50,6 +56,7 @@ public class ApplicationLock {
 	}
 
 	public void unlock() {
+		log.info("Application unlocked");
 		if (!this.isLocked()) {
 			return;
 		}
@@ -117,8 +124,10 @@ public class ApplicationLock {
 	private class ServerThread extends Thread {
 		@Override
 		public void run() {
+			log.info("Lock server thread running");
 			while (true) {
 				if (this.isInterrupted()) {
+					log.info("Lock server thread interrupted");
 					break;
 				}
 				try {

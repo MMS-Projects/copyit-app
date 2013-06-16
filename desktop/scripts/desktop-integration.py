@@ -172,7 +172,7 @@ class DesktopIntegration(dbus.service.Object):
         else:
             self.integration = DesktopIntegrationAppIndicator(self)
         # self.integration = DesktopIntegrationDummy(self)
-    @dbus.service.method('net.mms_projects.copyit.DesktopIntegration', in_signature='b')
+    @dbus.service.method('net.mms_projects.copy_it.DesktopIntegration', in_signature='b')
     def set_enabled(self, state):
         if state == self.enabled:
             print "Sync already set to " + ("enabled" if state else "disabled") + ". Not changing it"
@@ -181,7 +181,7 @@ class DesktopIntegration(dbus.service.Object):
         self.integration.set_enabled(state)
     def get_enabled(self):
         return self.enabled    
-    @dbus.service.method('net.mms_projects.copyit.DesktopIntegration', in_signature='s')
+    @dbus.service.method('net.mms_projects.copy_it.DesktopIntegration', in_signature='s')
     def set_state(self, state):
         if state == self.state:
             print "Sync state already set to " + state + ". Not changing it"
@@ -196,36 +196,36 @@ class DesktopIntegration(dbus.service.Object):
             self.action_enable_sync()
         else:
             self.action_disable_sync()
-    @dbus.service.signal('net.mms_projects.copyit.DesktopIntegration')
+    @dbus.service.signal('net.mms_projects.copy_it.DesktopIntegration')
     def action_push(self):
         pass
-    @dbus.service.signal('net.mms_projects.copyit.DesktopIntegration')
+    @dbus.service.signal('net.mms_projects.copy_it.DesktopIntegration')
     def action_pull(self):
         pass
-    @dbus.service.signal('net.mms_projects.copyit.DesktopIntegration')
+    @dbus.service.signal('net.mms_projects.copy_it.DesktopIntegration')
     def action_open_preferences(self):
         pass
-    @dbus.service.signal('net.mms_projects.copyit.DesktopIntegration')
+    @dbus.service.signal('net.mms_projects.copy_it.DesktopIntegration')
     def action_open_about(self):
         pass
-    @dbus.service.signal('net.mms_projects.copyit.DesktopIntegration')
+    @dbus.service.signal('net.mms_projects.copy_it.DesktopIntegration')
     def action_quit(self):
         pass
-    @dbus.service.signal('net.mms_projects.copyit.DesktopIntegration')
+    @dbus.service.signal('net.mms_projects.copy_it.DesktopIntegration')
     def action_enable_sync(self):
         print "Enabled sync"
         pass
-    @dbus.service.signal('net.mms_projects.copyit.DesktopIntegration')
+    @dbus.service.signal('net.mms_projects.copy_it.DesktopIntegration')
     def action_disable_sync(self):
         print "Disabled sync"
         pass
-    @dbus.service.signal('net.mms_projects.copyit.DesktopIntegration')
+    @dbus.service.signal('net.mms_projects.copy_it.DesktopIntegration')
     def ready(self):
         pass
     def main(self):
         self.ready()
         self.integration.loop()
-    @dbus.service.method('net.mms_projects.copyit.DesktopIntegration')
+    @dbus.service.method('net.mms_projects.copy_it.DesktopIntegration')
     def test(self):
         delay = 1
         actual_enabled = self.enabled;
@@ -246,7 +246,7 @@ class DesktopIntegration(dbus.service.Object):
         time.sleep(delay)
         self.set_state(actual_state)
         time.sleep(delay)
-    @dbus.service.method('net.mms_projects.copyit.DesktopIntegration', in_signature='ss')
+    @dbus.service.method('net.mms_projects.copy_it.DesktopIntegration', in_signature='ss')
     def setup(self, icon, attention_icon):
         self.integration.setup(icon, attention_icon)
         self.set_state("idle")
