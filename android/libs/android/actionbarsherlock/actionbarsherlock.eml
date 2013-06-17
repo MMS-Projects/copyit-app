@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component jdk="jre6">
+	<contentEntry url="file://$MODULE_DIR$"/>
+	<lib name="android-support-v4.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/android/libs/android/actionbarsherlock/libs/android-support-v4.jar!/"/>
+	</lib>
+</component>
