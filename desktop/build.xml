@@ -285,6 +285,8 @@
 			<zipfileset excludes="META-INF/*.SF" src="desktop/libs/swing2swt.jar" />
 			<zipfileset excludes="META-INF/*.SF" src="desktop/libs/slf4j-jdk14-1.7.5.jar" />
 			<zipfileset excludes="META-INF/*.SF" src="global/libs/slf4j-api-1.7.5.jar" />
+			<zipfileset excludes="META-INF/*.SF"
+                                src="global/libs/jcl-over-slf4j-1.7.5.jar" />
 			<zipfileset excludes="META-INF/*.SF" src="global/libs/commons-io-2.4.jar" />
 			<zipfileset excludes="META-INF/*.SF" src="global/libs/httpcore-4.2.2.jar" />
 			<zipfileset excludes="META-INF/*.SF" src="global/libs/httpclient-4.2.3.jar" />
