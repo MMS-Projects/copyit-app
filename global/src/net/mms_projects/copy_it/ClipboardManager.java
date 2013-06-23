@@ -144,28 +144,50 @@ public class ClipboardManager implements CopyServiceInterface,
 	}
 
 	@Override
-	public void setContent(String content) {
+	public void requestSet(String content) {
 		if (this.copyServices.isEmpty()) {
 			return;
 		}
 		if (!this.copyServices.containsKey(this.copyService)) {
 			return;
 		}
-		this.copyServices.get(this.copyService).setContent(content);
+		this.copyServices.get(this.copyService).requestSet(content);
 	}
 
-	@Override
-	public void getContent() {
+    @Override
+    public void setContent(String content) {
+        if (this.copyServices.isEmpty()) {
+            return;
+        }
+        if (!this.copyServices.containsKey(this.copyService)) {
+            return;
+        }
+        this.copyServices.get(this.copyService).setContent(content);
+    }
+
+    @Override
+	public void requestGet() {
 		if (this.pasteServices.isEmpty()) {
 			return;
 		}
 		if (!this.pasteServices.containsKey(this.pasteService)) {
 			return;
 		}
-		this.pasteServices.get(this.pasteService).getContent();
+		this.pasteServices.get(this.pasteService).requestGet();
 	}
 
-	@Override
+    @Override
+    public String getContent() {
+        if (this.pasteServices.isEmpty()) {
+            return null;
+        }
+        if (!this.pasteServices.containsKey(this.pasteService)) {
+            return null;
+        }
+        return this.pasteServices.get(this.pasteService).getContent();
+    }
+
+    @Override
 	public void onContentSet(String content) {
 		for (ClipboardListener listener : this.listeners) {
 			listener.onContentSet(content);
