@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component jdk="jre6">
+	<contentEntry url="file://$MODULE_DIR$"/>
+	<lib name="httpclient-4.2.3.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/android/libs/httpclient-4.2.3.jar!/"/>
+	</lib>
+	<lib name="httpcore-4.2.2.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/android/libs/httpcore-4.2.2.jar!/"/>
+	</lib>
+	<lib name="libGoogleAnalyticsV2.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/android/libs/libGoogleAnalyticsV2.jar!/"/>
+	</lib>
+	<lib name="slf4j-android-1.6.1-RC1.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/android/libs/slf4j-android-1.6.1-RC1.jar!/"/>
+	</lib>
+	<lib name="commons-io-2.4.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/android/libs/commons-io-2.4.jar!/"/>
+	</lib>
+	<lib name="gson-2.2.2.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/android/libs/gson-2.2.2.jar!/"/>
+	</lib>
+</component>
