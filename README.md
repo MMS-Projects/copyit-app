@@ -9,5 +9,5 @@ Building
 Building is easy and can be done using ant:
 
 ```
-ant linux windows mac os x
+ant linux windows macosx
 ```
