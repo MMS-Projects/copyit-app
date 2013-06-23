@@ -7,7 +7,6 @@ import javax.swing.JOptionPane;
 
 import net.mms_projects.copy_it.ClipboardManager;
 import net.mms_projects.copy_it.EnvironmentIntegration;
-import net.mms_projects.copy_it.EnvironmentIntegration.NotificationManager.NotificationUrgency;
 import net.mms_projects.copy_it.OpenBrowser;
 import net.mms_projects.copy_it.Settings;
 import net.mms_projects.copy_it.SyncListener;
@@ -131,7 +130,7 @@ public class SwtGui extends AbstractUi {
 			@Override
 			public void onPulled(final String content, Date date) {
 				if (!SwtGui.this.settings.getBoolean("sync.queue.enabled")) {
-					clipboardManager.setContent(content);
+					clipboardManager.requestSet(content);
 				}
 			}
 		});

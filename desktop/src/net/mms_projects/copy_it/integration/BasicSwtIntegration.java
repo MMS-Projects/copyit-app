@@ -97,7 +97,7 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements SyncL
 		this.menuItemCopyIt.setText("Copy it ▲");
 		this.menuItemCopyIt.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				clipboardManager.getContent();
+				clipboardManager.requestGet();
 			}
 		});
 
@@ -149,7 +149,7 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements SyncL
 
 	@Override
 	public void onPulled(final String content, Date date) {
-		clipboardManager.setContent(content);
+		clipboardManager.requestSet(content);
 		
 		this.getNotificationManager().notify(10, NotificationUrgency.NORMAL,
 				"", "Notification",

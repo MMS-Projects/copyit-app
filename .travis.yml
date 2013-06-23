@@ -1,0 +1,13 @@
+language: java
+script:
+ - ant linux windows macosx
+jdk:
+ - oraclejdk7
+ - openjdk6
+ - openjdk7
+notifications:
+  irc:
+    channels:
+      - "irc.freenode.org#copyit"
+    on_success: always
+    on_failure: always
