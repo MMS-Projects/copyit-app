@@ -9,6 +9,7 @@ import net.mms_projects.copy_it.sync_services.ApiService;
 import net.mms_projects.copy_it.sync_services.TestService;
 import net.mms_projects.copy_it.ui.AbstractUi;
 import net.mms_projects.copy_it.ui.ShellUi;
+import net.mms_projects.copy_it.ui.SingleCommandUi;
 import net.mms_projects.copy_it.ui.SwtGui;
 import net.mms_projects.utils.OSValidator;
 import org.apache.commons.io.FileUtils;
@@ -266,6 +267,8 @@ public class CopyItDesktop extends CopyIt {
         if (args.length > 0) {
             if ("cli".equalsIgnoreCase(args[0])) {
                 ui = new ShellUi(this.settings, syncManager, clipboardManager);
+            } else {
+                ui = new SingleCommandUi(this.settings, syncManager, clipboardManager, args[0]);
             }
         } else {
             ui = new SwtGui(this.settings, syncManager, clipboardManager);
