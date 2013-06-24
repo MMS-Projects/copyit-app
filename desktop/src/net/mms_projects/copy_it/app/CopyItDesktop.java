@@ -30,6 +30,7 @@ import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.*;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class CopyItDesktop extends CopyIt {
@@ -132,7 +133,7 @@ public class CopyItDesktop extends CopyIt {
         }
         this.settings.loadProperties();
 
-        Executor executor = Executors.newSingleThreadExecutor(Executors
+        ExecutorService executor = Executors.newSingleThreadExecutor(Executors
                 .defaultThreadFactory());
         final ClipboardManager clipboardManager = new ClipboardManager();
         clipboardManager.setExecutor(executor);
@@ -273,6 +274,7 @@ public class CopyItDesktop extends CopyIt {
 
         this.settings.saveProperties();
         CopyItDesktop.dbusConnection.disconnect();
+        executor.shutdown();
     }
 
     class StreamBuilder extends FileStreamBuilder {
