@@ -25,6 +25,27 @@ public class CopyIt extends Command {
 
     @Override
     public void run(String rawdata) {
-        this.reply("Not implemented yet");
+        final CountDownLatch countDownLatch = new CountDownLatch(1);
+
+        String content = this.clipboardManager.getContent();
+
+        this.syncManager.addListener(new SyncListener() {
+            @Override
+            public void onPushed(String content, Date date) {
+                                     countDownLatch.countDown();
+            }
+
+            @Override
+            public void onPulled(String content, Date date) {
+            }
+        });
+        this.syncManager.doPush(content, new Date());
+
+        try {
+            countDownLatch.await();
+        } catch (InterruptedException e) {
+        }
+
+        this.reply("Pushed: " + content);
     }
 }
