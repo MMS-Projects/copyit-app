@@ -3,7 +3,6 @@ package net.mms_projects.copy_it.ui;
 import net.mms_projects.copy_it.ClipboardManager;
 import net.mms_projects.copy_it.Settings;
 import net.mms_projects.copy_it.SyncManager;
-import net.mms_projects.copy_it.clipboard_services.AwtService;
 import net.mms_projects.copy_it.ui.interactive_shell.Shell;
 import net.mms_projects.copy_it.ui.interactive_shell.commands.CopyIt;
 import net.mms_projects.copy_it.ui.interactive_shell.commands.PasteIt;
@@ -22,11 +21,6 @@ public class ShellUi extends AbstractUi {
 
         this.syncManager = syncManager;
         this.clipboardManager = clipboardManager;
-
-        AwtService awtService = new AwtService(this.clipboardManager);
-
-        this.clipboardManager.addPasteService(awtService);
-        this.clipboardManager.addCopyService(awtService);
     }
 
     @Override

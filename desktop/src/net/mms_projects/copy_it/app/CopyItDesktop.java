@@ -5,6 +5,7 @@ import net.mms_projects.copy_it.ApplicationLock.LockException;
 import net.mms_projects.copy_it.api.ServerApi;
 import net.mms_projects.copy_it.api.endpoints.ClipboardContentEndpoint;
 import net.mms_projects.copy_it.clipboard_backends.SwtBackend;
+import net.mms_projects.copy_it.clipboard_services.AwtService;
 import net.mms_projects.copy_it.sync_services.ApiService;
 import net.mms_projects.copy_it.sync_services.TestService;
 import net.mms_projects.copy_it.ui.AbstractUi;
@@ -265,6 +266,11 @@ public class CopyItDesktop extends CopyIt {
 
         AbstractUi ui = null;
         if (args.length > 0) {
+            AwtService awtService = new AwtService(clipboardManager);
+
+            clipboardManager.addPasteService(awtService);
+            clipboardManager.addCopyService(awtService);
+
             if ("cli".equalsIgnoreCase(args[0])) {
                 ui = new ShellUi(this.settings, syncManager, clipboardManager);
             } else {

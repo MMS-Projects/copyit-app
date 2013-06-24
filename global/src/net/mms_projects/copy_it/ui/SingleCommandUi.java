@@ -3,8 +3,6 @@ package net.mms_projects.copy_it.ui;
 import net.mms_projects.copy_it.ClipboardManager;
 import net.mms_projects.copy_it.Settings;
 import net.mms_projects.copy_it.SyncManager;
-import net.mms_projects.copy_it.clipboard_services.AwtService;
-import net.mms_projects.copy_it.ui.interactive_shell.Shell;
 import net.mms_projects.copy_it.ui.interactive_shell.commands.CopyIt;
 import net.mms_projects.copy_it.ui.interactive_shell.commands.PasteIt;
 import net.mms_projects.irc.channel_bots.pb.CommandHandler;
@@ -24,11 +22,6 @@ public class SingleCommandUi extends AbstractUi {
         this.syncManager = syncManager;
         this.clipboardManager = clipboardManager;
         this.command = command;
-
-        AwtService awtService = new AwtService(this.clipboardManager);
-
-        this.clipboardManager.addPasteService(awtService);
-        this.clipboardManager.addCopyService(awtService);
     }
 
     @Override
