@@ -72,8 +72,8 @@
     <string name="update_available_text">Er is een nieuwe versie van Copy It beschikbaar. Om de laatste versie te downloaden klik op de download knop. Selecteer het pakket met de volgende naam:</string>
     <string name="update_button_download">Download update</string>
     <!-- Debug info -->
-    <string name="debug_label_server_baseurl">Server baseurl</string>
-    <string name="debug_label_jenkins_baseurl">Jenkins baseurl</string>
+    <string name="debug_label_server_baseurl">Server basis-url</string>
+    <string name="debug_label_jenkins_baseurl">Jenkins basis-url</string>
     <string name="debug_label_device_id">Toestel\'\ s id</string>
     <string name="debug_label_device_password">Toestel\'\ s wachtwoord</string>
     <string name="debug_label_build_number">Bouw nummer</string>
