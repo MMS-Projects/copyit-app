@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     
     <!-- Dashboard icons -->
@@ -21,7 +21,7 @@
     <string name="pref_category_history">Geschiedenis</string>
     <string name="pref_category_account">Gebruikers account</string>
     <string name="pref_category_information">Informatie</string>
-    <string name="pref_history_tracking_state">Sla je acties op naar je geschiedenis</string>
+    <string name="pref_history_tracking_state">Sla je acties op in je geschiedenis</string>
     <string name="pref_history_tracking_state_summary_on">Acties worden opgeslagen</string>
     <string name="pref_history_tracking_state_summary_off">Acties worden niet opgeslagen</string>
     <string name="pref_history_clear">Leeg geschiedenis</string>
@@ -30,7 +30,7 @@
     <string name="pref_about">@string/dashboard_button_about</string>
     <!-- Activity titles -->
     <string name="title_activity_login">Inloggen</string>
-    <string name="title_activity_welcome">Welkom in CopyIt</string>
+    <string name="title_activity_welcome">Welkom bij CopyIt</string>
     <string name="title_activity_settings">Instellingen</string>
     <string name="title_activity_about">@string/pref_about</string>
     <string name="title_activity_update">Update</string>
@@ -41,14 +41,14 @@
     <!-- Other stuff -->
     <string name="text_content">Inhoud:</string>
     <string name="text_welcome_message">Bedankt voor het downloaden van CopyIt. Om CopyIt te gebruiken moet je eerst inloggen.</string>
-    <string name="text_logging_in">Inloggen&#8230;</string>
+    <string name="text_logging_in">Inloggen…</string>
     <string name="text_login_successful">Succesvol ingelogt!</string>
     <string name="text_logout_successful">Succesvol uitgelogt!</string>
     <string name="text_login_question">U bent niet ingelogt. Wilt u inloggen?</string>
     <string name="text_content_pushed">Volgende inhoud word verstuurd: \'%1$s\'</string>
     <string name="text_content_pulled">Volgende inhoud is ontvangen: \'%1$s\'</string>
-    <string name="text_content_pulling">Pulling content&#8230;</string>
-    <string name="text_content_pushing">Pushing content&#8230;</string>
+    <string name="text_content_pulling">Pulling content…</string>
+    <string name="text_content_pushing">Pushing content…</string>
     <string name="text_history_cleared">Geschiedenis is geleegd</string>
     <string name="text_history_empty">Er is nog geen geschiedenis opggeslagen</string>
     <!-- Accessibility -->
@@ -57,7 +57,7 @@
     <!-- Dialog -->
     <string name="dialog_title_error">Fout</string>
     <string name="dialog_title_busy">Bezig</string>
-    <string name="dialog_title_select_send_app">Selecteer de app om naar te delen&#8230;</string>
+    <string name="dialog_title_select_send_app">Selecteer de app om naar te delen…</string>
     <string name="dialog_button_okay">Oké</string>
     <string name="dialog_button_yes">Ja</string>
     <string name="dialog_button_no">Nee</string>
