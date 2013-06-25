@@ -1,4 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
 
-</resources>
+<string name="dashboard_button_copyit">Copy It!</string>
+    <string name="dashboard_button_pasteit">Paste It!</string>
+    <string name="debug_not_available">non disponible</string>
+    </resources>
