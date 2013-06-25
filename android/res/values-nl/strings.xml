@@ -2,8 +2,6 @@
 <resources>
     
     <!-- Dashboard icons -->
-    <string name="dashboard_button_copyit">Copy It!</string>
-    <string name="dashboard_button_pasteit">Paste It!</string>
     <string name="dashboard_button_sendtoapp">Delen</string>
     <string name="dashboard_button_login">Inloggen</string>
     <string name="dashboard_button_settings">Instellingen</string>
@@ -14,8 +12,6 @@
     <string name="menu_feedback">Terugkoppeling</string>
     <string name="menu_history_clear">Legen</string>
     <!-- Buttons -->
-    <string name="button_copyit">\@string/dashboard_button_copyit</string>
-    <string name="button_pasteit">\@string/dashboard_button_pasteit</string>
     <string name="button_login">@string/dashboard_button_login</string>
     <!-- Preferenties -->
     <string name="pref_category_history">Geschiedenis</string>
