@@ -6,7 +6,7 @@
     <string name="dashboard_button_pasteit">Paste It!</string>
     <string name="dashboard_button_sendtoapp">Teilen</string>
     <string name="dashboard_button_login">Anmelden</string>
-    <string name="dashboard_button_settings">Institutionen</string>
+    <string name="dashboard_button_settings"></string>
     <string name="dashboard_button_about">Über</string>
     <string name="dashboard_button_history">Geschichte</string>
     <!-- Menu -->
