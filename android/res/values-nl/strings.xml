@@ -47,8 +47,8 @@
     <string name="text_login_question">U bent niet ingelogt. Wilt u inloggen?</string>
     <string name="text_content_pushed">Volgende inhoud word verstuurd: \'%1$s\'</string>
     <string name="text_content_pulled">Volgende inhoud is ontvangen: \'%1$s\'</string>
-    <string name="text_content_pulling">Pulling content…</string>
-    <string name="text_content_pushing">Pushing content…</string>
+    <string name="text_content_pulling"/>
+    <string name="text_content_pushing"></string>
     <string name="text_history_cleared">Geschiedenis is geleegd</string>
     <string name="text_history_empty">Er is nog geen geschiedenis opggeslagen</string>
     <!-- Accessibility -->
