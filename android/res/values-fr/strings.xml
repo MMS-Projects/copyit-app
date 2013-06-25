@@ -1,8 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
 
-<string name="dashboard_button_copyit">Copy It!</string>
-    <string name="dashboard_button_pasteit">Paste It!</string>
     <string name="debug_not_available">non disponible</string>
     <string name="dashboard_button_sendtoapp">Partager</string>
     <string name="dashboard_button_settings">Réglages</string>
@@ -12,4 +10,4 @@
     <string name="pref_category_information">Information</string>
     <string name="pref_logout">Déconnexion</string>
     <string name="title_activity_update">Mettre à jour</string>
-    </resources>
+</resources>
