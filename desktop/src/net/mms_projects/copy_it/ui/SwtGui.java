@@ -5,12 +5,7 @@ import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import net.mms_projects.copy_it.ClipboardManager;
-import net.mms_projects.copy_it.EnvironmentIntegration;
-import net.mms_projects.copy_it.OpenBrowser;
-import net.mms_projects.copy_it.Settings;
-import net.mms_projects.copy_it.SyncListener;
-import net.mms_projects.copy_it.SyncManager;
+import net.mms_projects.copy_it.*;
 import net.mms_projects.copy_it.api.ServerApi;
 import net.mms_projects.copy_it.api.endpoints.GetBuildInfo;
 import net.mms_projects.copy_it.api.responses.JenkinsBuildResponse;
@@ -53,9 +48,7 @@ public class SwtGui extends AbstractUi {
 		} catch (UnsatisfiedLinkError error) {
 			error.printStackTrace();
 
-			String message = "It looks like there was an error while loading the SWT libraries.\n"
-					+ "The following error was thrown:\n\n"
-					+ error.getMessage();
+			String message = Messages.getString("text.error.swt_loading", error.getMessage());
 			JOptionPane.showMessageDialog(new JFrame(), message, "Dialog",
 					JOptionPane.ERROR_MESSAGE);
 			System.exit(1);
@@ -110,8 +103,7 @@ public class SwtGui extends AbstractUi {
 		if (this.settings.get("run.firsttime") == null) {
 			MessageBox firstTimer = new MessageBox(this.activityShell);
 			firstTimer
-					.setMessage("It appairs this is the first time you started the app. "
-							+ "The preferences will open to setup your login.");
+					.setMessage(Messages.getString("text.firstrun"));
 			firstTimer.open();
 
 			new PreferencesDialog(this.activityShell, this.settings).open();
