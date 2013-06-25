@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
 
 	<!-- Dashboard icons -->
@@ -41,14 +41,14 @@
     <!-- Other stuff -->
     <string name="text_content">Inhalt:</string>
     <string name="text_welcome_message">Danke für die Installation von CopyIt. So starten Sie CopyIt bitte anmelden.</string>
-    <string name="text_logging_in">Am Login&#8230;</string>
-    <string name="text_login_successful">Anmeldung erfolgreich</string>
+    <string name="text_logging_in">Am Login…</string>
+    <string name="text_login_successful">Anmeldung erfolgreich!</string>
     <string name="text_logout_successful">Abmeldung erfolgreich!</string>
     <string name="text_login_question">Wie es aussieht, bist nicht eingeloggt Möchten Sie sich anmelden?</string>
     <string name="text_content_pushed">Schob den folgenden Inhalt: \'%1$s\'</string>
     <string name="text_content_pulled">Zog den folgenden Inhalt: \'%1$s\'</string>
-    <string name="text_content_pulling">Ziehen Inhalt&#8230;</string>
-    <string name="text_content_pushing">Pushing Inhalt&#8230;</string>
+    <string name="text_content_pulling">Ziehen Inhalt…</string>
+    <string name="text_content_pushing">Pushing Inhalt…</string>
     <string name="text_history_cleared">Die Geschichte wurde gelöscht</string>
     <string name="text_history_empty">Keine Geschichte ist noch nicht registriert</string>
     <!-- Accessibility -->
@@ -57,7 +57,7 @@
     <!-- Dialog -->
     <string name="dialog_title_error">Fehler</string>
     <string name="dialog_title_busy">Belegt</string>
-    <string name="dialog_title_select_send_app">Wählen App zu teilen&#8230;</string>
+    <string name="dialog_title_select_send_app">Wählen App zu teilen…</string>
     <string name="dialog_button_okay">Okay</string>
     <string name="dialog_button_yes">Ja</string>
     <string name="dialog_button_no">Nein</string>
@@ -73,7 +73,7 @@
     <string name="about_version">Ausgabe: %1$s</string>
     <string name="about_copyright">Erstellt von MMS-Projects</string>
     <!-- Update screen -->
-    <string name="update_available_text">Es gibt eine neue Version des Copy It zur Verfügung. Zum Herunterladen der neuesten Version auf den Download-Button. Wählen Sie das Paket mit dem folgenden Namen.</string>
+    <string name="update_available_text">Es gibt eine neue Version des Copy It zur Verfügung. Zum Herunterladen der neuesten Version auf den Download-Button. Wählen Sie das Paket mit dem folgenden Namen:</string>
     <string name="update_button_download">Aktualisieren herunterladen</string>
     <!-- Debug info -->
     <string name="debug_label_server_baseurl">Server Basis-URL</string>
