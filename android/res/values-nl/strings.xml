@@ -11,11 +11,11 @@
     <string name="dashboard_button_history">Geschiedenis</string>
     <!-- Menu -->
     <string name="menu_settings">@string/dashboard_button_settings</string>
-    <string name="menu_feedback">Feedback</string>
+    <string name="menu_feedback">Terugkoppeling</string>
     <string name="menu_history_clear">Legen</string>
     <!-- Buttons -->
-    <string name="button_copyit">Copy It!</string>
-    <string name="button_pasteit">Paste It!</string>
+    <string name="button_copyit">\@string/dashboard_button_copyit</string>
+    <string name="button_pasteit">\@string/dashboard_button_pasteit</string>
     <string name="button_login">@string/dashboard_button_login</string>
     <!-- Preferenties -->
     <string name="pref_category_history">Geschiedenis</string>
@@ -33,7 +33,7 @@
     <string name="title_activity_welcome">Welkom bij CopyIt</string>
     <string name="title_activity_settings">Instellingen</string>
     <string name="title_activity_about">@string/pref_about</string>
-    <string name="title_activity_update">Update</string>
+    <string name="title_activity_update">Bijwerken</string>
     <string name="title_activity_debug">Copy It debug scherm</string>
     <string name="title_activity_test">Tests NL</string>
     <string name="title_activity_logged_out">Uitgelogd</string>
@@ -48,12 +48,12 @@
     <string name="text_content_pushed">Volgende inhoud word verstuurd: \'%1$s\'</string>
     <string name="text_content_pulled">Volgende inhoud is ontvangen: \'%1$s\'</string>
     <string name="text_content_pulling"/>
-    <string name="text_content_pushing"></string>
+    <string name="text_content_pushing"/>
     <string name="text_history_cleared">Geschiedenis is geleegd</string>
     <string name="text_history_empty">Er is nog geen geschiedenis opggeslagen</string>
     <!-- Accessibility -->
     <string name="accessibility_widget_button_app">Deze knop opent Copy It</string>
-    <string name="accessibility_app_icon_big">Big CopyIt logo</string>
+    <string name="accessibility_app_icon_big">Groot CopyIt logo</string>
     <!-- Dialog -->
     <string name="dialog_title_error">Fout</string>
     <string name="dialog_title_busy">Bezig</string>
