@@ -42,7 +42,7 @@
     <Button
         android:id="@+id/button_history"
         style="@style/DashboardButton"
-        android:drawableTop="@drawable/dashboard_icon_placeholder"
+        android:drawableTop="@drawable/dashboard_icon_history"
         android:onClick="gotoHistory"
         android:text="@string/dashboard_button_history" />
 
