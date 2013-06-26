@@ -84,4 +84,5 @@
     <string name="debug_not_available">Niet beschikbaar</string>
     <!-- App settings -->
     
-</resources>
+<string name="text_content_pulling">Inhoud aan het binnenhalen…</string>
+    </resources>
