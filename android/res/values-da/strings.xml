@@ -1,3 +1,43 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-</resources>
+<string name="dashboard_button_login">Login</string>
+    <string name="dashboard_button_settings">Indstillinger</string>
+    <string name="dashboard_button_about">Om</string>
+    <string name="dashboard_button_history">Historik</string>
+    <string name="menu_history_clear">Ryd</string>
+    <string name="pref_category_history">Historik</string>
+    <string name="pref_category_account">Brugerkonto</string>
+    <string name="pref_category_information">Information</string>
+    <string name="pref_history_tracking_state">Gem handlinger til historikken</string>
+    <string name="pref_history_tracking_state_summary_on">Dine handlinger er gemt</string>
+    <string name="pref_history_tracking_state_summary_off">Dine handlinger er ikke gemt</string>
+    <string name="pref_history_clear">Ryd historik</string>
+    <string name="pref_logout">Log ud</string>
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_welcome">Velkommen til CopyIt</string>
+    <string name="title_activity_settings">Indstillinger</string>
+    <string name="title_activity_logged_out">Logget ud</string>
+    <string name="title_activity_history">Historik</string>
+    <string name="text_history_cleared">Historikken er blevet ryddet</string>
+    <string name="text_history_empty">Ingen historik er blevet optaget endnu</string>
+    <string name="dialog_title_busy">Optaget</string>
+    <string name="dialog_button_yes">Ja</string>
+    <string name="dialog_button_no">Nej</string>
+    <string name="error_general">En fejl opstod: %1$s</string>
+    <string name="about_version">Version: %1$s</string>
+    <string name="about_copyright">Lavet af MMS-Projects</string>
+    <string name="update_available_text">Der er en ny version af CopyIT. For at hente den nyeste version, klik på download knappen. Vælg pakken med det følgende navn:</string>
+    <string name="pref_about">Om</string>
+    <string name="menu_feedback">Ris og Ros</string>
+    <string name="button_copyit" translatable="false">Kopier det!</string>
+    <string name="button_pasteit" translatable="false">Indsæt det!</string>
+    <string name="title_activity_update">Opdater</string>
+    <string name="title_activity_debug">Copy It fejlfindingsside</string>
+    <string name="text_content_pulling">Henter indhold&amp;#8230;</string>
+    <string name="text_content_pushing">Overfører indhold&amp;#8230;</string>
+    <string name="dialog_title_error">Fejl</string>
+    <string name="dialog_button_okay">Ok</string>
+    <string name="update_button_download">Hent opdatering</string>
+    <string name="text_content_pushed">Overførte det følgende indhold: \'%1$s\'</string>
+    <string name="text_content_pulled">Hentede følgende indhold: \'%1$s\'</string>
+    </resources>

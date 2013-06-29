@@ -69,4 +69,7 @@
     <string name="widget_title_pasteit">CopyIt - Collez-le!</string>
     <string name="widget_title_copyit_pasteit">CopyIt - Copiez/Collez-le!</string>
     <string name="debug_label_build_number">Numéro de build</string>
+    <string name="pref_about">A propos de</string>
+    <string name="button_copyit" translatable="false">Copiez-le!</string>
+    <string name="button_pasteit" translatable="false">Collez-le!</string>
     </resources>
