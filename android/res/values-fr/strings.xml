@@ -36,7 +36,7 @@
     <string name="title_activity_debug">CopyIt Ecran déboguer</string>
     <string name="title_activity_logged_out">Déconnexion</string>
     <string name="title_activity_history">Historique</string>
-    <string name="text_content">Contenu:</string>
+    <string name="text_content">Contenut:</string>
     <string name="text_welcome_message">Merci d\'avoir installé CopyIt. Pour commencer à utiliser CopyIt identifiez-vous.</string>
     <string name="text_logging_in">Connexion…</string>
     <string name="text_login_successful">Connexion réussie!</string>

@@ -1,3 +1,13 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-</resources>
+<string name="dashboard_button_login">Iniciar sesión</string>
+    <string name="dashboard_button_settings">Ajustes</string>
+    <string name="dashboard_button_about">Acerca de</string>
+    <string name="dashboard_button_history">Historial</string>
+    <string name="menu_history_clear">Borrar</string>
+    <string name="pref_category_history">Historial</string>
+    <string name="pref_category_account">Cuenta de usuario</string>
+    <string name="pref_category_information">Información</string>
+    <string name="pref_history_tracking_state">Guardar acciones en tu historial</string>
+    <string name="pref_history_tracking_state_summary_on">Se ha guardado las acciones</string>
+    </resources>
