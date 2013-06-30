@@ -44,8 +44,8 @@
     <string name="text_login_question">On dirait que vous n\'êtes pas connecté. Voulez-vous vous connecter?</string>
     <string name="text_content_pushed">Poussé le contenu suivant: \'%1$s\'</string>
     <string name="text_content_pulled">Tiré le contenu suivant: \'%1$s\'</string>
-    <string name="text_content_pulling">Tirer le contenu…</string>
-    <string name="text_content_pushing">Pousser le contenu…</string>
+    <string name="text_content_pulling">Tirer le contenu&amp;#8230;</string>
+    <string name="text_content_pushing">Pousser le contenu&amp;#8230;</string>
     <string name="text_history_cleared">L\'historique a été effacée</string>
     <string name="text_history_empty">Aucune historique n\'a encore été enregistré</string>
     <string name="accessibility_widget_button_app">Ce bouton ouvre Copy It</string>

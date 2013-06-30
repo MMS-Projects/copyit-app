@@ -9,14 +9,14 @@
     <string name="pref_category_account">Cuenta de usuario</string>
     <string name="pref_category_information">Información</string>
     <string name="pref_history_tracking_state">Guardar acciones en tu historial</string>
-    <string name="pref_history_tracking_state_summary_on">Se guardará las acciones</string>
-    <string name="pref_history_tracking_state_summary_off">No se guardará las acciones</string>
+    <string name="pref_history_tracking_state_summary_on">Se guardarán las acciones</string>
+    <string name="pref_history_tracking_state_summary_off">No se guardarán las acciones</string>
     <string name="pref_history_clear">Borrar historial</string>
     <string name="pref_logout">Cerrar sesión</string>
     <string name="title_activity_login">Iniciar sesión</string>
     <string name="title_activity_welcome">Bienvenido a CopyIt</string>
     <string name="title_activity_settings">Ajustes</string>
-    <string name="title_activity_logged_out">Se ha cerrada la sesión</string>
+    <string name="title_activity_logged_out">Se ha cerrado la sesión</string>
     <string name="title_activity_history">Historial</string>
     <string name="text_history_cleared">Se ha borrado el historial</string>
     <string name="dialog_title_busy">Trabajando</string>
@@ -24,8 +24,8 @@
     <string name="dialog_button_no">No</string>
     <string name="error_general">Se ha producido un error: %1$s</string>
     <string name="about_version">Versión: %1$s</string>
-    <string name="about_copyright">Desarrollada por MMS-Projects</string>
-    <string name="update_available_text">Hay una nueva versión de Copy It disponible. Para descargar la última versión haz clic el botón de descarga. Elige el paquete lo que tiene el nombre:</string>
+    <string name="about_copyright">Desarrollado por MMS-Projects</string>
+    <string name="update_available_text">Hay una nueva versión de Copy It disponible. Para descargar la última versión haz clic el botón de descarga. Elige el paquete con el siguiente nombre:</string>
     <string name="pref_about">Acerca de</string>
     <string name="button_copyit" translatable="false">¡Copiarlo!</string>
     <string name="button_pasteit" translatable="false">¡Pegarlo!</string>
@@ -46,14 +46,14 @@
     <string name="title_activity_about">Acerca de</string>
     <string name="title_activity_test">Pruebas EN</string>
     <string name="text_content">Contenido:</string>
-    <string name="text_welcome_message">Gracias por instalar a CopyIt. Para empezar a usar a CopyIt inicia sesión por favor.</string>
+    <string name="text_welcome_message">Gracias por instalar CopyIt. Para empezar a usar CopyIt, inicia sesión.</string>
     <string name="text_logging_in">Iniciando sesión…</string>
     <string name="text_login_successful">¡Inicio de sesión correcto!</string>
     <string name="text_logout_successful">¡Cierre de sesión correcto!</string>
     <string name="text_login_question">Parece que no has iniciado sesión. ¿Quieres iniciar sesión?</string>
     <string name="accessibility_widget_button_app">Este botón abre Copy It</string>
     <string name="accessibility_app_icon_big">Gran logotipo de CopyIt</string>
-    <string name="dialog_title_select_send_app">Elige una app para compartir con…</string>
+    <string name="dialog_title_select_send_app">Elige una app con la que compartir…</string>
     <string name="error_device_setup_failed">No se puede configurar el dispositivo: %1$s</string>
     <string name="widget_title_copyit">CopyIt - ¡Copiarlo!</string>
     <string name="widget_title_pasteit">CopyIt - ¡Pegarlo!</string>
@@ -67,4 +67,18 @@
     <string name="debug_available">Disponible</string>
     <string name="debug_not_available">Indisponible</string>
     <string name="menu_feedback">Comentarios</string>
+    <string name="text_content_pushed">Se ha subido el siguiente contenido: \'%1$s\'</string>
+    <string name="text_content_pulled">Se ha descargado el siguiente contenido: \'%1$s\'</string>
+    <string name="text_history_empty">No hay nada en el historial</string>
+    <string name="text_content_pulling">Descargando contenido…</string>
+    <string name="text_content_pushing">Subiendo contenido…</string>
+    <string name="widget_title_general">CopyIt - General</string>
+    <string name="debug_label_build_number">Número de compilación</string>
+    <string name="debug_label_screen_density">Densidad de pantalla</string>
+    <string name="default_baseurl" translatable="false">http://copyit.dev.mms-projects.net</string>
+    <string name="jenkins_joburl" translatable="false">http://jenkins.marlinc.nl/job/CopyIt-App-Beta</string>
+    <string name="app_name" translatable="false">CopyIt</string>
+    <string name="default_apk" translatable="false">copyit.apk</string>
+    <string name="ga_trackingId" translatable="false">UA-37152392-6</string>
+
     </resources>
