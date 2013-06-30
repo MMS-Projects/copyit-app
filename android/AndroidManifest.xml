@@ -15,6 +15,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
 
     <application
         android:name="net.mms_projects.copy_it.app.AndroidApplication"
@@ -145,6 +146,15 @@
                 <action android:name="net.mms_projects.copy_it.history.clear" />
 
                 <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.example.anothersignintest.SignInTestActivity"
+            android:label="Sign in" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
