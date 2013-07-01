@@ -25,7 +25,8 @@ import com.google.android.gms.plus.PlusClient;
 import com.google.android.gms.plus.PlusClient.OnAccessRevokedListener;
 
 /**
- * @see <a href="https://gist.github.com/ianbarber/5170508">https://gist.github.com/ianbarber/5170508</a>
+ * @see <a
+ *      href="https://gist.github.com/ianbarber/5170508">https://gist.github.com/ianbarber/5170508</a>
  */
 public class SignInTestActivity extends Activity implements
 		ConnectionCallbacks, OnConnectionFailedListener, OnClickListener,
@@ -52,6 +53,9 @@ public class SignInTestActivity extends Activity implements
 	// case there is a delay in any of the dialogs being ready.
 	private ProgressDialog mConnectionProgressDialog;
 
+	private String[] scopes = new String[] { Scopes.PLUS_LOGIN,
+			"https://www.googleapis.com/auth/userinfo.email" };
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -62,7 +66,7 @@ public class SignInTestActivity extends Activity implements
 		// 3. Object to call onConnectionFailed on
 		mPlusClient = new PlusClient.Builder(this, this, this)
 				.setVisibleActivities("http://schemas.google.com/BuyActivity")
-				.build();
+				.setScopes(this.scopes).build();
 
 		// We use mResolveOnFail as a flag to say whether we should trigger
 		// the resolution of a connectionFailed ConnectionResult.
@@ -141,14 +145,16 @@ public class SignInTestActivity extends Activity implements
 		AsyncTask task = new AsyncTask() {
 			@Override
 			protected Object doInBackground(Object... params) {
-				String scope = "oauth2:" + Scopes.PLUS_LOGIN
-						+ " https://www.googleapis.com/auth/userinfo.email";
 				try {
 					// We can retrieve the token to check via
 					// tokeninfo or to pass to a service-side
 					// application.
+					String scopeString = "oauth2:";
+					for (String scope : scopes) {
+						scopeString += scope + " ";
+					}
 					String token = GoogleAuthUtil.getToken(context,
-							mPlusClient.getAccountName(), scope);
+							mPlusClient.getAccountName(), scopeString);
 				} catch (UserRecoverableAuthException e) {
 					// This error is recoverable, so we could fix this
 					// by displaying the intent to the user.
