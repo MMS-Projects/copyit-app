@@ -15,7 +15,7 @@
     <string name="button_login">@string/dashboard_button_login</string>
     <!-- Preferenties -->
     <string name="pref_category_history">Geschiedenis</string>
-    <string name="pref_category_account">Gebruikers account</string>
+    <string name="pref_category_account">Gebruikersaccount</string>
     <string name="pref_category_information">Informatie</string>
     <string name="pref_history_tracking_state">Sla je acties op in je geschiedenis</string>
     <string name="pref_history_tracking_state_summary_on">Acties worden opgeslagen</string>
@@ -46,7 +46,7 @@
     <string name="text_content_pulling"/>
     <string name="text_content_pushing"/>
     <string name="text_history_cleared">Geschiedenis is geleegd</string>
-    <string name="text_history_empty">Er is nog geen geschiedenis opggeslagen</string>
+    <string name="text_history_empty">Er is nog geen geschiedenis opgeslagen</string>
     <!-- Accessibility -->
     <string name="accessibility_widget_button_app">Deze knop opent Copy It</string>
     <string name="accessibility_app_icon_big">Groot CopyIt logo</string>
@@ -54,7 +54,7 @@
     <string name="dialog_title_error">Fout</string>
     <string name="dialog_title_busy">Bezig</string>
     <string name="dialog_title_select_send_app">Selecteer de app om naar te delen…</string>
-    <string name="dialog_button_okay">Oké</string>
+    <string name="dialog_button_okay">Oke</string>
     <string name="dialog_button_yes">Ja</string>
     <string name="dialog_button_no">Nee</string>
     <!-- Fouten -->
