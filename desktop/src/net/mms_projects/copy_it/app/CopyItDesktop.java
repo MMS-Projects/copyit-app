@@ -144,7 +144,7 @@ public class CopyItDesktop extends CopyIt {
         syncManager.setExecutor(executor);
 
         ServerApi api = new ServerApi();
-        api.deviceId = UUID.fromString(settings.get("device.id"));
+        api.deviceId = (settings.get("device.id") != null) ? UUID.fromString(settings.get("device.id")) : null;
         api.devicePassword = settings.get("device.password");
 
         TestService testService = new TestService(syncManager);

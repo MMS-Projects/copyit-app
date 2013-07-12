@@ -27,6 +27,7 @@
         android:singleLine="true"
         android:textIsSelectable="true" />
 
+    <!--
     <com.google.ads.AdView
         android:id="@+id/ad_view"
         android:layout_width="match_parent"
@@ -38,6 +39,7 @@
         ads:loadAdOnCreate="true"
         ads:testDevices="TEST_EMULATOR, TEST_DEVICE_ID" >
     </com.google.ads.AdView>
+    -->
 
     <TextView
         android:id="@+id/label_clipboard_content"

@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+<string name="dashboard_button_login">Login</string>
+    <string name="dashboard_button_settings">Indstillinger</string>
+    <string name="dashboard_button_about">Om</string>
+    <string name="dashboard_button_history">Historik</string>
+    <string name="menu_history_clear">Ryd</string>
+    <string name="pref_category_history">Historik</string>
+    <string name="pref_category_account">Brugerkonto</string>
+    <string name="pref_category_information">Information</string>
+    <string name="pref_history_tracking_state">Gem handlinger til historikken</string>
+    <string name="pref_history_tracking_state_summary_on">Dine handlinger er gemt</string>
+    <string name="pref_history_tracking_state_summary_off">Dine handlinger er ikke gemt</string>
+    <string name="pref_history_clear">Ryd historik</string>
+    <string name="pref_logout">Log ud</string>
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_welcome">Velkommen til CopyIt</string>
+    <string name="title_activity_settings">Indstillinger</string>
+    <string name="title_activity_logged_out">Logget ud</string>
+    <string name="title_activity_history">Historik</string>
+    <string name="text_history_cleared">Historikken er blevet ryddet</string>
+    <string name="text_history_empty">Ingen historik er blevet optaget endnu</string>
+    <string name="dialog_title_busy">Optaget</string>
+    <string name="dialog_button_yes">Ja</string>
+    <string name="dialog_button_no">Nej</string>
+    <string name="error_general">En fejl opstod: %1$s</string>
+    <string name="about_version">Version: %1$s</string>
+    <string name="about_copyright">Lavet af MMS-Projects</string>
+    <string name="update_available_text">Der er en ny version af CopyIT. For at hente den nyeste version, klik på download knappen. Vælg pakken med det følgende navn:</string>
+    <string name="pref_about">Om</string>
+    <string name="menu_feedback">Ris og Ros</string>
+    <string name="button_copyit" translatable="false">Kopier det!</string>
+    <string name="button_pasteit" translatable="false">Indsæt det!</string>
+    <string name="title_activity_update">Opdater</string>
+    <string name="title_activity_debug">Copy It fejlfindingsside</string>
+    <string name="text_content_pulling">Henter indhold&amp;#8230;</string>
+    <string name="text_content_pushing">Overfører indhold&amp;#8230;</string>
+    <string name="dialog_title_error">Fejl</string>
+    <string name="dialog_button_okay">Ok</string>
+    <string name="update_button_download">Hent opdatering</string>
+    <string name="text_content_pushed">Overførte det følgende indhold: \'%1$s\'</string>
+    <string name="text_content_pulled">Hentede følgende indhold: \'%1$s\'</string>
+    <string name="text_logout_successful">Du er nu logget af!</string>
+    <string name="text_login_question">Det ser ud som om du ikke er logget ind. Vil du logge ind?</string>
+    <string name="term_copyit" translatable="false">Kopier det!</string>
+    <string name="term_pasteit" translatable="false">Indsæt det!</string>
+
+    <string name="dashboard_button_copyit" translatable="false">\@string/term_copyit</string>
+    <string name="dashboard_button_pasteit" translatable="false">\@string/term_pasteit</string>
+    <string name="dashboard_button_sendtoapp">Del det</string>
+    <string name="menu_settings">\@string/dashboard_button_settings</string>
+    <string name="button_login">\@string/dashboard_button_login</string>
+    <string name="pref_login">\@string/dashboard_button_login</string>
+    <string name="title_activity_about">\@string/pref_about</string>
+    <string name="text_content">Indhold:</string>
+    <string name="text_welcome_message">Tak fordi du installerede CopyIt. For at bruge CopyIt skal du logge ind.</string>
+    <string name="text_logging_in">Logger ind…</string>
+    <string name="text_login_successful">Log ind succesfuld!</string>
+    <string name="accessibility_widget_button_app">Denne knap åbner Copy It</string>
+    <string name="accessibility_app_icon_big">Stort CopyIt logo</string>
+    <string name="dialog_title_select_send_app">Vælg applikation at dele med…</string>
+    <string name="error_device_setup_failed">Kunne ikke opsætte enheden: %1$s</string>
+    <string name="widget_title_general">CopyIt - Generalt</string>
+    <string name="widget_title_copyit">CopyIt - Kopier det!</string>
+    <string name="widget_title_pasteit">CopyIt - Indsæt det!</string>
+    <string name="widget_title_copyit_pasteit">CopyIt - Kopier/Indsæt det!</string>
+    <string name="debug_label_server_baseurl">Serverens addresse</string>
+    <string name="debug_label_jenkins_baseurl">Jenkins addresse</string>
+    <string name="debug_label_device_id">Enheds id</string>
+    <string name="debug_label_device_password">Enhedskodeord</string>
+    <string name="debug_label_build_number">Version nummer</string>
+    <string name="debug_label_screen_density">Skærm tæthed</string>
+    <string name="debug_no_value">Ingen</string>
+    <string name="debug_unknown">Ukendt</string>
+    <string name="debug_available">Tilgængelig</string>
+    <string name="debug_not_available">Ikke tilgængelig</string>
+    <string name="default_baseurl" translatable="false">http://copyit.dev.mms-projects.net</string>
+    <string name="jenkins_joburl" translatable="false">http://jenkins.marlinc.nl/job/CopyIt-App-Beta</string>
+    <string name="app_name" translatable="false">CopyIt</string>
+    <string name="default_apk" translatable="false">copyit.apk</string>
+    <string name="ga_trackingId" translatable="false">UA-37152392-6</string>
+
+    <string name="title_activity_test">Tests</string>
+    </resources>

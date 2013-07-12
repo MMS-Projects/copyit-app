@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Terms -->
+    <string name="term_copyit" translatable="false">Copy It!</string>
+    <string name="term_pasteit" translatable="false">Paste It!</string>
+
     <!-- Dashboard icons -->
-    <string name="dashboard_button_copyit">Copy It!</string>
-    <string name="dashboard_button_pasteit">Paste It!</string>
+    <string name="dashboard_button_copyit" translatable="false">@string/term_copyit</string>
+    <string name="dashboard_button_pasteit" translatable="false">@string/term_pasteit</string>
     <string name="dashboard_button_sendtoapp">Share it</string>
     <string name="dashboard_button_login">Login</string>
     <string name="dashboard_button_settings">Settings</string>
@@ -14,8 +18,8 @@
     <string name="menu_feedback">Feedback</string>
     <string name="menu_history_clear">Clear</string>
     <!-- Buttons -->
-    <string name="button_copyit">@string/dashboard_button_copyit</string>
-    <string name="button_pasteit">@string/dashboard_button_pasteit</string>
+    <string name="button_copyit" translatable="false">@string/dashboard_button_copyit</string>
+    <string name="button_pasteit" translatable="false">@string/dashboard_button_pasteit</string>
     <string name="button_login">@string/dashboard_button_login</string>
     <!-- Preferences -->
     <string name="pref_category_history">History</string>
