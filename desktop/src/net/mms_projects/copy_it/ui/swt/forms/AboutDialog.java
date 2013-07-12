@@ -97,7 +97,7 @@ public class AboutDialog extends Dialog {
 		appName.setText(Messages.getString("app_name"));
 		appVersion.setText(Messages.getString("about_version", CopyItDesktop.getVersion()));
 		appCopyright.setText(Messages.getString("about_copyright"));
-		btnClose.setText("Close");
+		btnClose.setText(Messages.getString("button.close"));
 		btnClose.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent event) {

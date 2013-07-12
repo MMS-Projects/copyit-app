@@ -7,3 +7,4 @@ options.properties
 project.properties
 .idea
 *.iml
+.lock

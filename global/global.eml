@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component inheritJdk="true">
+	<contentEntry url="file://$MODULE_DIR$"/>
+	<lib name="gson-2.2.2.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/global/libs/gson-2.2.2.jar!/"/>
+	</lib>
+	<lib name="httpclient-4.2.3.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/global/libs/httpclient-4.2.3.jar!/"/>
+	</lib>
+	<lib name="httpcore-4.2.2.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/global/libs/httpcore-4.2.2.jar!/"/>
+	</lib>
+	<lib name="commons-io-2.4.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/global/libs/commons-io-2.4.jar!/"/>
+	</lib>
+	<lib name="slf4j-api-1.7.5.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/global/libs/slf4j-api-1.7.5.jar!/"/>
+	</lib>
+	<lib name="jcl-over-slf4j-1.7.5.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/global/libs/jcl-over-slf4j-1.7.5.jar!/"/>
+	</lib>
+</component>

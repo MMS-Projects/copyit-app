@@ -142,7 +142,7 @@ public class UnityIntegration extends EnvironmentIntegration implements SyncList
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override
 			public void run() {
-				clipboardManager.setContent(content);
+				clipboardManager.requestSet(content);
 			}
 		});
 		getNotificationManager().notify(10, NotificationUrgency.NORMAL, "",
@@ -167,7 +167,7 @@ public class UnityIntegration extends EnvironmentIntegration implements SyncList
 			}
 
 		} else if (signal instanceof DesktopIntegration.action_push) {
-			clipboardManager.getContent();
+			clipboardManager.requestGet();
 		} else if (signal instanceof DesktopIntegration.action_pull) {
 			syncManager.doPull();
 		} else if (signal instanceof DesktopIntegration.action_open_preferences) {

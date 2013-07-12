@@ -15,6 +15,7 @@ import net.mms_projects.copy_it.ui.swt.forms.AboutDialog;
 import net.mms_projects.copy_it.ui.swt.forms.PreferencesDialog;
 import net.mms_projects.utils.OSValidator;
 
+import net.mms_projects.utils.StringUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
@@ -75,8 +76,8 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements SyncL
 
 		this.activityShell = activityShell;
 
-		this.createMenu();		
-		
+		this.createMenu();
+
 		this.setNotificationManager(new NotificationManagerSwt(this.display,
 				this.trayItem));
 	}
@@ -98,7 +99,7 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements SyncL
 		this.menuItemCopyIt.setText("Copy it ▲");
 		this.menuItemCopyIt.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				clipboardManager.getContent();
+				clipboardManager.requestGet();
 			}
 		});
 
@@ -150,8 +151,8 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements SyncL
 
 	@Override
 	public void onPulled(final String content, Date date) {
-		clipboardManager.setContent(content);
-		
+		clipboardManager.requestSet(content);
+
 		this.getNotificationManager().notify(10, NotificationUrgency.NORMAL,
 				"", "Notification",
 				Messages.getString("text_content_pulled", content));
@@ -169,14 +170,21 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements SyncL
 
 		@Override
 		public void notify(int id, NotificationUrgency urgency, String icon,
-				final String summary, final String body) {
-			this.display.asyncExec(new Runnable() {
+				final String summary, String body) {
+            String content;
+            if (body.length() > 100) {
+                content = StringUtils.ellipsize(body, 100);
+            } else {
+                content = body;
+            }
+            final String finalContent = content;
+            this.display.asyncExec(new Runnable() {
 				@Override
 				public void run() {
 					final ToolTip tip = new ToolTip(activityShell, SWT.BALLOON
 							| SWT.ICON_INFORMATION);
 					tip.setText(summary);
-					tip.setMessage(body);
+					tip.setMessage(finalContent);
 					trayItem.setToolTip(tip);
 					tip.setVisible(true);
 				}
@@ -188,7 +196,7 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements SyncL
 	@Override
 	public void onContentSet(String content) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

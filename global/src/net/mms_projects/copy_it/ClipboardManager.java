@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executor;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import net.mms_projects.copy_it.clipboard_services.CopyServiceInterface;
 import net.mms_projects.copy_it.clipboard_services.PasteServiceInterface;
@@ -21,8 +25,16 @@ public class ClipboardManager implements CopyServiceInterface,
 	private boolean pasteEnabled = true;
 	private boolean pollingEnabled = true;
 	private List<ClipboardListener> listeners = new ArrayList<ClipboardListener>();
+	private Executor executor;
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public void addCopyService(CopyServiceInterface service) {
+		if (this.executor == null) {
+			log.error("Before adding a service please define a executor");
+			return;
+		}
+		service.setExecutor(executor);
+		
 		this.copyServices.put(service.getServiceName(), service);
 		if (this.copyService == null) {
 			this.copyService = service.getServiceName();
@@ -33,6 +45,12 @@ public class ClipboardManager implements CopyServiceInterface,
 	}
 
 	public void addPasteService(PasteServiceInterface service) {
+		if (this.executor == null) {
+			log.error("Before adding a service please define a executor");
+			return;
+		}
+		service.setExecutor(executor);
+		
 		this.pasteServices.put(service.getServiceName(), service);
 		if (this.pasteService == null) {
 			this.pasteService = service.getServiceName();
@@ -43,6 +61,12 @@ public class ClipboardManager implements CopyServiceInterface,
 	}
 
 	public void addPollingService(PollingServiceInterface service) {
+		if (this.executor == null) {
+			log.error("Before adding a service please define a executor");
+			return;
+		}
+		service.setExecutor(executor);
+		
 		this.pollingServices.put(service.getServiceName(), service);
 		if (this.pollingService == null) {
 			this.pollingService = service.getServiceName();
@@ -120,28 +144,50 @@ public class ClipboardManager implements CopyServiceInterface,
 	}
 
 	@Override
-	public void setContent(String content) {
+	public void requestSet(String content) {
 		if (this.copyServices.isEmpty()) {
 			return;
 		}
 		if (!this.copyServices.containsKey(this.copyService)) {
 			return;
 		}
-		this.copyServices.get(this.copyService).setContent(content);
+		this.copyServices.get(this.copyService).requestSet(content);
 	}
 
-	@Override
-	public void getContent() {
+    @Override
+    public void setContent(String content) {
+        if (this.copyServices.isEmpty()) {
+            return;
+        }
+        if (!this.copyServices.containsKey(this.copyService)) {
+            return;
+        }
+        this.copyServices.get(this.copyService).setContent(content);
+    }
+
+    @Override
+	public void requestGet() {
 		if (this.pasteServices.isEmpty()) {
 			return;
 		}
 		if (!this.pasteServices.containsKey(this.pasteService)) {
 			return;
 		}
-		this.pasteServices.get(this.pasteService).getContent();
+		this.pasteServices.get(this.pasteService).requestGet();
 	}
 
-	@Override
+    @Override
+    public String getContent() {
+        if (this.pasteServices.isEmpty()) {
+            return null;
+        }
+        if (!this.pasteServices.containsKey(this.pasteService)) {
+            return null;
+        }
+        return this.pasteServices.get(this.pasteService).getContent();
+    }
+
+    @Override
 	public void onContentSet(String content) {
 		for (ClipboardListener listener : this.listeners) {
 			listener.onContentSet(content);
@@ -158,6 +204,26 @@ public class ClipboardManager implements CopyServiceInterface,
 	@Override
 	public String getServiceName() {
 		return "manager";
+	}
+
+	@Override
+	public void setExecutor(Executor executor) {
+		this.executor = executor;
+		
+		for (ServiceInterface service : this.copyServices.values()) {
+			service.setExecutor(executor);
+		}
+		for (ServiceInterface service : this.pasteServices.values()) {
+			service.setExecutor(executor);
+		}
+		for (ServiceInterface service : this.pollingServices.values()) {
+			service.setExecutor(executor);
+		}
+	}
+
+	@Override
+	public Executor getExecutor() {
+		return this.executor;
 	}
 
 	@Override

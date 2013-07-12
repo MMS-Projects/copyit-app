@@ -10,6 +10,13 @@ public interface CopyServiceInterface extends ServiceInterface {
 
 	public boolean isCopyActivated();
 
-	public void setContent(String content);
+    @Deprecated
+	public void requestSet(String content);
+
+    /**
+     * This method changes the clipboard content.
+     * @param content The content to set
+     */
+    public void setContent(String content);
 
 }

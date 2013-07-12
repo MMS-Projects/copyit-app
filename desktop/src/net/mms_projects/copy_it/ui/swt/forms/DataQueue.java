@@ -115,7 +115,7 @@ public class DataQueue extends Dialog implements SyncListener, SettingsListener 
 			public void handleEvent(Event event) {
 				TableItem tableItem = table.getSelection()[0];
 				String data = tableItem.getText(0);
-				clipboardManager.setContent(data);
+				clipboardManager.requestSet(data);
 			}
 		});
 		table.setMenu(menu);
