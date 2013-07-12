@@ -45,8 +45,8 @@
     <string name="text_content_pulled">Holte den folgenden Inhalt: \'%1$s\'</string>
     <string name="text_content_pulling">Ziehe Inhalt&amp;#8230;</string>
     <string name="text_content_pushing">Schiebe Inhalt&amp;#8230;</string>
-    <string name="text_history_cleared">Dein Verlauf wurde gelöscht.</string>
-    <string name="text_history_empty">Kein Verlauf wurde bis jetzt aufgenommen.</string>
+    <string name="text_history_cleared">Dein Verlauf wurde gelöscht</string>
+    <string name="text_history_empty">Kein Verlauf wurde bis jetzt aufgenommen</string>
     <!-- Accessibility -->
     <string name="accessibility_widget_button_app">Dieser Knopf öffnet Copy It</string>
     <string name="accessibility_app_icon_big">Big CopyIt logo</string>
