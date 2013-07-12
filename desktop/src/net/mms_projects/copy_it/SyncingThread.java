@@ -1,12 +1,12 @@
 package net.mms_projects.copy_it;
 
 import java.util.Date;
+import java.util.concurrent.Executor;
 
-import net.mms_projects.copy_it.PollingServiceInterface;
-import net.mms_projects.copy_it.SyncListener;
 import net.mms_projects.copy_it.api.endpoints.ClipboardContentEndpoint;
 
-import org.eclipse.swt.widgets.Display;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SyncingThread extends Thread implements PollingServiceInterface {
 
@@ -17,6 +17,8 @@ public class SyncingThread extends Thread implements PollingServiceInterface {
 	private String currentContent;
 	private ClipboardContentEndpoint endpoint;
 	private SyncListener listener;
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
+	private Executor executor;
 
 	public SyncingThread(SyncListener listener,
 			ClipboardContentEndpoint endpoint) {
@@ -41,8 +43,7 @@ public class SyncingThread extends Thread implements PollingServiceInterface {
 					return;
 				}
 
-				Display.getDefault().asyncExec(
-						new RefreshClipboard(this.endpoint));
+				this.executor.execute(new RefreshClipboard(this.endpoint));
 			} catch (InterruptedException e) {
 				this.interrupt();
 			}
@@ -70,9 +71,9 @@ public class SyncingThread extends Thread implements PollingServiceInterface {
 					&& (SyncingThread.this.currentContent.equals(newData))) {
 				return;
 			}
-			
+
 			SyncingThread.this.currentContent = newData;
-			
+
 			if (newData.length() == 0) {
 				return;
 			}
@@ -85,15 +86,27 @@ public class SyncingThread extends Thread implements PollingServiceInterface {
 	public String getServiceName() {
 		return SERVICE_NAME;
 	}
+	
+	@Override
+	public void setExecutor(Executor executor) {
+		this.executor = executor;
+	}
+
+	@Override
+	public Executor getExecutor() {
+		return this.executor;
+	}
 
 	@Override
 	public void activatePolling() {
 		this.enabled = true;
+		log.debug("The service has been enabled");
 	}
 
 	@Override
 	public void deactivatePolling() {
 		this.enabled = false;
+		log.debug("The service has been disabled");
 	}
 
 	@Override

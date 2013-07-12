@@ -1,6 +1,7 @@
 package net.mms_projects.copy_it.sync_services;
 
 import java.util.Date;
+import java.util.concurrent.Executor;
 
 import net.mms_projects.copy_it.SyncListener;
 import net.mms_projects.copy_it.api.endpoints.ClipboardContentEndpoint;
@@ -9,6 +10,7 @@ public class ApiService implements PullServiceInterface, PushServiceInterface {
 
 	protected SyncListener listener;
 	protected ClipboardContentEndpoint endpoint;
+	private Executor executor;
 
 	public ApiService(SyncListener listener, ClipboardContentEndpoint endpoint) {
 		this.listener = listener;
@@ -18,10 +20,20 @@ public class ApiService implements PullServiceInterface, PushServiceInterface {
 	public void setEndpoint(ClipboardContentEndpoint endpoint) {
 		this.endpoint = endpoint;
 	}
-	
+
 	@Override
 	public String getServiceName() {
 		return "api";
+	}
+
+	@Override
+	public void setExecutor(Executor executor) {
+		this.executor = executor;
+	}
+
+	@Override
+	public Executor getExecutor() {
+		return this.executor;
 	}
 
 	@Override
@@ -31,7 +43,7 @@ public class ApiService implements PullServiceInterface, PushServiceInterface {
 	@Override
 	public void deactivatePush() {
 	}
-	
+
 	@Override
 	public void activatePull() {
 	}
@@ -39,10 +51,10 @@ public class ApiService implements PullServiceInterface, PushServiceInterface {
 	@Override
 	public void deactivatePull() {
 	}
-	
+
 	@Override
 	public void doPush(final String content, final Date date) {
-		new Thread(new Runnable() {
+		this.executor.execute(new Runnable() {
 			@Override
 			public void run() {
 				try {
@@ -55,12 +67,12 @@ public class ApiService implements PullServiceInterface, PushServiceInterface {
 
 				listener.onPushed(content, date);
 			}
-		}).start();
+		});
 	}
 
 	@Override
 	public void doPull() {
-		new Thread(new Runnable() {
+		this.executor.execute(new Runnable() {
 			@Override
 			public void run() {
 				try {
@@ -71,7 +83,7 @@ public class ApiService implements PullServiceInterface, PushServiceInterface {
 					return;
 				}
 			}
-		}).start();
+		});
 	}
 
 	@Override
