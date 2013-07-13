@@ -3,6 +3,7 @@ package com.example.anothersignintest;
 import java.io.IOException;
 
 import net.mms_projects.copy_it.R;
+import net.mms_projects.copy_it.activities.BrowserLoginActivity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -155,6 +156,11 @@ public class SignInTestActivity extends Activity implements
 					}
 					String token = GoogleAuthUtil.getToken(context,
 							mPlusClient.getAccountName(), scopeString);
+					Intent loginIntent = new Intent(SignInTestActivity.this, BrowserLoginActivity.class);
+					loginIntent.putExtra(BrowserLoginActivity.EXTRA_PROVIDER, "google");
+					loginIntent.putExtra(BrowserLoginActivity.EXTRA_ACCESS_TOKEN, token);
+					startActivity(loginIntent);
+					finish();
 				} catch (UserRecoverableAuthException e) {
 					// This error is recoverable, so we could fix this
 					// by displaying the intent to the user.
