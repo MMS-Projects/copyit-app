@@ -1,4 +1,4 @@
-package net.mms_projects.copy_it.ui.android;
+package net.mms_projects.copy_it.activities;
 
 import java.net.MalformedURLException;
 import java.net.URL;
