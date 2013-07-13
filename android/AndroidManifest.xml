@@ -44,7 +44,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="net.mms_projects.copy_it.ui.android.BrowserLoginActivity"
+            android:name="net.mms_projects.copy_it.activities.BrowserLoginActivity"
             android:label="@string/title_activity_login"
             android:parentActivityName="net.mms_projects.copy_it.ui.android.MainActivity" >
             <meta-data
