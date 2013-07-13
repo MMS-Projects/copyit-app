@@ -2,14 +2,21 @@ package net.mms_projects.copy_it.activities;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import net.mms_projects.copy_it.LoginResponse;
 import net.mms_projects.copy_it.PasswordGenerator;
 import net.mms_projects.copy_it.R;
+
+import org.apache.http.Consts;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.http.message.BasicNameValuePair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -24,16 +31,16 @@ import com.google.analytics.tracking.android.EasyTracker;
 
 public class BrowserLoginActivity extends SherlockActivity {
 
+	public static String EXTRA_PROVIDER = "provider";
+	public static String EXTRA_ACCESS_TOKEN = "access_token";
+
 	protected LoginResponse response = new LoginResponse();
-	
+
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		PasswordGenerator generator = new PasswordGenerator();
-		response.devicePassword = generator.generatePassword();
 
 		setContentView(R.layout.activity_browser_login);
 
@@ -47,55 +54,46 @@ public class BrowserLoginActivity extends SherlockActivity {
 				.getResources().getString(R.string.default_baseurl));
 
 		WebView webview = (WebView) findViewById(R.id.webview);
-		webview.loadUrl(baseUrl + "/app-setup/setup?device_password="
-				+ response.devicePassword);
-		webview.setWebViewClient(new WebViewClient() {
-			@Override
-			public boolean shouldOverrideUrlLoading(WebView view, String url) {
-				URL location = null;
-				try {
-					location = new URL(url);
-				} catch (MalformedURLException e) {
-					e.printStackTrace();
-				}
+		webview.setWebViewClient(new LoginWebViewClient());
 
-				log.debug("Switching to url: {}", url);
+		PasswordGenerator generator = new PasswordGenerator();
+		response.devicePassword = generator.generatePassword();
 
-				if (location.getPath().startsWith("/app-setup/done/")) {
-					response.deviceId = UUID.fromString(location.getPath()
-							.substring(16));
-					Intent returnIntent = new Intent();
-					returnIntent.putExtra("device_id",
-							response.deviceId.toString());
-					returnIntent.putExtra("device_password",
-							response.devicePassword);
-					setResult(RESULT_OK, returnIntent);
-					log.debug("Login successful");
-					finish();
-				} else if (location.getPath().startsWith("/app-setup/fail/")) {
-					Intent returnIntent = new Intent();
-					setResult(RESULT_CANCELED, returnIntent);
-					log.debug("Login failed");
-					finish();
-				} else {
-					view.loadUrl(url);
-				}
-				return true;
-			}
-		});
+		String setupUrl = "/app-setup/setup?device_password="
+				+ response.devicePassword;
+
+		if (getIntent().getExtras().containsKey(EXTRA_PROVIDER)
+				&& getIntent().getExtras().containsKey(EXTRA_ACCESS_TOKEN)) {
+			List<NameValuePair> values = new ArrayList<NameValuePair>();
+			values.add(new BasicNameValuePair("access_token", getIntent()
+					.getExtras().getString(EXTRA_ACCESS_TOKEN)));
+			values.add(new BasicNameValuePair("returnurl", setupUrl));
+
+			String accessTokenUrl = "/auth/client-login/";
+			accessTokenUrl += getIntent().getExtras().getString(EXTRA_PROVIDER);
+			accessTokenUrl += "?"
+					+ URLEncodedUtils.format(values, Consts.UTF_8.name());
+
+			System.out.println(accessTokenUrl);
+
+			webview.loadUrl(baseUrl + accessTokenUrl);
+		} else {
+			webview.loadUrl(baseUrl + setupUrl);
+		}
+
 	}
-	
+
 	@Override
 	protected void onStart() {
 		super.onStart();
-		
+
 		EasyTracker.getInstance().activityStart(this);
 	}
-	
+
 	@Override
 	protected void onStop() {
 		super.onStop();
-		
+
 		EasyTracker.getInstance().activityStop(this);
 	}
 
@@ -114,6 +112,41 @@ public class BrowserLoginActivity extends SherlockActivity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	private class LoginWebViewClient extends WebViewClient {
+		@Override
+		public boolean shouldOverrideUrlLoading(WebView view, String url) {
+			URL location = null;
+			try {
+				location = new URL(url);
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			}
+
+			log.debug("Switching to url: {}", url);
+
+			if (location.getPath().startsWith("/app-setup/done/")) {
+				response.deviceId = UUID.fromString(location.getPath()
+						.substring(16));
+				Intent returnIntent = new Intent();
+				returnIntent
+						.putExtra("device_id", response.deviceId.toString());
+				returnIntent.putExtra("device_password",
+						response.devicePassword);
+				setResult(RESULT_OK, returnIntent);
+				log.debug("Login successful");
+				finish();
+			} else if (location.getPath().startsWith("/app-setup/fail/")) {
+				Intent returnIntent = new Intent();
+				setResult(RESULT_CANCELED, returnIntent);
+				log.debug("Login failed");
+				finish();
+			} else {
+				view.loadUrl(url);
+			}
+			return true;
+		}
 	}
 
 }
