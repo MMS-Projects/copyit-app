@@ -7,7 +7,7 @@ import net.mms_projects.copy_it.SyncManager;
 import org.eclipse.swt.widgets.Shell;
 import org.freedesktop.dbus.DBusConnection;
 
-public class GnomeIntegration extends BasicSwtIntegration {
+public class GnomeIntegration extends SwtIntegration {
 
 	public GnomeIntegration(DBusConnection dbusConnection, Settings settings,
 			Shell activityShell, SyncManager syncManager,
@@ -19,6 +19,12 @@ public class GnomeIntegration extends BasicSwtIntegration {
 		 * files and the appropriate icons for the .desktop files
 		 */
 		this.addIntegration(new FreeDesktopIntegration(this, dbusConnection));
+	}
+
+	@Override
+	public void standaloneSetup() {
+		// TODO Auto-generated method stub
+
 	}
 
 }

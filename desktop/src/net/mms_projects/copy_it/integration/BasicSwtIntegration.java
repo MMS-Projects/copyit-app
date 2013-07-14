@@ -46,8 +46,12 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements SyncL
 	private MenuItem menuItemPasteIt;
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-	public BasicSwtIntegration(Settings settings, Shell activityShell,
-			SyncManager syncManager, ClipboardManager clipboardManager) {
+	private EnvironmentIntegration parentIntegration;
+
+	public BasicSwtIntegration(EnvironmentIntegration parentIntegration,
+			Settings settings, Shell activityShell, SyncManager syncManager,
+			ClipboardManager clipboardManager) {
+		this.parentIntegration = parentIntegration;
 		this.tray = display.getSystemTray();
 		this.trayItem = new TrayItem(tray, 0);
 		this.settings = settings;
@@ -78,8 +82,9 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements SyncL
 
 		this.createMenu();
 
-		this.setNotificationManager(new NotificationManagerSwt(this.display,
-				this.trayItem));
+		this.parentIntegration
+				.setNotificationManager(new NotificationManagerSwt(
+						this.display, this.trayItem));
 	}
 
 	public void enableFeatures() {

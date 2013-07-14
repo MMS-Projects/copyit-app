@@ -13,6 +13,7 @@ import net.mms_projects.copy_it.app.CopyItDesktop;
 import net.mms_projects.copy_it.clipboard_backends.SwtBackend;
 import net.mms_projects.copy_it.integration.GnomeIntegration;
 import net.mms_projects.copy_it.integration.BasicSwtIntegration;
+import net.mms_projects.copy_it.integration.SwtIntegration;
 import net.mms_projects.copy_it.integration.UnityIntegration;
 import net.mms_projects.copy_it.ui.swt.forms.DataQueue;
 import net.mms_projects.copy_it.ui.swt.forms.PreferencesDialog;
@@ -74,22 +75,22 @@ public class SwtGui extends AbstractUi {
 
 				environmentIntegration = environmentIntegrationUnity;
 			} else if (desktop.equalsIgnoreCase("GNOME")) {
-				BasicSwtIntegration environmentIntegrationSwt = new GnomeIntegration(
+				GnomeIntegration environmentIntegrationGnome = new GnomeIntegration(
 						CopyItDesktop.dbusConnection, this.settings,
 						this.activityShell, syncManager,
 						clipboardManager);
-				syncManager.addListener(environmentIntegrationSwt);
-				clipboardManager.addListener(environmentIntegrationSwt);
+				syncManager.addListener(environmentIntegrationGnome.getSwtIntegration());
+				clipboardManager.addListener(environmentIntegrationGnome.getSwtIntegration());
 
-				environmentIntegration = environmentIntegrationSwt;
+				environmentIntegration = environmentIntegrationGnome;
 			}
 		}
 		if (environmentIntegration == null) {
-			BasicSwtIntegration environmentIntegrationSwt = new BasicSwtIntegration(this.settings,
+			SwtIntegration environmentIntegrationSwt = new SwtIntegration(this.settings,
 					this.activityShell, syncManager,
 					clipboardManager);
-			syncManager.addListener(environmentIntegrationSwt);
-			clipboardManager.addListener(environmentIntegrationSwt);
+			syncManager.addListener(environmentIntegrationSwt.getSwtIntegration());
+			clipboardManager.addListener(environmentIntegrationSwt.getSwtIntegration());
 
 			environmentIntegration = environmentIntegrationSwt;
 		}
