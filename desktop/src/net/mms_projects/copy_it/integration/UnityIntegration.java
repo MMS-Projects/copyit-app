@@ -88,7 +88,7 @@ public class UnityIntegration extends EnvironmentIntegration implements
 		}
 
 		URL inputUrl = getClass().getResource(
-				"/drawable-xxhdpi/app_icon_small_mono.png");
+				"/images/icon-16-mono.png");
 		File dest = new File(PathBuilder.getCacheDirectory(), "tray_icon.png");
 		try {
 			FileUtils.copyURLToFile(inputUrl, dest);

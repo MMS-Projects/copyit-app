@@ -56,13 +56,13 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements SyncL
 		this.clipboardManager = clipboardManager;
 
 		Image trayImage = SWTResourceManager
-				.getImage(getClass(), "/images/app_icon_small.png");
+				.getImage(getClass(), "/images/icon-16.png");
 		if (OSValidator.isUnix()) {
 			String desktop = System.getenv("XDG_CURRENT_DESKTOP");
 			if (desktop.equalsIgnoreCase("Unity")) {
 				log.debug("Running on {} using the monochrome icon", desktop);
 				trayImage = SWTResourceManager
-						.getImage(getClass(), "/images/app_icon_small_mono.png");
+						.getImage(getClass(), "/images/icon-16-mono.png");
 			}
 		}
 
