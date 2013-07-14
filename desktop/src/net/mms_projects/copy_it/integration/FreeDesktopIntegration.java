@@ -39,8 +39,11 @@ public class FreeDesktopIntegration extends EnvironmentIntegration {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
-
-		List<String> content = this.generateDesktopContents();
+		/*
+		 * Sets the FreeDesktop autostart manager
+		 */
+		this.parentIntegration
+				.setAutostartManager(new FreeDesktopAutostartManager());
 
 		/*
 		 * Write the 16x16 icon the the icon directory
@@ -67,8 +70,23 @@ public class FreeDesktopIntegration extends EnvironmentIntegration {
 			e1.printStackTrace();
 		}
 
-		File file = new File(PathBuilder.getLauncherShortcutDirectory(),
-				"copyit.desktop");
+		/*
+		 * This writes a .desktop file to the directory where launcher .desktop
+		 * files should be.
+		 */
+		this.writeDesktopFile(PathBuilder.getLauncherShortcutDirectory());
+	}
+
+	/**
+	 * This method writes a .desktop for the app to the specified path
+	 * 
+	 * @param path
+	 *            The path the .desktop file should be created in
+	 */
+	private void writeDesktopFile(File path) {
+		List<String> content = this.generateDesktopContents();
+
+		File file = new File(path, "copyit.desktop");
 		try {
 			FileUtils.writeLines(file, content);
 		} catch (IOException e) {
@@ -143,6 +161,28 @@ public class FreeDesktopIntegration extends EnvironmentIntegration {
 			classpath += System.getProperty("path.separator");
 		}
 		return classpath;
+	}
+
+	/**
+	 * The FreeDesktop auto start manager that writes follows the FreeDesktop
+	 * specifications
+	 */
+	class FreeDesktopAutostartManager implements
+			EnvironmentIntegration.AutostartManager {
+
+		/**
+		 * This creates a .desktop file in the auto start directory to make it
+		 * auto start
+		 */
+		@Override
+		public void setupAutostartup() {
+			/*
+			 * Write a .desktop file to the auto start directory
+			 */
+			FreeDesktopIntegration.this.writeDesktopFile(PathBuilder
+					.getAutostartDirectory());
+		}
+
 	}
 
 }
