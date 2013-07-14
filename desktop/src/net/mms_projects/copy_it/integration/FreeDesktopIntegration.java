@@ -8,44 +8,67 @@ import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.mms_projects.copy_it.EnvironmentIntegration;
 import net.mms_projects.copy_it.Messages;
 import net.mms_projects.copy_it.PathBuilder;
 import net.mms_projects.copy_it.app.CopyItDesktop;
+import net.mms_projects.copy_it.integration.notifications.FreedesktopNotificationManager;
 
 import org.apache.commons.io.FileUtils;
+import org.freedesktop.dbus.DBusConnection;
+import org.freedesktop.dbus.exceptions.DBusException;
 
-public class FreeDesktopIntegration {
+public class FreeDesktopIntegration extends EnvironmentIntegration {
 
-	public void setup() {
+	private EnvironmentIntegration parentIntegration;
+	private DBusConnection dbusConnection;
+
+	public FreeDesktopIntegration(EnvironmentIntegration parentIntegration,
+			DBusConnection dbusConnection) {
+		this.parentIntegration = parentIntegration;
+		this.dbusConnection = dbusConnection;
+	}
+
+	@Override
+	public void standaloneSetup() {
+		try {
+			this.parentIntegration
+					.setNotificationManager(new FreedesktopNotificationManager(
+							this.dbusConnection));
+		} catch (DBusException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+
 		List<String> content = this.generateDesktopContents();
-		
+
 		/*
 		 * Write the 16x16 icon the the icon directory
 		 */
 		try {
-			URL inputUrl = getClass().getResource(
-					"/images/icon-16-mono.png");
+			URL inputUrl = getClass().getResource("/images/icon-16-mono.png");
 			File dest = new File(PathBuilder.getIconDirectory(16), "copyit.png");
 			FileUtils.copyURLToFile(inputUrl, dest);
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}	
-		
+		}
+
 		/*
 		 * Write the 512x512 icon the the icon directory
 		 */
 		try {
-			URL inputUrl = getClass().getResource(
-					"/images/icon-512.png");
-			File dest = new File(PathBuilder.getIconDirectory(512), "copyit.png");
+			URL inputUrl = getClass().getResource("/images/icon-512.png");
+			File dest = new File(PathBuilder.getIconDirectory(512),
+					"copyit.png");
 			FileUtils.copyURLToFile(inputUrl, dest);
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}	
-		
-		File file = new File(PathBuilder.getLauncherShortcutDirectory(), "copyit.desktop");
+		}
+
+		File file = new File(PathBuilder.getLauncherShortcutDirectory(),
+				"copyit.desktop");
 		try {
 			FileUtils.writeLines(file, content);
 		} catch (IOException e) {
@@ -76,7 +99,7 @@ public class FreeDesktopIntegration {
 	 */
 	private String generateJavaCommandLine() {
 		List<String> commandline = new ArrayList<String>();
-		
+
 		commandline.add("java");
 		/*
 		 * This adds some the command line arguments passed to the current JVM
