@@ -130,6 +130,9 @@ public class UnityIntegration extends EnvironmentIntegration implements
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		FreeDesktopIntegration linuxIntegration = new FreeDesktopIntegration();
+		linuxIntegration.setup();
 	}
 
 	@Override
