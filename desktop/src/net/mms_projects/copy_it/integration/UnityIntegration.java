@@ -35,13 +35,14 @@ import org.freedesktop.dbus.exceptions.DBusException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class UnityIntegration extends EnvironmentIntegration implements SyncListener,
-		DBusSigHandler, SettingsListener, ClipboardListener {
+public class UnityIntegration extends EnvironmentIntegration implements
+		SyncListener, DBusSigHandler, SettingsListener, ClipboardListener {
 
 	protected Settings settings;
 	protected Shell activityShell;
 	protected SyncManager syncManager;
 	protected ClipboardManager clipboardManager;
+	protected DBusConnection dbusConnection;
 
 	private DesktopIntegration integration;
 
@@ -61,25 +62,25 @@ public class UnityIntegration extends EnvironmentIntegration implements SyncList
 		this.activityShell = activityShell;
 		this.syncManager = syncManager;
 		this.clipboardManager = clipboardManager;
+		this.dbusConnection = dbusConnection;
 
 		this.settings.addListener("sync.polling.enabled", this);
 
 		try {
-			CopyItDesktop.dbusConnection.addSigHandler(
-					DesktopIntegration.ready.class, this);
-			CopyItDesktop.dbusConnection.addSigHandler(
-					DesktopIntegration.action_pull.class, this);
-			CopyItDesktop.dbusConnection.addSigHandler(
-					DesktopIntegration.action_push.class, this);
-			CopyItDesktop.dbusConnection.addSigHandler(
+			dbusConnection.addSigHandler(DesktopIntegration.ready.class, this);
+			dbusConnection.addSigHandler(DesktopIntegration.action_pull.class,
+					this);
+			dbusConnection.addSigHandler(DesktopIntegration.action_push.class,
+					this);
+			dbusConnection.addSigHandler(
 					DesktopIntegration.action_open_preferences.class, this);
-			CopyItDesktop.dbusConnection.addSigHandler(
+			dbusConnection.addSigHandler(
 					DesktopIntegration.action_open_about.class, this);
-			CopyItDesktop.dbusConnection.addSigHandler(
-					DesktopIntegration.action_quit.class, this);
-			CopyItDesktop.dbusConnection.addSigHandler(
+			dbusConnection.addSigHandler(DesktopIntegration.action_quit.class,
+					this);
+			dbusConnection.addSigHandler(
 					DesktopIntegration.action_enable_sync.class, this);
-			CopyItDesktop.dbusConnection.addSigHandler(
+			dbusConnection.addSigHandler(
 					DesktopIntegration.action_disable_sync.class, this);
 		} catch (DBusException e) {
 			// TODO Auto-generated catch block
@@ -129,6 +130,9 @@ public class UnityIntegration extends EnvironmentIntegration implements SyncList
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		FreeDesktopIntegration linuxIntegration = new FreeDesktopIntegration();
+		linuxIntegration.setup();
 	}
 
 	@Override
@@ -155,7 +159,7 @@ public class UnityIntegration extends EnvironmentIntegration implements SyncList
 			String icon = new File(PathBuilder.getCacheDirectory(),
 					"tray_icon.png").getAbsolutePath();
 			try {
-				integration = CopyItDesktop.dbusConnection.getRemoteObject(
+				integration = this.dbusConnection.getRemoteObject(
 						"net.mms_projects.copyit.DesktopIntegration", "/",
 						DesktopIntegration.class);
 				integration.setup(icon, icon);
