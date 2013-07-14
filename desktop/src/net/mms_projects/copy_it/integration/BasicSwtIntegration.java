@@ -2,7 +2,6 @@ package net.mms_projects.copy_it.integration;
 
 import java.util.Date;
 
-import net.mms_projects.copy_it.AndroidResourceLoader;
 import net.mms_projects.copy_it.ClipboardListener;
 import net.mms_projects.copy_it.ClipboardManager;
 import net.mms_projects.copy_it.EnvironmentIntegration;
@@ -27,6 +26,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.swt.widgets.Tray;
 import org.eclipse.swt.widgets.TrayItem;
+import org.eclipse.wb.swt.SWTResourceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,14 +55,14 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements SyncL
 		this.syncManager = syncManager;
 		this.clipboardManager = clipboardManager;
 
-		Image trayImage = AndroidResourceLoader
-				.getImage("drawable-xxhdpi/app_icon_small.png");
+		Image trayImage = SWTResourceManager
+				.getImage(getClass(), "/images/app_icon_small.png");
 		if (OSValidator.isUnix()) {
 			String desktop = System.getenv("XDG_CURRENT_DESKTOP");
 			if (desktop.equalsIgnoreCase("Unity")) {
 				log.debug("Running on {} using the monochrome icon", desktop);
-				trayImage = AndroidResourceLoader
-						.getImage("drawable-xxhdpi/app_icon_small_mono.png");
+				trayImage = SWTResourceManager
+						.getImage(getClass(), "/images/app_icon_small_mono.png");
 			}
 		}
 

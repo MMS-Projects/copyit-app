@@ -1,6 +1,5 @@
 package net.mms_projects.copy_it.ui.swt.forms;
 
-import net.mms_projects.copy_it.AndroidResourceLoader;
 import net.mms_projects.copy_it.Messages;
 import net.mms_projects.copy_it.app.CopyItDesktop;
 
@@ -15,6 +14,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 public class AboutDialog extends Dialog {
 
@@ -65,8 +65,8 @@ public class AboutDialog extends Dialog {
 		fd_appIcon.top = new FormAttachment(0, 10);
 		fd_appIcon.left = new FormAttachment(0, 99);
 		appIcon.setLayoutData(fd_appIcon);
-		appIcon.setImage(AndroidResourceLoader
-				.getImage("drawable-xhdpi/ic_launcher.png"));
+		appIcon.setImage(SWTResourceManager
+				.getImage(getClass(), "/images/logo.png"));
 		Label appName = new Label(shell, SWT.NONE);
 		FormData fd_appName = new FormData();
 		fd_appName.right = new FormAttachment(0, 283);

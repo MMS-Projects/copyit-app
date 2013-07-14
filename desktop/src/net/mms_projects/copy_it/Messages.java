@@ -22,10 +22,6 @@ public class Messages {
 			} catch (MissingResourceException e2) {
 			}
 		}
-		String text = AndroidResourceLoader.getString("@string/" + key);
-		if (text != null) {
-			return text;
-		}
 		return '!' + key + '!';
 	}
 
