@@ -62,8 +62,8 @@ public class BrowserLoginActivity extends SherlockActivity {
 		String setupUrl = "/app-setup/setup?device_password="
 				+ response.devicePassword;
 
-		if (getIntent().getExtras().containsKey(EXTRA_PROVIDER)
-				&& getIntent().getExtras().containsKey(EXTRA_ACCESS_TOKEN)) {
+		if (getIntent().hasExtra(EXTRA_PROVIDER)
+				&& getIntent().hasExtra(EXTRA_ACCESS_TOKEN)) {
 			List<NameValuePair> values = new ArrayList<NameValuePair>();
 			values.add(new BasicNameValuePair("access_token", getIntent()
 					.getExtras().getString(EXTRA_ACCESS_TOKEN)));
