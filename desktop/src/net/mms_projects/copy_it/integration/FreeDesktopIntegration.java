@@ -29,9 +29,16 @@ public class FreeDesktopIntegration extends EnvironmentIntegration {
 		this.dbusConnection = dbusConnection;
 	}
 
+	/**
+	 * Sets up the FreeDesktop integration with FreeDesktop notifications and
+	 * FreeDesktop auto start support using desktop files.
+	 */
 	@Override
 	public void standaloneSetup() {
 		try {
+			/*
+			 * Sets the FreeDesktop notification manager
+			 */
 			this.parentIntegration
 					.setNotificationManager(new FreedesktopNotificationManager(
 							this.dbusConnection));
@@ -96,6 +103,11 @@ public class FreeDesktopIntegration extends EnvironmentIntegration {
 		file.setExecutable(true);
 	}
 
+	/**
+	 * This methods returns a list of all lines in the .desktop file
+	 * 
+	 * @return List of all lines for the .desktop file
+	 */
 	private List<String> generateDesktopContents() {
 		List<String> content = new ArrayList<String>();
 		content.add("[Desktop Entry]");
