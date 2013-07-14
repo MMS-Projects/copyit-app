@@ -64,6 +64,10 @@ public class UnityIntegration extends EnvironmentIntegration implements
 		this.clipboardManager = clipboardManager;
 		this.dbusConnection = dbusConnection;
 
+	}
+
+	@Override
+	public void standaloneSetup() {
 		this.settings.addListener("sync.polling.enabled", this);
 
 		try {
