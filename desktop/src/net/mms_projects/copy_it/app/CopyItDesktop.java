@@ -282,7 +282,9 @@ public class CopyItDesktop extends CopyIt {
         ui.open();
 
         this.settings.saveProperties();
-        CopyItDesktop.dbusConnection.disconnect();
+        if (OSValidator.isUnix()) {
+        	CopyItDesktop.dbusConnection.disconnect();
+        }
         executor.shutdown();
     }
 
