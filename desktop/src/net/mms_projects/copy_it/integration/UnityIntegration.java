@@ -64,6 +64,11 @@ public class UnityIntegration extends EnvironmentIntegration implements
 		this.clipboardManager = clipboardManager;
 		this.dbusConnection = dbusConnection;
 
+		/*
+		 * Add FreeDesktop integrations like notifications and writing .desktop
+		 * files and the appropriate icons for the .desktop files
+		 */
+		this.addIntegration(new FreeDesktopIntegration(this, dbusConnection));
 	}
 
 	@Override
@@ -91,8 +96,7 @@ public class UnityIntegration extends EnvironmentIntegration implements
 			e.printStackTrace();
 		}
 
-		URL inputUrl = getClass().getResource(
-				"/images/icon-16-mono.png");
+		URL inputUrl = getClass().getResource("/images/icon-16-mono.png");
 		File dest = new File(PathBuilder.getCacheDirectory(), "tray_icon.png");
 		try {
 			FileUtils.copyURLToFile(inputUrl, dest);
@@ -134,9 +138,6 @@ public class UnityIntegration extends EnvironmentIntegration implements
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		FreeDesktopIntegration linuxIntegration = new FreeDesktopIntegration();
-		linuxIntegration.setup();
 	}
 
 	@Override
