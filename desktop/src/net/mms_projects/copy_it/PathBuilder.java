@@ -61,5 +61,17 @@ public class PathBuilder {
 
 		return directory;
 	}
+	
+	public static File getAutostartDirectory() {
+		File directory = new File("." + File.separator);
+		if (OSValidator.isUnix()) {
+			directory = new File(System.getenv("HOME") + "/.config/autostart");
+			if (!directory.exists()) {
+				directory.mkdir();
+			}
+		}
+
+		return directory;
+	}
 
 }
