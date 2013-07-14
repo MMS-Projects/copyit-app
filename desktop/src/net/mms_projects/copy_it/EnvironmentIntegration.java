@@ -6,6 +6,7 @@ import java.util.List;
 abstract public class EnvironmentIntegration {
 
 	private NotificationManager notificationManager;
+	private AutostartManager autostartManager;
 	private List<EnvironmentIntegration> integrationProviders = new ArrayList<EnvironmentIntegration>();
 
 	/**
@@ -25,6 +26,35 @@ abstract public class EnvironmentIntegration {
 	 */
 	public NotificationManager getNotificationManager() {
 		return this.notificationManager;
+	}
+
+	/**
+	 * This method sets the auto start manager that should be used for this
+	 * environment
+	 * 
+	 * @param autostartManager
+	 *            The auto start manager to use
+	 */
+	public void setAutostartManager(AutostartManager autostartManager) {
+		this.autostartManager = autostartManager;
+	}
+
+	/**
+	 * This method checks if there is a auto start manager available
+	 * 
+	 * @return true if there is a auto start manager available
+	 */
+	public boolean hasAutostartManager() {
+		return this.autostartManager != null;
+	}
+
+	/**
+	 * This method returns the auto start manager used in this environment
+	 * 
+	 * @return The actual auto start manager
+	 */
+	public AutostartManager getAutostartManager() {
+		return this.autostartManager;
 	}
 
 	/**
@@ -90,6 +120,17 @@ abstract public class EnvironmentIntegration {
 		public void notify(int id, NotificationUrgency urgency, String icon,
 				String summary, String body);
 
+	}
+
+	/**
+	 * A interface that describes a basic auto start manager
+	 */
+	static public interface AutostartManager {
+		/**
+		 * This method sets up the auto start the way it should in the
+		 * environment it belongs to.
+		 */
+		public void setupAutostartup();
 	}
 
 }
