@@ -143,9 +143,9 @@ public class SignInTestActivity extends Activity implements
 
 		// Retrieve the oAuth 2.0 access token.
 		final Context context = this.getApplicationContext();
-		AsyncTask task = new AsyncTask() {
+		AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
 			@Override
-			protected Object doInBackground(Object... params) {
+			protected Void doInBackground(Void... params) {
 				try {
 					// We can retrieve the token to check via
 					// tokeninfo or to pass to a service-side
@@ -156,9 +156,12 @@ public class SignInTestActivity extends Activity implements
 					}
 					String token = GoogleAuthUtil.getToken(context,
 							mPlusClient.getAccountName(), scopeString);
-					Intent loginIntent = new Intent(SignInTestActivity.this, BrowserLoginActivity.class);
-					loginIntent.putExtra(BrowserLoginActivity.EXTRA_PROVIDER, "google");
-					loginIntent.putExtra(BrowserLoginActivity.EXTRA_ACCESS_TOKEN, token);
+					Intent loginIntent = new Intent(SignInTestActivity.this,
+							BrowserLoginActivity.class);
+					loginIntent.putExtra(BrowserLoginActivity.EXTRA_PROVIDER,
+							"google");
+					loginIntent.putExtra(
+							BrowserLoginActivity.EXTRA_ACCESS_TOKEN, token);
 					startActivity(loginIntent);
 					finish();
 				} catch (UserRecoverableAuthException e) {
@@ -174,7 +177,7 @@ public class SignInTestActivity extends Activity implements
 				return null;
 			}
 		};
-		task.execute((Void) null);
+		task.execute();
 	}
 
 	@Override
