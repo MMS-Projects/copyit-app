@@ -54,7 +54,10 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements SyncL
 		this.activityShell = activityShell;
 		this.syncManager = syncManager;
 		this.clipboardManager = clipboardManager;
-
+	}
+	
+	@Override
+	public void standaloneSetup() {
 		Image trayImage = SWTResourceManager
 				.getImage(getClass(), "/images/icon-16.png");
 		if (OSValidator.isUnix()) {
@@ -72,8 +75,6 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements SyncL
 				log.debug("selection");
 			}
 		});
-
-		this.activityShell = activityShell;
 
 		this.createMenu();
 

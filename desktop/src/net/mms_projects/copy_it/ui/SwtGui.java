@@ -93,6 +93,8 @@ public class SwtGui extends AbstractUi {
 
 			environmentIntegration = environmentIntegrationSwt;
 		}
+		
+		environmentIntegration.setup();
 
 		this.queueWindow = new DataQueue(this.activityShell, SWT.DIALOG_TRIM,
 				this.clipboardManager);
