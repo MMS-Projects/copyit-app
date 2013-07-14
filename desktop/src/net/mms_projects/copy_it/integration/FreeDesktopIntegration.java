@@ -24,7 +24,7 @@ public class FreeDesktopIntegration {
 		 */
 		try {
 			URL inputUrl = getClass().getResource(
-					"/images/app_icon_small.png");
+					"/images/icon-16-mono.png");
 			File dest = new File(PathBuilder.getIconDirectory(16), "copyit.png");
 			FileUtils.copyURLToFile(inputUrl, dest);
 		} catch (IOException e1) {
@@ -37,7 +37,7 @@ public class FreeDesktopIntegration {
 		 */
 		try {
 			URL inputUrl = getClass().getResource(
-					"/images/logo.png");
+					"/images/icon-512.png");
 			File dest = new File(PathBuilder.getIconDirectory(512), "copyit.png");
 			FileUtils.copyURLToFile(inputUrl, dest);
 		} catch (IOException e1) {
