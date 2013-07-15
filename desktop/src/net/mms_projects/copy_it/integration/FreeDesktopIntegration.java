@@ -131,7 +131,7 @@ public class FreeDesktopIntegration extends EnvironmentIntegration {
 		 * auto start
 		 */
 		@Override
-		public void setupAutostartup() {
+		public void enableAutostart() {
 			/*
 			 * Write a .desktop file to the auto start directory
 			 */

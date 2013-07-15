@@ -45,7 +45,7 @@ public class WindowsIntegration extends EnvironmentIntegration {
 			EnvironmentIntegration.AutostartManager {
 
 		@Override
-		public void setupAutostartup() throws AutoStartSetupException {
+		public void enableAutostart() throws AutoStartSetupException {
 			List<String> content = new ArrayList<String>();
 			content.add("@echo off");
 			content.add("start " + JavaCommandLine.generateJavaCommandLine());

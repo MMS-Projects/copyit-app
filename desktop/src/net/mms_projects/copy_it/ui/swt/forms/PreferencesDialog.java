@@ -271,7 +271,7 @@ public class PreferencesDialog extends GeneralDialog {
 					 * environment
 					 */
 					environmentIntegration.getAutostartManager()
-							.setupAutostartup();
+							.enableAutostart();
 
 					/*
 					 * Tell the user the setup is done
