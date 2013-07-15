@@ -2,6 +2,7 @@ package net.mms_projects.copy_it.ui.swt.forms;
 
 import net.mms_projects.copy_it.EnvironmentIntegration;
 import net.mms_projects.copy_it.EnvironmentIntegration.AutostartManager.AutoStartSetupException;
+import net.mms_projects.copy_it.EnvironmentIntegration.NotificationManager.NotificationUrgency;
 import net.mms_projects.copy_it.LoginResponse;
 import net.mms_projects.copy_it.Messages;
 import net.mms_projects.copy_it.Settings;
@@ -46,6 +47,8 @@ public class PreferencesDialog extends GeneralDialog {
 
 	private Button btnEnableQueue;
 
+	private int notificationId = 10;
+
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	/**
@@ -80,6 +83,14 @@ public class PreferencesDialog extends GeneralDialog {
 		}
 
 		this.settings.saveProperties();
+		/*
+		 * Show a notification to the user telling that the preferences have
+		 * been saved
+		 */
+		this.environmentIntegration.getNotificationManager().notify(
+				this.notificationId, NotificationUrgency.LOW, "copyit",
+				Messages.getString("app_name"),
+				Messages.getString("preferences.messge.saved"));
 	}
 
 	/**
