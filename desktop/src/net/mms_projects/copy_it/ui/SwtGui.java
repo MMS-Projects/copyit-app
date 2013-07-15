@@ -5,7 +5,13 @@ import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import net.mms_projects.copy_it.*;
+import net.mms_projects.copy_it.ClipboardManager;
+import net.mms_projects.copy_it.EnvironmentIntegration;
+import net.mms_projects.copy_it.Messages;
+import net.mms_projects.copy_it.OpenBrowser;
+import net.mms_projects.copy_it.Settings;
+import net.mms_projects.copy_it.SyncListener;
+import net.mms_projects.copy_it.SyncManager;
 import net.mms_projects.copy_it.api.ServerApi;
 import net.mms_projects.copy_it.api.endpoints.GetBuildInfo;
 import net.mms_projects.copy_it.api.responses.JenkinsBuildResponse;
@@ -49,7 +55,8 @@ public class SwtGui extends AbstractUi {
 		} catch (UnsatisfiedLinkError error) {
 			error.printStackTrace();
 
-			String message = Messages.getString("text.error.swt_loading", error.getMessage());
+			String message = Messages.getString("text.error.swt_loading",
+					error.getMessage());
 			JOptionPane.showMessageDialog(new JFrame(), message, "Dialog",
 					JOptionPane.ERROR_MESSAGE);
 			System.exit(1);
@@ -77,27 +84,30 @@ public class SwtGui extends AbstractUi {
 			} else if (desktop.equalsIgnoreCase("GNOME")) {
 				GnomeIntegration environmentIntegrationGnome = new GnomeIntegration(
 						CopyItDesktop.dbusConnection, this.settings,
-						this.activityShell, syncManager,
-						clipboardManager);
-				syncManager.addListener(environmentIntegrationGnome.getSwtIntegration());
-				clipboardManager.addListener(environmentIntegrationGnome.getSwtIntegration());
+						this.activityShell, syncManager, clipboardManager);
+				syncManager.addListener(environmentIntegrationGnome
+						.getSwtIntegration());
+				clipboardManager.addListener(environmentIntegrationGnome
+						.getSwtIntegration());
 
 				environmentIntegration = environmentIntegrationGnome;
 			}
 		} else if (OSValidator.isWindows()) {
-			environmentIntegration = new WindowsIntegration(
-					settings, activityShell, syncManager, clipboardManager);
+			environmentIntegration = new WindowsIntegration(settings,
+					activityShell, syncManager, clipboardManager);
 		}
 		if (environmentIntegration == null) {
-			SwtIntegration environmentIntegrationSwt = new SwtIntegration(this.settings,
-					this.activityShell, syncManager,
+			SwtIntegration environmentIntegrationSwt = new SwtIntegration(
+					this.settings, this.activityShell, syncManager,
 					clipboardManager);
-			syncManager.addListener(environmentIntegrationSwt.getSwtIntegration());
-			clipboardManager.addListener(environmentIntegrationSwt.getSwtIntegration());
+			syncManager.addListener(environmentIntegrationSwt
+					.getSwtIntegration());
+			clipboardManager.addListener(environmentIntegrationSwt
+					.getSwtIntegration());
 
 			environmentIntegration = environmentIntegrationSwt;
 		}
-		
+
 		environmentIntegration.setup();
 
 		this.queueWindow = new DataQueue(this.activityShell, SWT.DIALOG_TRIM,
@@ -108,8 +118,7 @@ public class SwtGui extends AbstractUi {
 	public void open() {
 		if (this.settings.get("run.firsttime") == null) {
 			MessageBox firstTimer = new MessageBox(this.activityShell);
-			firstTimer
-					.setMessage(Messages.getString("text.firstrun"));
+			firstTimer.setMessage(Messages.getString("text.firstrun"));
 			firstTimer.open();
 
 			new PreferencesDialog(this.activityShell, this.settings).open();

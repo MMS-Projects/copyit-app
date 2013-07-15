@@ -13,8 +13,8 @@ import net.mms_projects.copy_it.SyncManager;
 import net.mms_projects.copy_it.ui.swt.forms.AboutDialog;
 import net.mms_projects.copy_it.ui.swt.forms.PreferencesDialog;
 import net.mms_projects.utils.OSValidator;
-
 import net.mms_projects.utils.StringUtils;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
@@ -30,7 +30,8 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class BasicSwtIntegration extends EnvironmentIntegration implements SyncListener, ClipboardListener {
+public class BasicSwtIntegration extends EnvironmentIntegration implements
+		SyncListener, ClipboardListener {
 
 	protected Display display = Display.getDefault();
 	protected Menu menu;
@@ -59,17 +60,17 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements SyncL
 		this.syncManager = syncManager;
 		this.clipboardManager = clipboardManager;
 	}
-	
+
 	@Override
 	public void standaloneSetup() {
-		Image trayImage = SWTResourceManager
-				.getImage(getClass(), "/images/icon-16.png");
+		Image trayImage = SWTResourceManager.getImage(getClass(),
+				"/images/icon-16.png");
 		if (OSValidator.isUnix()) {
 			String desktop = System.getenv("XDG_CURRENT_DESKTOP");
 			if (desktop.equalsIgnoreCase("Unity")) {
 				log.debug("Running on {} using the monochrome icon", desktop);
-				trayImage = SWTResourceManager
-						.getImage(getClass(), "/images/icon-16-mono.png");
+				trayImage = SWTResourceManager.getImage(getClass(),
+						"/images/icon-16-mono.png");
 			}
 		}
 
@@ -176,14 +177,14 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements SyncL
 		@Override
 		public void notify(int id, NotificationUrgency urgency, String icon,
 				final String summary, String body) {
-            String content;
-            if (body.length() > 100) {
-                content = StringUtils.ellipsize(body, 100);
-            } else {
-                content = body;
-            }
-            final String finalContent = content;
-            this.display.asyncExec(new Runnable() {
+			String content;
+			if (body.length() > 100) {
+				content = StringUtils.ellipsize(body, 100);
+			} else {
+				content = body;
+			}
+			final String finalContent = content;
+			this.display.asyncExec(new Runnable() {
 				@Override
 				public void run() {
 					final ToolTip tip = new ToolTip(activityShell, SWT.BALLOON
