@@ -157,6 +157,10 @@ abstract public class EnvironmentIntegration {
 		 *             up the auto start
 		 */
 		public void enableAutostart() throws AutoStartSetupException;
+		
+		public boolean isEnabled() throws AutoStartSetupException;
+		
+		public void disableAutostart() throws AutoStartSetupException;
 	}
 
 }

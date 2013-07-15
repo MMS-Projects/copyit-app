@@ -126,6 +126,13 @@ public class FreeDesktopIntegration extends EnvironmentIntegration {
 	class FreeDesktopAutostartManager implements
 			EnvironmentIntegration.AutostartManager {
 
+		@Override
+		public boolean isEnabled() throws AutoStartSetupException {
+			File file = new File(PathBuilder.getAutostartDirectory(),
+					"copyit.desktop");
+			return file.exists();
+		}
+
 		/**
 		 * This creates a .desktop file in the auto start directory to make it
 		 * auto start
@@ -137,6 +144,13 @@ public class FreeDesktopIntegration extends EnvironmentIntegration {
 			 */
 			FreeDesktopIntegration.this.writeDesktopFile(PathBuilder
 					.getAutostartDirectory());
+		}
+
+		@Override
+		public void disableAutostart() throws AutoStartSetupException {
+			File file = new File(PathBuilder.getAutostartDirectory(),
+					"copyit.desktop");
+			file.delete();
 		}
 
 	}
