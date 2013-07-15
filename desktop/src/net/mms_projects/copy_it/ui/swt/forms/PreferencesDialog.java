@@ -32,6 +32,7 @@ public class PreferencesDialog extends GeneralDialog {
 	protected Shell shell;
 
 	private Settings settings;
+	private EnvironmentIntegration environmentIntegration;
 
 	private Text textEncryptionPassphrase;
 	private Label lblDeviceIdHere;
