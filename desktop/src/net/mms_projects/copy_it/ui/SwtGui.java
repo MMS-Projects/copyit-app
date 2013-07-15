@@ -17,6 +17,7 @@ import net.mms_projects.copy_it.api.endpoints.GetBuildInfo;
 import net.mms_projects.copy_it.api.responses.JenkinsBuildResponse;
 import net.mms_projects.copy_it.app.CopyItDesktop;
 import net.mms_projects.copy_it.clipboard_backends.SwtBackend;
+import net.mms_projects.copy_it.integration.FreeDesktopIntegration;
 import net.mms_projects.copy_it.integration.GnomeIntegration;
 import net.mms_projects.copy_it.integration.SwtIntegration;
 import net.mms_projects.copy_it.integration.UnityIntegration;
@@ -87,6 +88,13 @@ public class SwtGui extends AbstractUi {
 				environmentIntegration = new GnomeIntegration(
 						CopyItDesktop.dbusConnection, this.settings,
 						this.activityShell, syncManager, clipboardManager);
+			} else {
+				environmentIntegration = new SwtIntegration(this.settings,
+						this.activityShell, syncManager, clipboardManager);
+				environmentIntegration
+						.addIntegration(new FreeDesktopIntegration(
+								environmentIntegration,
+								CopyItDesktop.dbusConnection));
 			}
 		} else if (OSValidator.isWindows()) {
 			environmentIntegration = new WindowsIntegration(settings,
