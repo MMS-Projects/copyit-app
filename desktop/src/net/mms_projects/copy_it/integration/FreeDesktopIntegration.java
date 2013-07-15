@@ -113,7 +113,7 @@ public class FreeDesktopIntegration extends EnvironmentIntegration {
 		content.add("Type=Application");
 		content.add("Name=" + Messages.getString("app_name"));
 		content.add("Icon=copyit");
-		content.add("Exec=" + JavaCommandLine.generateJavaCommandLine() + " %f");
+		content.add("Exec=" + JavaCommandLine.generateJavaCommandLine());
 		content.add("Terminal=false");
 		content.add("StartupNotify=true");
 		return content;
