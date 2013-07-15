@@ -1,5 +1,6 @@
 package net.mms_projects.copy_it.ui.swt.forms;
 
+import net.mms_projects.copy_it.EnvironmentIntegration;
 import net.mms_projects.copy_it.LoginResponse;
 import net.mms_projects.copy_it.Messages;
 import net.mms_projects.copy_it.Settings;
@@ -50,10 +51,12 @@ public class PreferencesDialog extends GeneralDialog {
 	 * @param Settings
 	 *            the settings
 	 */
-	public PreferencesDialog(Shell parent, Settings settings) {
+	public PreferencesDialog(Shell parent, Settings settings,
+			EnvironmentIntegration environmentIntegration) {
 		super(parent, SWT.DIALOG_TRIM);
 
 		this.settings = settings;
+		this.environmentIntegration = environmentIntegration;
 
 		setText(Messages.getString("title_activity_settings"));
 	}
