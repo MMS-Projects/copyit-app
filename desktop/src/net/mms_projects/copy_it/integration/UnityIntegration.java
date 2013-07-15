@@ -105,7 +105,8 @@ public class UnityIntegration extends EnvironmentIntegration implements
 			e1.printStackTrace();
 		}
 
-		File script = CopyItDesktop.exportResource("desktop-integration.py");
+		File script = CopyItDesktop
+				.exportResource("scripts/desktop-integration.py");
 		if (script == null) {
 			script = new File("scripts/desktop-integration.py");
 		}
