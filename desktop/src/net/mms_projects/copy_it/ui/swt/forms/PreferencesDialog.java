@@ -220,7 +220,23 @@ public class PreferencesDialog extends GeneralDialog {
 		this.lblDeviceIdHere.setText("Device id here...");
 		this.btnLogin.setText(Messages.getString("button_login"));
 		this.btnManualLogin.setText("Manual login ");
-		this.btnSetupAutoStart.setText(Messages.getString("autostart.button.enable"));
+		if (this.environmentIntegration.hasAutostartManager()) {
+			try {
+				if (!this.environmentIntegration.getAutostartManager()
+						.isEnabled()) {
+					this.btnSetupAutoStart.setText(Messages
+							.getString("autostart.button.enable"));
+				} else {
+					this.btnSetupAutoStart.setText(Messages
+							.getString("autostart.button.disable"));
+				}
+			} catch (AutoStartSetupException e) {
+				e.printStackTrace();
+			}
+		} else {
+			this.btnSetupAutoStart.setText(Messages
+					.getString("autostart.button.not_available"));
+		}
 		// Security tab
 		tbtmSecurity.setText("Security");
 		tbtmSecurity.setControl(compositeSecurity);
@@ -266,19 +282,36 @@ public class PreferencesDialog extends GeneralDialog {
 						PreferencesDialog.this.shell);
 
 				try {
-					/*
-					 * Setup the auto start the way it should in the current
-					 * environment
-					 */
-					environmentIntegration.getAutostartManager()
-							.enableAutostart();
+					if (!environmentIntegration.getAutostartManager()
+							.isEnabled()) {
+						/*
+						 * Setup the auto start the way it should in the current
+						 * environment
+						 */
+						environmentIntegration.getAutostartManager()
+								.enableAutostart();
 
-					/*
-					 * Tell the user the setup is done
-					 */
-					messageBox.setMessage(Messages
-							.getString("autostart.message.setup_done"));
-					messageBox.open();
+						/*
+						 * Tell the user the setup is done
+						 */
+						messageBox.setMessage(Messages
+								.getString("autostart.message.enabled"));
+						messageBox.open();
+					} else {
+						/*
+						 * Setup the auto start the way it should in the current
+						 * environment
+						 */
+						environmentIntegration.getAutostartManager()
+								.disableAutostart();
+
+						/*
+						 * Tell the user the setup is done
+						 */
+						messageBox.setMessage(Messages
+								.getString("autostart.message.disabled"));
+						messageBox.open();
+					}
 				} catch (AutoStartSetupException e) {
 					/*
 					 * Show the user a nice error dialog explaining the error
@@ -288,6 +321,7 @@ public class PreferencesDialog extends GeneralDialog {
 							e.getLocalizedMessage()));
 					messageBox.open();
 				}
+				updateForm();
 			}
 		});
 		// Encryption enable checkbox
@@ -338,6 +372,25 @@ public class PreferencesDialog extends GeneralDialog {
 		if (this.settings.get("device.id") != null) {
 			this.btnManualLogin.setText("Relogin (manual)");
 		}
+
+		if (this.environmentIntegration.hasAutostartManager()) {
+			try {
+				if (!this.environmentIntegration.getAutostartManager()
+						.isEnabled()) {
+					this.btnSetupAutoStart.setText(Messages
+							.getString("autostart.button.enable"));
+				} else {
+					this.btnSetupAutoStart.setText(Messages
+							.getString("autostart.button.disable"));
+				}
+			} catch (AutoStartSetupException e) {
+				e.printStackTrace();
+			}
+		} else {
+			this.btnSetupAutoStart.setText(Messages
+					.getString("autostart.button.not_available"));
+		}
+
 		btnEnablePolling.setSelection(this.settings
 				.getBoolean("sync.polling.enabled"));
 		btnEnableQueue.setSelection(this.settings
