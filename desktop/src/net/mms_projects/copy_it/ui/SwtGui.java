@@ -76,19 +76,22 @@ public class SwtGui extends AbstractUi {
 
 		if (OSValidator.isUnix()) {
 			String desktop = System.getenv("XDG_CURRENT_DESKTOP");
-			if (desktop.equalsIgnoreCase("Unity")) {
-				UnityIntegration environmentIntegrationUnity = new UnityIntegration(
-						CopyItDesktop.dbusConnection, this.settings,
-						this.activityShell, syncManager, clipboardManager);
-				syncManager.addListener(environmentIntegrationUnity);
-				clipboardManager.addListener(environmentIntegrationUnity);
+			if (desktop != null) {
+				if (desktop.equalsIgnoreCase("Unity")) {
+					UnityIntegration environmentIntegrationUnity = new UnityIntegration(
+							CopyItDesktop.dbusConnection, this.settings,
+							this.activityShell, syncManager, clipboardManager);
+					syncManager.addListener(environmentIntegrationUnity);
+					clipboardManager.addListener(environmentIntegrationUnity);
 
-				environmentIntegration = environmentIntegrationUnity;
-			} else if (desktop.equalsIgnoreCase("GNOME")) {
-				environmentIntegration = new GnomeIntegration(
-						CopyItDesktop.dbusConnection, this.settings,
-						this.activityShell, syncManager, clipboardManager);
-			} else {
+					environmentIntegration = environmentIntegrationUnity;
+				} else if (desktop.equalsIgnoreCase("GNOME")) {
+					environmentIntegration = new GnomeIntegration(
+							CopyItDesktop.dbusConnection, this.settings,
+							this.activityShell, syncManager, clipboardManager);
+				}
+			}
+			if (environmentIntegration == null) {
 				environmentIntegration = new SwtIntegration(this.settings,
 						this.activityShell, syncManager, clipboardManager);
 				environmentIntegration
