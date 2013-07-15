@@ -46,6 +46,8 @@ public class PreferencesDialog extends GeneralDialog {
 
 	private Button btnEnableQueue;
 
+	private int notificationId = 10;
+
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	/**
@@ -80,6 +82,14 @@ public class PreferencesDialog extends GeneralDialog {
 		}
 
 		this.settings.saveProperties();
+		/*
+		 * Show a notification to the user telling that the preferences have
+		 * been saved
+		 */
+		this.environmentIntegration.getNotificationManager().notify(
+				this.notificationId, NotificationUrgency.LOW, "copyit",
+				Messages.getString("app_name"),
+				Messages.getString("preferences.messge.saved"));
 	}
 
 	/**
@@ -220,7 +230,8 @@ public class PreferencesDialog extends GeneralDialog {
 		this.lblDeviceIdHere.setText("Device id here...");
 		this.btnLogin.setText(Messages.getString("button_login"));
 		this.btnManualLogin.setText("Manual login ");
-		this.btnSetupAutoStart.setText(Messages.getString("autostart.button.enable"));
+		this.btnSetupAutoStart.setText(Messages
+				.getString("autostart.button.enable"));
 		// Security tab
 		tbtmSecurity.setText("Security");
 		tbtmSecurity.setControl(compositeSecurity);
