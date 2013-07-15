@@ -126,11 +126,37 @@ abstract public class EnvironmentIntegration {
 	 * A interface that describes a basic auto start manager
 	 */
 	static public interface AutostartManager {
+		public static class AutoStartSetupException extends Exception {
+
+			private static final long serialVersionUID = -2363782709319312249L;
+
+			public AutoStartSetupException() {
+				super();
+			}
+
+			public AutoStartSetupException(String message) {
+				super(message);
+			}
+
+			public AutoStartSetupException(String message, Throwable cause) {
+				super(message, cause);
+			}
+
+			public AutoStartSetupException(Throwable cause) {
+				super(cause);
+			}
+
+		}
+
 		/**
 		 * This method sets up the auto start the way it should in the
 		 * environment it belongs to.
+		 * 
+		 * @throws AutoStartSetupException
+		 *             This gets thrown when something bad happens while setting
+		 *             up the auto start
 		 */
-		public void setupAutostartup();
+		public void setupAutostartup() throws AutoStartSetupException;
 	}
 
 }
