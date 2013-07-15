@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-<string name="dashboard_button_login">Login</string>
+<string name="dashboard_button_login">Log ind</string>
     <string name="dashboard_button_settings">Indstillinger</string>
     <string name="dashboard_button_about">Om</string>
     <string name="dashboard_button_history">Historik</string>
@@ -13,7 +13,7 @@
     <string name="pref_history_tracking_state_summary_off">Dine handlinger er ikke gemt</string>
     <string name="pref_history_clear">Ryd historik</string>
     <string name="pref_logout">Log ud</string>
-    <string name="title_activity_login">Login</string>
+    <string name="title_activity_login">Log in</string>
     <string name="title_activity_welcome">Velkommen til CopyIt</string>
     <string name="title_activity_settings">Indstillinger</string>
     <string name="title_activity_logged_out">Logget ud</string>
