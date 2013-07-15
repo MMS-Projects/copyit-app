@@ -2,6 +2,7 @@ package net.mms_projects.copy_it.ui.swt.forms;
 
 import net.mms_projects.copy_it.EnvironmentIntegration;
 import net.mms_projects.copy_it.EnvironmentIntegration.AutostartManager.AutoStartSetupException;
+import net.mms_projects.copy_it.EnvironmentIntegration.NotificationManager.NotificationUrgency;
 import net.mms_projects.copy_it.LoginResponse;
 import net.mms_projects.copy_it.Messages;
 import net.mms_projects.copy_it.Settings;
