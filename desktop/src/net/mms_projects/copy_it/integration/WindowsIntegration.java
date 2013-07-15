@@ -45,7 +45,14 @@ public class WindowsIntegration extends EnvironmentIntegration {
 			EnvironmentIntegration.AutostartManager {
 
 		@Override
-		public void setupAutostartup() throws AutoStartSetupException {
+		public boolean isEnabled() throws AutoStartSetupException {
+			File file = new File(PathBuilder.getAutostartDirectory(),
+					"copyit.bat");
+			return file.exists();
+		}
+
+		@Override
+		public void enableAutostart() throws AutoStartSetupException {
 			List<String> content = new ArrayList<String>();
 			content.add("@echo off");
 			content.add("start " + JavaCommandLine.generateJavaCommandLine());
@@ -57,6 +64,13 @@ public class WindowsIntegration extends EnvironmentIntegration {
 			} catch (IOException e) {
 				throw new AutoStartSetupException(e);
 			}
+		}
+
+		@Override
+		public void disableAutostart() throws AutoStartSetupException {
+			File file = new File(PathBuilder.getAutostartDirectory(),
+					"copyit.bat");
+			file.delete();
 		}
 
 	}

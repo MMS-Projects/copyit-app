@@ -149,14 +149,18 @@ abstract public class EnvironmentIntegration {
 		}
 
 		/**
-		 * This method sets up the auto start the way it should in the
+		 * This method enabled the auto start the way it should in the
 		 * environment it belongs to.
 		 * 
 		 * @throws AutoStartSetupException
 		 *             This gets thrown when something bad happens while setting
 		 *             up the auto start
 		 */
-		public void setupAutostartup() throws AutoStartSetupException;
+		public void enableAutostart() throws AutoStartSetupException;
+		
+		public boolean isEnabled() throws AutoStartSetupException;
+		
+		public void disableAutostart() throws AutoStartSetupException;
 	}
 
 }
