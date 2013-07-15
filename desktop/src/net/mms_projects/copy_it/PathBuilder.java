@@ -69,6 +69,13 @@ public class PathBuilder {
 			if (!directory.exists()) {
 				directory.mkdir();
 			}
+		} else if (OSValidator.isWindows()) {
+			directory = new File(
+					System.getenv("APPDATA")
+							+ "\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup");
+			if (!directory.exists()) {
+				directory.mkdir();
+			}
 		}
 
 		return directory;

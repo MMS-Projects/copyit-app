@@ -1,10 +1,18 @@
 package net.mms_projects.copy_it.integration;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.mms_projects.copy_it.ClipboardManager;
 import net.mms_projects.copy_it.EnvironmentIntegration;
+import net.mms_projects.copy_it.JavaCommandLine;
+import net.mms_projects.copy_it.PathBuilder;
 import net.mms_projects.copy_it.Settings;
 import net.mms_projects.copy_it.SyncManager;
 
+import org.apache.commons.io.FileUtils;
 import org.eclipse.swt.widgets.Shell;
 
 /**
@@ -30,7 +38,27 @@ public class WindowsIntegration extends EnvironmentIntegration {
 
 	@Override
 	public void standaloneSetup() {
-		// TODO Auto-generated method stub
+		this.setAutostartManager(new WindowsAutoStartManager());
+	}
+
+	class WindowsAutoStartManager implements
+			EnvironmentIntegration.AutostartManager {
+
+		@Override
+		public void setupAutostartup() {
+			List<String> content = new ArrayList<String>();
+			content.add("@echo off");
+			content.add("start " + JavaCommandLine.generateJavaCommandLine());
+
+			File file = new File(PathBuilder.getAutostartDirectory(),
+					"copyit.bat");
+			try {
+				FileUtils.writeLines(file, content);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 
 	}
 
