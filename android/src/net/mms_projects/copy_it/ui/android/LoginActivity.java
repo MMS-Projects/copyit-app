@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import net.mms_projects.copy_it.LoginResponse;
 import net.mms_projects.copy_it.R;
+import net.mms_projects.copy_it.activities.BrowserLoginActivity;
 import net.mms_projects.copy_it.android.tasks.SetupDeviceTask;
 import net.mms_projects.copy_it.api.ServerApi;
 import android.app.AlertDialog;
