@@ -25,7 +25,6 @@ public class GnomeIntegration extends EnvironmentIntegration {
 		 */
 		syncManager.addListener(swtIntegration);
 		clipboardManager.addListener(swtIntegration);
-
 		/*
 		 * Add FreeDesktop integrations like notifications and writing .desktop
 		 * files and the appropriate icons for the .desktop files
