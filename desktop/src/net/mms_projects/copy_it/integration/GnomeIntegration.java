@@ -1,18 +1,30 @@
 package net.mms_projects.copy_it.integration;
 
 import net.mms_projects.copy_it.ClipboardManager;
+import net.mms_projects.copy_it.EnvironmentIntegration;
 import net.mms_projects.copy_it.Settings;
 import net.mms_projects.copy_it.SyncManager;
 
 import org.eclipse.swt.widgets.Shell;
 import org.freedesktop.dbus.DBusConnection;
 
-public class GnomeIntegration extends SwtIntegration {
+public class GnomeIntegration extends EnvironmentIntegration {
 
 	public GnomeIntegration(DBusConnection dbusConnection, Settings settings,
 			Shell activityShell, SyncManager syncManager,
 			ClipboardManager clipboardManager) {
-		super(settings, activityShell, syncManager, clipboardManager);
+		/*
+		 * Adds SWT integration like a tray icon
+		 */
+		BasicSwtIntegration swtIntegration = new BasicSwtIntegration(this,
+				settings, activityShell, syncManager, clipboardManager);
+		this.addIntegration(swtIntegration);
+
+		/*
+		 * Add some listeners to the SWT integration
+		 */
+		syncManager.addListener(swtIntegration);
+		clipboardManager.addListener(swtIntegration);
 
 		/*
 		 * Add FreeDesktop integrations like notifications and writing .desktop

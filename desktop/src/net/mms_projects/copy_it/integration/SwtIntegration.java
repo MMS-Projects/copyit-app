@@ -9,16 +9,20 @@ import org.eclipse.swt.widgets.Shell;
 
 public class SwtIntegration extends EnvironmentIntegration {
 
-	private BasicSwtIntegration swtIntegration;
-
 	public SwtIntegration(Settings settings, Shell activityShell,
 			SyncManager syncManager, ClipboardManager clipboardManager) {
 		/*
 		 * Adds SWT integration like a tray icon
 		 */
-		this.setSwtIntegration(new BasicSwtIntegration(this, settings,
-				activityShell, syncManager, clipboardManager));
-		this.addIntegration(this.getSwtIntegration());
+		BasicSwtIntegration swtIntegration = new BasicSwtIntegration(this,
+				settings, activityShell, syncManager, clipboardManager);
+		this.addIntegration(swtIntegration);
+
+		/*
+		 * Add some listeners to the SWT integration
+		 */
+		syncManager.addListener(swtIntegration);
+		clipboardManager.addListener(swtIntegration);
 	}
 
 	@Override
@@ -27,11 +31,4 @@ public class SwtIntegration extends EnvironmentIntegration {
 
 	}
 
-	public void setSwtIntegration(BasicSwtIntegration swtIntegration) {
-		this.swtIntegration = swtIntegration;
-	}
-
-	public BasicSwtIntegration getSwtIntegration() {
-		return this.swtIntegration;
-	}
 }

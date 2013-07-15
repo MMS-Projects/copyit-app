@@ -82,30 +82,17 @@ public class SwtGui extends AbstractUi {
 
 				environmentIntegration = environmentIntegrationUnity;
 			} else if (desktop.equalsIgnoreCase("GNOME")) {
-				GnomeIntegration environmentIntegrationGnome = new GnomeIntegration(
+				environmentIntegration = new GnomeIntegration(
 						CopyItDesktop.dbusConnection, this.settings,
 						this.activityShell, syncManager, clipboardManager);
-				syncManager.addListener(environmentIntegrationGnome
-						.getSwtIntegration());
-				clipboardManager.addListener(environmentIntegrationGnome
-						.getSwtIntegration());
-
-				environmentIntegration = environmentIntegrationGnome;
 			}
 		} else if (OSValidator.isWindows()) {
 			environmentIntegration = new WindowsIntegration(settings,
 					activityShell, syncManager, clipboardManager);
 		}
 		if (environmentIntegration == null) {
-			SwtIntegration environmentIntegrationSwt = new SwtIntegration(
-					this.settings, this.activityShell, syncManager,
-					clipboardManager);
-			syncManager.addListener(environmentIntegrationSwt
-					.getSwtIntegration());
-			clipboardManager.addListener(environmentIntegrationSwt
-					.getSwtIntegration());
-
-			environmentIntegration = environmentIntegrationSwt;
+			environmentIntegration = new SwtIntegration(this.settings,
+					this.activityShell, syncManager, clipboardManager);
 		}
 
 		environmentIntegration.setup();
