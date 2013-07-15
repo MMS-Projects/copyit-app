@@ -115,7 +115,6 @@
 			</fileset>
 			<fileset dir="android/res" />
 			<fileset dir="desktop/res" />
-			<fileset dir="desktop/scripts" />
 			<fileset dir="desktop/libs/linux">
 				<include name="**/*.so" />
 			</fileset>
@@ -153,7 +152,6 @@
 			</fileset>
 			<fileset dir="android/res" />
 			<fileset dir="desktop/res" />
-			<fileset dir="desktop/scripts" />
 			<fileset dir="desktop/libs/linux">
 				<include name="**/*.so" />
 			</fileset>
