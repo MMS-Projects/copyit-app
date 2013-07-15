@@ -45,7 +45,7 @@ public class WindowsIntegration extends EnvironmentIntegration {
 			EnvironmentIntegration.AutostartManager {
 
 		@Override
-		public void setupAutostartup() {
+		public void setupAutostartup() throws AutoStartSetupException {
 			List<String> content = new ArrayList<String>();
 			content.add("@echo off");
 			content.add("start " + JavaCommandLine.generateJavaCommandLine());
@@ -55,8 +55,7 @@ public class WindowsIntegration extends EnvironmentIntegration {
 			try {
 				FileUtils.writeLines(file, content);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new AutoStartSetupException(e);
 			}
 		}
 
