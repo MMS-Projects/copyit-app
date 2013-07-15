@@ -12,9 +12,9 @@ import net.mms_projects.copy_it.api.responses.JenkinsBuildResponse;
 import net.mms_projects.copy_it.app.CopyItDesktop;
 import net.mms_projects.copy_it.clipboard_backends.SwtBackend;
 import net.mms_projects.copy_it.integration.GnomeIntegration;
-import net.mms_projects.copy_it.integration.BasicSwtIntegration;
 import net.mms_projects.copy_it.integration.SwtIntegration;
 import net.mms_projects.copy_it.integration.UnityIntegration;
+import net.mms_projects.copy_it.integration.WindowsIntegration;
 import net.mms_projects.copy_it.ui.swt.forms.DataQueue;
 import net.mms_projects.copy_it.ui.swt.forms.PreferencesDialog;
 import net.mms_projects.utils.OSValidator;
@@ -84,6 +84,9 @@ public class SwtGui extends AbstractUi {
 
 				environmentIntegration = environmentIntegrationGnome;
 			}
+		} else if (OSValidator.isWindows()) {
+			environmentIntegration = new WindowsIntegration(
+					settings, activityShell, syncManager, clipboardManager);
 		}
 		if (environmentIntegration == null) {
 			SwtIntegration environmentIntegrationSwt = new SwtIntegration(this.settings,
