@@ -121,7 +121,7 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements
 		menuItemPreferences.setText("Preferences");
 		menuItemPreferences.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				new PreferencesDialog(activityShell, settings).open();
+				new PreferencesDialog(activityShell, settings, parentIntegration).open();
 			}
 		});
 

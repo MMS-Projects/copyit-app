@@ -183,7 +183,8 @@ public class UnityIntegration extends EnvironmentIntegration implements
 			Display.getDefault().asyncExec(new Runnable() {
 				@Override
 				public void run() {
-					new PreferencesDialog(activityShell, settings).open();
+					new PreferencesDialog(activityShell, settings,
+							UnityIntegration.this).open();
 				}
 			});
 		} else if (signal instanceof DesktopIntegration.action_open_about) {

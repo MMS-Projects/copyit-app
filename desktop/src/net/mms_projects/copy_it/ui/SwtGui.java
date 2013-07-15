@@ -41,6 +41,8 @@ public class SwtGui extends AbstractUi {
 	protected SyncManager syncManager;
 	protected ClipboardManager clipboardManager;
 
+	protected EnvironmentIntegration environmentIntegration;
+
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public SwtGui(Settings settings, SyncManager syncManager,
@@ -97,6 +99,8 @@ public class SwtGui extends AbstractUi {
 
 		environmentIntegration.setup();
 
+		this.environmentIntegration = environmentIntegration;
+
 		this.queueWindow = new DataQueue(this.activityShell, SWT.DIALOG_TRIM,
 				this.clipboardManager);
 	}
@@ -108,7 +112,8 @@ public class SwtGui extends AbstractUi {
 			firstTimer.setMessage(Messages.getString("text.firstrun"));
 			firstTimer.open();
 
-			new PreferencesDialog(this.activityShell, this.settings).open();
+			new PreferencesDialog(this.activityShell, this.settings,
+					this.environmentIntegration).open();
 			this.settings.set("run.firsttime", "nope");
 		}
 
