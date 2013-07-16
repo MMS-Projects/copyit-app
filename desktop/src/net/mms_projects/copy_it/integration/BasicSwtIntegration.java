@@ -10,6 +10,7 @@ import net.mms_projects.copy_it.Messages;
 import net.mms_projects.copy_it.Settings;
 import net.mms_projects.copy_it.SyncListener;
 import net.mms_projects.copy_it.SyncManager;
+import net.mms_projects.copy_it.linux.DesktopEnvironment;
 import net.mms_projects.copy_it.ui.swt.forms.AboutDialog;
 import net.mms_projects.copy_it.ui.swt.forms.PreferencesDialog;
 import net.mms_projects.utils.OSValidator;
@@ -66,9 +67,8 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements
 		Image trayImage = SWTResourceManager.getImage(getClass(),
 				"/images/icon-16.png");
 		if (OSValidator.isUnix()) {
-			String desktop = System.getenv("XDG_CURRENT_DESKTOP");
-			if (desktop.equalsIgnoreCase("Unity")) {
-				log.debug("Running on {} using the monochrome icon", desktop);
+			if (DesktopEnvironment.isUnity()) {
+				log.debug("Running on Unity using the monochrome icon");
 				trayImage = SWTResourceManager.getImage(getClass(),
 						"/images/icon-16-mono.png");
 			}

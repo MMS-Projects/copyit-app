@@ -22,6 +22,7 @@ import net.mms_projects.copy_it.integration.GnomeIntegration;
 import net.mms_projects.copy_it.integration.SwtIntegration;
 import net.mms_projects.copy_it.integration.UnityIntegration;
 import net.mms_projects.copy_it.integration.WindowsIntegration;
+import net.mms_projects.copy_it.linux.DesktopEnvironment;
 import net.mms_projects.copy_it.ui.swt.forms.DataQueue;
 import net.mms_projects.copy_it.ui.swt.forms.PreferencesDialog;
 import net.mms_projects.utils.OSValidator;
@@ -75,8 +76,8 @@ public class SwtGui extends AbstractUi {
 		EnvironmentIntegration environmentIntegration = null;
 
 		if (OSValidator.isUnix()) {
-			String desktop = System.getenv("XDG_CURRENT_DESKTOP");
-			if (desktop.equalsIgnoreCase("Unity")) {
+			switch (DesktopEnvironment.getDesktopEnvironment()) {
+			case Unity:
 				UnityIntegration environmentIntegrationUnity = new UnityIntegration(
 						CopyItDesktop.dbusConnection, this.settings,
 						this.activityShell, syncManager, clipboardManager);
@@ -84,17 +85,20 @@ public class SwtGui extends AbstractUi {
 				clipboardManager.addListener(environmentIntegrationUnity);
 
 				environmentIntegration = environmentIntegrationUnity;
-			} else if (desktop.equalsIgnoreCase("GNOME")) {
+				break;
+			case Gnome:
 				environmentIntegration = new GnomeIntegration(
 						CopyItDesktop.dbusConnection, this.settings,
 						this.activityShell, syncManager, clipboardManager);
-			} else {
+				break;
+			default:
 				environmentIntegration = new SwtIntegration(this.settings,
 						this.activityShell, syncManager, clipboardManager);
 				environmentIntegration
 						.addIntegration(new FreeDesktopIntegration(
 								environmentIntegration,
 								CopyItDesktop.dbusConnection));
+				break;
 			}
 		} else if (OSValidator.isWindows()) {
 			environmentIntegration = new WindowsIntegration(settings,
