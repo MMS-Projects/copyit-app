@@ -2,6 +2,7 @@ package net.mms_projects.copy_it;
 
 import java.io.File;
 
+import net.mms_projects.copy_it.linux.XDG;
 import net.mms_projects.utils.OSValidator;
 
 public class PathBuilder {
@@ -15,8 +16,8 @@ public class PathBuilder {
 				directory.mkdir();
 			}
 		} else if (OSValidator.isUnix()) {
-			directory = new File(System.getenv("HOME") + File.separator
-					+ ".config" + File.separator + "copyit");
+			directory = new File(XDG.getConfigHome() + File.separator
+					+ "copyit");
 			if (!directory.exists()) {
 				directory.mkdir();
 			}
@@ -28,8 +29,7 @@ public class PathBuilder {
 	public static File getCacheDirectory() {
 		File directory = new File("." + File.separator);
 		if (OSValidator.isUnix()) {
-			directory = new File(System.getenv("HOME") + File.separator
-					+ ".cache" + File.separator + "copyit");
+			directory = new File(XDG.getCacheHome() + File.separator + "copyit");
 			if (!directory.exists()) {
 				directory.mkdir();
 			}

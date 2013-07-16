@@ -17,11 +17,11 @@ import net.mms_projects.copy_it.api.endpoints.GetBuildInfo;
 import net.mms_projects.copy_it.api.responses.JenkinsBuildResponse;
 import net.mms_projects.copy_it.app.CopyItDesktop;
 import net.mms_projects.copy_it.clipboard_backends.SwtBackend;
-import net.mms_projects.copy_it.integration.FreeDesktopIntegration;
-import net.mms_projects.copy_it.integration.GnomeIntegration;
+import net.mms_projects.copy_it.integration.DefaultLinuxIntegration;
 import net.mms_projects.copy_it.integration.SwtIntegration;
 import net.mms_projects.copy_it.integration.UnityIntegration;
 import net.mms_projects.copy_it.integration.WindowsIntegration;
+import net.mms_projects.copy_it.linux.DesktopEnvironment;
 import net.mms_projects.copy_it.ui.swt.forms.DataQueue;
 import net.mms_projects.copy_it.ui.swt.forms.PreferencesDialog;
 import net.mms_projects.utils.OSValidator;
@@ -75,29 +75,21 @@ public class SwtGui extends AbstractUi {
 		EnvironmentIntegration environmentIntegration = null;
 
 		if (OSValidator.isUnix()) {
-			String desktop = System.getenv("XDG_CURRENT_DESKTOP");
-			if (desktop != null) {
-				if (desktop.equalsIgnoreCase("Unity")) {
-					UnityIntegration environmentIntegrationUnity = new UnityIntegration(
-							CopyItDesktop.dbusConnection, this.settings,
-							this.activityShell, syncManager, clipboardManager);
-					syncManager.addListener(environmentIntegrationUnity);
-					clipboardManager.addListener(environmentIntegrationUnity);
-
-					environmentIntegration = environmentIntegrationUnity;
-				} else if (desktop.equalsIgnoreCase("GNOME")) {
-					environmentIntegration = new GnomeIntegration(
-							CopyItDesktop.dbusConnection, this.settings,
-							this.activityShell, syncManager, clipboardManager);
-				}
-			}
-			if (environmentIntegration == null) {
-				environmentIntegration = new SwtIntegration(this.settings,
+			switch (DesktopEnvironment.getDesktopEnvironment()) {
+			case Unity:
+				UnityIntegration environmentIntegrationUnity = new UnityIntegration(
+						CopyItDesktop.dbusConnection, this.settings,
 						this.activityShell, syncManager, clipboardManager);
-				environmentIntegration
-						.addIntegration(new FreeDesktopIntegration(
-								environmentIntegration,
-								CopyItDesktop.dbusConnection));
+				syncManager.addListener(environmentIntegrationUnity);
+				clipboardManager.addListener(environmentIntegrationUnity);
+
+				environmentIntegration = environmentIntegrationUnity;
+				break;
+			default:
+				environmentIntegration = new DefaultLinuxIntegration(
+						CopyItDesktop.dbusConnection, this.settings,
+						this.activityShell, syncManager, clipboardManager);
+				break;
 			}
 		} else if (OSValidator.isWindows()) {
 			environmentIntegration = new WindowsIntegration(settings,
