@@ -8,10 +8,10 @@ import net.mms_projects.copy_it.SyncManager;
 import org.eclipse.swt.widgets.Shell;
 import org.freedesktop.dbus.DBusConnection;
 
-public class GnomeIntegration extends EnvironmentIntegration {
+public class DefaultLinuxIntegration extends EnvironmentIntegration {
 
-	public GnomeIntegration(DBusConnection dbusConnection, Settings settings,
-			Shell activityShell, SyncManager syncManager,
+	public DefaultLinuxIntegration(DBusConnection dbusConnection,
+			Settings settings, Shell activityShell, SyncManager syncManager,
 			ClipboardManager clipboardManager) {
 		/*
 		 * Adds SWT integration like a tray icon
