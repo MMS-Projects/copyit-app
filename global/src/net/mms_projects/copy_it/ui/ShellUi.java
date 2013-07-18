@@ -1,6 +1,7 @@
 package net.mms_projects.copy_it.ui;
 
 import java.io.PrintStream;
+import java.util.Date;
 
 import net.mms_projects.copy_it.ClipboardManager;
 import net.mms_projects.copy_it.Config;
@@ -49,6 +50,24 @@ public class ShellUi implements UserInterfaceImplementation {
 			public void hide() {
 				// TODO Auto-generated method stub
 				
+			}
+		});
+		this.setQueueUserInterface(new QueueUserInterface() {
+			
+			@Override
+			public void show() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void hide() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void addContent(String content, Date date) {
 			}
 		});
 	}
