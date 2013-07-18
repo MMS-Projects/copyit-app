@@ -8,21 +8,21 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Date;
 
+import net.mms_projects.copy_it.Activatable;
 import net.mms_projects.copy_it.ClipboardListener;
 import net.mms_projects.copy_it.ClipboardManager;
+import net.mms_projects.copy_it.Config;
 import net.mms_projects.copy_it.DesktopIntegration;
 import net.mms_projects.copy_it.EnvironmentIntegration;
 import net.mms_projects.copy_it.EnvironmentIntegration.NotificationManager.NotificationUrgency;
-import net.mms_projects.copy_it.Activatable;
 import net.mms_projects.copy_it.FunctionalityManager;
 import net.mms_projects.copy_it.Messages;
 import net.mms_projects.copy_it.PathBuilder;
-import net.mms_projects.copy_it.Config;
-import net.mms_projects.copy_it.SettingsListener;
 import net.mms_projects.copy_it.SyncListener;
 import net.mms_projects.copy_it.SyncManager;
 import net.mms_projects.copy_it.app.CopyItDesktop;
 import net.mms_projects.copy_it.integration.notifications.FreedesktopNotificationManager;
+import net.mms_projects.copy_it.listeners.EnabledListener;
 import net.mms_projects.copy_it.ui.swt.forms.AboutDialog;
 import net.mms_projects.copy_it.ui.swt.forms.PreferencesDialog;
 
@@ -38,7 +38,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class UnityIntegration extends EnvironmentIntegration implements
-		SyncListener, DBusSigHandler, SettingsListener, ClipboardListener {
+		SyncListener, DBusSigHandler, ClipboardListener {
 
 	protected Config settings;
 	protected Shell activityShell;
@@ -50,6 +50,19 @@ public class UnityIntegration extends EnvironmentIntegration implements
 
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	private FunctionalityManager<Activatable> functionality;
+
+	private EnabledListener pollingListener = new EnabledListener() {
+
+		@Override
+		public void onEnabled() {
+			integration.set_enabled(true);
+		}
+
+		@Override
+		public void onDisabled() {
+			integration.set_enabled(false);
+		}
+	};
 
 	public UnityIntegration(DBusConnection dbusConnection, Config settings,
 			FunctionalityManager<Activatable> functionality,
@@ -78,8 +91,6 @@ public class UnityIntegration extends EnvironmentIntegration implements
 
 	@Override
 	public void standaloneSetup() {
-		this.settings.addListener("sync.polling.enabled", this);
-
 		try {
 			dbusConnection.addSigHandler(DesktopIntegration.ready.class, this);
 			dbusConnection.addSigHandler(DesktopIntegration.action_pull.class,
@@ -216,13 +227,6 @@ public class UnityIntegration extends EnvironmentIntegration implements
 			this.functionality.setEnabled("polling", false);
 			this.integration.set_enabled(this.functionality
 					.isEnabled("polling"));
-		}
-	}
-
-	@Override
-	public void onChange(String key, String value) {
-		if ("sync.polling.enabled".equals(key)) {
-			this.integration.set_enabled(Boolean.parseBoolean(value));
 		}
 	}
 
