@@ -27,6 +27,7 @@ import net.mms_projects.copy_it.linux.DesktopEnvironment;
 import net.mms_projects.copy_it.listeners.EnabledListener;
 import net.mms_projects.copy_it.ui.swt.forms.DataQueue;
 import net.mms_projects.copy_it.ui.swt.forms.PreferencesDialog;
+import net.mms_projects.copy_it.ui_old.AbstractUi;
 import net.mms_projects.utils.OSValidator;
 
 import org.eclipse.swt.SWT;

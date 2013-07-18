@@ -34,10 +34,10 @@ import net.mms_projects.copy_it.clipboard_services.AwtService;
 import net.mms_projects.copy_it.listeners.EnabledListener;
 import net.mms_projects.copy_it.sync_services.ApiService;
 import net.mms_projects.copy_it.sync_services.TestService;
-import net.mms_projects.copy_it.ui.AbstractUi;
 import net.mms_projects.copy_it.ui.ShellUi;
 import net.mms_projects.copy_it.ui.SingleCommandUi;
 import net.mms_projects.copy_it.ui.SwtGui;
+import net.mms_projects.copy_it.ui_old.AbstractUi;
 import net.mms_projects.utils.OSValidator;
 
 import org.apache.commons.io.FileUtils;

@@ -6,6 +6,7 @@ import net.mms_projects.copy_it.SyncManager;
 import net.mms_projects.copy_it.ui.interactive_shell.Shell;
 import net.mms_projects.copy_it.ui.interactive_shell.commands.CopyIt;
 import net.mms_projects.copy_it.ui.interactive_shell.commands.PasteIt;
+import net.mms_projects.copy_it.ui_old.AbstractUi;
 import net.mms_projects.irc.channel_bots.pb.CommandHandler;
 import net.mms_projects.irc.channel_bots.pb.commands.Help;
 
