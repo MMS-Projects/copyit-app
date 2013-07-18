@@ -119,7 +119,13 @@ public class SwtInterface implements UserInterfaceImplementation {
 
 	@Override
 	public void close() {
-		this.activityShell.close();
+		Display.getDefault().asyncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				activityShell.close();
+			}
+		});
 	}
 
 	@Override
