@@ -1,7 +1,7 @@
 package net.mms_projects.copy_it.ui;
 
 import net.mms_projects.copy_it.ClipboardManager;
-import net.mms_projects.copy_it.Settings;
+import net.mms_projects.copy_it.Config;
 import net.mms_projects.copy_it.SyncManager;
 import net.mms_projects.copy_it.ui.interactive_shell.Shell;
 import net.mms_projects.copy_it.ui.interactive_shell.commands.CopyIt;
@@ -16,7 +16,7 @@ public class ShellUi extends AbstractUi {
     private SyncManager syncManager;
     private ClipboardManager clipboardManager;
 
-    public ShellUi(Settings settings, SyncManager syncManager, ClipboardManager clipboardManager) {
+    public ShellUi(Config settings, SyncManager syncManager, ClipboardManager clipboardManager) {
         super(settings);
 
         this.syncManager = syncManager;

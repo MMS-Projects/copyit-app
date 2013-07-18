@@ -6,7 +6,7 @@ import java.util.UUID;
 
 import net.mms_projects.copy_it.LoginResponse;
 import net.mms_projects.copy_it.Messages;
-import net.mms_projects.copy_it.Settings;
+import net.mms_projects.copy_it.Config;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
@@ -23,13 +23,13 @@ import org.eclipse.swt.widgets.Shell;
 
 public class AutoLoginDialog extends AbstractLoginDialog {
 
-	protected Settings settings;
+	protected Config settings;
 
 	private Browser browser;
 
 	private Shell windowBuilderShell;
 
-	public AutoLoginDialog(Shell parent, Settings settings) {
+	public AutoLoginDialog(Shell parent, Config settings) {
 		super(parent);
 
 		this.settings = settings;

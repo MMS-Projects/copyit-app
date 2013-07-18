@@ -8,19 +8,21 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Date;
 
+import net.mms_projects.copy_it.Activatable;
 import net.mms_projects.copy_it.ClipboardListener;
 import net.mms_projects.copy_it.ClipboardManager;
+import net.mms_projects.copy_it.Config;
 import net.mms_projects.copy_it.DesktopIntegration;
 import net.mms_projects.copy_it.EnvironmentIntegration;
 import net.mms_projects.copy_it.EnvironmentIntegration.NotificationManager.NotificationUrgency;
+import net.mms_projects.copy_it.FunctionalityManager;
 import net.mms_projects.copy_it.Messages;
 import net.mms_projects.copy_it.PathBuilder;
-import net.mms_projects.copy_it.Settings;
-import net.mms_projects.copy_it.SettingsListener;
 import net.mms_projects.copy_it.SyncListener;
 import net.mms_projects.copy_it.SyncManager;
 import net.mms_projects.copy_it.app.CopyItDesktop;
 import net.mms_projects.copy_it.integration.notifications.FreedesktopNotificationManager;
+import net.mms_projects.copy_it.listeners.EnabledListener;
 import net.mms_projects.copy_it.ui.swt.forms.AboutDialog;
 import net.mms_projects.copy_it.ui.swt.forms.PreferencesDialog;
 
@@ -36,9 +38,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class UnityIntegration extends EnvironmentIntegration implements
-		SyncListener, DBusSigHandler, SettingsListener, ClipboardListener {
+		SyncListener, DBusSigHandler, ClipboardListener {
 
-	protected Settings settings;
+	protected Config settings;
 	protected Shell activityShell;
 	protected SyncManager syncManager;
 	protected ClipboardManager clipboardManager;
@@ -47,8 +49,23 @@ public class UnityIntegration extends EnvironmentIntegration implements
 	private DesktopIntegration integration;
 
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
+	private FunctionalityManager<Activatable> functionality;
 
-	public UnityIntegration(DBusConnection dbusConnection, Settings settings,
+	private EnabledListener pollingListener = new EnabledListener() {
+
+		@Override
+		public void onEnabled() {
+			integration.set_enabled(true);
+		}
+
+		@Override
+		public void onDisabled() {
+			integration.set_enabled(false);
+		}
+	};
+
+	public UnityIntegration(DBusConnection dbusConnection, Config settings,
+			FunctionalityManager<Activatable> functionality,
 			Shell activityShell, SyncManager syncManager,
 			ClipboardManager clipboardManager) {
 		try {
@@ -59,6 +76,7 @@ public class UnityIntegration extends EnvironmentIntegration implements
 			e.printStackTrace();
 		}
 		this.settings = settings;
+		this.functionality = functionality;
 		this.activityShell = activityShell;
 		this.syncManager = syncManager;
 		this.clipboardManager = clipboardManager;
@@ -73,8 +91,6 @@ public class UnityIntegration extends EnvironmentIntegration implements
 
 	@Override
 	public void standaloneSetup() {
-		this.settings.addListener("sync.polling.enabled", this);
-
 		try {
 			dbusConnection.addSigHandler(DesktopIntegration.ready.class, this);
 			dbusConnection.addSigHandler(DesktopIntegration.action_pull.class,
@@ -169,8 +185,8 @@ public class UnityIntegration extends EnvironmentIntegration implements
 						"net.mms_projects.copyit.DesktopIntegration", "/",
 						DesktopIntegration.class);
 				integration.setup(icon, icon);
-				integration.set_enabled(this.settings
-						.getBoolean("sync.polling.enabled"));
+				integration
+						.set_enabled(this.functionality.isEnabled("polling"));
 			} catch (DBusException e) {
 				log.error("Could not connect to desktop integration script although it reported as ready. Exiting...");
 				System.exit(1);
@@ -184,7 +200,7 @@ public class UnityIntegration extends EnvironmentIntegration implements
 			Display.getDefault().asyncExec(new Runnable() {
 				@Override
 				public void run() {
-					new PreferencesDialog(activityShell, settings,
+					new PreferencesDialog(activityShell, settings, functionality,
 							UnityIntegration.this).open();
 				}
 			});
@@ -204,18 +220,13 @@ public class UnityIntegration extends EnvironmentIntegration implements
 				}
 			});
 		} else if (signal instanceof DesktopIntegration.action_enable_sync) {
-			this.settings.set("sync.polling.enabled", true);
-			this.integration.set_enabled(true);
+			this.functionality.setEnabled("polling", true);
+			this.integration.set_enabled(this.functionality
+					.isEnabled("polling"));
 		} else if (signal instanceof DesktopIntegration.action_disable_sync) {
-			this.settings.set("sync.polling.enabled", false);
-			this.integration.set_enabled(false);
-		}
-	}
-
-	@Override
-	public void onChange(String key, String value) {
-		if ("sync.polling.enabled".equals(key)) {
-			this.integration.set_enabled(Boolean.parseBoolean(value));
+			this.functionality.setEnabled("polling", false);
+			this.integration.set_enabled(this.functionality
+					.isEnabled("polling"));
 		}
 	}
 

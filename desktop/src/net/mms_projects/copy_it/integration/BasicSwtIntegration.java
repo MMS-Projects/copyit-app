@@ -6,8 +6,10 @@ import net.mms_projects.copy_it.ClipboardListener;
 import net.mms_projects.copy_it.ClipboardManager;
 import net.mms_projects.copy_it.EnvironmentIntegration;
 import net.mms_projects.copy_it.EnvironmentIntegration.NotificationManager.NotificationUrgency;
+import net.mms_projects.copy_it.Activatable;
+import net.mms_projects.copy_it.FunctionalityManager;
 import net.mms_projects.copy_it.Messages;
-import net.mms_projects.copy_it.Settings;
+import net.mms_projects.copy_it.Config;
 import net.mms_projects.copy_it.SyncListener;
 import net.mms_projects.copy_it.SyncManager;
 import net.mms_projects.copy_it.linux.DesktopEnvironment;
@@ -37,7 +39,7 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements
 	protected Display display = Display.getDefault();
 	protected Menu menu;
 	protected TrayItem trayItem;
-	protected Settings settings;
+	protected Config settings;
 	protected Shell activityShell;
 	protected SyncManager syncManager;
 	protected ClipboardManager clipboardManager;
@@ -47,16 +49,18 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements
 	private MenuItem menuItemCopyIt;
 	private MenuItem menuItemPasteIt;
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
+	private FunctionalityManager<Activatable> functionality;
 
 	private EnvironmentIntegration parentIntegration;
 
 	public BasicSwtIntegration(EnvironmentIntegration parentIntegration,
-			Settings settings, Shell activityShell, SyncManager syncManager,
+			Config settings, FunctionalityManager<Activatable> functionality, Shell activityShell, SyncManager syncManager,
 			ClipboardManager clipboardManager) {
 		this.parentIntegration = parentIntegration;
 		this.tray = display.getSystemTray();
 		this.trayItem = new TrayItem(tray, 0);
 		this.settings = settings;
+		this.functionality = functionality;
 		this.activityShell = activityShell;
 		this.syncManager = syncManager;
 		this.clipboardManager = clipboardManager;
@@ -121,7 +125,7 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements
 		menuItemPreferences.setText("Preferences");
 		menuItemPreferences.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				new PreferencesDialog(activityShell, settings, parentIntegration).open();
+				new PreferencesDialog(activityShell, settings, functionality, parentIntegration).open();
 			}
 		});
 

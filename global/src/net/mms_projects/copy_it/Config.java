@@ -12,7 +12,7 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Settings {
+public class Config {
 
 	private Properties defaults = new Properties();
 	private Properties properties;
@@ -20,7 +20,7 @@ public class Settings {
 	private Map<String, List<SettingsListener>> listeners = new HashMap<String, List<SettingsListener>>();
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-	public Settings() {
+	public Config() {
 		this.defaults.setProperty("server.baseurl",
 				"http://copyit.dev.mms-projects.net");
 		this.properties = new Properties(defaults);
