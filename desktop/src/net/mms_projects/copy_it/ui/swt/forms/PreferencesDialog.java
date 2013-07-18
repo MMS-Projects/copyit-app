@@ -72,8 +72,7 @@ public class PreferencesDialog extends GeneralDialog implements
 		setText(Messages.getString("title_activity_settings"));
 	}
 
-	@Override
-	public void open() {
+	public void swtOpen() {
 		this.createContents();
 		this.updateForm();
 
@@ -345,7 +344,7 @@ public class PreferencesDialog extends GeneralDialog implements
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override
 			public void run() {
-				open();
+				swtOpen();
 			}
 		});
 	}

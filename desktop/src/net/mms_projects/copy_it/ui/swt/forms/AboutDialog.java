@@ -38,7 +38,7 @@ public class AboutDialog extends Dialog implements AboutUserInterface {
 	 * 
 	 * @return the result
 	 */
-	public Object open() {
+	public Object swtOpen() {
 		createContents();
 		shell.open();
 		shell.layout();
@@ -113,7 +113,7 @@ public class AboutDialog extends Dialog implements AboutUserInterface {
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override
 			public void run() {
-				open();
+				swtOpen();
 			}
 		});
 	}
