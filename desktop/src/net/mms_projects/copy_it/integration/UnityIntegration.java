@@ -184,10 +184,10 @@ public class UnityIntegration extends EnvironmentIntegration implements
 			syncManager.doPull();
 		} else if (signal instanceof DesktopIntegration.action_open_preferences) {
 			this.getUserInterfaceImplementation().getSettingsUserInterface()
-					.show();
+					.open();
 		} else if (signal instanceof DesktopIntegration.action_open_about) {
 			this.getUserInterfaceImplementation().getAboutUserInterface()
-					.show();
+					.open();
 		} else if (signal instanceof DesktopIntegration.action_quit) {
 			this.getUserInterfaceImplementation().close();
 		} else if (signal instanceof DesktopIntegration.action_enable_sync) {

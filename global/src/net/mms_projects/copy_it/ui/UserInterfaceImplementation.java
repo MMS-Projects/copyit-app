@@ -24,9 +24,9 @@ public interface UserInterfaceImplementation {
 
 	public static interface UserInterface {
 
-		public void show();
+		public void open();
 
-		public void hide();
+		public void close();
 
 	}
 

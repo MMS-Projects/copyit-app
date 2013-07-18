@@ -89,7 +89,7 @@ public class SwtInterface implements UserInterfaceImplementation {
 			firstTimer.setMessage(Messages.getString("text.firstrun"));
 			firstTimer.open();
 
-			this.getSettingsUserInterface().show();
+			this.getSettingsUserInterface().open();
 			this.config.set("run.firsttime", "nope");
 		}
 

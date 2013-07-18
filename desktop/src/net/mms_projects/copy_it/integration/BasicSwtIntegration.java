@@ -119,7 +119,7 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements
 		menuItemPreferences.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
 				getUserInterfaceImplementation().getSettingsUserInterface()
-						.show();
+						.open();
 			}
 		});
 
@@ -127,7 +127,7 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements
 		menuItemAbout.setText("About");
 		menuItemAbout.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				getUserInterfaceImplementation().getAboutUserInterface().show();
+				getUserInterfaceImplementation().getAboutUserInterface().open();
 			}
 		});
 

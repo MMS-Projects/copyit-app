@@ -112,12 +112,12 @@ public class DataQueue extends Dialog implements QueueUserInterface {
 	}
 
 	@Override
-	public void show() {
+	public void open() {
 		shell.setVisible(true);
 	}
 
 	@Override
-	public void hide() {
+	public void close() {
 		if ((this.shell != null) && (this.shell.isVisible())) {
 			this.shell.setVisible(false);
 		}
@@ -129,7 +129,7 @@ public class DataQueue extends Dialog implements QueueUserInterface {
 
 			@Override
 			public void run() {
-				show();
+				open();
 				tableItem = new TableItem(table, SWT.NONE);
 				tableItem.setText(new String[] { content, date.toString() });
 			}

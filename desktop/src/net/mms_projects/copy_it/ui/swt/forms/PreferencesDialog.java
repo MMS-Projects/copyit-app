@@ -341,7 +341,7 @@ public class PreferencesDialog extends GeneralDialog implements
 	}
 
 	@Override
-	public void show() {
+	public void open() {
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override
 			public void run() {
@@ -351,7 +351,7 @@ public class PreferencesDialog extends GeneralDialog implements
 	}
 
 	@Override
-	public void hide() {
+	public void close() {
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override
 			public void run() {

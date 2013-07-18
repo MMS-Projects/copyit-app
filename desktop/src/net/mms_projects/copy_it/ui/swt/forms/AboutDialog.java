@@ -109,7 +109,7 @@ public class AboutDialog extends Dialog implements AboutUserInterface {
 	}
 
 	@Override
-	public void show() {
+	public void open() {
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override
 			public void run() {
@@ -119,7 +119,7 @@ public class AboutDialog extends Dialog implements AboutUserInterface {
 	}
 
 	@Override
-	public void hide() {
+	public void close() {
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override
 			public void run() {

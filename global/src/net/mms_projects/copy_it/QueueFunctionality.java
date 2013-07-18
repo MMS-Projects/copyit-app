@@ -31,7 +31,7 @@ public class QueueFunctionality implements Activatable, SyncListener {
 	public void disable() {
 		this.enabled = false;
 
-		this.userInterfaceImplementation.getQueueUserInterface().hide();
+		this.userInterfaceImplementation.getQueueUserInterface().close();
 
 		for (EnabledListener listener : this.enabledListeners) {
 			listener.onDisabled();

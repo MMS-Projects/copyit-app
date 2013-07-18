@@ -28,12 +28,12 @@ public class ShellUi implements UserInterfaceImplementation {
 		this.setSettingsUserInterface(new SettingsUserInterface() {
 			
 			@Override
-			public void show() {
+			public void open() {
 				System.out.println("No settings yet.");
 			}
 			
 			@Override
-			public void hide() {
+			public void close() {
 				// TODO Auto-generated method stub
 				
 			}
@@ -42,12 +42,12 @@ public class ShellUi implements UserInterfaceImplementation {
 		this.setAboutUserInterface(new AboutUserInterface() {
 			
 			@Override
-			public void show() {
+			public void open() {
 				System.out.println("CopyIt!");
 			}
 			
 			@Override
-			public void hide() {
+			public void close() {
 				// TODO Auto-generated method stub
 				
 			}
@@ -55,13 +55,13 @@ public class ShellUi implements UserInterfaceImplementation {
 		this.setQueueUserInterface(new QueueUserInterface() {
 			
 			@Override
-			public void show() {
+			public void open() {
 				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
-			public void hide() {
+			public void close() {
 				// TODO Auto-generated method stub
 				
 			}
