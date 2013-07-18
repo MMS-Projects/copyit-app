@@ -40,6 +40,8 @@ import net.mms_projects.copy_it.linux.DesktopEnvironment;
 import net.mms_projects.copy_it.listeners.EnabledListener;
 import net.mms_projects.copy_it.sync_services.ApiService;
 import net.mms_projects.copy_it.sync_services.TestService;
+import net.mms_projects.copy_it.ui.ShellUi;
+import net.mms_projects.copy_it.ui.SingleCommandUi;
 import net.mms_projects.copy_it.ui.SwtInterface;
 import net.mms_projects.copy_it.ui.UserInterfaceImplementation;
 import net.mms_projects.utils.OSValidator;
@@ -380,21 +382,21 @@ public class CopyItDesktop extends CopyIt {
 			clipboardManager.addCopyService(awtService);
 
 			if ("cli".equalsIgnoreCase(args[0])) {
-				// ui = new ShellUi(this.settings, syncManager,
-				// clipboardManager);
+				uiImplementation = new ShellUi(this.settings, syncManager,
+						clipboardManager);
 			} else {
-				// ui = new SingleCommandUi(this.settings, syncManager,
-				// clipboardManager, args[0]);
+				uiImplementation = new SingleCommandUi(this.settings,
+						syncManager, clipboardManager, args[0]);
 			}
 		} else {
 			uiImplementation = new SwtInterface(settings, functionalityManager,
 					environmentIntegration, syncManager, clipboardManager);
 		}
-		
+
 		environmentIntegration.setUserInterfaceImplementation(uiImplementation);
 
 		environmentIntegration.setup();
-		
+
 		uiImplementation.open();
 
 		this.settings.saveProperties();
