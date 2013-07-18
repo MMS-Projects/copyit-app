@@ -76,12 +76,14 @@ abstract public class EnvironmentIntegration {
 	 */
 	final public void setup() {
 		if (this.getUserInterfaceImplementation() == null) {
-			throw new IllegalStateException("No UserInterfaceImplementation set");
+			throw new IllegalStateException(
+					"No UserInterfaceImplementation set");
 		}
 		this.standaloneSetup();
 
 		for (EnvironmentIntegration integrationProvider : this.integrationProviders) {
-			integrationProvider.setUserInterfaceImplementation(this.getUserInterfaceImplementation());
+			integrationProvider.setUserInterfaceImplementation(this
+					.getUserInterfaceImplementation());
 			integrationProvider.setup();
 		}
 	}
@@ -92,11 +94,12 @@ abstract public class EnvironmentIntegration {
 	 * EnvironmentIntegration.setup} instead!
 	 */
 	abstract public void standaloneSetup();
-	
-	public void setUserInterfaceImplementation(UserInterfaceImplementation userInterfaceImplementation) {
+
+	public void setUserInterfaceImplementation(
+			UserInterfaceImplementation userInterfaceImplementation) {
 		this.userInterfaceImplementation = userInterfaceImplementation;
 	}
-	
+
 	protected UserInterfaceImplementation getUserInterfaceImplementation() {
 		return this.userInterfaceImplementation;
 	}
@@ -140,7 +143,7 @@ abstract public class EnvironmentIntegration {
 	/**
 	 * A interface that describes a basic auto start manager
 	 */
-	static public interface AutostartManager {
+	static public interface AutostartManager extends Activatable {
 		public static class AutoStartSetupException extends Exception {
 
 			private static final long serialVersionUID = -2363782709319312249L;
@@ -171,11 +174,7 @@ abstract public class EnvironmentIntegration {
 		 *             This gets thrown when something bad happens while setting
 		 *             up the auto start
 		 */
-		public void enableAutostart() throws AutoStartSetupException;
-		
-		public boolean isEnabled() throws AutoStartSetupException;
-		
-		public void disableAutostart() throws AutoStartSetupException;
+		public void enable();
 	}
 
 }

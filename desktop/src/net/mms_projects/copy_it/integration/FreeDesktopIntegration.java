@@ -11,6 +11,7 @@ import net.mms_projects.copy_it.JavaCommandLine;
 import net.mms_projects.copy_it.Messages;
 import net.mms_projects.copy_it.PathBuilder;
 import net.mms_projects.copy_it.integration.notifications.FreedesktopNotificationManager;
+import net.mms_projects.copy_it.listeners.EnabledListener;
 
 import org.apache.commons.io.FileUtils;
 import org.freedesktop.dbus.DBusConnection;
@@ -126,8 +127,10 @@ public class FreeDesktopIntegration extends EnvironmentIntegration {
 	class FreeDesktopAutostartManager implements
 			EnvironmentIntegration.AutostartManager {
 
+		private List<EnabledListener> enabledListeners = new ArrayList<EnabledListener>();
+
 		@Override
-		public boolean isEnabled() throws AutoStartSetupException {
+		public boolean isEnabled() {
 			File file = new File(PathBuilder.getAutostartDirectory(),
 					"copyit.desktop");
 			return file.exists();
@@ -138,19 +141,41 @@ public class FreeDesktopIntegration extends EnvironmentIntegration {
 		 * auto start
 		 */
 		@Override
-		public void enableAutostart() {
+		public void enable() {
 			/*
 			 * Write a .desktop file to the auto start directory
 			 */
 			FreeDesktopIntegration.this.writeDesktopFile(PathBuilder
 					.getAutostartDirectory());
+
+			for (EnabledListener listener : this.enabledListeners) {
+				listener.onEnabled();
+			}
 		}
 
 		@Override
-		public void disableAutostart() throws AutoStartSetupException {
+		public void disable() {
 			File file = new File(PathBuilder.getAutostartDirectory(),
 					"copyit.desktop");
 			file.delete();
+
+			for (EnabledListener listener : this.enabledListeners) {
+				listener.onDisabled();
+			}
+		}
+
+		@Override
+		public void setEnabled(boolean enabled) {
+			if (enabled) {
+				this.enable();
+			} else {
+				this.disable();
+			}
+		}
+
+		@Override
+		public void addEnabledListener(EnabledListener listener) {
+			this.enabledListeners.add(listener);
 		}
 
 	}
