@@ -38,7 +38,6 @@ import org.slf4j.LoggerFactory;
 public class UnityIntegration extends EnvironmentIntegration implements
 		SyncListener, DBusSigHandler, ClipboardListener {
 
-	protected Config settings;
 	protected Shell activityShell;
 	protected SyncManager syncManager;
 	protected ClipboardManager clipboardManager;
@@ -63,7 +62,7 @@ public class UnityIntegration extends EnvironmentIntegration implements
 		}
 	};
 
-	public UnityIntegration(DBusConnection dbusConnection, Config settings,
+	public UnityIntegration(DBusConnection dbusConnection,
 			FunctionalityManager<Activatable> functionality,
 			Shell activityShell, SyncManager syncManager,
 			ClipboardManager clipboardManager) {
@@ -74,7 +73,6 @@ public class UnityIntegration extends EnvironmentIntegration implements
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this.settings = settings;
 		this.functionality = functionality;
 		this.activityShell = activityShell;
 		this.syncManager = syncManager;

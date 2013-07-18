@@ -86,9 +86,8 @@ public class SwtGui extends AbstractUi {
 			switch (DesktopEnvironment.getDesktopEnvironment()) {
 			case Unity:
 				UnityIntegration environmentIntegrationUnity = new UnityIntegration(
-						CopyItDesktop.dbusConnection, this.settings,
-						this.functionality, this.activityShell, syncManager,
-						clipboardManager);
+						CopyItDesktop.dbusConnection, this.functionality,
+						this.activityShell, syncManager, clipboardManager);
 				syncManager.addListener(environmentIntegrationUnity);
 				clipboardManager.addListener(environmentIntegrationUnity);
 
@@ -96,20 +95,17 @@ public class SwtGui extends AbstractUi {
 				break;
 			default:
 				environmentIntegration = new DefaultLinuxIntegration(
-						CopyItDesktop.dbusConnection, this.settings,
-						this.functionality, this.activityShell, syncManager,
-						clipboardManager);
+						CopyItDesktop.dbusConnection, this.functionality,
+						this.activityShell, syncManager, clipboardManager);
 				break;
 			}
 		} else if (OSValidator.isWindows()) {
-			environmentIntegration = new WindowsIntegration(settings,
-					this.functionality, activityShell, syncManager,
-					clipboardManager);
+			environmentIntegration = new WindowsIntegration(this.functionality,
+					activityShell, syncManager, clipboardManager);
 		}
 		if (environmentIntegration == null) {
-			environmentIntegration = new SwtIntegration(this.settings,
-					this.functionality, this.activityShell, syncManager,
-					clipboardManager);
+			environmentIntegration = new SwtIntegration(this.functionality,
+					this.activityShell, syncManager, clipboardManager);
 		}
 
 		this.uiImplementation = new SwtInterface(activityShell, settings,

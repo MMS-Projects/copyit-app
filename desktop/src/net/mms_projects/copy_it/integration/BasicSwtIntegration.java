@@ -5,7 +5,6 @@ import java.util.Date;
 import net.mms_projects.copy_it.Activatable;
 import net.mms_projects.copy_it.ClipboardListener;
 import net.mms_projects.copy_it.ClipboardManager;
-import net.mms_projects.copy_it.Config;
 import net.mms_projects.copy_it.EnvironmentIntegration;
 import net.mms_projects.copy_it.EnvironmentIntegration.NotificationManager.NotificationUrgency;
 import net.mms_projects.copy_it.FunctionalityManager;
@@ -37,7 +36,6 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements
 	protected Display display = Display.getDefault();
 	protected Menu menu;
 	protected TrayItem trayItem;
-	protected Config settings;
 	protected Shell activityShell;
 	protected SyncManager syncManager;
 	protected ClipboardManager clipboardManager;
@@ -52,13 +50,12 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements
 	private EnvironmentIntegration parentIntegration;
 
 	public BasicSwtIntegration(EnvironmentIntegration parentIntegration,
-			Config settings, FunctionalityManager<Activatable> functionality,
+			FunctionalityManager<Activatable> functionality,
 			Shell activityShell, SyncManager syncManager,
 			ClipboardManager clipboardManager) {
 		this.parentIntegration = parentIntegration;
 		this.tray = display.getSystemTray();
 		this.trayItem = new TrayItem(tray, 0);
-		this.settings = settings;
 		this.functionality = functionality;
 		this.activityShell = activityShell;
 		this.syncManager = syncManager;
