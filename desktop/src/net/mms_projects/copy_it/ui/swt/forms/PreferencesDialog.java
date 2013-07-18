@@ -269,8 +269,7 @@ public class PreferencesDialog extends GeneralDialog {
 		btnEnablePolling.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				PreferencesDialog.this.settings.set("sync.polling.enabled",
-						btnEnablePolling.getSelection());
+				functionality.setEnabled("polling", btnEnablePolling.getSelection());
 				PreferencesDialog.this.updateForm();
 			}
 		});
@@ -296,11 +295,9 @@ public class PreferencesDialog extends GeneralDialog {
 		if (this.settings.get("device.id") != null) {
 			this.btnManualLogin.setText("Relogin (manual)");
 		}
-		btnEnablePolling.setSelection(this.settings
-				.getBoolean("sync.polling.enabled"));
+		btnEnablePolling.setSelection(functionality.isEnabled("polling"));
 		btnEnableQueue.setSelection(functionality.isEnabled("queue"));
-		btnEnableQueue.setEnabled(this.settings
-				.getBoolean("sync.polling.enabled"));
+		btnEnableQueue.setEnabled(functionality.isEnabled("polling"));
 	}
 
 	private abstract class LoginSectionAdapter extends SelectionAdapter {
