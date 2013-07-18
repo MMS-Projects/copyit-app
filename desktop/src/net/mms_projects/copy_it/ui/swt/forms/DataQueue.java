@@ -149,7 +149,7 @@ public class DataQueue extends Dialog implements SyncListener,
 
 	@Override
 	public void enable() {
-		this.enabled = false;
+		this.enabled = true;
 
 		for (EnabledListener listener : this.enabledListeners) {
 			listener.onEnabled();
@@ -162,7 +162,7 @@ public class DataQueue extends Dialog implements SyncListener,
 			this.shell.setVisible(false);
 		}
 
-		this.enabled = true;
+		this.enabled = false;
 
 		for (EnabledListener listener : this.enabledListeners) {
 			listener.onDisabled();
