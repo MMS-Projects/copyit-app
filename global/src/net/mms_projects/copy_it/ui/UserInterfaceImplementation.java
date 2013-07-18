@@ -2,6 +2,10 @@ package net.mms_projects.copy_it.ui;
 
 public interface UserInterfaceImplementation {
 
+	public void open();
+
+	public void close();
+
 	public void setSettingsUserInterface(
 			SettingsUserInterface settingsUserInterface);
 

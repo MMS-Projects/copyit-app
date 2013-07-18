@@ -11,7 +11,6 @@ import java.util.Date;
 import net.mms_projects.copy_it.Activatable;
 import net.mms_projects.copy_it.ClipboardListener;
 import net.mms_projects.copy_it.ClipboardManager;
-import net.mms_projects.copy_it.Config;
 import net.mms_projects.copy_it.DesktopIntegration;
 import net.mms_projects.copy_it.EnvironmentIntegration;
 import net.mms_projects.copy_it.EnvironmentIntegration.NotificationManager.NotificationUrgency;
@@ -26,8 +25,6 @@ import net.mms_projects.copy_it.listeners.EnabledListener;
 import net.mms_projects.copy_it.ui.UserInterfaceImplementation;
 
 import org.apache.commons.io.FileUtils;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
 import org.freedesktop.dbus.DBusConnection;
 import org.freedesktop.dbus.DBusSigHandler;
 import org.freedesktop.dbus.DBusSignal;
@@ -38,7 +35,6 @@ import org.slf4j.LoggerFactory;
 public class UnityIntegration extends EnvironmentIntegration implements
 		SyncListener, DBusSigHandler, ClipboardListener {
 
-	protected Shell activityShell;
 	protected SyncManager syncManager;
 	protected ClipboardManager clipboardManager;
 	protected DBusConnection dbusConnection;
@@ -64,8 +60,7 @@ public class UnityIntegration extends EnvironmentIntegration implements
 
 	public UnityIntegration(DBusConnection dbusConnection,
 			FunctionalityManager<Activatable> functionality,
-			Shell activityShell, SyncManager syncManager,
-			ClipboardManager clipboardManager) {
+			SyncManager syncManager, ClipboardManager clipboardManager) {
 		try {
 			this.setNotificationManager(new FreedesktopNotificationManager(
 					dbusConnection));
@@ -74,11 +69,9 @@ public class UnityIntegration extends EnvironmentIntegration implements
 			e.printStackTrace();
 		}
 		this.functionality = functionality;
-		this.activityShell = activityShell;
 		this.syncManager = syncManager;
 		this.clipboardManager = clipboardManager;
 		this.dbusConnection = dbusConnection;
-		this.uiImplementation = uiImplementation;
 
 		/*
 		 * Add FreeDesktop integrations like notifications and writing .desktop
@@ -163,12 +156,7 @@ public class UnityIntegration extends EnvironmentIntegration implements
 
 	@Override
 	public void onPulled(final String content, Date date) {
-		Display.getDefault().asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				clipboardManager.requestSet(content);
-			}
-		});
+		clipboardManager.requestSet(content);
 		getNotificationManager().notify(10, NotificationUrgency.NORMAL, "",
 				"CopyIt", Messages.getString("text_content_pulled", content));
 	}
@@ -201,13 +189,7 @@ public class UnityIntegration extends EnvironmentIntegration implements
 			this.getUserInterfaceImplementation().getAboutUserInterface()
 					.show();
 		} else if (signal instanceof DesktopIntegration.action_quit) {
-			Display.getDefault().asyncExec(new Runnable() {
-				@Override
-				public void run() {
-					activityShell.close();
-					System.exit(0);
-				}
-			});
+			this.getUserInterfaceImplementation().close();
 		} else if (signal instanceof DesktopIntegration.action_enable_sync) {
 			this.functionality.setEnabled("polling", true);
 			this.integration.set_enabled(this.functionality

@@ -6,21 +6,18 @@ import net.mms_projects.copy_it.EnvironmentIntegration;
 import net.mms_projects.copy_it.FunctionalityManager;
 import net.mms_projects.copy_it.SyncManager;
 
-import org.eclipse.swt.widgets.Shell;
-
 /**
  * This integration provider adds Windows specific integrations.
  */
 public class WindowsIntegration extends EnvironmentIntegration {
 
 	public WindowsIntegration(FunctionalityManager<Activatable> functionality,
-			Shell activityShell, SyncManager syncManager,
-			ClipboardManager clipboardManager) {
+			SyncManager syncManager, ClipboardManager clipboardManager) {
 		/*
 		 * Adds SWT integration like a tray icon
 		 */
 		BasicSwtIntegration swtIntegration = new BasicSwtIntegration(this,
-				functionality, activityShell, syncManager, clipboardManager);
+				functionality, syncManager, clipboardManager);
 		this.addIntegration(swtIntegration);
 
 		/*

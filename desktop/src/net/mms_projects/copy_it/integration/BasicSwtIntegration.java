@@ -36,7 +36,6 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements
 	protected Display display = Display.getDefault();
 	protected Menu menu;
 	protected TrayItem trayItem;
-	protected Shell activityShell;
 	protected SyncManager syncManager;
 	protected ClipboardManager clipboardManager;
 
@@ -51,13 +50,11 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements
 
 	public BasicSwtIntegration(EnvironmentIntegration parentIntegration,
 			FunctionalityManager<Activatable> functionality,
-			Shell activityShell, SyncManager syncManager,
-			ClipboardManager clipboardManager) {
+			SyncManager syncManager, ClipboardManager clipboardManager) {
 		this.parentIntegration = parentIntegration;
 		this.tray = display.getSystemTray();
 		this.trayItem = new TrayItem(tray, 0);
 		this.functionality = functionality;
-		this.activityShell = activityShell;
 		this.syncManager = syncManager;
 		this.clipboardManager = clipboardManager;
 	}
@@ -99,7 +96,7 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements
 	}
 
 	protected void createMenu() {
-		this.menu = new Menu(this.activityShell, SWT.POP_UP);
+		this.menu = new Menu(new Shell(), SWT.POP_UP);
 
 		this.menuItemCopyIt = new MenuItem(menu, SWT.PUSH);
 		this.menuItemCopyIt.setText("Copy it ▲");
@@ -138,7 +135,7 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements
 		menuItemExit.setText("Exit");
 		menuItemExit.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				activityShell.close();
+				getUserInterfaceImplementation().close();
 			}
 		});
 
@@ -188,7 +185,7 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements
 			this.display.asyncExec(new Runnable() {
 				@Override
 				public void run() {
-					final ToolTip tip = new ToolTip(activityShell, SWT.BALLOON
+					final ToolTip tip = new ToolTip(new Shell(), SWT.BALLOON
 							| SWT.ICON_INFORMATION);
 					tip.setText(summary);
 					tip.setMessage(finalContent);

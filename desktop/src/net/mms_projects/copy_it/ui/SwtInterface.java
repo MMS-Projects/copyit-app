@@ -1,26 +1,143 @@
 package net.mms_projects.copy_it.ui;
 
+import java.util.Date;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import net.mms_projects.copy_it.Activatable;
+import net.mms_projects.copy_it.ClipboardManager;
 import net.mms_projects.copy_it.Config;
 import net.mms_projects.copy_it.EnvironmentIntegration;
 import net.mms_projects.copy_it.FunctionalityManager;
+import net.mms_projects.copy_it.Messages;
+import net.mms_projects.copy_it.SyncListener;
+import net.mms_projects.copy_it.SyncManager;
+import net.mms_projects.copy_it.clipboard_backends.SwtBackend;
+import net.mms_projects.copy_it.listeners.EnabledListener;
 import net.mms_projects.copy_it.ui.swt.forms.AboutDialog;
+import net.mms_projects.copy_it.ui.swt.forms.DataQueue;
 import net.mms_projects.copy_it.ui.swt.forms.PreferencesDialog;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SwtInterface implements UserInterfaceImplementation {
 
 	private SettingsUserInterface settingsUserInterface;
 	private AboutUserInterface aboutUserInterface;
 
-	public SwtInterface(Shell activeShell, Config settings,
+	protected Config config;
+	protected DataQueue queueWindow;
+	protected Display display;
+	protected Shell activityShell;
+
+	protected SyncManager syncManager;
+	protected ClipboardManager clipboardManager;
+
+	protected EnvironmentIntegration environmentIntegration;
+
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
+	private FunctionalityManager<Activatable> functionality;
+
+	public SwtInterface(final Config config,
 			FunctionalityManager<Activatable> functionality,
-			EnvironmentIntegration environmentIntegration) {
-		this.setSettingsUserInterface(new PreferencesDialog(activeShell,
-				settings, functionality, environmentIntegration));
-		this.setAboutUserInterface(new AboutDialog(activeShell, SWT.NONE));
+			EnvironmentIntegration environmentIntegration,
+			SyncManager syncManager, ClipboardManager clipboardManager) {
+		this.config = config;
+		this.syncManager = syncManager;
+		this.clipboardManager = clipboardManager;
+
+		this.functionality = functionality;
+
+		try {
+			this.display = Display.getDefault();
+		} catch (UnsatisfiedLinkError error) {
+			error.printStackTrace();
+
+			String message = Messages.getString("text.error.swt_loading",
+					error.getMessage());
+			JOptionPane.showMessageDialog(new JFrame(), message, "Dialog",
+					JOptionPane.ERROR_MESSAGE);
+			System.exit(1);
+		}
+		SwtBackend swtClipboard = new SwtBackend(this.clipboardManager);
+
+		this.clipboardManager.addCopyService(swtClipboard);
+		this.clipboardManager.addPasteService(swtClipboard);
+		this.clipboardManager.addPollingService(swtClipboard);
+
+		this.activityShell = new Shell(this.display);
+
+		this.queueWindow = new DataQueue(this.activityShell, SWT.DIALOG_TRIM,
+				this.clipboardManager);
+		this.queueWindow.setEnabled(this.config
+				.getBoolean("sync.queue.enabled"));
+		this.queueWindow.addEnabledListener(new EnabledListener() {
+
+			@Override
+			public void onEnabled() {
+				config.set("sync.queue.enabled", true);
+			}
+
+			@Override
+			public void onDisabled() {
+				config.set("sync.queue.enabled", false);
+			}
+
+		});
+		this.functionality.addFunctionality("queue", this.queueWindow);
+
+		this.setSettingsUserInterface(new PreferencesDialog(this.activityShell,
+				config, functionality, environmentIntegration));
+		this.setAboutUserInterface(new AboutDialog(this.activityShell, SWT.NONE));
+	}
+
+	@Override
+	public void open() {
+		if (this.config.get("run.firsttime") == null) {
+			MessageBox firstTimer = new MessageBox(this.activityShell);
+			firstTimer.setMessage(Messages.getString("text.firstrun"));
+			firstTimer.open();
+
+			this.getSettingsUserInterface().show();
+			this.config.set("run.firsttime", "nope");
+		}
+
+		// this.checkVersion();
+
+		syncManager.addListener(new SyncListener() {
+			@Override
+			public void onPushed(String content, Date date) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onPulled(final String content, Date date) {
+				if (!config.getBoolean("sync.queue.enabled")) {
+					clipboardManager.requestSet(content);
+				}
+			}
+		});
+		syncManager.addListener(queueWindow);
+
+		this.queueWindow.setup();
+
+		while (!this.activityShell.isDisposed()) {
+			if (!display.readAndDispatch()) {
+				display.sleep();
+			}
+		}
+	}
+
+	@Override
+	public void close() {
+		this.activityShell.close();
 	}
 
 	@Override
