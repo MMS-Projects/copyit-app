@@ -210,10 +210,12 @@ public class UnityIntegration extends EnvironmentIntegration implements
 			});
 		} else if (signal instanceof DesktopIntegration.action_enable_sync) {
 			this.functionality.setEnabled("polling", true);
-			this.integration.set_enabled(true);
+			this.integration.set_enabled(this.functionality
+					.isEnabled("polling"));
 		} else if (signal instanceof DesktopIntegration.action_disable_sync) {
 			this.functionality.setEnabled("polling", false);
-			this.integration.set_enabled(false);
+			this.integration.set_enabled(this.functionality
+					.isEnabled("polling"));
 		}
 	}
 
