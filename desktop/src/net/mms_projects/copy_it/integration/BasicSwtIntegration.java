@@ -2,17 +2,16 @@ package net.mms_projects.copy_it.integration;
 
 import java.util.Date;
 
+import net.mms_projects.copy_it.Activatable;
 import net.mms_projects.copy_it.ClipboardListener;
 import net.mms_projects.copy_it.ClipboardManager;
 import net.mms_projects.copy_it.EnvironmentIntegration;
 import net.mms_projects.copy_it.EnvironmentIntegration.NotificationManager.NotificationUrgency;
+import net.mms_projects.copy_it.FunctionalityManager;
 import net.mms_projects.copy_it.Messages;
-import net.mms_projects.copy_it.Settings;
 import net.mms_projects.copy_it.SyncListener;
 import net.mms_projects.copy_it.SyncManager;
 import net.mms_projects.copy_it.linux.DesktopEnvironment;
-import net.mms_projects.copy_it.ui.swt.forms.AboutDialog;
-import net.mms_projects.copy_it.ui.swt.forms.PreferencesDialog;
 import net.mms_projects.utils.OSValidator;
 import net.mms_projects.utils.StringUtils;
 
@@ -37,8 +36,6 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements
 	protected Display display = Display.getDefault();
 	protected Menu menu;
 	protected TrayItem trayItem;
-	protected Settings settings;
-	protected Shell activityShell;
 	protected SyncManager syncManager;
 	protected ClipboardManager clipboardManager;
 
@@ -47,17 +44,17 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements
 	private MenuItem menuItemCopyIt;
 	private MenuItem menuItemPasteIt;
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
+	private FunctionalityManager<Activatable> functionality;
 
 	private EnvironmentIntegration parentIntegration;
 
 	public BasicSwtIntegration(EnvironmentIntegration parentIntegration,
-			Settings settings, Shell activityShell, SyncManager syncManager,
-			ClipboardManager clipboardManager) {
+			FunctionalityManager<Activatable> functionality,
+			SyncManager syncManager, ClipboardManager clipboardManager) {
 		this.parentIntegration = parentIntegration;
 		this.tray = display.getSystemTray();
 		this.trayItem = new TrayItem(tray, 0);
-		this.settings = settings;
-		this.activityShell = activityShell;
+		this.functionality = functionality;
 		this.syncManager = syncManager;
 		this.clipboardManager = clipboardManager;
 	}
@@ -99,7 +96,7 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements
 	}
 
 	protected void createMenu() {
-		this.menu = new Menu(this.activityShell, SWT.POP_UP);
+		this.menu = new Menu(new Shell(), SWT.POP_UP);
 
 		this.menuItemCopyIt = new MenuItem(menu, SWT.PUSH);
 		this.menuItemCopyIt.setText("Copy it ▲");
@@ -121,7 +118,8 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements
 		menuItemPreferences.setText("Preferences");
 		menuItemPreferences.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				new PreferencesDialog(activityShell, settings, parentIntegration).open();
+				getUserInterfaceImplementation().getSettingsUserInterface()
+						.open();
 			}
 		});
 
@@ -129,7 +127,7 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements
 		menuItemAbout.setText("About");
 		menuItemAbout.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				new AboutDialog(activityShell, SWT.NONE).open();
+				getUserInterfaceImplementation().getAboutUserInterface().open();
 			}
 		});
 
@@ -137,7 +135,7 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements
 		menuItemExit.setText("Exit");
 		menuItemExit.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				activityShell.close();
+				getUserInterfaceImplementation().close();
 			}
 		});
 
@@ -187,7 +185,7 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements
 			this.display.asyncExec(new Runnable() {
 				@Override
 				public void run() {
-					final ToolTip tip = new ToolTip(activityShell, SWT.BALLOON
+					final ToolTip tip = new ToolTip(new Shell(), SWT.BALLOON
 							| SWT.ICON_INFORMATION);
 					tip.setText(summary);
 					tip.setMessage(finalContent);

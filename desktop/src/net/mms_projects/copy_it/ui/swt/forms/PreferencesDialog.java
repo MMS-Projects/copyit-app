@@ -1,13 +1,16 @@
 package net.mms_projects.copy_it.ui.swt.forms;
 
+import net.mms_projects.copy_it.Activatable;
+import net.mms_projects.copy_it.Config;
 import net.mms_projects.copy_it.EnvironmentIntegration;
 import net.mms_projects.copy_it.EnvironmentIntegration.AutostartManager.AutoStartSetupException;
 import net.mms_projects.copy_it.EnvironmentIntegration.NotificationManager.NotificationUrgency;
+import net.mms_projects.copy_it.FunctionalityManager;
 import net.mms_projects.copy_it.LoginResponse;
 import net.mms_projects.copy_it.Messages;
-import net.mms_projects.copy_it.Settings;
 import net.mms_projects.copy_it.api.ServerApi;
 import net.mms_projects.copy_it.api.endpoints.DeviceEndpoint;
+import net.mms_projects.copy_it.ui.UserInterfaceImplementation.SettingsUserInterface;
 import net.mms_projects.copy_it.ui.swt.forms.login_dialogs.AbstractLoginDialog;
 import net.mms_projects.copy_it.ui.swt.forms.login_dialogs.AutoLoginDialog;
 import net.mms_projects.copy_it.ui.swt.forms.login_dialogs.LoginDialog;
@@ -30,11 +33,13 @@ import org.eclipse.swt.widgets.Text;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class PreferencesDialog extends GeneralDialog {
+public class PreferencesDialog extends GeneralDialog implements
+		SettingsUserInterface {
 
 	protected Shell shell;
 
-	private Settings settings;
+	private Config settings;
+	private FunctionalityManager<Activatable> functionality;
 	private EnvironmentIntegration environmentIntegration;
 
 	private Text textEncryptionPassphrase;
@@ -55,21 +60,22 @@ public class PreferencesDialog extends GeneralDialog {
 	 * Create the dialog.
 	 * 
 	 * @param parent
-	 * @param Settings
+	 * @param Config
 	 *            the settings
 	 */
-	public PreferencesDialog(Shell parent, Settings settings,
+	public PreferencesDialog(Shell parent, Config settings,
+			FunctionalityManager<Activatable> functionality,
 			EnvironmentIntegration environmentIntegration) {
 		super(parent, SWT.DIALOG_TRIM);
 
 		this.settings = settings;
+		this.functionality = functionality;
 		this.environmentIntegration = environmentIntegration;
 
 		setText(Messages.getString("title_activity_settings"));
 	}
 
-	@Override
-	public void open() {
+	public void swtOpen() {
 		this.createContents();
 		this.updateForm();
 
@@ -355,7 +361,7 @@ public class PreferencesDialog extends GeneralDialog {
 		btnEnablePolling.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				PreferencesDialog.this.settings.set("sync.polling.enabled",
+				functionality.setEnabled("polling",
 						btnEnablePolling.getSelection());
 				PreferencesDialog.this.updateForm();
 			}
@@ -363,8 +369,7 @@ public class PreferencesDialog extends GeneralDialog {
 		btnEnableQueue.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				PreferencesDialog.this.settings.set("sync.queue.enabled",
-						btnEnableQueue.getSelection());
+				functionality.setEnabled("queue", btnEnableQueue.getSelection());
 				PreferencesDialog.this.updateForm();
 			}
 		});
@@ -402,12 +407,9 @@ public class PreferencesDialog extends GeneralDialog {
 					.getString("autostart.button.not_available"));
 		}
 
-		btnEnablePolling.setSelection(this.settings
-				.getBoolean("sync.polling.enabled"));
-		btnEnableQueue.setSelection(this.settings
-				.getBoolean("sync.queue.enabled"));
-		btnEnableQueue.setEnabled(this.settings
-				.getBoolean("sync.polling.enabled"));
+		btnEnablePolling.setSelection(functionality.isEnabled("polling"));
+		btnEnableQueue.setSelection(functionality.isEnabled("queue"));
+		btnEnableQueue.setEnabled(functionality.isEnabled("polling"));
 	}
 
 	private abstract class LoginSectionAdapter extends SelectionAdapter {
@@ -444,5 +446,25 @@ public class PreferencesDialog extends GeneralDialog {
 			PreferencesDialog.this.updateForm();
 		}
 
+	}
+
+	@Override
+	public void open() {
+		Display.getDefault().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				swtOpen();
+			}
+		});
+	}
+
+	@Override
+	public void close() {
+		Display.getDefault().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				shell.dispose();
+			}
+		});
 	}
 }

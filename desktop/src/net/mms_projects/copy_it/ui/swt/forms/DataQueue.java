@@ -3,8 +3,7 @@ package net.mms_projects.copy_it.ui.swt.forms;
 import java.util.Date;
 
 import net.mms_projects.copy_it.ClipboardManager;
-import net.mms_projects.copy_it.SettingsListener;
-import net.mms_projects.copy_it.SyncListener;
+import net.mms_projects.copy_it.ui.UserInterfaceImplementation.QueueUserInterface;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FormAttachment;
@@ -21,13 +20,13 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
-public class DataQueue extends Dialog implements SyncListener, SettingsListener {
+public class DataQueue extends Dialog implements QueueUserInterface {
 
 	protected Object result;
 	protected Shell shell;
 	private Table table;
 	private TableItem tableItem;
-	private boolean enabled;
+
 	private ClipboardManager clipboardManager;
 
 	/**
@@ -44,15 +43,6 @@ public class DataQueue extends Dialog implements SyncListener, SettingsListener 
 		setText("SWT Dialog");
 	}
 
-	public void setEnabled(boolean state) {
-		if (!state) {
-			if (this.shell.isVisible()) {
-				this.shell.setVisible(false);
-			}
-		}
-		this.enabled = state;
-	}
-
 	public void setup() {
 		createContents();
 
@@ -62,23 +52,6 @@ public class DataQueue extends Dialog implements SyncListener, SettingsListener 
 				shell.setVisible(false);
 			}
 		});
-	}
-
-	/**
-	 * Open the dialog.
-	 * 
-	 * @return the result
-	 */
-	public Object open() {
-		shell.open();
-		shell.layout();
-		Display display = getParent().getDisplay();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				display.sleep();
-			}
-		}
-		return result;
 	}
 
 	/**
@@ -122,31 +95,28 @@ public class DataQueue extends Dialog implements SyncListener, SettingsListener 
 	}
 
 	@Override
-	public void onPushed(String content, Date date) {
-		// TODO Auto-generated method stub
-
+	public void open() {
+		shell.setVisible(true);
 	}
 
 	@Override
-	public void onPulled(final String content, final Date date) {
+	public void close() {
+		if ((this.shell != null) && (this.shell.isVisible())) {
+			this.shell.setVisible(false);
+		}
+	}
+
+	@Override
+	public void addContent(final String content, final Date date) {
 		Display.getDefault().asyncExec(new Runnable() {
 
 			@Override
 			public void run() {
-				if (enabled) {
-					shell.setVisible(true);
-				}
+				open();
 				tableItem = new TableItem(table, SWT.NONE);
 				tableItem.setText(new String[] { content, date.toString() });
 			}
 		});
-
 	}
 
-	@Override
-	public void onChange(String key, String value) {
-		if ("sync.queue.enabled".equals(key)) {
-			this.setEnabled(Boolean.parseBoolean(value));
-		}
-	}
 }
