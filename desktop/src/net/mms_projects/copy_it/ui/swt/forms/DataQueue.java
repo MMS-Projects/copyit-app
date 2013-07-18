@@ -1,10 +1,14 @@
 package net.mms_projects.copy_it.ui.swt.forms;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import net.mms_projects.copy_it.Activatable;
 import net.mms_projects.copy_it.ClipboardManager;
 import net.mms_projects.copy_it.SettingsListener;
 import net.mms_projects.copy_it.SyncListener;
+import net.mms_projects.copy_it.listeners.EnabledListener;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FormAttachment;
@@ -21,7 +25,8 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
-public class DataQueue extends Dialog implements SyncListener, SettingsListener {
+public class DataQueue extends Dialog implements SyncListener,
+		SettingsListener, Activatable {
 
 	protected Object result;
 	protected Shell shell;
@@ -29,6 +34,7 @@ public class DataQueue extends Dialog implements SyncListener, SettingsListener 
 	private TableItem tableItem;
 	private boolean enabled;
 	private ClipboardManager clipboardManager;
+	private List<EnabledListener> enabledListeners = new ArrayList<EnabledListener>();
 
 	/**
 	 * Create the dialog.
@@ -42,15 +48,6 @@ public class DataQueue extends Dialog implements SyncListener, SettingsListener 
 		this.clipboardManager = clipboardManager;
 
 		setText("SWT Dialog");
-	}
-
-	public void setEnabled(boolean state) {
-		if (!state) {
-			if (this.shell.isVisible()) {
-				this.shell.setVisible(false);
-			}
-		}
-		this.enabled = state;
 	}
 
 	public void setup() {
@@ -149,4 +146,45 @@ public class DataQueue extends Dialog implements SyncListener, SettingsListener 
 			this.setEnabled(Boolean.parseBoolean(value));
 		}
 	}
+
+	@Override
+	public void enable() {
+		this.enabled = false;
+
+		for (EnabledListener listener : this.enabledListeners) {
+			listener.onEnabled();
+		}
+	}
+
+	@Override
+	public void disable() {
+		if (this.shell.isVisible()) {
+			this.shell.setVisible(false);
+		}
+
+		this.enabled = true;
+
+		for (EnabledListener listener : this.enabledListeners) {
+			listener.onDisabled();
+		}
+	}
+
+	public void setEnabled(boolean state) {
+		if (state) {
+			this.enable();
+		} else {
+			this.disable();
+		}
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return this.enabled;
+	}
+
+	@Override
+	public void addEnabledListener(EnabledListener listener) {
+		this.enabledListeners.add(listener);
+	}
+
 }
