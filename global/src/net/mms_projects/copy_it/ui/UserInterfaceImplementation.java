@@ -1,5 +1,8 @@
 package net.mms_projects.copy_it.ui;
 
+import java.util.Date;
+
+
 public interface UserInterfaceImplementation {
 
 	public void open();
@@ -15,6 +18,10 @@ public interface UserInterfaceImplementation {
 
 	public AboutUserInterface getAboutUserInterface();
 
+	public void setQueueUserInterface(QueueUserInterface userInterface);
+
+	public QueueUserInterface getQueueUserInterface();
+
 	public static interface UserInterface {
 
 		public void show();
@@ -29,6 +36,12 @@ public interface UserInterfaceImplementation {
 
 	public static interface AboutUserInterface extends UserInterface {
 
+	}
+
+	public static interface QueueUserInterface extends UserInterface {
+
+		public void addContent(String content, Date date);
+		
 	}
 
 }

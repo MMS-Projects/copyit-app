@@ -65,4 +65,16 @@ public class SingleCommandUi implements UserInterfaceImplementation {
 	public AboutUserInterface getAboutUserInterface() {
 		return this.aboutUserInterface;
 	}
+
+	@Override
+	public void setQueueUserInterface(QueueUserInterface userInterface) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public QueueUserInterface getQueueUserInterface() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

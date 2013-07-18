@@ -25,6 +25,7 @@ import net.mms_projects.copy_it.EnvironmentIntegration;
 import net.mms_projects.copy_it.FileStreamBuilder;
 import net.mms_projects.copy_it.FunctionalityManager;
 import net.mms_projects.copy_it.PathBuilder;
+import net.mms_projects.copy_it.QueueFunctionality;
 import net.mms_projects.copy_it.SettingsListener;
 import net.mms_projects.copy_it.SyncListener;
 import net.mms_projects.copy_it.SyncManager;
@@ -144,7 +145,7 @@ public class CopyItDesktop extends CopyIt {
 	}
 
 	public void run(String[] args) {
-		FunctionalityManager<Activatable> functionalityManager = new FunctionalityManager<Activatable>();
+		final FunctionalityManager<Activatable> functionalityManager = new FunctionalityManager<Activatable>();
 
 		log.info("The application is launched");
 		this.settings = new Config();
@@ -396,6 +397,27 @@ public class CopyItDesktop extends CopyIt {
 		environmentIntegration.setUserInterfaceImplementation(uiImplementation);
 
 		environmentIntegration.setup();
+
+		QueueFunctionality queueFunctionality = new QueueFunctionality(
+				uiImplementation);
+
+		queueFunctionality.setEnabled(this.settings
+				.getBoolean("sync.queue.enabled"));
+		queueFunctionality.addEnabledListener(new EnabledListener() {
+
+			@Override
+			public void onEnabled() {
+				settings.set("sync.queue.enabled", true);
+			}
+
+			@Override
+			public void onDisabled() {
+				settings.set("sync.queue.enabled", false);
+			}
+
+		});
+		functionalityManager.addFunctionality("queue", queueFunctionality);
+		syncManager.addListener(queueFunctionality);
 
 		uiImplementation.open();
 

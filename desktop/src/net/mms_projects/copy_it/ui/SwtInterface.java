@@ -14,7 +14,6 @@ import net.mms_projects.copy_it.Messages;
 import net.mms_projects.copy_it.SyncListener;
 import net.mms_projects.copy_it.SyncManager;
 import net.mms_projects.copy_it.clipboard_backends.SwtBackend;
-import net.mms_projects.copy_it.listeners.EnabledListener;
 import net.mms_projects.copy_it.ui.swt.forms.AboutDialog;
 import net.mms_projects.copy_it.ui.swt.forms.DataQueue;
 import net.mms_projects.copy_it.ui.swt.forms.PreferencesDialog;
@@ -30,9 +29,9 @@ public class SwtInterface implements UserInterfaceImplementation {
 
 	private SettingsUserInterface settingsUserInterface;
 	private AboutUserInterface aboutUserInterface;
+	private QueueUserInterface queueUserInterface;
 
 	protected Config config;
-	protected DataQueue queueWindow;
 	protected Display display;
 	protected Shell activityShell;
 
@@ -73,28 +72,14 @@ public class SwtInterface implements UserInterfaceImplementation {
 
 		this.activityShell = new Shell(this.display);
 
-		this.queueWindow = new DataQueue(this.activityShell, SWT.DIALOG_TRIM,
-				this.clipboardManager);
-		this.queueWindow.setEnabled(this.config
-				.getBoolean("sync.queue.enabled"));
-		this.queueWindow.addEnabledListener(new EnabledListener() {
-
-			@Override
-			public void onEnabled() {
-				config.set("sync.queue.enabled", true);
-			}
-
-			@Override
-			public void onDisabled() {
-				config.set("sync.queue.enabled", false);
-			}
-
-		});
-		this.functionality.addFunctionality("queue", this.queueWindow);
-
 		this.setSettingsUserInterface(new PreferencesDialog(this.activityShell,
 				config, functionality, environmentIntegration));
 		this.setAboutUserInterface(new AboutDialog(this.activityShell, SWT.NONE));
+
+		DataQueue queueWindow = new DataQueue(this.activityShell,
+				SWT.DIALOG_TRIM, this.clipboardManager);
+		queueWindow.setup();
+		this.setQueueUserInterface(queueWindow);
 	}
 
 	@Override
@@ -124,9 +109,6 @@ public class SwtInterface implements UserInterfaceImplementation {
 				}
 			}
 		});
-		syncManager.addListener(queueWindow);
-
-		this.queueWindow.setup();
 
 		while (!this.activityShell.isDisposed()) {
 			if (!display.readAndDispatch()) {
@@ -159,6 +141,16 @@ public class SwtInterface implements UserInterfaceImplementation {
 	@Override
 	public AboutUserInterface getAboutUserInterface() {
 		return this.aboutUserInterface;
+	}
+
+	@Override
+	public void setQueueUserInterface(QueueUserInterface userInterface) {
+		this.queueUserInterface = userInterface;
+	}
+
+	@Override
+	public QueueUserInterface getQueueUserInterface() {
+		return this.queueUserInterface;
 	}
 
 }
