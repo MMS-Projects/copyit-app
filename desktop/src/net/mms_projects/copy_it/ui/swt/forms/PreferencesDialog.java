@@ -35,6 +35,7 @@ public class PreferencesDialog extends GeneralDialog {
 	protected Shell shell;
 
 	private Config settings;
+	private FunctionalityManager<Activatable> functionality;
 	private EnvironmentIntegration environmentIntegration;
 
 	private Text textEncryptionPassphrase;
@@ -62,6 +63,7 @@ public class PreferencesDialog extends GeneralDialog {
 		super(parent, SWT.DIALOG_TRIM);
 
 		this.settings = settings;
+		this.functionality = functionality;
 		this.environmentIntegration = environmentIntegration;
 
 		setText(Messages.getString("title_activity_settings"));
