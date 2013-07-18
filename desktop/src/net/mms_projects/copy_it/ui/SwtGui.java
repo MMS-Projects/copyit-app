@@ -5,11 +5,13 @@ import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import net.mms_projects.copy_it.Activatable;
 import net.mms_projects.copy_it.ClipboardManager;
+import net.mms_projects.copy_it.Config;
 import net.mms_projects.copy_it.EnvironmentIntegration;
+import net.mms_projects.copy_it.FunctionalityManager;
 import net.mms_projects.copy_it.Messages;
 import net.mms_projects.copy_it.OpenBrowser;
-import net.mms_projects.copy_it.Config;
 import net.mms_projects.copy_it.SyncListener;
 import net.mms_projects.copy_it.SyncManager;
 import net.mms_projects.copy_it.api.ServerApi;
@@ -45,6 +47,7 @@ public class SwtGui extends AbstractUi {
 	protected EnvironmentIntegration environmentIntegration;
 
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
+	private FunctionalityManager<Activatable> functionality;
 
 	public SwtGui(Config settings, SyncManager syncManager,
 			ClipboardManager clipboardManager) {
@@ -52,6 +55,8 @@ public class SwtGui extends AbstractUi {
 
 		this.syncManager = syncManager;
 		this.clipboardManager = clipboardManager;
+
+		this.functionality = new FunctionalityManager<Activatable>();
 
 		try {
 			this.display = Display.getDefault();
@@ -88,16 +93,19 @@ public class SwtGui extends AbstractUi {
 			default:
 				environmentIntegration = new DefaultLinuxIntegration(
 						CopyItDesktop.dbusConnection, this.settings,
-						this.activityShell, syncManager, clipboardManager);
+						this.functionality, this.activityShell, syncManager,
+						clipboardManager);
 				break;
 			}
 		} else if (OSValidator.isWindows()) {
 			environmentIntegration = new WindowsIntegration(settings,
-					activityShell, syncManager, clipboardManager);
+					this.functionality, activityShell, syncManager,
+					clipboardManager);
 		}
 		if (environmentIntegration == null) {
 			environmentIntegration = new SwtIntegration(this.settings,
-					this.activityShell, syncManager, clipboardManager);
+					this.functionality, this.activityShell, syncManager,
+					clipboardManager);
 		}
 
 		environmentIntegration.setup();
@@ -116,7 +124,7 @@ public class SwtGui extends AbstractUi {
 			firstTimer.open();
 
 			new PreferencesDialog(this.activityShell, this.settings,
-					this.environmentIntegration).open();
+					this.functionality, this.environmentIntegration).open();
 			this.settings.set("run.firsttime", "nope");
 		}
 

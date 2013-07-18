@@ -13,6 +13,8 @@ import net.mms_projects.copy_it.ClipboardManager;
 import net.mms_projects.copy_it.DesktopIntegration;
 import net.mms_projects.copy_it.EnvironmentIntegration;
 import net.mms_projects.copy_it.EnvironmentIntegration.NotificationManager.NotificationUrgency;
+import net.mms_projects.copy_it.Activatable;
+import net.mms_projects.copy_it.FunctionalityManager;
 import net.mms_projects.copy_it.Messages;
 import net.mms_projects.copy_it.PathBuilder;
 import net.mms_projects.copy_it.Config;
@@ -47,6 +49,7 @@ public class UnityIntegration extends EnvironmentIntegration implements
 	private DesktopIntegration integration;
 
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
+	private FunctionalityManager<Activatable> functionality;
 
 	public UnityIntegration(DBusConnection dbusConnection, Config settings,
 			Shell activityShell, SyncManager syncManager,
@@ -184,7 +187,7 @@ public class UnityIntegration extends EnvironmentIntegration implements
 			Display.getDefault().asyncExec(new Runnable() {
 				@Override
 				public void run() {
-					new PreferencesDialog(activityShell, settings,
+					new PreferencesDialog(activityShell, settings, functionality,
 							UnityIntegration.this).open();
 				}
 			});

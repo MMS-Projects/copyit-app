@@ -1,10 +1,12 @@
 package net.mms_projects.copy_it.ui.swt.forms;
 
+import net.mms_projects.copy_it.Activatable;
+import net.mms_projects.copy_it.Config;
 import net.mms_projects.copy_it.EnvironmentIntegration;
 import net.mms_projects.copy_it.EnvironmentIntegration.NotificationManager.NotificationUrgency;
+import net.mms_projects.copy_it.FunctionalityManager;
 import net.mms_projects.copy_it.LoginResponse;
 import net.mms_projects.copy_it.Messages;
-import net.mms_projects.copy_it.Config;
 import net.mms_projects.copy_it.api.ServerApi;
 import net.mms_projects.copy_it.api.endpoints.DeviceEndpoint;
 import net.mms_projects.copy_it.ui.swt.forms.login_dialogs.AbstractLoginDialog;
@@ -55,7 +57,7 @@ public class PreferencesDialog extends GeneralDialog {
 	 * @param Config
 	 *            the settings
 	 */
-	public PreferencesDialog(Shell parent, Config settings,
+	public PreferencesDialog(Shell parent, Config settings, FunctionalityManager<Activatable> functionality,
 			EnvironmentIntegration environmentIntegration) {
 		super(parent, SWT.DIALOG_TRIM);
 
