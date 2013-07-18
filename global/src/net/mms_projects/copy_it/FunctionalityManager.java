@@ -3,6 +3,8 @@ package net.mms_projects.copy_it;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.mms_projects.copy_it.listeners.EnabledListener;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,6 +35,10 @@ public class FunctionalityManager<F extends Activatable> {
 
 	public boolean isEnabled(String key) {
 		return this.functionality.get(key).isEnabled();
+	}
+	
+	public void addEnabledListener(String key, EnabledListener listener) {
+		this.functionality.get(key).addEnabledListener(listener);
 	}
 
 }
