@@ -13,7 +13,6 @@ import net.mms_projects.copy_it.Messages;
 import net.mms_projects.copy_it.SyncListener;
 import net.mms_projects.copy_it.SyncManager;
 import net.mms_projects.copy_it.linux.DesktopEnvironment;
-import net.mms_projects.copy_it.ui.swt.forms.AboutDialog;
 import net.mms_projects.utils.OSValidator;
 import net.mms_projects.utils.StringUtils;
 
@@ -134,7 +133,7 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements
 		menuItemAbout.setText("About");
 		menuItemAbout.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				new AboutDialog(activityShell, SWT.NONE).open();
+				getUserInterfaceImplementation().getAboutUserInterface().show();
 			}
 		});
 

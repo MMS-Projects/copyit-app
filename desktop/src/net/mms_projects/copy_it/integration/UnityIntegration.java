@@ -24,10 +24,8 @@ import net.mms_projects.copy_it.app.CopyItDesktop;
 import net.mms_projects.copy_it.integration.notifications.FreedesktopNotificationManager;
 import net.mms_projects.copy_it.listeners.EnabledListener;
 import net.mms_projects.copy_it.ui.UserInterfaceImplementation;
-import net.mms_projects.copy_it.ui.swt.forms.AboutDialog;
 
 import org.apache.commons.io.FileUtils;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.freedesktop.dbus.DBusConnection;
@@ -202,12 +200,8 @@ public class UnityIntegration extends EnvironmentIntegration implements
 			this.getUserInterfaceImplementation().getSettingsUserInterface()
 					.show();
 		} else if (signal instanceof DesktopIntegration.action_open_about) {
-			Display.getDefault().asyncExec(new Runnable() {
-				@Override
-				public void run() {
-					new AboutDialog(activityShell, SWT.NONE).open();
-				}
-			});
+			this.getUserInterfaceImplementation().getAboutUserInterface()
+					.show();
 		} else if (signal instanceof DesktopIntegration.action_quit) {
 			Display.getDefault().asyncExec(new Runnable() {
 				@Override

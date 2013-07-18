@@ -2,8 +2,11 @@ package net.mms_projects.copy_it.ui.swt.forms;
 
 import net.mms_projects.copy_it.Messages;
 import net.mms_projects.copy_it.app.CopyItDesktop;
+import net.mms_projects.copy_it.ui.UserInterfaceImplementation.AboutUserInterface;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
@@ -12,11 +15,9 @@ import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-public class AboutDialog extends Dialog {
+public class AboutDialog extends Dialog implements AboutUserInterface {
 
 	protected Object result;
 	protected Shell shell;
@@ -65,8 +66,8 @@ public class AboutDialog extends Dialog {
 		fd_appIcon.top = new FormAttachment(0, 10);
 		fd_appIcon.left = new FormAttachment(0, 99);
 		appIcon.setLayoutData(fd_appIcon);
-		appIcon.setImage(SWTResourceManager
-				.getImage(getClass(), "/images/logo-512.png"));
+		appIcon.setImage(SWTResourceManager.getImage(getClass(),
+				"/images/logo-512.png"));
 		Label appName = new Label(shell, SWT.NONE);
 		FormData fd_appName = new FormData();
 		fd_appName.right = new FormAttachment(0, 283);
@@ -95,13 +96,34 @@ public class AboutDialog extends Dialog {
 		fd_btnClose.left = new FormAttachment(appIcon, 0, SWT.LEFT);
 		btnClose.setLayoutData(fd_btnClose);
 		appName.setText(Messages.getString("app_name"));
-		appVersion.setText(Messages.getString("about_version", CopyItDesktop.getVersion()));
+		appVersion.setText(Messages.getString("about_version",
+				CopyItDesktop.getVersion()));
 		appCopyright.setText(Messages.getString("about_copyright"));
 		btnClose.setText(Messages.getString("button.close"));
 		btnClose.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent event) {
 				AboutDialog.this.shell.close();
+			}
+		});
+	}
+
+	@Override
+	public void show() {
+		Display.getDefault().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				open();
+			}
+		});
+	}
+
+	@Override
+	public void hide() {
+		Display.getDefault().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				shell.dispose();
 			}
 		});
 	}
