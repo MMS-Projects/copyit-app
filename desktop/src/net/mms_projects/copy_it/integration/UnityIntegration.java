@@ -52,6 +52,7 @@ public class UnityIntegration extends EnvironmentIntegration implements
 	private FunctionalityManager<Activatable> functionality;
 
 	public UnityIntegration(DBusConnection dbusConnection, Config settings,
+			FunctionalityManager<Activatable> functionality,
 			Shell activityShell, SyncManager syncManager,
 			ClipboardManager clipboardManager) {
 		try {
@@ -62,6 +63,7 @@ public class UnityIntegration extends EnvironmentIntegration implements
 			e.printStackTrace();
 		}
 		this.settings = settings;
+		this.functionality = functionality;
 		this.activityShell = activityShell;
 		this.syncManager = syncManager;
 		this.clipboardManager = clipboardManager;

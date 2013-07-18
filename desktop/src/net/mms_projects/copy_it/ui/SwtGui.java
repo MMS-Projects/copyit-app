@@ -84,7 +84,8 @@ public class SwtGui extends AbstractUi {
 			case Unity:
 				UnityIntegration environmentIntegrationUnity = new UnityIntegration(
 						CopyItDesktop.dbusConnection, this.settings,
-						this.activityShell, syncManager, clipboardManager);
+						this.functionality, this.activityShell, syncManager,
+						clipboardManager);
 				syncManager.addListener(environmentIntegrationUnity);
 				clipboardManager.addListener(environmentIntegrationUnity);
 
