@@ -124,6 +124,8 @@ public class CopyItDesktop extends CopyIt {
     }
 
     public void run(String[] args) {
+    	FunctionalityManager<Activatable> functionalityManager = new FunctionalityManager<Activatable>();
+    	
         log.info("The application is launched");
         this.settings = new Config();
         try {
@@ -277,7 +279,7 @@ public class CopyItDesktop extends CopyIt {
                 ui = new SingleCommandUi(this.settings, syncManager, clipboardManager, args[0]);
             }
         } else {
-            ui = new SwtGui(this.settings, syncManager, clipboardManager);
+            ui = new SwtGui(this.settings, functionalityManager, syncManager, clipboardManager);
         }
         ui.open();
 

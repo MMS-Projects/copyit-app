@@ -50,14 +50,14 @@ public class SwtGui extends AbstractUi {
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	private FunctionalityManager<Activatable> functionality;
 
-	public SwtGui(final Config settings, SyncManager syncManager,
+	public SwtGui(final Config settings, FunctionalityManager<Activatable> functionality, SyncManager syncManager,
 			ClipboardManager clipboardManager) {
 		super(settings);
 
 		this.syncManager = syncManager;
 		this.clipboardManager = clipboardManager;
 
-		this.functionality = new FunctionalityManager<Activatable>();
+		this.functionality = functionality;
 
 		try {
 			this.display = Display.getDefault();
