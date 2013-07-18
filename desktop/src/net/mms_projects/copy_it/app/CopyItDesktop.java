@@ -21,9 +21,11 @@ import net.mms_projects.copy_it.ApplicationLock;
 import net.mms_projects.copy_it.ApplicationLock.LockException;
 import net.mms_projects.copy_it.ClipboardManager;
 import net.mms_projects.copy_it.Config;
+import net.mms_projects.copy_it.EnvironmentIntegration;
 import net.mms_projects.copy_it.FileStreamBuilder;
 import net.mms_projects.copy_it.FunctionalityManager;
 import net.mms_projects.copy_it.PathBuilder;
+import net.mms_projects.copy_it.QueueFunctionality;
 import net.mms_projects.copy_it.SettingsListener;
 import net.mms_projects.copy_it.SyncListener;
 import net.mms_projects.copy_it.SyncManager;
@@ -31,13 +33,18 @@ import net.mms_projects.copy_it.SyncingThread;
 import net.mms_projects.copy_it.api.ServerApi;
 import net.mms_projects.copy_it.api.endpoints.ClipboardContentEndpoint;
 import net.mms_projects.copy_it.clipboard_services.AwtService;
+import net.mms_projects.copy_it.integration.DefaultLinuxIntegration;
+import net.mms_projects.copy_it.integration.SwtIntegration;
+import net.mms_projects.copy_it.integration.UnityIntegration;
+import net.mms_projects.copy_it.integration.WindowsIntegration;
+import net.mms_projects.copy_it.linux.DesktopEnvironment;
 import net.mms_projects.copy_it.listeners.EnabledListener;
 import net.mms_projects.copy_it.sync_services.ApiService;
 import net.mms_projects.copy_it.sync_services.TestService;
-import net.mms_projects.copy_it.ui.AbstractUi;
 import net.mms_projects.copy_it.ui.ShellUi;
 import net.mms_projects.copy_it.ui.SingleCommandUi;
-import net.mms_projects.copy_it.ui.SwtGui;
+import net.mms_projects.copy_it.ui.SwtInterface;
+import net.mms_projects.copy_it.ui.UserInterfaceImplementation;
 import net.mms_projects.utils.OSValidator;
 
 import org.apache.commons.io.FileUtils;
@@ -138,7 +145,7 @@ public class CopyItDesktop extends CopyIt {
 	}
 
 	public void run(String[] args) {
-		FunctionalityManager<Activatable> functionalityManager = new FunctionalityManager<Activatable>();
+		final FunctionalityManager<Activatable> functionalityManager = new FunctionalityManager<Activatable>();
 
 		log.info("The application is launched");
 		this.settings = new Config();
@@ -338,7 +345,37 @@ public class CopyItDesktop extends CopyIt {
 			});
 		}
 
-		AbstractUi ui = null;
+		EnvironmentIntegration environmentIntegration = null;
+
+		if (OSValidator.isUnix()) {
+			switch (DesktopEnvironment.getDesktopEnvironment()) {
+			case Unity:
+				UnityIntegration environmentIntegrationUnity = new UnityIntegration(
+						CopyItDesktop.dbusConnection, functionalityManager,
+						syncManager, clipboardManager);
+				syncManager.addListener(environmentIntegrationUnity);
+				clipboardManager.addListener(environmentIntegrationUnity);
+
+				environmentIntegration = environmentIntegrationUnity;
+				break;
+			default:
+				environmentIntegration = new DefaultLinuxIntegration(
+						CopyItDesktop.dbusConnection, functionalityManager,
+						syncManager, clipboardManager);
+				break;
+			}
+		} else if (OSValidator.isWindows()) {
+			environmentIntegration = new WindowsIntegration(
+					functionalityManager, syncManager, clipboardManager);
+		}
+		if (environmentIntegration == null) {
+			environmentIntegration = new SwtIntegration(functionalityManager,
+					syncManager, clipboardManager);
+		}
+
+		System.out.println(environmentIntegration);
+
+		UserInterfaceImplementation uiImplementation = null;
 		if (args.length > 0) {
 			AwtService awtService = new AwtService(clipboardManager);
 
@@ -346,16 +383,43 @@ public class CopyItDesktop extends CopyIt {
 			clipboardManager.addCopyService(awtService);
 
 			if ("cli".equalsIgnoreCase(args[0])) {
-				ui = new ShellUi(this.settings, syncManager, clipboardManager);
+				uiImplementation = new ShellUi(this.settings, syncManager,
+						clipboardManager);
 			} else {
-				ui = new SingleCommandUi(this.settings, syncManager,
-						clipboardManager, args[0]);
+				uiImplementation = new SingleCommandUi(this.settings,
+						syncManager, clipboardManager, args[0]);
 			}
 		} else {
-			ui = new SwtGui(this.settings, functionalityManager, syncManager,
-					clipboardManager);
+			uiImplementation = new SwtInterface(settings, functionalityManager,
+					environmentIntegration, syncManager, clipboardManager);
 		}
-		ui.open();
+
+		environmentIntegration.setUserInterfaceImplementation(uiImplementation);
+
+		environmentIntegration.setup();
+
+		QueueFunctionality queueFunctionality = new QueueFunctionality(
+				uiImplementation);
+
+		queueFunctionality.setEnabled(this.settings
+				.getBoolean("sync.queue.enabled"));
+		queueFunctionality.addEnabledListener(new EnabledListener() {
+
+			@Override
+			public void onEnabled() {
+				settings.set("sync.queue.enabled", true);
+			}
+
+			@Override
+			public void onDisabled() {
+				settings.set("sync.queue.enabled", false);
+			}
+
+		});
+		functionalityManager.addFunctionality("queue", queueFunctionality);
+		syncManager.addListener(queueFunctionality);
+
+		uiImplementation.open();
 
 		this.settings.saveProperties();
 		if (OSValidator.isUnix()) {
