@@ -3,10 +3,13 @@ package net.mms_projects.copy_it;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.mms_projects.copy_it.ui.UserInterfaceImplementation;
+
 abstract public class EnvironmentIntegration {
 
 	private NotificationManager notificationManager;
 	private List<EnvironmentIntegration> integrationProviders = new ArrayList<EnvironmentIntegration>();
+	private UserInterfaceImplementation userInterfaceImplementation;
 
 	/**
 	 * This will set the current notification manager to the one provided
@@ -42,9 +45,13 @@ abstract public class EnvironmentIntegration {
 	 * This method initializes the setup of the integration.
 	 */
 	final public void setup() {
+		if (this.getUserInterfaceImplementation() == null) {
+			throw new IllegalStateException("No UserInterfaceImplementation set");
+		}
 		this.standaloneSetup();
 
 		for (EnvironmentIntegration integrationProvider : this.integrationProviders) {
+			integrationProvider.setUserInterfaceImplementation(this.getUserInterfaceImplementation());
 			integrationProvider.setup();
 		}
 	}
@@ -55,6 +62,14 @@ abstract public class EnvironmentIntegration {
 	 * EnvironmentIntegration.setup} instead!
 	 */
 	abstract public void standaloneSetup();
+	
+	public void setUserInterfaceImplementation(UserInterfaceImplementation userInterfaceImplementation) {
+		this.userInterfaceImplementation = userInterfaceImplementation;
+	}
+	
+	protected UserInterfaceImplementation getUserInterfaceImplementation() {
+		return this.userInterfaceImplementation;
+	}
 
 	/**
 	 * A interface that describes a basic notification manager with one method

@@ -23,8 +23,8 @@ import net.mms_projects.copy_it.SyncManager;
 import net.mms_projects.copy_it.app.CopyItDesktop;
 import net.mms_projects.copy_it.integration.notifications.FreedesktopNotificationManager;
 import net.mms_projects.copy_it.listeners.EnabledListener;
+import net.mms_projects.copy_it.ui.UserInterfaceImplementation;
 import net.mms_projects.copy_it.ui.swt.forms.AboutDialog;
-import net.mms_projects.copy_it.ui.swt.forms.PreferencesDialog;
 
 import org.apache.commons.io.FileUtils;
 import org.eclipse.swt.SWT;
@@ -50,6 +50,7 @@ public class UnityIntegration extends EnvironmentIntegration implements
 
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	private FunctionalityManager<Activatable> functionality;
+	private UserInterfaceImplementation uiImplementation;
 
 	private EnabledListener pollingListener = new EnabledListener() {
 
@@ -81,6 +82,7 @@ public class UnityIntegration extends EnvironmentIntegration implements
 		this.syncManager = syncManager;
 		this.clipboardManager = clipboardManager;
 		this.dbusConnection = dbusConnection;
+		this.uiImplementation = uiImplementation;
 
 		/*
 		 * Add FreeDesktop integrations like notifications and writing .desktop
@@ -197,13 +199,8 @@ public class UnityIntegration extends EnvironmentIntegration implements
 		} else if (signal instanceof DesktopIntegration.action_pull) {
 			syncManager.doPull();
 		} else if (signal instanceof DesktopIntegration.action_open_preferences) {
-			Display.getDefault().asyncExec(new Runnable() {
-				@Override
-				public void run() {
-					new PreferencesDialog(activityShell, settings, functionality,
-							UnityIntegration.this).open();
-				}
-			});
+			this.getUserInterfaceImplementation().getSettingsUserInterface()
+					.show();
 		} else if (signal instanceof DesktopIntegration.action_open_about) {
 			Display.getDefault().asyncExec(new Runnable() {
 				@Override

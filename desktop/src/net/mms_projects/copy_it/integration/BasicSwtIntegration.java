@@ -2,19 +2,18 @@ package net.mms_projects.copy_it.integration;
 
 import java.util.Date;
 
+import net.mms_projects.copy_it.Activatable;
 import net.mms_projects.copy_it.ClipboardListener;
 import net.mms_projects.copy_it.ClipboardManager;
+import net.mms_projects.copy_it.Config;
 import net.mms_projects.copy_it.EnvironmentIntegration;
 import net.mms_projects.copy_it.EnvironmentIntegration.NotificationManager.NotificationUrgency;
-import net.mms_projects.copy_it.Activatable;
 import net.mms_projects.copy_it.FunctionalityManager;
 import net.mms_projects.copy_it.Messages;
-import net.mms_projects.copy_it.Config;
 import net.mms_projects.copy_it.SyncListener;
 import net.mms_projects.copy_it.SyncManager;
 import net.mms_projects.copy_it.linux.DesktopEnvironment;
 import net.mms_projects.copy_it.ui.swt.forms.AboutDialog;
-import net.mms_projects.copy_it.ui.swt.forms.PreferencesDialog;
 import net.mms_projects.utils.OSValidator;
 import net.mms_projects.utils.StringUtils;
 
@@ -54,7 +53,8 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements
 	private EnvironmentIntegration parentIntegration;
 
 	public BasicSwtIntegration(EnvironmentIntegration parentIntegration,
-			Config settings, FunctionalityManager<Activatable> functionality, Shell activityShell, SyncManager syncManager,
+			Config settings, FunctionalityManager<Activatable> functionality,
+			Shell activityShell, SyncManager syncManager,
 			ClipboardManager clipboardManager) {
 		this.parentIntegration = parentIntegration;
 		this.tray = display.getSystemTray();
@@ -125,7 +125,8 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements
 		menuItemPreferences.setText("Preferences");
 		menuItemPreferences.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				new PreferencesDialog(activityShell, settings, functionality, parentIntegration).open();
+				getUserInterfaceImplementation().getSettingsUserInterface()
+						.show();
 			}
 		});
 

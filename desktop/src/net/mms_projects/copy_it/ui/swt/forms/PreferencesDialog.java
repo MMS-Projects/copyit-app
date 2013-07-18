@@ -9,6 +9,7 @@ import net.mms_projects.copy_it.LoginResponse;
 import net.mms_projects.copy_it.Messages;
 import net.mms_projects.copy_it.api.ServerApi;
 import net.mms_projects.copy_it.api.endpoints.DeviceEndpoint;
+import net.mms_projects.copy_it.ui.UserInterfaceImplementation.SettingsUserInterface;
 import net.mms_projects.copy_it.ui.swt.forms.login_dialogs.AbstractLoginDialog;
 import net.mms_projects.copy_it.ui.swt.forms.login_dialogs.AutoLoginDialog;
 import net.mms_projects.copy_it.ui.swt.forms.login_dialogs.LoginDialog;
@@ -30,7 +31,8 @@ import org.eclipse.swt.widgets.Text;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class PreferencesDialog extends GeneralDialog {
+public class PreferencesDialog extends GeneralDialog implements
+		SettingsUserInterface {
 
 	protected Shell shell;
 
@@ -58,7 +60,8 @@ public class PreferencesDialog extends GeneralDialog {
 	 * @param Config
 	 *            the settings
 	 */
-	public PreferencesDialog(Shell parent, Config settings, FunctionalityManager<Activatable> functionality,
+	public PreferencesDialog(Shell parent, Config settings,
+			FunctionalityManager<Activatable> functionality,
 			EnvironmentIntegration environmentIntegration) {
 		super(parent, SWT.DIALOG_TRIM);
 
@@ -269,7 +272,8 @@ public class PreferencesDialog extends GeneralDialog {
 		btnEnablePolling.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				functionality.setEnabled("polling", btnEnablePolling.getSelection());
+				functionality.setEnabled("polling",
+						btnEnablePolling.getSelection());
 				PreferencesDialog.this.updateForm();
 			}
 		});
@@ -334,5 +338,25 @@ public class PreferencesDialog extends GeneralDialog {
 			PreferencesDialog.this.updateForm();
 		}
 
+	}
+
+	@Override
+	public void show() {
+		Display.getDefault().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				open();
+			}
+		});
+	}
+
+	@Override
+	public void hide() {
+		Display.getDefault().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				shell.dispose();
+			}
+		});
 	}
 }

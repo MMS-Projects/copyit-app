@@ -26,7 +26,6 @@ import net.mms_projects.copy_it.integration.WindowsIntegration;
 import net.mms_projects.copy_it.linux.DesktopEnvironment;
 import net.mms_projects.copy_it.listeners.EnabledListener;
 import net.mms_projects.copy_it.ui.swt.forms.DataQueue;
-import net.mms_projects.copy_it.ui.swt.forms.PreferencesDialog;
 import net.mms_projects.copy_it.ui_old.AbstractUi;
 import net.mms_projects.utils.OSValidator;
 
@@ -50,9 +49,11 @@ public class SwtGui extends AbstractUi {
 
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	private FunctionalityManager<Activatable> functionality;
+	private UserInterfaceImplementation uiImplementation;
 
-	public SwtGui(final Config settings, FunctionalityManager<Activatable> functionality, SyncManager syncManager,
-			ClipboardManager clipboardManager) {
+	public SwtGui(final Config settings,
+			FunctionalityManager<Activatable> functionality,
+			SyncManager syncManager, ClipboardManager clipboardManager) {
 		super(settings);
 
 		this.syncManager = syncManager;
@@ -111,25 +112,32 @@ public class SwtGui extends AbstractUi {
 					clipboardManager);
 		}
 
+		this.uiImplementation = new SwtInterface(activityShell, settings,
+				functionality, environmentIntegration);
+
+		environmentIntegration
+				.setUserInterfaceImplementation(this.uiImplementation);
+
 		environmentIntegration.setup();
 
 		this.environmentIntegration = environmentIntegration;
 
 		this.queueWindow = new DataQueue(this.activityShell, SWT.DIALOG_TRIM,
 				this.clipboardManager);
-		this.queueWindow.setEnabled(this.settings.getBoolean("sync.queue.enabled"));
+		this.queueWindow.setEnabled(this.settings
+				.getBoolean("sync.queue.enabled"));
 		this.queueWindow.addEnabledListener(new EnabledListener() {
-			
+
 			@Override
 			public void onEnabled() {
 				settings.set("sync.queue.enabled", true);
 			}
-			
+
 			@Override
 			public void onDisabled() {
 				settings.set("sync.queue.enabled", false);
 			}
-			
+
 		});
 		this.functionality.addFunctionality("queue", this.queueWindow);
 	}
@@ -141,8 +149,7 @@ public class SwtGui extends AbstractUi {
 			firstTimer.setMessage(Messages.getString("text.firstrun"));
 			firstTimer.open();
 
-			new PreferencesDialog(this.activityShell, this.settings,
-					this.functionality, this.environmentIntegration).open();
+			this.uiImplementation.getSettingsUserInterface().show();
 			this.settings.set("run.firsttime", "nope");
 		}
 
