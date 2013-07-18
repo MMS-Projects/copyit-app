@@ -185,8 +185,8 @@ public class UnityIntegration extends EnvironmentIntegration implements
 						"net.mms_projects.copyit.DesktopIntegration", "/",
 						DesktopIntegration.class);
 				integration.setup(icon, icon);
-				integration.set_enabled(this.settings
-						.getBoolean("sync.polling.enabled"));
+				integration
+						.set_enabled(this.functionality.isEnabled("polling"));
 			} catch (DBusException e) {
 				log.error("Could not connect to desktop integration script although it reported as ready. Exiting...");
 				System.exit(1);
