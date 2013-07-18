@@ -277,8 +277,7 @@ public class PreferencesDialog extends GeneralDialog {
 		btnEnableQueue.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				PreferencesDialog.this.settings.set("sync.queue.enabled",
-						btnEnableQueue.getSelection());
+				functionality.setEnabled("queue", btnEnableQueue.getSelection());
 				PreferencesDialog.this.updateForm();
 			}
 		});
@@ -299,8 +298,7 @@ public class PreferencesDialog extends GeneralDialog {
 		}
 		btnEnablePolling.setSelection(this.settings
 				.getBoolean("sync.polling.enabled"));
-		btnEnableQueue.setSelection(this.settings
-				.getBoolean("sync.queue.enabled"));
+		btnEnableQueue.setSelection(functionality.isEnabled("queue"));
 		btnEnableQueue.setEnabled(this.settings
 				.getBoolean("sync.polling.enabled"));
 	}

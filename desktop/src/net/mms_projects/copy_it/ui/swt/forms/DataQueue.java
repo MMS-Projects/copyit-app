@@ -25,8 +25,7 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
-public class DataQueue extends Dialog implements SyncListener,
-		SettingsListener, Activatable {
+public class DataQueue extends Dialog implements SyncListener, Activatable {
 
 	protected Object result;
 	protected Shell shell;
@@ -141,13 +140,6 @@ public class DataQueue extends Dialog implements SyncListener,
 	}
 
 	@Override
-	public void onChange(String key, String value) {
-		if ("sync.queue.enabled".equals(key)) {
-			this.setEnabled(Boolean.parseBoolean(value));
-		}
-	}
-
-	@Override
 	public void enable() {
 		this.enabled = true;
 
@@ -158,7 +150,7 @@ public class DataQueue extends Dialog implements SyncListener,
 
 	@Override
 	public void disable() {
-		if (this.shell.isVisible()) {
+		if ((this.shell != null) && (this.shell.isVisible())) {
 			this.shell.setVisible(false);
 		}
 

@@ -24,6 +24,7 @@ import net.mms_projects.copy_it.integration.SwtIntegration;
 import net.mms_projects.copy_it.integration.UnityIntegration;
 import net.mms_projects.copy_it.integration.WindowsIntegration;
 import net.mms_projects.copy_it.linux.DesktopEnvironment;
+import net.mms_projects.copy_it.listeners.EnabledListener;
 import net.mms_projects.copy_it.ui.swt.forms.DataQueue;
 import net.mms_projects.copy_it.ui.swt.forms.PreferencesDialog;
 import net.mms_projects.utils.OSValidator;
@@ -49,7 +50,7 @@ public class SwtGui extends AbstractUi {
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	private FunctionalityManager<Activatable> functionality;
 
-	public SwtGui(Config settings, SyncManager syncManager,
+	public SwtGui(final Config settings, SyncManager syncManager,
 			ClipboardManager clipboardManager) {
 		super(settings);
 
@@ -115,6 +116,21 @@ public class SwtGui extends AbstractUi {
 
 		this.queueWindow = new DataQueue(this.activityShell, SWT.DIALOG_TRIM,
 				this.clipboardManager);
+		this.queueWindow.setEnabled(this.settings.getBoolean("sync.queue.enabled"));
+		this.queueWindow.addEnabledListener(new EnabledListener() {
+			
+			@Override
+			public void onEnabled() {
+				settings.set("sync.queue.enabled", true);
+			}
+			
+			@Override
+			public void onDisabled() {
+				settings.set("sync.queue.enabled", false);
+			}
+			
+		});
+		this.functionality.addFunctionality("queue", this.queueWindow);
 	}
 
 	@Override
@@ -148,10 +164,6 @@ public class SwtGui extends AbstractUi {
 		syncManager.addListener(queueWindow);
 
 		this.queueWindow.setup();
-		this.queueWindow.setEnabled(this.settings
-				.getBoolean("sync.queue.enabled"));
-
-		this.settings.addListener("sync.queue.enabled", this.queueWindow);
 
 		while (!this.activityShell.isDisposed()) {
 			if (!display.readAndDispatch()) {
