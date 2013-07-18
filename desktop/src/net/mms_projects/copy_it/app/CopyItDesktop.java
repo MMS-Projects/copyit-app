@@ -40,7 +40,7 @@ public class CopyItDesktop extends CopyIt {
     static public DBusConnection dbusConnection;
     static private boolean nativeLoadingInitialized;
     private final Logger log = LoggerFactory.getLogger(this.getClass());
-    protected Settings settings;
+    protected Config settings;
 
     /**
      * @param args
@@ -125,7 +125,7 @@ public class CopyItDesktop extends CopyIt {
 
     public void run(String[] args) {
         log.info("The application is launched");
-        this.settings = new Settings();
+        this.settings = new Config();
         try {
             this.settings.setFileStreamBuilder(new StreamBuilder());
         } catch (IOException e) {

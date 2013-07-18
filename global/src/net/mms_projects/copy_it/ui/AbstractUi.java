@@ -1,12 +1,12 @@
 package net.mms_projects.copy_it.ui;
 
-import net.mms_projects.copy_it.Settings;
+import net.mms_projects.copy_it.Config;
 
 abstract public class AbstractUi {
 
-	protected Settings settings;
+	protected Config settings;
 	
-	public AbstractUi(Settings settings) {
+	public AbstractUi(Config settings) {
 		this.settings = settings;
 	}
 	

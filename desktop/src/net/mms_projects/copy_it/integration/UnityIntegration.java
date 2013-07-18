@@ -15,7 +15,7 @@ import net.mms_projects.copy_it.EnvironmentIntegration;
 import net.mms_projects.copy_it.EnvironmentIntegration.NotificationManager.NotificationUrgency;
 import net.mms_projects.copy_it.Messages;
 import net.mms_projects.copy_it.PathBuilder;
-import net.mms_projects.copy_it.Settings;
+import net.mms_projects.copy_it.Config;
 import net.mms_projects.copy_it.SettingsListener;
 import net.mms_projects.copy_it.SyncListener;
 import net.mms_projects.copy_it.SyncManager;
@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 public class UnityIntegration extends EnvironmentIntegration implements
 		SyncListener, DBusSigHandler, SettingsListener, ClipboardListener {
 
-	protected Settings settings;
+	protected Config settings;
 	protected Shell activityShell;
 	protected SyncManager syncManager;
 	protected ClipboardManager clipboardManager;
@@ -48,7 +48,7 @@ public class UnityIntegration extends EnvironmentIntegration implements
 
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-	public UnityIntegration(DBusConnection dbusConnection, Settings settings,
+	public UnityIntegration(DBusConnection dbusConnection, Config settings,
 			Shell activityShell, SyncManager syncManager,
 			ClipboardManager clipboardManager) {
 		try {

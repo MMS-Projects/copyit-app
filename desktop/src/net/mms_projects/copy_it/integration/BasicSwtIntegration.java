@@ -7,7 +7,7 @@ import net.mms_projects.copy_it.ClipboardManager;
 import net.mms_projects.copy_it.EnvironmentIntegration;
 import net.mms_projects.copy_it.EnvironmentIntegration.NotificationManager.NotificationUrgency;
 import net.mms_projects.copy_it.Messages;
-import net.mms_projects.copy_it.Settings;
+import net.mms_projects.copy_it.Config;
 import net.mms_projects.copy_it.SyncListener;
 import net.mms_projects.copy_it.SyncManager;
 import net.mms_projects.copy_it.linux.DesktopEnvironment;
@@ -37,7 +37,7 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements
 	protected Display display = Display.getDefault();
 	protected Menu menu;
 	protected TrayItem trayItem;
-	protected Settings settings;
+	protected Config settings;
 	protected Shell activityShell;
 	protected SyncManager syncManager;
 	protected ClipboardManager clipboardManager;
@@ -51,7 +51,7 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements
 	private EnvironmentIntegration parentIntegration;
 
 	public BasicSwtIntegration(EnvironmentIntegration parentIntegration,
-			Settings settings, Shell activityShell, SyncManager syncManager,
+			Config settings, Shell activityShell, SyncManager syncManager,
 			ClipboardManager clipboardManager) {
 		this.parentIntegration = parentIntegration;
 		this.tray = display.getSystemTray();

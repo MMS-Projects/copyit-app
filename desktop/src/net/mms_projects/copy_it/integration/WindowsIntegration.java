@@ -2,7 +2,7 @@ package net.mms_projects.copy_it.integration;
 
 import net.mms_projects.copy_it.ClipboardManager;
 import net.mms_projects.copy_it.EnvironmentIntegration;
-import net.mms_projects.copy_it.Settings;
+import net.mms_projects.copy_it.Config;
 import net.mms_projects.copy_it.SyncManager;
 
 import org.eclipse.swt.widgets.Shell;
@@ -12,7 +12,7 @@ import org.eclipse.swt.widgets.Shell;
  */
 public class WindowsIntegration extends EnvironmentIntegration {
 
-	public WindowsIntegration(Settings settings, Shell activityShell,
+	public WindowsIntegration(Config settings, Shell activityShell,
 			SyncManager syncManager, ClipboardManager clipboardManager) {
 		/*
 		 * Adds SWT integration like a tray icon

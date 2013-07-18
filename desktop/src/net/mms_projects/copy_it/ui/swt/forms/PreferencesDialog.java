@@ -4,7 +4,7 @@ import net.mms_projects.copy_it.EnvironmentIntegration;
 import net.mms_projects.copy_it.EnvironmentIntegration.NotificationManager.NotificationUrgency;
 import net.mms_projects.copy_it.LoginResponse;
 import net.mms_projects.copy_it.Messages;
-import net.mms_projects.copy_it.Settings;
+import net.mms_projects.copy_it.Config;
 import net.mms_projects.copy_it.api.ServerApi;
 import net.mms_projects.copy_it.api.endpoints.DeviceEndpoint;
 import net.mms_projects.copy_it.ui.swt.forms.login_dialogs.AbstractLoginDialog;
@@ -32,7 +32,7 @@ public class PreferencesDialog extends GeneralDialog {
 
 	protected Shell shell;
 
-	private Settings settings;
+	private Config settings;
 	private EnvironmentIntegration environmentIntegration;
 
 	private Text textEncryptionPassphrase;
@@ -52,10 +52,10 @@ public class PreferencesDialog extends GeneralDialog {
 	 * Create the dialog.
 	 * 
 	 * @param parent
-	 * @param Settings
+	 * @param Config
 	 *            the settings
 	 */
-	public PreferencesDialog(Shell parent, Settings settings,
+	public PreferencesDialog(Shell parent, Config settings,
 			EnvironmentIntegration environmentIntegration) {
 		super(parent, SWT.DIALOG_TRIM);
 

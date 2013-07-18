@@ -2,7 +2,7 @@ package net.mms_projects.copy_it.integration;
 
 import net.mms_projects.copy_it.ClipboardManager;
 import net.mms_projects.copy_it.EnvironmentIntegration;
-import net.mms_projects.copy_it.Settings;
+import net.mms_projects.copy_it.Config;
 import net.mms_projects.copy_it.SyncManager;
 
 import org.eclipse.swt.widgets.Shell;
@@ -11,7 +11,7 @@ import org.freedesktop.dbus.DBusConnection;
 public class DefaultLinuxIntegration extends EnvironmentIntegration {
 
 	public DefaultLinuxIntegration(DBusConnection dbusConnection,
-			Settings settings, Shell activityShell, SyncManager syncManager,
+			Config settings, Shell activityShell, SyncManager syncManager,
 			ClipboardManager clipboardManager) {
 		/*
 		 * Adds SWT integration like a tray icon

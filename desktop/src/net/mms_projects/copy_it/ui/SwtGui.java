@@ -9,7 +9,7 @@ import net.mms_projects.copy_it.ClipboardManager;
 import net.mms_projects.copy_it.EnvironmentIntegration;
 import net.mms_projects.copy_it.Messages;
 import net.mms_projects.copy_it.OpenBrowser;
-import net.mms_projects.copy_it.Settings;
+import net.mms_projects.copy_it.Config;
 import net.mms_projects.copy_it.SyncListener;
 import net.mms_projects.copy_it.SyncManager;
 import net.mms_projects.copy_it.api.ServerApi;
@@ -46,7 +46,7 @@ public class SwtGui extends AbstractUi {
 
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-	public SwtGui(Settings settings, SyncManager syncManager,
+	public SwtGui(Config settings, SyncManager syncManager,
 			ClipboardManager clipboardManager) {
 		super(settings);
 
