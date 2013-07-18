@@ -3,7 +3,7 @@ package net.mms_projects.copy_it.ui;
 import java.util.Date;
 
 
-public interface UserInterfaceImplementation {
+public interface UserInterfaceImplementation extends UserInterface {
 
 	public void open();
 
@@ -21,14 +21,6 @@ public interface UserInterfaceImplementation {
 	public void setQueueUserInterface(QueueUserInterface userInterface);
 
 	public QueueUserInterface getQueueUserInterface();
-
-	public static interface UserInterface {
-
-		public void open();
-
-		public void close();
-
-	}
 
 	public static interface SettingsUserInterface extends UserInterface {
 
