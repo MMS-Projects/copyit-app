@@ -73,6 +73,8 @@ public class UnityIntegration extends EnvironmentIntegration implements
 		this.clipboardManager = clipboardManager;
 		this.dbusConnection = dbusConnection;
 
+		this.functionality.addEnabledListener("polling", this.pollingListener);
+
 		/*
 		 * Add FreeDesktop integrations like notifications and writing .desktop
 		 * files and the appropriate icons for the .desktop files
