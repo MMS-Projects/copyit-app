@@ -4,11 +4,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.UUID;
 
+import net.mms_projects.copy_it.Config;
 import net.mms_projects.copy_it.LoginResponse;
 import net.mms_projects.copy_it.Messages;
-import net.mms_projects.copy_it.Config;
+import net.mms_projects.copy_it.ui.exceptions.NoBrowserEngineException;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTException;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.browser.LocationEvent;
 import org.eclipse.swt.browser.LocationListener;
@@ -18,8 +20,11 @@ import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Shell;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AutoLoginDialog extends AbstractLoginDialog {
 
@@ -28,6 +33,8 @@ public class AutoLoginDialog extends AbstractLoginDialog {
 	private Browser browser;
 
 	private Shell windowBuilderShell;
+
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public AutoLoginDialog(Shell parent, Config settings) {
 		super(parent);
@@ -41,7 +48,18 @@ public class AutoLoginDialog extends AbstractLoginDialog {
 	 * Open the dialog.
 	 */
 	public void open() {
-		this.createContents();
+		try {
+			this.createContents();
+		} catch (NoBrowserEngineException exception) {
+			this.log.error("No engine available to render browser pages",
+					exception);
+
+			MessageBox messageBox = new MessageBox(this.getParent());
+			messageBox.setMessage(Messages.getString(
+					"ui.browser.error.no-engine", exception.getMessage()));
+			messageBox.open();
+			return;
+		}
 		this.updateForm();
 
 		this.shell.open();
@@ -64,7 +82,12 @@ public class AutoLoginDialog extends AbstractLoginDialog {
 		this.windowBuilderShell.setText(getText());
 		windowBuilderShell.setLayout(new FormLayout());
 
-		browser = new Browser(windowBuilderShell, SWT.NONE);
+		try {
+			browser = new Browser(windowBuilderShell, SWT.NONE);
+		} catch (SWTException exception) {
+			throw new NoBrowserEngineException(exception);
+		}
+
 		FormData fd_browser = new FormData();
 		fd_browser.top = new FormAttachment(0, 10);
 		fd_browser.left = new FormAttachment(0, 10);
