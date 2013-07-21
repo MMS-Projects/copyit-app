@@ -167,7 +167,7 @@ public class PreferencesDialog extends GeneralDialog implements
 		fd_btnManualLogin.top = new FormAttachment(lblDeviceIdHere, 6);
 		btnManualLogin.setLayoutData(fd_btnManualLogin);
 
-		this.btnSetupAutoStart = new Button(compositeAccount, SWT.NONE);
+		this.btnSetupAutoStart = new Button(compositeAccount, SWT.CHECK);
 		/*
 		 * If there is a auto start manager available enable the 'Setup auto
 		 * start' button
