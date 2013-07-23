@@ -1,9 +1,13 @@
 package net.mms_projects.copy_it.integration;
 
+import java.util.Date;
+
 import net.mms_projects.copy_it.Activatable;
 import net.mms_projects.copy_it.ClipboardManager;
 import net.mms_projects.copy_it.EnvironmentIntegration;
+import net.mms_projects.copy_it.EnvironmentIntegration.NotificationManager.NotificationUrgency;
 import net.mms_projects.copy_it.FunctionalityManager;
+import net.mms_projects.copy_it.Messages;
 import net.mms_projects.copy_it.SyncManager;
 import net.mms_projects.copy_it.linux.DesktopEnvironment;
 import net.mms_projects.utils.OSValidator;
@@ -93,7 +97,13 @@ public class BasicSwtIntegration extends EnvironmentIntegration {
 		this.menuItemCopyIt.setText("Copy it ▲");
 		this.menuItemCopyIt.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				clipboardManager.requestGet();
+				String content = clipboardManager.getContent();
+
+				syncManager.setRemoteContent(content, new Date());
+
+				getNotificationManager().notify(10, NotificationUrgency.NORMAL,
+						"", "CopyIt",
+						Messages.getString("text_content_pushed", content));
 			}
 		});
 

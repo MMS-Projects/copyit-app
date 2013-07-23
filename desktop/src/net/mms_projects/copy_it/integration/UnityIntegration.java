@@ -6,12 +6,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.Date;
 
 import net.mms_projects.copy_it.Activatable;
 import net.mms_projects.copy_it.ClipboardManager;
 import net.mms_projects.copy_it.DesktopIntegration;
 import net.mms_projects.copy_it.EnvironmentIntegration;
+import net.mms_projects.copy_it.EnvironmentIntegration.NotificationManager.NotificationUrgency;
 import net.mms_projects.copy_it.FunctionalityManager;
+import net.mms_projects.copy_it.Messages;
 import net.mms_projects.copy_it.PathBuilder;
 import net.mms_projects.copy_it.SyncManager;
 import net.mms_projects.copy_it.app.CopyItDesktop;
@@ -163,7 +166,13 @@ public class UnityIntegration extends EnvironmentIntegration implements
 			}
 
 		} else if (signal instanceof DesktopIntegration.action_push) {
-			clipboardManager.requestGet();
+			String content = clipboardManager.getContent();
+
+			syncManager.setRemoteContent(content, new Date());
+
+			getNotificationManager().notify(10, NotificationUrgency.NORMAL, "",
+					"CopyIt",
+					Messages.getString("text_content_pushed", content));
 		} else if (signal instanceof DesktopIntegration.action_pull) {
 			syncManager.requestRemoteContentAsync();
 		} else if (signal instanceof DesktopIntegration.action_open_preferences) {
