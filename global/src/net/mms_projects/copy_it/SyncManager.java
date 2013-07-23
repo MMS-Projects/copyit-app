@@ -14,7 +14,7 @@ import net.mms_projects.copy_it.sync_services.PullServiceInterface;
 import net.mms_projects.copy_it.sync_services.PushServiceInterface;
 
 public class SyncManager implements PushServiceInterface, PullServiceInterface,
-		PollingServiceInterface, SyncListener, ClipboardListener {
+		PollingServiceInterface, SyncListener {
 
 	private Map<String, PushServiceInterface> pushServices = new HashMap<String, PushServiceInterface>();
 	private Map<String, PullServiceInterface> pullServices = new HashMap<String, PullServiceInterface>();
@@ -24,15 +24,8 @@ public class SyncManager implements PushServiceInterface, PullServiceInterface,
 	private String pullingService;
 	private List<SyncListener> listeners = new ArrayList<SyncListener>();
 
-	private ClipboardManager clipboardManager;
-	private String currentContent;
 	private Executor executor;
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
-
-	public SyncManager(ClipboardManager clipboardManager) {
-		this.clipboardManager = clipboardManager;
-		this.clipboardManager.addListener(this);
-	}
 
 	public void addPushService(PushServiceInterface service) {
 		if (this.executor == null) {
@@ -156,9 +149,6 @@ public class SyncManager implements PushServiceInterface, PullServiceInterface,
 
 	@Override
 	public void onRemoteContentChange(String content, Date date) {
-		if (content.equals(this.currentContent)) {
-			return;
-		}
 		for (SyncListener listener : this.listeners) {
 			listener.onRemoteContentChange(content, date);
 		}
@@ -245,16 +235,6 @@ public class SyncManager implements PushServiceInterface, PullServiceInterface,
 	public boolean isPollingActivated() {
 		return this.pullingServices.get(this.pullingService)
 				.isPollingActivated();
-	}
-
-	@Override
-	public void onClipboardContentChange(String content) {
-		this.currentContent = content;
-	}
-
-	@Override
-	public void onContentGet(String content) {
-		this.currentContent = content;
 	}
 
 }

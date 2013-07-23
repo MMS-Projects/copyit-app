@@ -164,7 +164,7 @@ public class CopyItDesktop extends CopyIt {
 		final ClipboardManager clipboardManager = new ClipboardManager();
 		clipboardManager.setExecutor(executor);
 
-		final SyncManager syncManager = new SyncManager(clipboardManager);
+		final SyncManager syncManager = new SyncManager();
 		syncManager.setExecutor(executor);
 
 		ServerApi api = new ServerApi();
