@@ -12,7 +12,6 @@ import net.mms_projects.copy_it.FunctionalityManager;
 import net.mms_projects.copy_it.JavaCommandLine;
 import net.mms_projects.copy_it.PathBuilder;
 import net.mms_projects.copy_it.SyncManager;
-import net.mms_projects.copy_it.listeners.EnabledListener;
 
 import org.apache.commons.io.FileUtils;
 
@@ -45,17 +44,15 @@ public class WindowsIntegration extends EnvironmentIntegration {
 	class WindowsAutoStartManager implements
 			EnvironmentIntegration.AutostartManager {
 
-		private List<EnabledListener> enabledListeners = new ArrayList<EnabledListener>();
-
 		@Override
-		public boolean isEnabled() {
+		public boolean isEnabled() throws AutoStartSetupException {
 			File file = new File(PathBuilder.getAutostartDirectory(),
 					"copyit.bat");
 			return file.exists();
 		}
 
 		@Override
-		public void enable() {
+		public void enableAutostart() throws AutoStartSetupException {
 			List<String> content = new ArrayList<String>();
 			content.add("@echo off");
 			content.add("start " + JavaCommandLine.generateJavaCommandLine());
@@ -65,37 +62,15 @@ public class WindowsIntegration extends EnvironmentIntegration {
 			try {
 				FileUtils.writeLines(file, content);
 			} catch (IOException e) {
-				System.out.println(e);
-			}
-
-			for (EnabledListener listener : this.enabledListeners) {
-				listener.onEnabled();
+				throw new AutoStartSetupException(e);
 			}
 		}
 
 		@Override
-		public void disable() {
+		public void disableAutostart() throws AutoStartSetupException {
 			File file = new File(PathBuilder.getAutostartDirectory(),
 					"copyit.bat");
 			file.delete();
-
-			for (EnabledListener listener : this.enabledListeners) {
-				listener.onDisabled();
-			}
-		}
-
-		@Override
-		public void setEnabled(boolean enabled) {
-			if (enabled) {
-				this.enable();
-			} else {
-				this.disable();
-			}
-		}
-
-		@Override
-		public void addEnabledListener(EnabledListener listener) {
-			this.enabledListeners.add(listener);
 		}
 
 	}

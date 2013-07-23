@@ -238,12 +238,17 @@ public class PreferencesDialog extends GeneralDialog implements
 		this.btnLogin.setText(Messages.getString("button_login"));
 		this.btnManualLogin.setText("Manual login ");
 		if (this.environmentIntegration.hasAutostartManager()) {
-			if (!this.environmentIntegration.getAutostartManager().isEnabled()) {
-				this.btnSetupAutoStart.setText(Messages
-						.getString("autostart.button.enable"));
-			} else {
-				this.btnSetupAutoStart.setText(Messages
-						.getString("autostart.button.disable"));
+			try {
+				if (!this.environmentIntegration.getAutostartManager()
+						.isEnabled()) {
+					this.btnSetupAutoStart.setText(Messages
+							.getString("autostart.button.enable"));
+				} else {
+					this.btnSetupAutoStart.setText(Messages
+							.getString("autostart.button.disable"));
+				}
+			} catch (AutoStartSetupException e) {
+				e.printStackTrace();
 			}
 		} else {
 			this.btnSetupAutoStart.setText(Messages
@@ -293,14 +298,15 @@ public class PreferencesDialog extends GeneralDialog implements
 				MessageBox messageBox = new MessageBox(
 						PreferencesDialog.this.shell);
 
-//				try {
+				try {
 					if (!environmentIntegration.getAutostartManager()
 							.isEnabled()) {
 						/*
 						 * Setup the auto start the way it should in the current
 						 * environment
 						 */
-						environmentIntegration.getAutostartManager().enable();
+						environmentIntegration.getAutostartManager()
+								.enableAutostart();
 
 						/*
 						 * Tell the user the setup is done
@@ -313,7 +319,8 @@ public class PreferencesDialog extends GeneralDialog implements
 						 * Setup the auto start the way it should in the current
 						 * environment
 						 */
-						environmentIntegration.getAutostartManager().disable();
+						environmentIntegration.getAutostartManager()
+								.disableAutostart();
 
 						/*
 						 * Tell the user the setup is done
@@ -322,15 +329,15 @@ public class PreferencesDialog extends GeneralDialog implements
 								.getString("autostart.message.disabled"));
 						messageBox.open();
 					}
-//				} catch (AutoStartSetupException e) {
-//					/*
-//					 * Show the user a nice error dialog explaining the error
-//					 */
-//					messageBox.setMessage(Messages.getString(
-//							"autostart.error.exception_thrown",
-//							e.getLocalizedMessage()));
-//					messageBox.open();
-//				}
+				} catch (AutoStartSetupException e) {
+					/*
+					 * Show the user a nice error dialog explaining the error
+					 */
+					messageBox.setMessage(Messages.getString(
+							"autostart.error.exception_thrown",
+							e.getLocalizedMessage()));
+					messageBox.open();
+				}
 				updateForm();
 			}
 		});
@@ -383,12 +390,17 @@ public class PreferencesDialog extends GeneralDialog implements
 		}
 
 		if (this.environmentIntegration.hasAutostartManager()) {
-			if (!this.environmentIntegration.getAutostartManager().isEnabled()) {
-				this.btnSetupAutoStart.setText(Messages
-						.getString("autostart.button.enable"));
-			} else {
-				this.btnSetupAutoStart.setText(Messages
-						.getString("autostart.button.disable"));
+			try {
+				if (!this.environmentIntegration.getAutostartManager()
+						.isEnabled()) {
+					this.btnSetupAutoStart.setText(Messages
+							.getString("autostart.button.enable"));
+				} else {
+					this.btnSetupAutoStart.setText(Messages
+							.getString("autostart.button.disable"));
+				}
+			} catch (AutoStartSetupException e) {
+				e.printStackTrace();
 			}
 		} else {
 			this.btnSetupAutoStart.setText(Messages
