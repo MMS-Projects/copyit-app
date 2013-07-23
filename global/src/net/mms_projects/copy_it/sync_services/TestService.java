@@ -112,8 +112,6 @@ public class TestService implements PushServiceInterface,
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		listener.onPushed(content, date);
 	}
 
 }

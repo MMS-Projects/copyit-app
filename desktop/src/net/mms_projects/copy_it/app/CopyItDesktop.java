@@ -201,11 +201,6 @@ public class CopyItDesktop extends CopyIt {
 		syncManager.addListener(new SyncListener() {
 
 			@Override
-			public void onPushed(String content, Date date) {
-				log.debug("The following content was pushed: {}", content);
-			}
-
-			@Override
 			public void onRemoteContentChange(String content, Date date) {
 				log.debug("The following content was pulled: {}", content);
 			}

@@ -44,22 +44,7 @@ public class CopyIt extends Command {
 
         final CountDownLatch countDownLatch = new CountDownLatch(1);
 
-        this.syncManager.addListener(new SyncListener() {
-            @Override
-            public void onPushed(String content, Date date) {
-                countDownLatch.countDown();
-            }
-
-            @Override
-            public void onRemoteContentChange(String content, Date date) {
-            }
-        });
-        this.syncManager.updateRemoteContentAsync(content, new Date());
-
-        try {
-            countDownLatch.await();
-        } catch (InterruptedException ignored) {
-        }
+        this.syncManager.setRemoteContent(content, new Date());
 
         this.reply("Pushed: " + content);
     }

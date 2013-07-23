@@ -30,10 +30,6 @@ public class SyncClipboardBinding implements Activatable, SyncListener,
 	}
 
 	@Override
-	public void onPushed(String content, Date date) {
-	}
-
-	@Override
 	public void onRemoteContentChange(final String content, Date date) {
 		if (this.isEnabled()) {
 			this.clipboardManager.setContent(content);

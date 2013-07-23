@@ -91,8 +91,6 @@ public class ApiService implements PullServiceInterface, PushServiceInterface {
 
 			return;
 		}
-
-		this.listener.onPushed(content, date);
 	}
 
 	@Override

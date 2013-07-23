@@ -153,13 +153,6 @@ public class SyncManager implements PushServiceInterface, PullServiceInterface,
 		}
 		return this.pullServices.get(this.pullService).getRemoteContent();
 	}
-	
-	@Override
-	public void onPushed(String content, Date date) {
-		for (SyncListener listener : this.listeners) {
-			listener.onPushed(content, date);
-		}
-	}
 
 	@Override
 	public void onRemoteContentChange(String content, Date date) {

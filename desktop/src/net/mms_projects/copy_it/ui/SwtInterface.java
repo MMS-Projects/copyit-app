@@ -96,11 +96,6 @@ public class SwtInterface implements UserInterfaceImplementation {
 		// this.checkVersion();
 
 		syncManager.addListener(new SyncListener() {
-			@Override
-			public void onPushed(String content, Date date) {
-				// TODO Auto-generated method stub
-
-			}
 
 			@Override
 			public void onRemoteContentChange(final String content, Date date) {
