@@ -20,21 +20,23 @@ import org.freedesktop.dbus.exceptions.DBusException;
 
 public class FreeDesktopIntegration extends EnvironmentIntegration {
 
-	private EnvironmentIntegration parentIntegration;
 	private DBusConnection dbusConnection;
 
 	public FreeDesktopIntegration(EnvironmentIntegration parentIntegration,
 			DBusConnection dbusConnection) {
-		this.parentIntegration = parentIntegration;
+		super(parentIntegration);
+
 		this.dbusConnection = dbusConnection;
 	}
 
 	@Override
 	public void standaloneSetup() {
 		try {
-			this.parentIntegration
-					.setNotificationManager(new FreedesktopNotificationManager(
-							this.dbusConnection));
+			/*
+			 * Sets the FreeDesktop notification manager
+			 */
+			this.setNotificationManager(new FreedesktopNotificationManager(
+					this.dbusConnection));
 		} catch (DBusException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();

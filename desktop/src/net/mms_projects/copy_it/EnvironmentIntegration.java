@@ -10,6 +10,14 @@ abstract public class EnvironmentIntegration {
 	private NotificationManager notificationManager;
 	private List<EnvironmentIntegration> integrationProviders = new ArrayList<EnvironmentIntegration>();
 	private UserInterfaceImplementation userInterfaceImplementation;
+	private EnvironmentIntegration parentIntegration;
+
+	public EnvironmentIntegration() {
+	}
+
+	public EnvironmentIntegration(EnvironmentIntegration parentIntegration) {
+		this.setParentIntegration(parentIntegration);
+	}
 
 	/**
 	 * This will set the current notification manager to the one provided
@@ -18,7 +26,12 @@ abstract public class EnvironmentIntegration {
 	 *            The notification manager to set
 	 */
 	public void setNotificationManager(NotificationManager notificationManager) {
-		this.notificationManager = notificationManager;
+		if (this.hasParentIntegration()) {
+			this.getParentIntegration().setNotificationManager(
+					notificationManager);
+		} else {
+			this.notificationManager = notificationManager;
+		}
 	}
 
 	/**
@@ -27,7 +40,11 @@ abstract public class EnvironmentIntegration {
 	 * @return The current notification manager
 	 */
 	public NotificationManager getNotificationManager() {
-		return this.notificationManager;
+		if (this.hasParentIntegration()) {
+			return this.getParentIntegration().getNotificationManager();
+		} else {
+			return this.notificationManager;
+		}
 	}
 
 	/**
@@ -41,17 +58,31 @@ abstract public class EnvironmentIntegration {
 		this.integrationProviders.add(integrationProvider);
 	}
 
+	public void setParentIntegration(EnvironmentIntegration integrationProvider) {
+		this.parentIntegration = integrationProvider;
+	}
+
+	public boolean hasParentIntegration() {
+		return this.getParentIntegration() != null;
+	}
+
+	public EnvironmentIntegration getParentIntegration() {
+		return this.parentIntegration;
+	}
+
 	/**
 	 * This method initializes the setup of the integration.
 	 */
 	final public void setup() {
 		if (this.getUserInterfaceImplementation() == null) {
-			throw new IllegalStateException("No UserInterfaceImplementation set");
+			throw new IllegalStateException(
+					"No UserInterfaceImplementation set");
 		}
 		this.standaloneSetup();
 
 		for (EnvironmentIntegration integrationProvider : this.integrationProviders) {
-			integrationProvider.setUserInterfaceImplementation(this.getUserInterfaceImplementation());
+			integrationProvider.setUserInterfaceImplementation(this
+					.getUserInterfaceImplementation());
 			integrationProvider.setup();
 		}
 	}
@@ -62,13 +93,23 @@ abstract public class EnvironmentIntegration {
 	 * EnvironmentIntegration.setup} instead!
 	 */
 	abstract public void standaloneSetup();
-	
-	public void setUserInterfaceImplementation(UserInterfaceImplementation userInterfaceImplementation) {
-		this.userInterfaceImplementation = userInterfaceImplementation;
+
+	public void setUserInterfaceImplementation(
+			UserInterfaceImplementation userInterfaceImplementation) {
+		if (this.hasParentIntegration()) {
+			this.getParentIntegration().setUserInterfaceImplementation(
+					userInterfaceImplementation);
+		} else {
+			this.userInterfaceImplementation = userInterfaceImplementation;
+		}
 	}
-	
+
 	protected UserInterfaceImplementation getUserInterfaceImplementation() {
-		return this.userInterfaceImplementation;
+		if (this.hasParentIntegration()) {
+			return this.getParentIntegration().getUserInterfaceImplementation();
+		} else {
+			return this.userInterfaceImplementation;
+		}
 	}
 
 	/**
