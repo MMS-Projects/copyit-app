@@ -33,6 +33,7 @@ import net.mms_projects.copy_it.SyncingThread;
 import net.mms_projects.copy_it.api.ServerApi;
 import net.mms_projects.copy_it.api.endpoints.ClipboardContentEndpoint;
 import net.mms_projects.copy_it.clipboard_services.AwtService;
+import net.mms_projects.copy_it.functionality.SyncClipboardBinding;
 import net.mms_projects.copy_it.integration.DefaultLinuxIntegration;
 import net.mms_projects.copy_it.integration.SwtIntegration;
 import net.mms_projects.copy_it.integration.UnityIntegration;
@@ -163,7 +164,7 @@ public class CopyItDesktop extends CopyIt {
 		final ClipboardManager clipboardManager = new ClipboardManager();
 		clipboardManager.setExecutor(executor);
 
-		final SyncManager syncManager = new SyncManager(clipboardManager);
+		final SyncManager syncManager = new SyncManager();
 		syncManager.setExecutor(executor);
 
 		ServerApi api = new ServerApi();
@@ -200,12 +201,7 @@ public class CopyItDesktop extends CopyIt {
 		syncManager.addListener(new SyncListener() {
 
 			@Override
-			public void onPushed(String content, Date date) {
-				log.debug("The following content was pushed: {}", content);
-			}
-
-			@Override
-			public void onPulled(String content, Date date) {
+			public void onRemoteContentChange(String content, Date date) {
 				log.debug("The following content was pulled: {}", content);
 			}
 		});
@@ -353,8 +349,6 @@ public class CopyItDesktop extends CopyIt {
 				UnityIntegration environmentIntegrationUnity = new UnityIntegration(
 						CopyItDesktop.dbusConnection, functionalityManager,
 						syncManager, clipboardManager);
-				syncManager.addListener(environmentIntegrationUnity);
-				clipboardManager.addListener(environmentIntegrationUnity);
 
 				environmentIntegration = environmentIntegrationUnity;
 				break;
@@ -397,6 +391,13 @@ public class CopyItDesktop extends CopyIt {
 		environmentIntegration.setUserInterfaceImplementation(uiImplementation);
 
 		environmentIntegration.setup();
+
+		SyncClipboardBinding syncClipboardBinding = new SyncClipboardBinding(
+				environmentIntegration, syncManager, clipboardManager);
+		syncManager.addListener(syncClipboardBinding);
+		clipboardManager.addListener(syncClipboardBinding);
+		functionalityManager.addFunctionality("sync-clipboard-binding",
+				syncClipboardBinding);
 
 		QueueFunctionality queueFunctionality = new QueueFunctionality(
 				uiImplementation);

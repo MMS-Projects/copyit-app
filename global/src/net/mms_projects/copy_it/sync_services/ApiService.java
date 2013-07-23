@@ -53,35 +53,21 @@ public class ApiService implements PullServiceInterface, PushServiceInterface {
 	}
 
 	@Override
-	public void doPush(final String content, final Date date) {
+	public void updateRemoteContentAsync(final String content, final Date date) {
 		this.executor.execute(new Runnable() {
 			@Override
 			public void run() {
-				try {
-					endpoint.update(content);
-				} catch (Exception e) {
-					e.printStackTrace();
-
-					return;
-				}
-
-				listener.onPushed(content, date);
+				setRemoteContent(content, date);
 			}
 		});
 	}
 
 	@Override
-	public void doPull() {
+	public void requestRemoteContentAsync() {
 		this.executor.execute(new Runnable() {
 			@Override
 			public void run() {
-				try {
-					listener.onPulled(endpoint.get(), new Date());
-				} catch (Exception e) {
-					e.printStackTrace();
-
-					return;
-				}
+				listener.onRemoteContentChange(getRemoteContent(), new Date());
 			}
 		});
 	}
@@ -94,6 +80,28 @@ public class ApiService implements PullServiceInterface, PushServiceInterface {
 	@Override
 	public boolean isPullActivated() {
 		return true;
+	}
+
+	@Override
+	public void setRemoteContent(String content, Date date) {
+		try {
+			this.endpoint.update(content);
+		} catch (Exception e) {
+			e.printStackTrace();
+
+			return;
+		}
+	}
+
+	@Override
+	public String getRemoteContent() {
+		try {
+			return this.endpoint.get();
+		} catch (Exception e) {
+			e.printStackTrace();
+
+			return null;
+		}
 	}
 
 }

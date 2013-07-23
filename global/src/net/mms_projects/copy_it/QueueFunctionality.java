@@ -58,13 +58,7 @@ public class QueueFunctionality implements Activatable, SyncListener {
 	}
 
 	@Override
-	public void onPushed(String content, Date date) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onPulled(String content, Date date) {
+	public void onRemoteContentChange(String content, Date date) {
 		if (this.isEnabled()) {
 			this.userInterfaceImplementation.getQueueUserInterface()
 					.addContent(content, date);

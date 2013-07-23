@@ -9,7 +9,6 @@ import java.net.URL;
 import java.util.Date;
 
 import net.mms_projects.copy_it.Activatable;
-import net.mms_projects.copy_it.ClipboardListener;
 import net.mms_projects.copy_it.ClipboardManager;
 import net.mms_projects.copy_it.DesktopIntegration;
 import net.mms_projects.copy_it.EnvironmentIntegration;
@@ -17,7 +16,6 @@ import net.mms_projects.copy_it.EnvironmentIntegration.NotificationManager.Notif
 import net.mms_projects.copy_it.FunctionalityManager;
 import net.mms_projects.copy_it.Messages;
 import net.mms_projects.copy_it.PathBuilder;
-import net.mms_projects.copy_it.SyncListener;
 import net.mms_projects.copy_it.SyncManager;
 import net.mms_projects.copy_it.app.CopyItDesktop;
 import net.mms_projects.copy_it.integration.notifications.FreedesktopNotificationManager;
@@ -33,7 +31,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class UnityIntegration extends EnvironmentIntegration implements
-		SyncListener, DBusSigHandler, ClipboardListener {
+		DBusSigHandler {
 
 	protected SyncManager syncManager;
 	protected ClipboardManager clipboardManager;
@@ -151,19 +149,6 @@ public class UnityIntegration extends EnvironmentIntegration implements
 	}
 
 	@Override
-	public void onPushed(String content, Date date) {
-		getNotificationManager().notify(10, NotificationUrgency.NORMAL, "",
-				"CopyIt", Messages.getString("text_content_pushed", content));
-	}
-
-	@Override
-	public void onPulled(final String content, Date date) {
-		clipboardManager.requestSet(content);
-		getNotificationManager().notify(10, NotificationUrgency.NORMAL, "",
-				"CopyIt", Messages.getString("text_content_pulled", content));
-	}
-
-	@Override
 	public void handle(DBusSignal signal) {
 		if (signal instanceof DesktopIntegration.ready) {
 			String icon = new File(PathBuilder.getCacheDirectory(),
@@ -181,9 +166,15 @@ public class UnityIntegration extends EnvironmentIntegration implements
 			}
 
 		} else if (signal instanceof DesktopIntegration.action_push) {
-			clipboardManager.requestGet();
+			String content = clipboardManager.getContent();
+
+			syncManager.setRemoteContent(content, new Date());
+
+			getNotificationManager().notify(10, NotificationUrgency.NORMAL, "",
+					"CopyIt",
+					Messages.getString("text_content_pushed", content));
 		} else if (signal instanceof DesktopIntegration.action_pull) {
-			syncManager.doPull();
+			syncManager.requestRemoteContentAsync();
 		} else if (signal instanceof DesktopIntegration.action_open_preferences) {
 			this.getUserInterfaceImplementation().getSettingsUserInterface()
 					.open();
@@ -259,17 +250,6 @@ public class UnityIntegration extends EnvironmentIntegration implements
 		}
 
 		abstract protected void log(String output);
-	}
-
-	@Override
-	public void onContentSet(String content) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onContentGet(String content) {
-		syncManager.doPush(content, new Date());
 	}
 
 }

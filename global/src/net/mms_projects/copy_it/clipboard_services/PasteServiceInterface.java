@@ -10,8 +10,6 @@ public interface PasteServiceInterface extends ServiceInterface {
 
 	public boolean isPasteActivated();
 
-	public void requestGet();
-
     /**
      * This method gets the content from the clipboard.
      *

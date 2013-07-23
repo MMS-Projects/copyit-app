@@ -10,6 +10,9 @@ public interface PullServiceInterface extends ServiceInterface {
 
 	public boolean isPullActivated();
 
-	public void doPull();
+	public String getRemoteContent();
+	
+	@Deprecated
+	public void requestRemoteContentAsync();
 
 }

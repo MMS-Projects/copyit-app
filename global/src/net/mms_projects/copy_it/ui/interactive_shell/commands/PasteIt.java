@@ -29,18 +29,15 @@ public class PasteIt extends Command {
         final String[] clipboardContent = {null};
 
         this.syncManager.addListener(new SyncListener() {
-            @Override
-            public void onPushed(String content, Date date) {
-            }
 
             @Override
-            public void onPulled(String content, Date date) {
+            public void onRemoteContentChange(String content, Date date) {
                 clipboardContent[0] = content;
 
                 countDownLatch.countDown();
             }
         });
-        this.syncManager.doPull();
+        this.syncManager.requestRemoteContentAsync();
 
         try {
             countDownLatch.await();

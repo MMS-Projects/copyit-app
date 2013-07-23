@@ -3,11 +3,11 @@ package net.mms_projects.copy_it.sync_services;
 import java.util.Date;
 import java.util.concurrent.Executor;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import net.mms_projects.copy_it.PollingServiceInterface;
 import net.mms_projects.copy_it.SyncListener;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TestService implements PushServiceInterface,
 		PollingServiceInterface {
@@ -50,11 +50,11 @@ public class TestService implements PushServiceInterface,
 			public void run() {
 				try {
 					Thread.sleep(2000);
-					listener.onPulled("Random content 1", new Date());
+					listener.onRemoteContentChange("Random content 1", new Date());
 					Thread.sleep(500);
-					listener.onPulled("Random content 2", new Date());
+					listener.onRemoteContentChange("Random content 2", new Date());
 					Thread.sleep(100);
-					listener.onPulled("Random content 3", new Date());
+					listener.onRemoteContentChange("Random content 3", new Date());
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -81,22 +81,12 @@ public class TestService implements PushServiceInterface,
 	}
 
 	@Override
-	public void doPush(final String content, final Date date) {
+	public void updateRemoteContentAsync(final String content, final Date date) {
 		this.executor.execute(new Runnable() {
 
 			@Override
 			public void run() {
-				System.out
-						.println("Contacting server blabla taking long time blabla....");
-
-				try {
-					Thread.sleep(2000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-				listener.onPushed(content, date);
+				setRemoteContent(content, date);
 			}
 		});
 	}
@@ -109,6 +99,19 @@ public class TestService implements PushServiceInterface,
 	@Override
 	public boolean isPushActivated() {
 		return this.pushEnabled;
+	}
+
+	@Override
+	public void setRemoteContent(String content, Date date) {
+		System.out
+				.println("Contacting server blabla taking long time blabla....");
+
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

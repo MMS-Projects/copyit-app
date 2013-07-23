@@ -142,7 +142,8 @@ public class ClipboardManager implements CopyServiceInterface,
 		}
 		return true;
 	}
-
+	
+	@Deprecated
 	@Override
 	public void requestSet(String content) {
 		if (this.copyServices.isEmpty()) {
@@ -166,17 +167,6 @@ public class ClipboardManager implements CopyServiceInterface,
     }
 
     @Override
-	public void requestGet() {
-		if (this.pasteServices.isEmpty()) {
-			return;
-		}
-		if (!this.pasteServices.containsKey(this.pasteService)) {
-			return;
-		}
-		this.pasteServices.get(this.pasteService).requestGet();
-	}
-
-    @Override
     public String getContent() {
         if (this.pasteServices.isEmpty()) {
             return null;
@@ -188,16 +178,9 @@ public class ClipboardManager implements CopyServiceInterface,
     }
 
     @Override
-	public void onContentSet(String content) {
+	public void onClipboardContentChange(String content) {
 		for (ClipboardListener listener : this.listeners) {
-			listener.onContentSet(content);
-		}
-	}
-
-	@Override
-	public void onContentGet(String content) {
-		for (ClipboardListener listener : this.listeners) {
-			listener.onContentGet(content);
+			listener.onClipboardContentChange(content);
 		}
 	}
 

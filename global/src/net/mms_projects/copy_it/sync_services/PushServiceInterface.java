@@ -12,6 +12,9 @@ public interface PushServiceInterface extends ServiceInterface {
 
 	public boolean isPushActivated();
 	
-	public void doPush(String content, Date date);
+	public void setRemoteContent(String content, Date date);
+	
+	@Deprecated
+	public void updateRemoteContentAsync(String content, Date date);
 
 }

@@ -14,7 +14,7 @@ import net.mms_projects.copy_it.sync_services.PullServiceInterface;
 import net.mms_projects.copy_it.sync_services.PushServiceInterface;
 
 public class SyncManager implements PushServiceInterface, PullServiceInterface,
-		PollingServiceInterface, SyncListener, ClipboardListener {
+		PollingServiceInterface, SyncListener {
 
 	private Map<String, PushServiceInterface> pushServices = new HashMap<String, PushServiceInterface>();
 	private Map<String, PullServiceInterface> pullServices = new HashMap<String, PullServiceInterface>();
@@ -24,15 +24,8 @@ public class SyncManager implements PushServiceInterface, PullServiceInterface,
 	private String pullingService;
 	private List<SyncListener> listeners = new ArrayList<SyncListener>();
 
-	private ClipboardManager clipboardManager;
-	private String currentContent;
 	private Executor executor;
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
-
-	public SyncManager(ClipboardManager clipboardManager) {
-		this.clipboardManager = clipboardManager;
-		this.clipboardManager.addListener(this);
-	}
 
 	public void addPushService(PushServiceInterface service) {
 		if (this.executor == null) {
@@ -107,42 +100,57 @@ public class SyncManager implements PushServiceInterface, PullServiceInterface,
 		this.activatePolling();
 	}
 
+	@Deprecated
 	@Override
-	public void doPush(String content, Date date) {
+	public void updateRemoteContentAsync(String content, Date date) {
 		if (this.pushServices.isEmpty()) {
 			return;
 		}
 		if (!this.pushServices.containsKey(this.pushService)) {
 			return;
 		}
-		this.pushServices.get(this.pushService).doPush(content, date);
+		this.pushServices.get(this.pushService).updateRemoteContentAsync(content, date);
 	}
 
 	@Override
-	public void doPull() {
+	public void setRemoteContent(String content, Date date) {
+		if (this.pushServices.isEmpty()) {
+			return;
+		}
+		if (!this.pushServices.containsKey(this.pushService)) {
+			return;
+		}
+		this.pushServices.get(this.pushService).setRemoteContent(content, date);
+	}
+	
+	@Deprecated
+	@Override
+	public void requestRemoteContentAsync() {
 		if (this.pullServices.isEmpty()) {
 			return;
 		}
 		if (!this.pullServices.containsKey(this.pullService)) {
 			return;
 		}
-		this.pullServices.get(this.pullService).doPull();
+		this.pullServices.get(this.pullService).requestRemoteContentAsync();
+	}
+
+
+	@Override
+	public String getRemoteContent() {
+		if (this.pullServices.isEmpty()) {
+			return null;
+		}
+		if (!this.pullServices.containsKey(this.pullService)) {
+			return null;
+		}
+		return this.pullServices.get(this.pullService).getRemoteContent();
 	}
 
 	@Override
-	public void onPushed(String content, Date date) {
+	public void onRemoteContentChange(String content, Date date) {
 		for (SyncListener listener : this.listeners) {
-			listener.onPushed(content, date);
-		}
-	}
-
-	@Override
-	public void onPulled(String content, Date date) {
-		if (content.equals(this.currentContent)) {
-			return;
-		}
-		for (SyncListener listener : this.listeners) {
-			listener.onPulled(content, date);
+			listener.onRemoteContentChange(content, date);
 		}
 	}
 
@@ -227,16 +235,6 @@ public class SyncManager implements PushServiceInterface, PullServiceInterface,
 	public boolean isPollingActivated() {
 		return this.pullingServices.get(this.pullingService)
 				.isPollingActivated();
-	}
-
-	@Override
-	public void onContentSet(String content) {
-		this.currentContent = content;
-	}
-
-	@Override
-	public void onContentGet(String content) {
-		this.currentContent = content;
 	}
 
 }

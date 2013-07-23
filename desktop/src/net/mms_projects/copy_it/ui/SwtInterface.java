@@ -95,21 +95,6 @@ public class SwtInterface implements UserInterfaceImplementation {
 
 		// this.checkVersion();
 
-		syncManager.addListener(new SyncListener() {
-			@Override
-			public void onPushed(String content, Date date) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void onPulled(final String content, Date date) {
-				if (!config.getBoolean("sync.queue.enabled")) {
-					clipboardManager.requestSet(content);
-				}
-			}
-		});
-
 		while (!this.activityShell.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();
