@@ -101,7 +101,7 @@ public class BasicSwtIntegration extends EnvironmentIntegration {
 		this.menuItemPasteIt.setText("Paste it ▼");
 		this.menuItemPasteIt.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				syncManager.doPull();
+				syncManager.requestRemoteContentAsync();
 			}
 		});
 

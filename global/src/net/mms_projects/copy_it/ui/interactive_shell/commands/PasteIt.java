@@ -40,7 +40,7 @@ public class PasteIt extends Command {
                 countDownLatch.countDown();
             }
         });
-        this.syncManager.doPull();
+        this.syncManager.requestRemoteContentAsync();
 
         try {
             countDownLatch.await();

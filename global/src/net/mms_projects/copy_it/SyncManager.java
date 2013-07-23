@@ -109,49 +109,49 @@ public class SyncManager implements PushServiceInterface, PullServiceInterface,
 
 	@Deprecated
 	@Override
-	public void doPush(String content, Date date) {
+	public void updateRemoteContentAsync(String content, Date date) {
 		if (this.pushServices.isEmpty()) {
 			return;
 		}
 		if (!this.pushServices.containsKey(this.pushService)) {
 			return;
 		}
-		this.pushServices.get(this.pushService).doPush(content, date);
+		this.pushServices.get(this.pushService).updateRemoteContentAsync(content, date);
 	}
 
 	@Override
-	public void setContent(String content, Date date) {
+	public void setRemoteContent(String content, Date date) {
 		if (this.pushServices.isEmpty()) {
 			return;
 		}
 		if (!this.pushServices.containsKey(this.pushService)) {
 			return;
 		}
-		this.pushServices.get(this.pushService).setContent(content, date);
+		this.pushServices.get(this.pushService).setRemoteContent(content, date);
 	}
 	
 	@Deprecated
 	@Override
-	public void doPull() {
+	public void requestRemoteContentAsync() {
 		if (this.pullServices.isEmpty()) {
 			return;
 		}
 		if (!this.pullServices.containsKey(this.pullService)) {
 			return;
 		}
-		this.pullServices.get(this.pullService).doPull();
+		this.pullServices.get(this.pullService).requestRemoteContentAsync();
 	}
 
 
 	@Override
-	public String getContent() {
+	public String getRemoteContent() {
 		if (this.pullServices.isEmpty()) {
 			return null;
 		}
 		if (!this.pullServices.containsKey(this.pullService)) {
 			return null;
 		}
-		return this.pullServices.get(this.pullService).getContent();
+		return this.pullServices.get(this.pullService).getRemoteContent();
 	}
 	
 	@Override

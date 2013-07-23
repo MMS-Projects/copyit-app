@@ -165,7 +165,7 @@ public class UnityIntegration extends EnvironmentIntegration implements
 		} else if (signal instanceof DesktopIntegration.action_push) {
 			clipboardManager.requestGet();
 		} else if (signal instanceof DesktopIntegration.action_pull) {
-			syncManager.doPull();
+			syncManager.requestRemoteContentAsync();
 		} else if (signal instanceof DesktopIntegration.action_open_preferences) {
 			this.getUserInterfaceImplementation().getSettingsUserInterface()
 					.open();

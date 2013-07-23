@@ -81,12 +81,12 @@ public class TestService implements PushServiceInterface,
 	}
 
 	@Override
-	public void doPush(final String content, final Date date) {
+	public void updateRemoteContentAsync(final String content, final Date date) {
 		this.executor.execute(new Runnable() {
 
 			@Override
 			public void run() {
-				setContent(content, date);
+				setRemoteContent(content, date);
 			}
 		});
 	}
@@ -102,7 +102,7 @@ public class TestService implements PushServiceInterface,
 	}
 
 	@Override
-	public void setContent(String content, Date date) {
+	public void setRemoteContent(String content, Date date) {
 		System.out
 				.println("Contacting server blabla taking long time blabla....");
 

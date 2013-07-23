@@ -54,7 +54,7 @@ public class CopyIt extends Command {
             public void onRemoteContentChange(String content, Date date) {
             }
         });
-        this.syncManager.doPush(content, new Date());
+        this.syncManager.updateRemoteContentAsync(content, new Date());
 
         try {
             countDownLatch.await();
