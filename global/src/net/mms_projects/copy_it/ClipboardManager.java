@@ -142,7 +142,8 @@ public class ClipboardManager implements CopyServiceInterface,
 		}
 		return true;
 	}
-
+	
+	@Deprecated
 	@Override
 	public void requestSet(String content) {
 		if (this.copyServices.isEmpty()) {
@@ -165,6 +166,7 @@ public class ClipboardManager implements CopyServiceInterface,
         this.copyServices.get(this.copyService).setContent(content);
     }
 
+    @Deprecated
     @Override
 	public void requestGet() {
 		if (this.pasteServices.isEmpty()) {

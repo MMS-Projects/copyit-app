@@ -10,6 +10,7 @@ public interface PasteServiceInterface extends ServiceInterface {
 
 	public boolean isPasteActivated();
 
+	@Deprecated
 	public void requestGet();
 
     /**
