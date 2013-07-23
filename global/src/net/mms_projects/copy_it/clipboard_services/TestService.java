@@ -18,7 +18,7 @@ public class TestService implements CopyServiceInterface, PasteServiceInterface 
     @Override
     public void requestSet(String content) {
         this.setContent(content);
-        this.listener.onContentSet(this.testContent);
+        this.listener.onClipboardContentChange(this.testContent);
     }
 
     @Override

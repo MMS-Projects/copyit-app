@@ -190,9 +190,9 @@ public class ClipboardManager implements CopyServiceInterface,
     }
 
     @Override
-	public void onContentSet(String content) {
+	public void onClipboardContentChange(String content) {
 		for (ClipboardListener listener : this.listeners) {
-			listener.onContentSet(content);
+			listener.onClipboardContentChange(content);
 		}
 	}
 

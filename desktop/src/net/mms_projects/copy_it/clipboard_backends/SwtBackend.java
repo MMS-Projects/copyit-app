@@ -54,7 +54,7 @@ public class SwtBackend implements CopyServiceInterface, PasteServiceInterface,
 							 * all the listeners
 							 */
 							currentContent = newContent;
-							listener.onContentSet(newContent);
+							listener.onClipboardContentChange(newContent);
 						}
 					}
 				}

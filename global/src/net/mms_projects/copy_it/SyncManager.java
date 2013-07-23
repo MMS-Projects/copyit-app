@@ -248,7 +248,7 @@ public class SyncManager implements PushServiceInterface, PullServiceInterface,
 	}
 
 	@Override
-	public void onContentSet(String content) {
+	public void onClipboardContentChange(String content) {
 		this.currentContent = content;
 	}
 
