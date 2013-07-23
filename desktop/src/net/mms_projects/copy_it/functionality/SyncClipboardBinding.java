@@ -42,12 +42,6 @@ public class SyncClipboardBinding implements Activatable, SyncListener,
 
 	@Override
 	public void onContentSet(String content) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onContentGet(String content) {
 		if (this.isEnabled()) {
 			this.syncManager.setRemoteContent(content, new Date());
 
@@ -55,6 +49,11 @@ public class SyncClipboardBinding implements Activatable, SyncListener,
 					"CopyIt",
 					Messages.getString("text_content_pushed", content));
 		}
+	}
+
+	@Override
+	public void onContentGet(String content) {
+
 	}
 
 	@Override
