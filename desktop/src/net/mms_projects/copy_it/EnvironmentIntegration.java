@@ -11,6 +11,14 @@ abstract public class EnvironmentIntegration {
 	private AutostartManager autostartManager;
 	private List<EnvironmentIntegration> integrationProviders = new ArrayList<EnvironmentIntegration>();
 	private UserInterfaceImplementation userInterfaceImplementation;
+	private EnvironmentIntegration parentIntegration;
+
+	public EnvironmentIntegration() {
+	}
+
+	public EnvironmentIntegration(EnvironmentIntegration parentIntegration) {
+		this.setParentIntegration(parentIntegration);
+	}
 
 	/**
 	 * This will set the current notification manager to the one provided
@@ -19,7 +27,12 @@ abstract public class EnvironmentIntegration {
 	 *            The notification manager to set
 	 */
 	public void setNotificationManager(NotificationManager notificationManager) {
-		this.notificationManager = notificationManager;
+		if (this.hasParentIntegration()) {
+			this.getParentIntegration().setNotificationManager(
+					notificationManager);
+		} else {
+			this.notificationManager = notificationManager;
+		}
 	}
 
 	/**
@@ -28,18 +41,27 @@ abstract public class EnvironmentIntegration {
 	 * @return The current notification manager
 	 */
 	public NotificationManager getNotificationManager() {
-		return this.notificationManager;
+		if (this.hasParentIntegration()) {
+			return this.getParentIntegration().getNotificationManager();
+		} else {
+			return this.notificationManager;
+		}
 	}
 
 	/**
 	 * This method sets the auto start manager that should be used for this
-	 * environment
+	 * environment. If there's a parent integration provider it will set the
+	 * autostart manager on that.
 	 * 
 	 * @param autostartManager
 	 *            The auto start manager to use
 	 */
 	public void setAutostartManager(AutostartManager autostartManager) {
-		this.autostartManager = autostartManager;
+		if (this.hasParentIntegration()) {
+			this.getParentIntegration().setAutostartManager(autostartManager);
+		} else {
+			this.autostartManager = autostartManager;
+		}
 	}
 
 	/**
@@ -48,7 +70,7 @@ abstract public class EnvironmentIntegration {
 	 * @return true if there is a auto start manager available
 	 */
 	public boolean hasAutostartManager() {
-		return this.autostartManager != null;
+		return this.getAutostartManager() != null;
 	}
 
 	/**
@@ -57,7 +79,11 @@ abstract public class EnvironmentIntegration {
 	 * @return The actual auto start manager
 	 */
 	public AutostartManager getAutostartManager() {
-		return this.autostartManager;
+		if (this.hasParentIntegration()) {
+			return this.getParentIntegration().getAutostartManager();
+		} else {
+			return this.autostartManager;
+		}
 	}
 
 	/**
@@ -71,17 +97,31 @@ abstract public class EnvironmentIntegration {
 		this.integrationProviders.add(integrationProvider);
 	}
 
+	public void setParentIntegration(EnvironmentIntegration integrationProvider) {
+		this.parentIntegration = integrationProvider;
+	}
+
+	public boolean hasParentIntegration() {
+		return this.getParentIntegration() != null;
+	}
+
+	public EnvironmentIntegration getParentIntegration() {
+		return this.parentIntegration;
+	}
+
 	/**
 	 * This method initializes the setup of the integration.
 	 */
 	final public void setup() {
 		if (this.getUserInterfaceImplementation() == null) {
-			throw new IllegalStateException("No UserInterfaceImplementation set");
+			throw new IllegalStateException(
+					"No UserInterfaceImplementation set");
 		}
 		this.standaloneSetup();
 
 		for (EnvironmentIntegration integrationProvider : this.integrationProviders) {
-			integrationProvider.setUserInterfaceImplementation(this.getUserInterfaceImplementation());
+			integrationProvider.setUserInterfaceImplementation(this
+					.getUserInterfaceImplementation());
 			integrationProvider.setup();
 		}
 	}
@@ -92,13 +132,23 @@ abstract public class EnvironmentIntegration {
 	 * EnvironmentIntegration.setup} instead!
 	 */
 	abstract public void standaloneSetup();
-	
-	public void setUserInterfaceImplementation(UserInterfaceImplementation userInterfaceImplementation) {
-		this.userInterfaceImplementation = userInterfaceImplementation;
+
+	public void setUserInterfaceImplementation(
+			UserInterfaceImplementation userInterfaceImplementation) {
+		if (this.hasParentIntegration()) {
+			this.getParentIntegration().setUserInterfaceImplementation(
+					userInterfaceImplementation);
+		} else {
+			this.userInterfaceImplementation = userInterfaceImplementation;
+		}
 	}
-	
+
 	protected UserInterfaceImplementation getUserInterfaceImplementation() {
-		return this.userInterfaceImplementation;
+		if (this.hasParentIntegration()) {
+			return this.getParentIntegration().getUserInterfaceImplementation();
+		} else {
+			return this.userInterfaceImplementation;
+		}
 	}
 
 	/**

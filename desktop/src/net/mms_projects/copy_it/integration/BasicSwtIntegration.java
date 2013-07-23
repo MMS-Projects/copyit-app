@@ -46,12 +46,11 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	private FunctionalityManager<Activatable> functionality;
 
-	private EnvironmentIntegration parentIntegration;
-
 	public BasicSwtIntegration(EnvironmentIntegration parentIntegration,
 			FunctionalityManager<Activatable> functionality,
 			SyncManager syncManager, ClipboardManager clipboardManager) {
-		this.parentIntegration = parentIntegration;
+		super(parentIntegration);
+		
 		this.tray = display.getSystemTray();
 		this.trayItem = new TrayItem(tray, 0);
 		this.functionality = functionality;
@@ -80,9 +79,8 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements
 
 		this.createMenu();
 
-		this.parentIntegration
-				.setNotificationManager(new NotificationManagerSwt(
-						this.display, this.trayItem));
+		this.setNotificationManager(new NotificationManagerSwt(this.display,
+				this.trayItem));
 	}
 
 	public void enableFeatures() {

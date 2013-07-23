@@ -18,12 +18,12 @@ import org.freedesktop.dbus.exceptions.DBusException;
 
 public class FreeDesktopIntegration extends EnvironmentIntegration {
 
-	private EnvironmentIntegration parentIntegration;
 	private DBusConnection dbusConnection;
 
 	public FreeDesktopIntegration(EnvironmentIntegration parentIntegration,
 			DBusConnection dbusConnection) {
-		this.parentIntegration = parentIntegration;
+		super(parentIntegration);
+
 		this.dbusConnection = dbusConnection;
 	}
 
@@ -37,9 +37,8 @@ public class FreeDesktopIntegration extends EnvironmentIntegration {
 			/*
 			 * Sets the FreeDesktop notification manager
 			 */
-			this.parentIntegration
-					.setNotificationManager(new FreedesktopNotificationManager(
-							this.dbusConnection));
+			this.setNotificationManager(new FreedesktopNotificationManager(
+					this.dbusConnection));
 		} catch (DBusException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
@@ -47,8 +46,7 @@ public class FreeDesktopIntegration extends EnvironmentIntegration {
 		/*
 		 * Sets the FreeDesktop autostart manager
 		 */
-		this.parentIntegration
-				.setAutostartManager(new FreeDesktopAutostartManager());
+		this.setAutostartManager(new FreeDesktopAutostartManager());
 
 		/*
 		 * Write the 16x16 icon the the icon directory
