@@ -86,17 +86,7 @@ public class TestService implements PushServiceInterface,
 
 			@Override
 			public void run() {
-				System.out
-						.println("Contacting server blabla taking long time blabla....");
-
-				try {
-					Thread.sleep(2000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-				listener.onPushed(content, date);
+				setContent(content, date);
 			}
 		});
 	}
@@ -109,6 +99,21 @@ public class TestService implements PushServiceInterface,
 	@Override
 	public boolean isPushActivated() {
 		return this.pushEnabled;
+	}
+
+	@Override
+	public void setContent(String content, Date date) {
+		System.out
+				.println("Contacting server blabla taking long time blabla....");
+
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		listener.onPushed(content, date);
 	}
 
 }

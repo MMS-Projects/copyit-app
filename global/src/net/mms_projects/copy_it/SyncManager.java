@@ -107,6 +107,7 @@ public class SyncManager implements PushServiceInterface, PullServiceInterface,
 		this.activatePolling();
 	}
 
+	@Deprecated
 	@Override
 	public void doPush(String content, Date date) {
 		if (this.pushServices.isEmpty()) {
@@ -119,6 +120,18 @@ public class SyncManager implements PushServiceInterface, PullServiceInterface,
 	}
 
 	@Override
+	public void setContent(String content, Date date) {
+		if (this.pushServices.isEmpty()) {
+			return;
+		}
+		if (!this.pushServices.containsKey(this.pushService)) {
+			return;
+		}
+		this.pushServices.get(this.pushService).setContent(content, date);
+	}
+	
+	@Deprecated
+	@Override
 	public void doPull() {
 		if (this.pullServices.isEmpty()) {
 			return;
@@ -129,6 +142,18 @@ public class SyncManager implements PushServiceInterface, PullServiceInterface,
 		this.pullServices.get(this.pullService).doPull();
 	}
 
+
+	@Override
+	public String getContent() {
+		if (this.pullServices.isEmpty()) {
+			return null;
+		}
+		if (!this.pullServices.containsKey(this.pullService)) {
+			return null;
+		}
+		return this.pullServices.get(this.pullService).getContent();
+	}
+	
 	@Override
 	public void onPushed(String content, Date date) {
 		for (SyncListener listener : this.listeners) {

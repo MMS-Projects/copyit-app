@@ -57,15 +57,7 @@ public class ApiService implements PullServiceInterface, PushServiceInterface {
 		this.executor.execute(new Runnable() {
 			@Override
 			public void run() {
-				try {
-					endpoint.update(content);
-				} catch (Exception e) {
-					e.printStackTrace();
-
-					return;
-				}
-
-				listener.onPushed(content, date);
+				setContent(content, date);
 			}
 		});
 	}
@@ -75,13 +67,7 @@ public class ApiService implements PullServiceInterface, PushServiceInterface {
 		this.executor.execute(new Runnable() {
 			@Override
 			public void run() {
-				try {
-					listener.onPulled(endpoint.get(), new Date());
-				} catch (Exception e) {
-					e.printStackTrace();
-
-					return;
-				}
+				listener.onPulled(getContent(), new Date());
 			}
 		});
 	}
@@ -94,6 +80,30 @@ public class ApiService implements PullServiceInterface, PushServiceInterface {
 	@Override
 	public boolean isPullActivated() {
 		return true;
+	}
+
+	@Override
+	public void setContent(String content, Date date) {
+		try {
+			this.endpoint.update(content);
+		} catch (Exception e) {
+			e.printStackTrace();
+
+			return;
+		}
+
+		this.listener.onPushed(content, date);
+	}
+
+	@Override
+	public String getContent() {
+		try {
+			return this.endpoint.get();
+		} catch (Exception e) {
+			e.printStackTrace();
+
+			return null;
+		}
 	}
 
 }
