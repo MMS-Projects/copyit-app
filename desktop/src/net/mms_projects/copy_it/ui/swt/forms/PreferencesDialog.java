@@ -237,22 +237,17 @@ public class PreferencesDialog extends GeneralDialog implements
 		this.lblDeviceIdHere.setText("Device id here...");
 		this.btnLogin.setText(Messages.getString("button_login"));
 		this.btnManualLogin.setText("Manual login ");
+		this.btnSetupAutoStart.setText(Messages
+				.getString("autostart.button.enable"));
+		this.btnSetupAutoStart.setEnabled(this.environmentIntegration
+				.hasAutostartManager());
 		if (this.environmentIntegration.hasAutostartManager()) {
 			try {
-				if (!this.environmentIntegration.getAutostartManager()
-						.isEnabled()) {
-					this.btnSetupAutoStart.setText(Messages
-							.getString("autostart.button.enable"));
-				} else {
-					this.btnSetupAutoStart.setText(Messages
-							.getString("autostart.button.disable"));
-				}
+				this.btnSetupAutoStart.setSelection(this.environmentIntegration
+						.getAutostartManager().isEnabled());
 			} catch (AutoStartSetupException e) {
 				e.printStackTrace();
 			}
-		} else {
-			this.btnSetupAutoStart.setText(Messages
-					.getString("autostart.button.not_available"));
 		}
 		// Security tab
 		tbtmSecurity.setText("Security");
@@ -389,22 +384,15 @@ public class PreferencesDialog extends GeneralDialog implements
 			this.btnManualLogin.setText("Relogin (manual)");
 		}
 
+		this.btnSetupAutoStart.setEnabled(this.environmentIntegration
+				.hasAutostartManager());
 		if (this.environmentIntegration.hasAutostartManager()) {
 			try {
-				if (!this.environmentIntegration.getAutostartManager()
-						.isEnabled()) {
-					this.btnSetupAutoStart.setText(Messages
-							.getString("autostart.button.enable"));
-				} else {
-					this.btnSetupAutoStart.setText(Messages
-							.getString("autostart.button.disable"));
-				}
+				this.btnSetupAutoStart.setSelection(this.environmentIntegration
+						.getAutostartManager().isEnabled());
 			} catch (AutoStartSetupException e) {
 				e.printStackTrace();
 			}
-		} else {
-			this.btnSetupAutoStart.setText(Messages
-					.getString("autostart.button.not_available"));
 		}
 
 		btnEnablePolling.setSelection(functionality.isEnabled("polling"));
