@@ -4,6 +4,4 @@ public interface ClipboardListener {
 
 	public void onClipboardContentChange(String content);
 
-	public void onContentGet(String content);
-
 }

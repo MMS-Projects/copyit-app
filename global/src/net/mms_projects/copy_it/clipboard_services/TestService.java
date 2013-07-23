@@ -22,12 +22,6 @@ public class TestService implements CopyServiceInterface, PasteServiceInterface 
     }
 
     @Override
-    public void requestGet() {
-        System.out.println("Requested content: " + this.testContent);
-        this.listener.onContentGet(this.getContent());
-    }
-
-    @Override
     public String getContent() {
         return this.testContent;
     }

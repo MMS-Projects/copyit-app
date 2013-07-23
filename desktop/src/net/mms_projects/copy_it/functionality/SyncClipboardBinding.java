@@ -52,11 +52,6 @@ public class SyncClipboardBinding implements Activatable, SyncListener,
 	}
 
 	@Override
-	public void onContentGet(String content) {
-
-	}
-
-	@Override
 	public void enable() {
 		this.enabled = true;
 	}

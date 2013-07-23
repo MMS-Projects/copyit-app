@@ -166,18 +166,6 @@ public class ClipboardManager implements CopyServiceInterface,
         this.copyServices.get(this.copyService).setContent(content);
     }
 
-    @Deprecated
-    @Override
-	public void requestGet() {
-		if (this.pasteServices.isEmpty()) {
-			return;
-		}
-		if (!this.pasteServices.containsKey(this.pasteService)) {
-			return;
-		}
-		this.pasteServices.get(this.pasteService).requestGet();
-	}
-
     @Override
     public String getContent() {
         if (this.pasteServices.isEmpty()) {
@@ -193,13 +181,6 @@ public class ClipboardManager implements CopyServiceInterface,
 	public void onClipboardContentChange(String content) {
 		for (ClipboardListener listener : this.listeners) {
 			listener.onClipboardContentChange(content);
-		}
-	}
-
-	@Override
-	public void onContentGet(String content) {
-		for (ClipboardListener listener : this.listeners) {
-			listener.onContentGet(content);
 		}
 	}
 

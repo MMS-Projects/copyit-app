@@ -73,11 +73,6 @@ public class SwtBackend implements CopyServiceInterface, PasteServiceInterface,
 	}
 
 	@Override
-	public void requestGet() {
-		this.getContent(true);
-	}
-
-	@Override
 	public String getContent() {
 		final CountDownLatch countDownLatch = new CountDownLatch(1);
 
@@ -131,28 +126,6 @@ public class SwtBackend implements CopyServiceInterface, PasteServiceInterface,
 			e.printStackTrace(); // To change body of catch statement use File |
 									// Settings | File Templates.
 		}
-	}
-
-	private void getContent(final boolean allowNull) {
-		this.getExecutor().execute(new Runnable() {
-			@Override
-			public void run() {
-				String data = getContent();
-
-				if (data == null) {
-					if (allowNull) {
-						listener.onContentGet(data);
-						return;
-					}
-					return;
-				}
-				if (!data.equals(currentContent)) {
-					currentContent = data;
-					listener.onContentGet(data);
-				}
-			}
-		});
-
 	}
 
 	@Override

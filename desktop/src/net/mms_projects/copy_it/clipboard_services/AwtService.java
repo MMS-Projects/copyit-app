@@ -53,18 +53,6 @@ public class AwtService implements CopyServiceInterface, PasteServiceInterface, 
     }
 
     @Override
-    public void requestGet() {
-        this.getExecutor().execute(new Runnable() {
-            @Override
-            public void run() {
-                String data = getContent();
-
-                listener.onContentGet(data);
-            }
-        });
-    }
-
-    @Override
     public String getContent() {
         String result = "";
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
