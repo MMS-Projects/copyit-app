@@ -19,7 +19,7 @@ public class SyncClipboardBinding implements Activatable, SyncListener,
 	protected SyncManager syncManager;
 	protected ClipboardManager clipboardManager;
 
-	private boolean enabled;
+	private boolean enabled = true;
 	private EnvironmentIntegration environmentIntegration;
 
 	public SyncClipboardBinding(EnvironmentIntegration environmentIntegration,
