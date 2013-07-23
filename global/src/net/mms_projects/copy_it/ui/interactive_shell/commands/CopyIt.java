@@ -51,7 +51,7 @@ public class CopyIt extends Command {
             }
 
             @Override
-            public void onPulled(String content, Date date) {
+            public void onRemoteContentChange(String content, Date date) {
             }
         });
         this.syncManager.doPush(content, new Date());

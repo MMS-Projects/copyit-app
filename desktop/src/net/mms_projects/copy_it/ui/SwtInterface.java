@@ -103,7 +103,7 @@ public class SwtInterface implements UserInterfaceImplementation {
 			}
 
 			@Override
-			public void onPulled(final String content, Date date) {
+			public void onRemoteContentChange(final String content, Date date) {
 				if (!config.getBoolean("sync.queue.enabled")) {
 					clipboardManager.requestSet(content);
 				}

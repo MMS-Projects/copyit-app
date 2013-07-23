@@ -78,7 +78,7 @@ public class SyncingThread extends Thread implements PollingServiceInterface {
 				return;
 			}
 
-			listener.onPulled(newData, new Date());
+			listener.onRemoteContentChange(newData, new Date());
 		}
 	}
 

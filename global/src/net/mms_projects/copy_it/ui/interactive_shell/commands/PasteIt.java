@@ -34,7 +34,7 @@ public class PasteIt extends Command {
             }
 
             @Override
-            public void onPulled(String content, Date date) {
+            public void onRemoteContentChange(String content, Date date) {
                 clipboardContent[0] = content;
 
                 countDownLatch.countDown();

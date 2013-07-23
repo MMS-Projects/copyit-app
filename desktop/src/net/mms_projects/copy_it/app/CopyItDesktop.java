@@ -206,7 +206,7 @@ public class CopyItDesktop extends CopyIt {
 			}
 
 			@Override
-			public void onPulled(String content, Date date) {
+			public void onRemoteContentChange(String content, Date date) {
 				log.debug("The following content was pulled: {}", content);
 			}
 		});

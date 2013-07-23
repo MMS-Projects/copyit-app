@@ -162,12 +162,12 @@ public class SyncManager implements PushServiceInterface, PullServiceInterface,
 	}
 
 	@Override
-	public void onPulled(String content, Date date) {
+	public void onRemoteContentChange(String content, Date date) {
 		if (content.equals(this.currentContent)) {
 			return;
 		}
 		for (SyncListener listener : this.listeners) {
-			listener.onPulled(content, date);
+			listener.onRemoteContentChange(content, date);
 		}
 	}
 

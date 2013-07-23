@@ -67,7 +67,7 @@ public class ApiService implements PullServiceInterface, PushServiceInterface {
 		this.executor.execute(new Runnable() {
 			@Override
 			public void run() {
-				listener.onPulled(getContent(), new Date());
+				listener.onRemoteContentChange(getContent(), new Date());
 			}
 		});
 	}
