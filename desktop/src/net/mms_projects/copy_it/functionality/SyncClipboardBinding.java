@@ -31,17 +31,12 @@ public class SyncClipboardBinding implements Activatable, SyncListener,
 
 	@Override
 	public void onPushed(String content, Date date) {
-		if (this.isEnabled()) {
-			getNotificationManager().notify(10, NotificationUrgency.NORMAL, "",
-					"CopyIt",
-					Messages.getString("text_content_pushed", content));
-		}
 	}
 
 	@Override
 	public void onRemoteContentChange(final String content, Date date) {
 		if (this.isEnabled()) {
-			this.clipboardManager.requestSet(content);
+			this.clipboardManager.setContent(content);
 
 			getNotificationManager().notify(10, NotificationUrgency.NORMAL, "",
 					"CopyIt",
@@ -58,7 +53,11 @@ public class SyncClipboardBinding implements Activatable, SyncListener,
 	@Override
 	public void onContentGet(String content) {
 		if (this.isEnabled()) {
-			this.syncManager.updateRemoteContentAsync(content, new Date());
+			this.syncManager.setRemoteContent(content, new Date());
+
+			getNotificationManager().notify(10, NotificationUrgency.NORMAL, "",
+					"CopyIt",
+					Messages.getString("text_content_pushed", content));
 		}
 	}
 
