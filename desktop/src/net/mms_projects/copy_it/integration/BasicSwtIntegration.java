@@ -1,15 +1,9 @@
 package net.mms_projects.copy_it.integration;
 
-import java.util.Date;
-
 import net.mms_projects.copy_it.Activatable;
-import net.mms_projects.copy_it.ClipboardListener;
 import net.mms_projects.copy_it.ClipboardManager;
 import net.mms_projects.copy_it.EnvironmentIntegration;
-import net.mms_projects.copy_it.EnvironmentIntegration.NotificationManager.NotificationUrgency;
 import net.mms_projects.copy_it.FunctionalityManager;
-import net.mms_projects.copy_it.Messages;
-import net.mms_projects.copy_it.SyncListener;
 import net.mms_projects.copy_it.SyncManager;
 import net.mms_projects.copy_it.linux.DesktopEnvironment;
 import net.mms_projects.utils.OSValidator;
@@ -30,8 +24,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class BasicSwtIntegration extends EnvironmentIntegration implements
-		SyncListener, ClipboardListener {
+public class BasicSwtIntegration extends EnvironmentIntegration {
 
 	protected Display display = Display.getDefault();
 	protected Menu menu;
@@ -144,22 +137,6 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements
 		});
 	}
 
-	@Override
-	public void onPushed(final String content, Date date) {
-		this.getNotificationManager().notify(10, NotificationUrgency.NORMAL,
-				"", "Notification",
-				Messages.getString("text_content_pushed", content));
-	}
-
-	@Override
-	public void onPulled(final String content, Date date) {
-		clipboardManager.requestSet(content);
-
-		this.getNotificationManager().notify(10, NotificationUrgency.NORMAL,
-				"", "Notification",
-				Messages.getString("text_content_pulled", content));
-	}
-
 	private class NotificationManagerSwt implements NotificationManager {
 
 		protected TrayItem trayItem;
@@ -195,14 +172,4 @@ public class BasicSwtIntegration extends EnvironmentIntegration implements
 
 	}
 
-	@Override
-	public void onContentSet(String content) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onContentGet(String content) {
-		syncManager.doPush(content, new Date());
-	}
 }

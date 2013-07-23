@@ -33,6 +33,7 @@ import net.mms_projects.copy_it.SyncingThread;
 import net.mms_projects.copy_it.api.ServerApi;
 import net.mms_projects.copy_it.api.endpoints.ClipboardContentEndpoint;
 import net.mms_projects.copy_it.clipboard_services.AwtService;
+import net.mms_projects.copy_it.functionality.SyncClipboardBinding;
 import net.mms_projects.copy_it.integration.DefaultLinuxIntegration;
 import net.mms_projects.copy_it.integration.SwtIntegration;
 import net.mms_projects.copy_it.integration.UnityIntegration;
@@ -353,8 +354,6 @@ public class CopyItDesktop extends CopyIt {
 				UnityIntegration environmentIntegrationUnity = new UnityIntegration(
 						CopyItDesktop.dbusConnection, functionalityManager,
 						syncManager, clipboardManager);
-				syncManager.addListener(environmentIntegrationUnity);
-				clipboardManager.addListener(environmentIntegrationUnity);
 
 				environmentIntegration = environmentIntegrationUnity;
 				break;
@@ -397,6 +396,13 @@ public class CopyItDesktop extends CopyIt {
 		environmentIntegration.setUserInterfaceImplementation(uiImplementation);
 
 		environmentIntegration.setup();
+
+		SyncClipboardBinding syncClipboardBinding = new SyncClipboardBinding(
+				environmentIntegration, syncManager, clipboardManager);
+		syncManager.addListener(syncClipboardBinding);
+		clipboardManager.addListener(syncClipboardBinding);
+		functionalityManager.addFunctionality("sync-clipboard-binding",
+				syncClipboardBinding);
 
 		QueueFunctionality queueFunctionality = new QueueFunctionality(
 				uiImplementation);

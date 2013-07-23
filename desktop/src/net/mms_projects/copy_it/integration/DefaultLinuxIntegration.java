@@ -21,12 +21,6 @@ public class DefaultLinuxIntegration extends EnvironmentIntegration {
 		this.addIntegration(swtIntegration);
 
 		/*
-		 * Add some listeners to the SWT integration
-		 */
-		syncManager.addListener(swtIntegration);
-		clipboardManager.addListener(swtIntegration);
-
-		/*
 		 * Add FreeDesktop integrations like notifications and writing .desktop
 		 * files and the appropriate icons for the .desktop files
 		 */

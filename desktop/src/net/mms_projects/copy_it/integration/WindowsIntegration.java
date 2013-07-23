@@ -19,12 +19,6 @@ public class WindowsIntegration extends EnvironmentIntegration {
 		BasicSwtIntegration swtIntegration = new BasicSwtIntegration(this,
 				functionality, syncManager, clipboardManager);
 		this.addIntegration(swtIntegration);
-
-		/*
-		 * Add some listeners to the SWT integration
-		 */
-		syncManager.addListener(swtIntegration);
-		clipboardManager.addListener(swtIntegration);
 	}
 
 	@Override
