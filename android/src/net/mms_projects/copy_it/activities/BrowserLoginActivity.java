@@ -55,11 +55,6 @@ public class BrowserLoginActivity extends SherlockActivity {
 
 		WebView webview = (WebView) findViewById(R.id.webview);
 		webview.setWebViewClient(new LoginWebViewClient());
-		/*
-		 * This makes sure that the website can use JavaScript in the browser
-		 * login activity
-		 */
-		webview.getSettings().setJavaScriptEnabled(true);
 
 		PasswordGenerator generator = new PasswordGenerator();
 		response.devicePassword = generator.generatePassword();
