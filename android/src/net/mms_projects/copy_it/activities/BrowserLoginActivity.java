@@ -70,7 +70,7 @@ public class BrowserLoginActivity extends SherlockActivity {
 		if (getIntent().hasExtra(EXTRA_PROVIDER)
 				&& getIntent().hasExtra(EXTRA_ACCESS_TOKEN)) {
 			List<NameValuePair> values = new ArrayList<NameValuePair>();
-			values.add(new BasicNameValuePair("access_token", getIntent()
+			values.add(new BasicNameValuePair("accesstoken", getIntent()
 					.getExtras().getString(EXTRA_ACCESS_TOKEN)));
 			values.add(new BasicNameValuePair("returnurl", setupUrl));
 
