@@ -90,6 +90,10 @@
     <string name="debug_unknown">Unknown</string>
     <string name="debug_available">Available</string>
     <string name="debug_not_available">Not available</string>
+    
+    <!-- Login specific stuff -->
+    <string name="login_button_browser_login">Login using our website</string>
+    
     <!-- App settings -->
     <string name="default_baseurl" translatable="false">http://copyit.dev.mms-projects.net</string>
     <string name="jenkins_joburl" translatable="false">http://jenkins.marlinc.nl/job/CopyIt-App-Beta</string>
