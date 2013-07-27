@@ -93,6 +93,7 @@
     
     <!-- Login specific stuff -->
     <string name="login_button_browser_login">Login using our website</string>
+    <string name="login_dialog_text_automatic_service_login">Would you like to automatically login using %1$s?</string>
     
     <!-- App settings -->
     <string name="default_baseurl" translatable="false">http://copyit.dev.mms-projects.net</string>
