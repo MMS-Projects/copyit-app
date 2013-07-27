@@ -72,7 +72,6 @@ public class LoginActivity extends SherlockActivity {
 	public void openBrowserLogin(View view) {
 		Intent intent = new Intent(this, BrowserLoginActivity.class);
 		startActivityForResult(intent, LoginActivity.ACTIVITY_LOGIN);
-		finish();
 	}
 
 	@Override
