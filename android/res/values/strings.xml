@@ -96,6 +96,7 @@
     <string name="app_name" translatable="false">CopyIt</string>
     <string name="default_apk" translatable="false">copyit.apk</string>
     <string name="ga_trackingId" translatable="false">UA-37152392-6</string>
+    <string name="facebook_app_id" translatable="false">143407639157783</string>
 
     <bool name="ga_autoActivityTracking" translatable="false">true</bool>
     <bool name="ga_reportUncaughtExceptions" translatable="false">true</bool>
