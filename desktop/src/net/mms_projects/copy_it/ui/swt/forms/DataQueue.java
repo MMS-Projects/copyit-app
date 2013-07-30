@@ -3,6 +3,7 @@ package net.mms_projects.copy_it.ui.swt.forms;
 import java.util.Date;
 
 import net.mms_projects.copy_it.ClipboardManager;
+import net.mms_projects.copy_it.Messages;
 import net.mms_projects.copy_it.ui.UserInterfaceImplementation.QueueUserInterface;
 
 import org.eclipse.swt.SWT;
@@ -40,12 +41,16 @@ public class DataQueue extends Dialog implements QueueUserInterface {
 
 		this.clipboardManager = clipboardManager;
 
-		setText("SWT Dialog");
+		setText(Messages.getString("queue.window.title"));
 	}
 
 	public void setup() {
 		createContents();
 
+		/*
+		 * Add a listener that will make sure that the queue will hide instead
+		 * of close
+		 */
 		this.shell.addListener(SWT.Close, new Listener() {
 			public void handleEvent(Event e) {
 				e.doit = false;
@@ -75,20 +80,28 @@ public class DataQueue extends Dialog implements QueueUserInterface {
 
 		TableColumn tblclmnData = new TableColumn(table, SWT.NONE);
 		tblclmnData.setWidth(336);
-		tblclmnData.setText("Data");
+		tblclmnData.setText(Messages.getString("queue.column.data"));
 
 		TableColumn tblclmnDate = new TableColumn(table, SWT.NONE);
 		tblclmnDate.setWidth(100);
-		tblclmnDate.setText("Date");
+		tblclmnDate.setText(Messages.getString("queue.column.date"));
 
 		Menu menu = new Menu(table);
 		MenuItem itemPaste = new MenuItem(menu, SWT.PUSH);
-		itemPaste.setText("Paste");
+		itemPaste.setText(Messages
+				.getString("queue.context_menu.put_in_clipboard"));
+
+		/*
+		 * This listener will handle the 'put in clipboard' action in the
+		 * content menu
+		 */
 		itemPaste.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
 				TableItem tableItem = table.getSelection()[0];
-				String data = tableItem.getText(0);
-				clipboardManager.requestSet(data);
+				String content = tableItem.getText(0);
+
+				clipboardManager.setContent(content);
+
 			}
 		});
 		table.setMenu(menu);
@@ -113,6 +126,11 @@ public class DataQueue extends Dialog implements QueueUserInterface {
 			@Override
 			public void run() {
 				open();
+
+				/*
+				 * Add a new row to the table containing the content and the
+				 * date it was set
+				 */
 				tableItem = new TableItem(table, SWT.NONE);
 				tableItem.setText(new String[] { content, date.toString() });
 			}
