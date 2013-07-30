@@ -3,6 +3,7 @@ package net.mms_projects.copy_it.ui.swt.forms;
 import java.util.Date;
 
 import net.mms_projects.copy_it.ClipboardManager;
+import net.mms_projects.copy_it.Messages;
 import net.mms_projects.copy_it.ui.UserInterfaceImplementation.QueueUserInterface;
 
 import org.eclipse.swt.SWT;
@@ -83,7 +84,7 @@ public class DataQueue extends Dialog implements QueueUserInterface {
 
 		Menu menu = new Menu(table);
 		MenuItem itemPaste = new MenuItem(menu, SWT.PUSH);
-		itemPaste.setText("Paste");
+		itemPaste.setText(Messages.getString("queue.context_menu.put_in_clipboard"));
 		itemPaste.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
 				TableItem tableItem = table.getSelection()[0];
