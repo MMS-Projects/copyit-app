@@ -41,7 +41,7 @@ public class DataQueue extends Dialog implements QueueUserInterface {
 
 		this.clipboardManager = clipboardManager;
 
-		setText("SWT Dialog");
+		setText(Messages.getString("queue.window.title"));
 	}
 
 	public void setup() {
