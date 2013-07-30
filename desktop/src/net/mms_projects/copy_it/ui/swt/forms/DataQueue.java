@@ -47,6 +47,10 @@ public class DataQueue extends Dialog implements QueueUserInterface {
 	public void setup() {
 		createContents();
 
+		/*
+		 * Add a listener that will make sure that the queue will hide instead
+		 * of close
+		 */
 		this.shell.addListener(SWT.Close, new Listener() {
 			public void handleEvent(Event e) {
 				e.doit = false;
@@ -86,6 +90,11 @@ public class DataQueue extends Dialog implements QueueUserInterface {
 		MenuItem itemPaste = new MenuItem(menu, SWT.PUSH);
 		itemPaste.setText(Messages
 				.getString("queue.context_menu.put_in_clipboard"));
+
+		/*
+		 * This listener will handle the 'put in clipboard' action in the
+		 * content menu
+		 */
 		itemPaste.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
 				TableItem tableItem = table.getSelection()[0];
@@ -117,6 +126,11 @@ public class DataQueue extends Dialog implements QueueUserInterface {
 			@Override
 			public void run() {
 				open();
+
+				/*
+				 * Add a new row to the table containing the content and the
+				 * date it was set
+				 */
 				tableItem = new TableItem(table, SWT.NONE);
 				tableItem.setText(new String[] { content, date.toString() });
 			}
