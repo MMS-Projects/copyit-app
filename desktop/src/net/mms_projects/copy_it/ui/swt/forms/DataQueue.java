@@ -84,12 +84,15 @@ public class DataQueue extends Dialog implements QueueUserInterface {
 
 		Menu menu = new Menu(table);
 		MenuItem itemPaste = new MenuItem(menu, SWT.PUSH);
-		itemPaste.setText(Messages.getString("queue.context_menu.put_in_clipboard"));
+		itemPaste.setText(Messages
+				.getString("queue.context_menu.put_in_clipboard"));
 		itemPaste.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
 				TableItem tableItem = table.getSelection()[0];
-				String data = tableItem.getText(0);
-				clipboardManager.requestSet(data);
+				String content = tableItem.getText(0);
+
+				clipboardManager.setContent(content);
+
 			}
 		});
 		table.setMenu(menu);
