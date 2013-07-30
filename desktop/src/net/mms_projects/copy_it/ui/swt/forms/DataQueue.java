@@ -76,11 +76,11 @@ public class DataQueue extends Dialog implements QueueUserInterface {
 
 		TableColumn tblclmnData = new TableColumn(table, SWT.NONE);
 		tblclmnData.setWidth(336);
-		tblclmnData.setText("Data");
+		tblclmnData.setText(Messages.getString("queue.column.data"));
 
 		TableColumn tblclmnDate = new TableColumn(table, SWT.NONE);
 		tblclmnDate.setWidth(100);
-		tblclmnDate.setText("Date");
+		tblclmnDate.setText(Messages.getString("queue.column.date"));
 
 		Menu menu = new Menu(table);
 		MenuItem itemPaste = new MenuItem(menu, SWT.PUSH);
