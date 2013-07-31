@@ -90,6 +90,10 @@
     <string name="debug_unknown">Unknown</string>
     <string name="debug_available">Available</string>
     <string name="debug_not_available">Not available</string>
+    <!-- History screen -->
+    <string name="history_cab_put_in_clipboard">Put in clipboad</string>
+    <string name="history_content_set">Set the clipboard content to \'%1$s\'</string>
+
     
     <!-- Login specific stuff -->
     <string name="login_button_browser_login">Login using our website</string>
