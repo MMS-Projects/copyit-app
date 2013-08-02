@@ -1,3 +1,11 @@
+copyit (0.0.1R2) raring; urgency=low
+
+  * Update changelog for 0.0.1R1 release
+  * Changed the version numbers to 0.0.1R2
+  * Changed the Debian branch back to master
+
+ -- Marlin Cremers <m.cremers@mms-projects.net>  Fri, 02 Aug 2013 15:41:31 +0200
+
 copyit (0.0.1R1) raring; urgency=low
 
   * Added some scripts to do Debian builds and added some files to gitignore
@@ -12,7 +20,7 @@ copyit (0.0.1R1) raring; urgency=low
   * Update changelog for 0.0.1-R1 release
   * Revert "Update changelog for 0.0.1-R1 release"
 
- -- Marlin Cremers <marlinc@laptop-marlinc>  Fri, 02 Aug 2013 15:10:40 +0200
+ -- Marlin Cremers <m.cremers@mms-projects.net>  Fri, 02 Aug 2013 15:10:40 +0200
 
 copyit (0.0.1-0ubuntu3) precise; urgency=low
 
