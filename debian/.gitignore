@@ -1,4 +1,5 @@
 files
-substvars
+*substvars
 tmp/
-debhelper.log
+*debhelper.log
+copyit/

@@ -1,0 +1,2 @@
+#!/bin/bash
+git-buildpackage --git-upstream-tag="v%(version)s" $@
