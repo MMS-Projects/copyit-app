@@ -1,3 +1,10 @@
+copyit (0.0.1R3) raring; urgency=low
+
+  * Changelog update to 0.0.1R2
+  * Bumped the version to 0.0.1R3
+
+ -- Marlin Cremers <m.cremers@mms-projects.net>  Fri, 02 Aug 2013 15:46:48 +0200
+
 copyit (0.0.1R2) raring; urgency=low
 
   * Update changelog for 0.0.1R1 release
