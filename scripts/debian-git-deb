@@ -1,2 +1,2 @@
 #!/bin/bash
-git-buildpackage --git-debian-branch=develop --git-upstream-tag="v%(version)s" $@
+git-buildpackage --git-upstream-tag="v%(version)s" $@

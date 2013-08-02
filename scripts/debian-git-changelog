@@ -1,2 +1,2 @@
 #!/bin/bash
-git-dch --debian-branch=develop $@
+git-dch $@
