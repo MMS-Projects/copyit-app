@@ -1,9 +1,16 @@
-copyit (0.0.1-R1) UNRELEASED; urgency=low
+copyit (0.0.1-R1) raring; urgency=low
 
   * Added some scripts to do Debian builds and added some files to gitignore
   * Added some scripts to do Debian builds and added some files to gitignore
+  * Added some scripts to do Debian builds and added some files to gitignore
+  * Update changelog for 0.0.1-R1 release
+  * Changed the Debian branch to develop in the build script
+  * Update changelog for 0.0.1-R1ubuntu1 release
+  * Revert "Update changelog for 0.0.1-R1ubuntu1 release"
+  * Update changelog for 0.0.1-R1 release
+  * Revert "Update changelog for 0.0.1-R1 release"
 
- -- Marlin Cremers <m.cremers@mms-projects.net>  Fri, 02 Aug 2013 14:56:40 +0200
+ -- Marlin Cremers <marlinc@laptop-marlinc>  Fri, 02 Aug 2013 15:08:13 +0200
 
 copyit (0.0.1-0ubuntu3) precise; urgency=low
 
