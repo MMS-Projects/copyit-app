@@ -1,0 +1,9 @@
+*.txt		text
+
+*.sh		eol=lf
+*.java		eol=lf
+*.xml		eol=lf
+
+*.jpg		-text
+*.png		-text
+

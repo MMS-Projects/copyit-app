@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    
+    <!-- Dashboard icons -->
+    <string name="dashboard_button_sendtoapp">Delen</string>
+    <string name="dashboard_button_login">Inloggen</string>
+    <string name="dashboard_button_settings">Instellingen</string>
+    <string name="dashboard_button_about">Over</string>
+    <string name="dashboard_button_history">Geschiedenis</string>
+    <!-- Menu -->
+    <string name="menu_settings">@string/dashboard_button_settings</string>
+    <string name="menu_feedback">Terugkoppeling</string>
+    <string name="menu_history_clear">Legen</string>
+    <!-- Buttons -->
+    <string name="button_login">@string/dashboard_button_login</string>
+    <!-- Preferenties -->
+    <string name="pref_category_history">Geschiedenis</string>
+    <string name="pref_category_account">Gebruikersaccount</string>
+    <string name="pref_category_information">Informatie</string>
+    <string name="pref_history_tracking_state">Sla je acties op in je geschiedenis</string>
+    <string name="pref_history_tracking_state_summary_on">Acties worden opgeslagen</string>
+    <string name="pref_history_tracking_state_summary_off">Acties worden niet opgeslagen</string>
+    <string name="pref_history_clear">Leeg geschiedenis</string>
+    <string name="pref_login">@string/dashboard_button_login</string>
+    <string name="pref_logout">Uitloggen</string>
+    <string name="pref_about">Over</string>
+    <!-- Activity titles -->
+    <string name="title_activity_login">Inloggen</string>
+    <string name="title_activity_welcome">Welkom bij CopyIt</string>
+    <string name="title_activity_settings">Instellingen</string>
+    <string name="title_activity_about">@string/pref_about</string>
+    <string name="title_activity_update">Bijwerken</string>
+    <string name="title_activity_debug">Copy It debug scherm</string>
+    <string name="title_activity_test">Tests NL</string>
+    <string name="title_activity_logged_out">Uitgelogd</string>
+    <string name="title_activity_history">Geschiedenis</string>
+    <!-- Other stuff -->
+    <string name="text_content">Inhoud:</string>
+    <string name="text_welcome_message">Bedankt voor het downloaden van CopyIt. Om CopyIt te gebruiken moet je eerst inloggen.</string>
+    <string name="text_logging_in">Inloggen…</string>
+    <string name="text_login_successful">Succesvol ingelogt!</string>
+    <string name="text_logout_successful">Succesvol uitgelogt!</string>
+    <string name="text_login_question">U bent niet ingelogt. Wilt u inloggen?</string>
+    <string name="text_content_pushed">Volgende inhoud word verstuurd: \'%1$s\'</string>
+    <string name="text_content_pulled">Volgende inhoud is ontvangen: \'%1$s\'</string>
+    <string name="text_content_pulling"/>
+    <string name="text_content_pushing"/>
+    <string name="text_history_cleared">Geschiedenis is geleegd</string>
+    <string name="text_history_empty">Er is nog geen geschiedenis opgeslagen</string>
+    <!-- Accessibility -->
+    <string name="accessibility_widget_button_app">Deze knop opent Copy It</string>
+    <string name="accessibility_app_icon_big">Groot CopyIt logo</string>
+    <!-- Dialog -->
+    <string name="dialog_title_error">Fout</string>
+    <string name="dialog_title_busy">Bezig</string>
+    <string name="dialog_title_select_send_app">Selecteer de app om naar te delen…</string>
+    <string name="dialog_button_okay">Oke</string>
+    <string name="dialog_button_yes">Ja</string>
+    <string name="dialog_button_no">Nee</string>
+    <!-- Fouten -->
+    <string name="error_device_setup_failed">Instellen van het app is mislukt: %1$s</string>
+    <string name="error_general">Er is een fout opgetreden: %1$s</string>
+    <!-- Widgets -->
+    <string name="widget_title_general">CopyIt - Algemeen</string>
+    <string name="widget_title_copyit">CopyIt - Copy It!</string>
+    <string name="widget_title_pasteit">CopyIt - Paste It!</string>
+    <string name="widget_title_copyit_pasteit">CopyIt - Copy/Paste It!</string>
+    <!-- About information -->
+    <string name="about_version">Versie: %1$s</string>
+    <string name="about_copyright">Gemaakt door MMS-Projects</string>
+    <!-- Update screen -->
+    <string name="update_available_text">Er is een nieuwe versie van Copy It beschikbaar. Om de laatste versie te downloaden klik op de download knop. Selecteer het pakket met de volgende naam:</string>
+    <string name="update_button_download">Download update</string>
+    <!-- Debug info -->
+    <string name="debug_label_server_baseurl">Server basis-url</string>
+    <string name="debug_label_jenkins_baseurl">Jenkins basis-url</string>
+    <string name="debug_label_device_id">Toestel\'\ s id</string>
+    <string name="debug_label_device_password">Toestel\'\ s wachtwoord</string>
+    <string name="debug_label_build_number">Bouw nummer</string>
+    <string name="debug_label_screen_density">Scherm dichtheid</string>
+    <string name="debug_no_value">Geen</string>
+    <string name="debug_unknown">Niet bekend</string>
+    <string name="debug_available">Beschikbaar</string>
+    <string name="debug_not_available">Niet beschikbaar</string>
+    <!-- App settings -->
+    
+<string name="text_content_pulling">Inhoud aan het binnenhalen…</string>
+    <string name="text_content_pushing"/>
+    <string name="text_content_pushing">Inhoud aan het sturen...</string>
+    </resources>

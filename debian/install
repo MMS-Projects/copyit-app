@@ -1,0 +1,5 @@
+build/copyit-linux-x86.jar usr/share/copyit
+build/copyit-linux-x86_64.jar usr/share/copyit
+
+debian/package/copyit usr/bin
+debian/package/mmsprojects-copyit.desktop usr/share/applications

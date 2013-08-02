@@ -1,0 +1,33 @@
+copyit (0.0.1R1) raring; urgency=low
+
+  * Added some scripts to do Debian builds and added some files to gitignore
+  * Added some scripts to do Debian builds and added some files to gitignore
+  * Added some scripts to do Debian builds and added some files to gitignore
+  * Update changelog for 0.0.1-R1 release
+  * Changed the Debian branch to develop in the build script
+  * Update changelog for 0.0.1-R1ubuntu1 release
+  * Revert "Update changelog for 0.0.1-R1ubuntu1 release"
+  * Update changelog for 0.0.1-R1 release
+  * Revert "Update changelog for 0.0.1-R1 release"
+  * Update changelog for 0.0.1-R1 release
+  * Revert "Update changelog for 0.0.1-R1 release"
+
+ -- Marlin Cremers <marlinc@laptop-marlinc>  Fri, 02 Aug 2013 15:10:40 +0200
+
+copyit (0.0.1-0ubuntu3) precise; urgency=low
+
+  * No changes really...
+
+ -- Marlin Cremers <m.cremers@mms-projects.net>  Thu, 01 Aug 2013 23:01:55 +0200
+
+copyit (0.0.1-0ubuntu2) precise; urgency=low
+
+  * Added a dependency to libwebkitgtk-1.0-0
+
+ -- Marlin Cremers <m.cremers@mms-projects.net>  Thu, 1 Aug 2013 22:18:50 +0200
+
+copyit (0.0.1-0ubuntu1) precise; urgency=low
+
+  * First Debian package build
+
+ -- Marlin Cremers <m.cremers@mms-projects.net>  Thu, 1 Aug 2013 22:00:00 +0200

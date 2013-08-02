@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=0.0.1
+Name=CopyIt
+# Gnome and KDE 3 uses Comment.
+Comment=Run CopyIt
+Exec=/usr/bin/copyit
+Terminal=false
+Icon=mmsprojects-copyit
+Type=Application
+Categories=X11;

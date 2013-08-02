@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="ContentDescription" severity="ignore">
+        <ignore path="res/layout-large/abs__action_mode_close_item.xml" />
+        <ignore path="res/layout/abs__action_bar_home.xml" />
+        <ignore path="res/layout/abs__action_bar_title_item.xml" />
+        <ignore path="res/layout/abs__action_menu_item_layout.xml" />
+        <ignore path="res/layout/abs__action_mode_close_item.xml" />
+        <ignore path="res/layout/abs__activity_chooser_view.xml" />
+    </issue>
+    <issue id="DefaultLocale" severity="ignore" />
+    <issue id="DuplicateIds" severity="ignore">
+        <ignore path="res/layout/abs__activity_chooser_view.xml" />
+    </issue>
+    <issue id="FloatMath" severity="ignore" />
+    <issue id="IconDensities" severity="ignore" />
+    <issue id="IconDuplicates" severity="ignore">
+        <ignore path="res/drawable-hdpi/abs__list_longpressed_holo.9.png" />
+        <ignore path="res/drawable-hdpi/abs__list_pressed_holo_light.9.png" />
+        <ignore path="res/drawable-mdpi/abs__list_longpressed_holo.9.png" />
+        <ignore path="res/drawable-mdpi/abs__list_pressed_holo_light.9.png" />
+        <ignore path="res/drawable-xhdpi/abs__list_longpressed_holo.9.png" />
+        <ignore path="res/drawable-xhdpi/abs__list_pressed_holo_light.9.png" />
+    </issue>
+    <issue id="IconDuplicatesConfig" severity="ignore">
+        <ignore path="res/drawable-mdpi/abs__list_divider_holo_dark.9.png" />
+        <ignore path="res/drawable-mdpi/abs__list_divider_holo_light.9.png" />
+    </issue>
+    <issue id="InefficientWeight" severity="ignore">
+        <ignore path="res/layout/abs__search_view.xml" />
+    </issue>
+    <issue id="InlinedApi" severity="ignore" />
+    <issue id="MissingPrefix" severity="ignore">
+        <ignore path="res/drawable/abs__search_dropdown_dark.xml" />
+        <ignore path="res/drawable/abs__search_dropdown_light.xml" />
+    </issue>
+    <issue id="MissingRegistered">
+        <ignore path="res/layout/abs__action_bar_tab_bar_view.xml" />
+    </issue>
+    <issue id="MissingTranslation" severity="ignore">
+        <ignore path="res/values/abs__strings.xml" />
+        <ignore path="res/values/abs__strings.xml" />
+        <ignore path="res/values/abs__strings.xml" />
+    </issue>
+    <issue id="NestedWeights" severity="ignore">
+        <ignore path="res/layout/abs__search_view.xml" />
+    </issue>
+    <issue id="NewApi" severity="ignore">
+        <ignore path="res/layout/abs__search_view.xml" />
+        <ignore path="res/values/abs__styles.xml" />
+    </issue>
+    <issue id="ObsoleteLayoutParam" severity="ignore">
+        <ignore path="res/layout/abs__screen_action_bar_overlay.xml" />
+    </issue>
+    <issue id="Overdraw" severity="ignore">
+        <ignore path="res/layout/abs__action_bar_home.xml" />
+    </issue>
+    <issue id="Registered" severity="ignore" />
+    <issue id="SelectableText" severity="ignore">
+        <ignore path="res/layout/abs__action_bar_title_item.xml" />
+        <ignore path="res/layout/abs__activity_chooser_view_list_item.xml" />
+    </issue>
+    <issue id="TypographyEllipsis" severity="ignore">
+        <ignore path="res/values/abs__strings.xml" />
+    </issue>
+    <issue id="UnusedResources" severity="ignore">
+        <ignore path="res/layout/abs__action_bar_tab.xml" />
+        <ignore path="res/layout/abs__action_bar_tab_bar_view.xml" />
+        <ignore path="res/layout/abs__action_bar_title_item.xml" />
+        <ignore path="res/layout/abs__action_menu_item_layout.xml" />
+        <ignore path="res/layout/abs__action_menu_layout.xml" />
+        <ignore path="res/layout/abs__action_mode_close_item.xml" />
+    </issue>
+    <issue id="UseCompoundDrawables" severity="ignore">
+        <ignore path="res/layout/abs__activity_chooser_view_list_item.xml" />
+    </issue>
+    <issue id="UselessParent" severity="ignore">
+        <ignore path="res/layout/abs__activity_chooser_view_list_item.xml" />
+    </issue>
+    <issue id="ViewConstructor" severity="ignore" />
+    <issue id="WrongCall" severity="ignore" />
+</lint>

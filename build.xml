@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project name="Create Runnable Jar" default="all">
+
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+        <classpath>
+            <fileset dir="${basedir}/antlib"/>
+        </classpath>
+    </taskdef>
+
+    <import file="desktop/build.xml" />
+    <import file="android/build-call.xml" />
+    <property name="version" value="0.0.1R2" />
+    
+    <property file="local.properties" />
+    
+    <property environment="env" />
+    <condition property="build.number" value="${env.BUILD_NUMBER}" else="ant">
+        <isset property="env.BUILD_NUMBER" />
+    </condition>
+    
+    <target name="all" depends="desktop, android" />
+    
+    <target name="version-update" depends="android-update-version-name" />
+
+</project>

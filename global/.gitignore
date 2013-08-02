@@ -1,0 +1,8 @@
+build
+bin
+gen
+*~
+
+local.properties
+
+options.properties

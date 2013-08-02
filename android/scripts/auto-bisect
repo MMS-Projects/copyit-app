@@ -1,0 +1,27 @@
+#!/bin/bash
+# git bisect job for jenkins, originally by @bashlog
+
+PROJECT_URL="$JENKINS_URL/job/$JOB_NAME"
+
+echo Project url: $PROJECT_URL
+
+GOOD_JSON=$(curl "$PROJECT_URL/lastStableBuild/api/json")
+BAD_JSON=$(curl "$PROJECT_URL/lastFailedBuild/api/json")
+
+GOOD_BUILD=$(echo $GOOD_JSON | sed 's:[{},]:\n:g'|grep '"number":'|sed 's/.*://')
+BAD_BUILD=$(echo $BAD_JSON | sed 's:[{},]:\n:g'|grep '"number":'|sed 's/.*://')
+
+GOOD_HASH=$(echo $GOOD_JSON | sed 's:[{}]:\n:g'|grep '"SHA1".*name'|sed 's/"SHA1":"\([^"]*\)".*/\1/')
+BAD_HASH=$(echo $BAD_JSON | sed 's:[{}]:\n:g'|grep '"SHA1".*name'|sed 's/"SHA1":"\([^"]*\)".*/\1/')
+GOOD_HASH=$(echo $GOOD_HASH | awk '{print $1;}')
+BAD_HASH=$(echo $BAD_HASH | awk '{print $1;}')
+CURRENT_HASH=$(git log --pretty=oneline|head -n1|sed 's: .*::')
+
+
+echo Current commit: $CURRENT_HASH
+echo Good commit: $GOOD_HASH
+echo Bad commit: $BAD_HASH
+
+git bisect start $BAD_HASH $GOOD_HASH
+git bisect run "ant"
+git checkout $CURRENT_HASH

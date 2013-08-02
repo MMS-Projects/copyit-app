@@ -1,0 +1,26 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+#export DH_OPTIONS=-v
+
+export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
+
+ARCH := $(shell getconf LONG_BIT)
+
+JAVA_HOME_32 := /usr/lib/jvm/java-7-openjdk-i386
+JAVA_HOME_64 := /usr/lib/jvm/java-7-openjdk-amd64
+
+export JAVA_HOME := $(JAVA_HOME_$(ARCH))
+
+%:
+	dh $@
+       
+override_dh_auto_build: 
+	ant linux
+	
+override_dh_clean:
+	dh_clean
+
+	ant clean

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+DIR=`dirname $0`
+
+export JENKINS_URL="http://jenkins.marlinc.nl"
+export JOB_NAME="CopyIt-Desktop"
+
+$DIR/auto-bisect

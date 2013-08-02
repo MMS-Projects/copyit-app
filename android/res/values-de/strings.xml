@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+
+	<!-- Dashboard icons -->
+    <string name="dashboard_button_sendtoapp">Teilen</string>
+    <string name="dashboard_button_login">Anmelden</string>
+    <string name="dashboard_button_settings"/>
+    <string name="dashboard_button_about">Über</string>
+    <string name="dashboard_button_history">Geschichte</string>
+    <!-- Menu -->
+    <string name="menu_settings">@string/dashboard_button_settings</string>
+    <string name="menu_feedback">Rückmeldung</string>
+    <string name="menu_history_clear">Entleeren</string>
+    <!-- Buttons -->
+    <string name="button_login">@string/dashboard_button_login</string>
+    <!-- Preferenties -->
+    <string name="pref_category_history">Geschichte</string>
+    <string name="pref_category_account">Benutzer</string>
+    <string name="pref_category_information">Informationen</string>
+    <string name="pref_history_tracking_state">Speichern Aktionen, um Ihre Geschichte</string>
+    <string name="pref_history_tracking_state_summary_on">Aktionen werden sparen</string>
+    <string name="pref_history_tracking_state_summary_off">Aktionen werden nicht verfolgt</string>
+    <string name="pref_history_clear">Verlauf löschen</string>
+    <string name="pref_login">@string/dashboard_button_login</string>
+    <string name="pref_logout">Abmelden</string>
+    <string name="pref_about">Über</string>
+    <!-- Activity titles -->
+    <string name="title_activity_login">Anmelden</string>
+    <string name="title_activity_welcome">Willkommen bei CopyIt</string>
+    <string name="title_activity_settings">Institutionen</string>
+    <string name="title_activity_about">@string/pref_about</string>
+    <string name="title_activity_update">Aktualisieren</string>
+    <string name="title_activity_debug">Kopiere es debug Fenster</string>
+    <string name="title_activity_test">Tests DE</string>
+    <string name="title_activity_logged_out">Abgemeldet</string>
+    <string name="title_activity_history">Geschichte</string>
+    <!-- Other stuff -->
+    <string name="text_content">Inhalt:</string>
+    <string name="text_welcome_message">Danke für die Installation von CopyIt. So starten Sie CopyIt bitte anmelden.</string>
+    <string name="text_logging_in">Am Login…</string>
+    <string name="text_login_successful">Anmeldung erfolgreich!</string>
+    <string name="text_logout_successful">Abmeldung erfolgreich!</string>
+    <string name="text_login_question">Wie es aussieht, bist nicht eingeloggt Möchten Sie sich anmelden?</string>
+    <string name="text_content_pushed">Schob den folgenden Inhalt: \'%1$s\'</string>
+    <string name="text_content_pulled">Holte den folgenden Inhalt: \'%1$s\'</string>
+    <string name="text_content_pulling">Ziehe Inhalt&amp;#8230;</string>
+    <string name="text_content_pushing">Schiebe Inhalt&amp;#8230;</string>
+    <string name="text_history_cleared">Dein Verlauf wurde gelöscht</string>
+    <string name="text_history_empty">Kein Verlauf wurde bis jetzt aufgenommen</string>
+    <!-- Accessibility -->
+    <string name="accessibility_widget_button_app">Dieser Knopf öffnet Copy It</string>
+    <string name="accessibility_app_icon_big">Big CopyIt logo</string>
+    <!-- Dialog -->
+    <string name="dialog_title_error">Fehler</string>
+    <string name="dialog_title_busy">Beschäftigt</string>
+    <string name="dialog_title_select_send_app">Wählen App zu teilen…</string>
+    <string name="dialog_button_okay">Ok</string>
+    <string name="dialog_button_yes">Ja</string>
+    <string name="dialog_button_no">Nein</string>
+    <!-- Errors -->
+    <string name="error_device_setup_failed">Konnte nicht eingerichtet werden das Gerät: %1$s</string>
+    <string name="error_general">Ein Fehler ist aufgetreten: %1$s</string>
+    <!-- Widgets -->
+    <string name="widget_title_general">CopyIt - Allgemeine</string>
+    <string name="widget_title_copyit">CopyIt - Copy It!</string>
+    <string name="widget_title_pasteit">CopyIt - Paste It!</string>
+    <string name="widget_title_copyit_pasteit">CopyIt - Copy/Paste It!</string>
+    <!-- About information -->
+    <string name="about_version">Version: %1$s</string>
+    <string name="about_copyright">Erstellt von MMS-Projects</string>
+    <!-- Update screen -->
+    <string name="update_available_text">Es gibt eine neue Version des Copy It zur Verfügung. Zum Herunterladen der neuesten Version auf den Download-Button. Wählen Sie das Paket mit dem folgenden Namen:</string>
+    <string name="update_button_download">Aktualisierung herunterladen</string>
+    <!-- Debug info -->
+    <string name="debug_label_server_baseurl">Server Basis-URL</string>
+    <string name="debug_label_jenkins_baseurl">Jenkins Basis-URL</string>
+    <string name="debug_label_device_id">Geräte ID</string>
+    <string name="debug_label_device_password">Geräte Passwort</string>
+    <string name="debug_label_build_number">Bau nummer</string>
+    <string name="debug_label_screen_density">Rasterdichte</string>
+    <string name="debug_no_value">Keine</string>
+    <string name="debug_unknown">Unbekannt</string>
+    <string name="debug_available">Verfügbar</string>
+    <string name="debug_not_available">Nicht verfügbar</string>
+    <!-- App settings -->
+
+<string name="dashboard_button_settings">Einstellungen</string>
+    <string name="button_copyit" translatable="false">Kopiere es!</string>
+    <string name="button_pasteit" translatable="false">Füge es ein!</string>
+    <string name="term_copyit" translatable="false">Kopiere es!</string>
+    <string name="term_pasteit" translatable="false">Füge es ein!</string>
+
+    <string name="default_baseurl" translatable="false">http://copyit.dev.mms-projects.net</string>
+    <string name="jenkins_joburl" translatable="false">http://jenkins.marlinc.nl/job/CopyIt-App-Beta</string>
+    <string name="app_name" translatable="false">KopiereEs</string>
+    <string name="default_apk" translatable="false">copyit.apk</string>
+    <string name="ga_trackingId" translatable="false">UA-37152392-6</string>
+
+    <string name="dashboard_button_copyit" translatable="false">\@string/term_copyit</string>
+    <string name="dashboard_button_pasteit" translatable="false">\@string/term_pasteit</string>
+    </resources>

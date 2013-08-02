@@ -1,0 +1,11 @@
+build
+bin
+gen
+*~
+
+local.properties
+
+options.properties
+
+# Eclipse PyDev project file
+.pydevproject

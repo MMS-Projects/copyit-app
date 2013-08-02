@@ -1,0 +1,9 @@
+build
+bin
+gen
+*~
+local.properties
+options.properties
+.idea
+*.iml
+.lock
