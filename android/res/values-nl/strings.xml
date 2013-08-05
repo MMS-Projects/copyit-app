@@ -9,7 +9,7 @@
     <string name="dashboard_button_history">Geschiedenis</string>
     <!-- Menu -->
     <string name="menu_settings">@string/dashboard_button_settings</string>
-    <string name="menu_feedback">Terugkoppeling</string>
+    <string name="menu_feedback">Feedback</string>
     <string name="menu_history_clear">Legen</string>
     <!-- Buttons -->
     <string name="button_login">@string/dashboard_button_login</string>
