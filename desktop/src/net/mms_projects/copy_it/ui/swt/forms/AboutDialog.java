@@ -30,7 +30,7 @@ public class AboutDialog extends Dialog implements AboutUserInterface {
 	 */
 	public AboutDialog(Shell parent, int style) {
 		super(parent, style);
-		setText(Messages.getString("title_activity_about"));
+		setText(Messages.getString("about.window.title", Messages.getString("app_name")));
 	}
 
 	/**
@@ -67,7 +67,7 @@ public class AboutDialog extends Dialog implements AboutUserInterface {
 		fd_appIcon.left = new FormAttachment(0, 99);
 		appIcon.setLayoutData(fd_appIcon);
 		appIcon.setImage(SWTResourceManager.getImage(getClass(),
-				"/images/logo-512.png"));
+				"/images/icon-512.png"));
 		Label appName = new Label(shell, SWT.NONE);
 		FormData fd_appName = new FormData();
 		fd_appName.right = new FormAttachment(0, 283);
