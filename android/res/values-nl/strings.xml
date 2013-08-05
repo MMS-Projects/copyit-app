@@ -87,4 +87,11 @@
 <string name="text_content_pulling">Inhoud aan het binnenhalen…</string>
     <string name="text_content_pushing"/>
     <string name="text_content_pushing">Inhoud aan het sturen...</string>
+    <string name="history_cab_put_in_clipboard">Stop in klembord</string>
+    <string name="history_content_set">klembord ingesteld op \'%1$s\'</string>
+
+    
+    <string name="login_button_browser_login">Login met onze website</string>
+    <string name="login_dialog_text_automatic_service_login">Wil je automatisch inloggen met %1$s?</string>
+    
     </resources>
