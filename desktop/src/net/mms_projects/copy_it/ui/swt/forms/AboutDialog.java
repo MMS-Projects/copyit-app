@@ -30,7 +30,7 @@ public class AboutDialog extends Dialog implements AboutUserInterface {
 	 */
 	public AboutDialog(Shell parent, int style) {
 		super(parent, style);
-		setText(Messages.getString("title_activity_about"));
+		setText(Messages.getString("about.window.title", Messages.getString("app_name")));
 	}
 
 	/**
