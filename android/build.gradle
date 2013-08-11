@@ -31,9 +31,6 @@ android {
     defaultConfig {
         minSdkVersion 7
         targetSdkVersion 17
-
-	testPackageName "net.mms_projects.copy_it"
-	testInstrumentationRunner "android.test.InstrumentationTestRunner"
     }
 
     sourceSets {
@@ -43,5 +40,15 @@ android {
             resources.srcDirs = ['src']
             res.srcDirs = ['res']
         }
+
+        instrumentTest.setRoot('tests')
+    instrumentTest {
+      java.srcDirs = ['tests/src', '../global/test']
+      res.srcDirs = ['tests/res']
+      assets.srcDirs = ['tests/assets']
+      resources.srcDirs = ['tests/src']
     }
+    }
+
 }
+
