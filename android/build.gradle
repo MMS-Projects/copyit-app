@@ -9,11 +9,10 @@ buildscript {
     }
     apply plugin: 'android'
 
-       repositories {
-            mavenCentral()
-        }
+
 dependencies {
-    compile project(':facebook')
+    compile project(':global')
+    compile project(':android:facebook')
 
     compile 'com.actionbarsherlock:actionbarsherlock:4.4.0+@aar'
     compile 'com.android.support:support-v4:13.0.+'
@@ -36,7 +35,7 @@ android {
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
-            java.srcDirs = ['src', '../global/src']
+            java.srcDirs = ['src']
             resources.srcDirs = ['src']
             res.srcDirs = ['res']
         }

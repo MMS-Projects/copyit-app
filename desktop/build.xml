@@ -87,7 +87,7 @@
 
 	<target name="linux-x86-compile" depends="clean">
 		<mkdir dir="build/classes" />
-		<javac srcdir="global/src:desktop/src" destdir="build/classes"
+		<javac srcdir="global/src/main/java:desktop/src/main/java" destdir="build/classes"
 			classpathref="linux-x86-classpath" />
 	</target>
 
@@ -114,7 +114,7 @@
 				<include name="**/res/mmsprojects-copyit-**.png" />
 			</fileset>
 			<fileset dir="android/res" />
-			<fileset dir="desktop/res" />
+			<fileset dir="desktop/src/main/resources" />
 			<fileset dir="desktop/libs/linux">
 				<include name="**/*.so" />
 			</fileset>
@@ -124,7 +124,7 @@
 	<target name="linux-x86_64-compile" depends="clean">
 		<mkdir dir="build/classes" />
 		<!-- . is used for pointing to the current directory -->
-		<javac srcdir="global/src:desktop/src" destdir="build/classes"
+		<javac srcdir="global/src/main/java:desktop/src/main/java" destdir="build/classes"
 			classpathref="linux-x86_64-classpath" />
 	</target>
 
@@ -151,7 +151,7 @@
 				<include name="**/res/mmsprojects-copyit-**.png" />
 			</fileset>
 			<fileset dir="android/res" />
-			<fileset dir="desktop/res" />
+			<fileset dir="desktop/src/main/resources" />
 			<fileset dir="desktop/libs/linux">
 				<include name="**/*.so" />
 			</fileset>
@@ -160,7 +160,7 @@
 
 	<target name="windows-x86-compile" depends="clean">
 		<mkdir dir="build/classes" />
-		<javac srcdir="global/src:desktop/src" destdir="build/classes"
+		<javac srcdir="global/src/main/java:desktop/src/main/java" destdir="build/classes"
 			classpathref="windows-x86-classpath" />
 	</target>
 
@@ -187,7 +187,7 @@
 				<include name="**/res/mmsprojects-copyit-**.png" />
 			</fileset>
 			<fileset dir="android/res" />
-			<fileset dir="desktop/res" />
+			<fileset dir="desktop/src/main/resources" />
 		</jar>
 	</target>
 
@@ -199,7 +199,7 @@
 
 	<target name="windows-x86_64-compile" depends="clean">
 		<mkdir dir="build/classes" />
-		<javac srcdir="global/src:desktop/src" destdir="build/classes"
+		<javac srcdir="global/src/main/java:desktop/src/main/java" destdir="build/classes"
 			classpathref="windows-x86_64-classpath" />
 	</target>
 
@@ -226,7 +226,7 @@
 				<include name="**/res/mmsprojects-copyit-**.png" />
 			</fileset>
 			<fileset dir="android/res" />
-			<fileset dir="desktop/res" />
+			<fileset dir="desktop/src/main/resources" />
 		</jar>
 	</target>
 
@@ -238,7 +238,7 @@
 
 	<target name="macosx-x86-compile" depends="clean">
 		<mkdir dir="build/classes" />
-		<javac srcdir="global/src:desktop/src" destdir="build/classes"
+		<javac srcdir="global/src/main/java:desktop/src/main/java" destdir="build/classes"
 			classpathref="macosx-x86-classpath" />
 	</target>
 
@@ -265,13 +265,13 @@
 				<include name="**/res/mmsprojects-copyit-**.png" />
 			</fileset>
 			<fileset dir="android/res" />
-			<fileset dir="desktop/res" />
+			<fileset dir="desktop/src/main/resources" />
 		</jar>
 	</target>
 
 	<target name="macosx-x86_64-compile" depends="clean">
 		<mkdir dir="build/classes" />
-		<javac srcdir="global/src:desktop/src" destdir="build/classes"
+		<javac srcdir="global/src/main/java:desktop/src/main/java" destdir="build/classes"
 			classpathref="macosx-x86_64-classpath" />
 	</target>
 
@@ -298,7 +298,7 @@
 				<include name="**/res/mmsprojects-copyit-**.png" />
 			</fileset>
 			<fileset dir="android/res" />
-			<fileset dir="desktop/res" />
+			<fileset dir="desktop/src/main/resources" />
 		</jar>
 	</target>
 
