@@ -1,6 +1,7 @@
 language: java
 script:
  - ant linux windows macosx
+ - gradle check
 jdk:
  - oraclejdk7
  - openjdk6
