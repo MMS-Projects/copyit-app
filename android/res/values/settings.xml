@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name" translatable="false">CopyIt</string>
+
+    <!-- App settings -->
+    <!-- Urls -->
+    <string name="default_baseurl" translatable="false">http://copyit.dev.mms-projects.net</string>
+    <string name="jenkins_joburl" translatable="false">http://jenkins.marlinc.nl/job/CopyIt-App-Beta</string>
+    <!-- Apks -->
+    <string name="default_apk" translatable="false">copyit.apk</string>
+    <!-- Facebook settings -->
+    <string name="facebook_app_id" translatable="false">143407639157783</string>
+    <!-- Google Analytics stuff -->
+    <string name="ga_trackingId" translatable="false">UA-37152392-6</string>
+
+    <bool name="ga_autoActivityTracking" translatable="false">true</bool>
+    <bool name="ga_reportUncaughtExceptions" translatable="false">true</bool>
+
+</resources>
