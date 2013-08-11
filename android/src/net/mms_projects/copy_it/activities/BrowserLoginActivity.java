@@ -2,6 +2,7 @@ package net.mms_projects.copy_it.activities;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -10,7 +11,6 @@ import net.mms_projects.copy_it.LoginResponse;
 import net.mms_projects.copy_it.PasswordGenerator;
 import net.mms_projects.copy_it.R;
 
-import org.apache.http.Consts;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
@@ -77,7 +77,7 @@ public class BrowserLoginActivity extends SherlockActivity {
 			String accessTokenUrl = "/auth/client-login/";
 			accessTokenUrl += getIntent().getExtras().getString(EXTRA_PROVIDER);
 			accessTokenUrl += "?"
-					+ URLEncodedUtils.format(values, Consts.UTF_8.name());
+					+ URLEncodedUtils.format(values, Charset.forName("UTF-*").name());
 
 			System.out.println(accessTokenUrl);
 
