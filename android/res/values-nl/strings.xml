@@ -43,8 +43,6 @@
     <string name="text_login_question">U bent niet ingelogt. Wilt u inloggen?</string>
     <string name="text_content_pushed">Volgende inhoud word verstuurd: \'%1$s\'</string>
     <string name="text_content_pulled">Volgende inhoud is ontvangen: \'%1$s\'</string>
-    <string name="text_content_pulling"/>
-    <string name="text_content_pushing"/>
     <string name="text_history_cleared">Geschiedenis is geleegd</string>
     <string name="text_history_empty">Er is nog geen geschiedenis opgeslagen</string>
     <!-- Accessibility -->
@@ -85,7 +83,6 @@
     <!-- App settings -->
     
 <string name="text_content_pulling">Inhoud aan het binnenhalen…</string>
-    <string name="text_content_pushing"/>
     <string name="text_content_pushing">Inhoud aan het sturen...</string>
     <string name="history_cab_put_in_clipboard">Stop in klembord</string>
     <string name="history_content_set">klembord ingesteld op \'%1$s\'</string>

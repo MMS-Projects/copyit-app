@@ -58,10 +58,6 @@
     <string name="error_device_setup_failed">Impossible de configurer le périphérique: %1$s</string>
     <string name="widget_title_general">CopyIt - Général</string>
     <string name="debug_label_server_baseurl">Serveur baseurl</string>
-    <string name="pref_about"/>
-    <string name="button_copyit" translatable="false"/>
-    <string name="button_pasteit" translatable="false"/>
-    <string name="pref_history_tracking_state"/>
     <string name="pref_history_tracking_state">Enregistrer les actions vers votre historique</string>
     <string name="title_activity_test">Tests FR</string>
     <string name="dialog_title_select_send_app">Sélectionner app pour partager avec…</string>

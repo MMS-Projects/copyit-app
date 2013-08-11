@@ -4,7 +4,6 @@
 	<!-- Dashboard icons -->
     <string name="dashboard_button_sendtoapp">Teilen</string>
     <string name="dashboard_button_login">Anmelden</string>
-    <string name="dashboard_button_settings"/>
     <string name="dashboard_button_about">Über</string>
     <string name="dashboard_button_history">Geschichte</string>
     <!-- Menu -->
