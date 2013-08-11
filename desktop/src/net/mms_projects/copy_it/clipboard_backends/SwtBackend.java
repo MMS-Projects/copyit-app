@@ -2,12 +2,13 @@ package net.mms_projects.copy_it.clipboard_backends;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 
 import net.mms_projects.copy_it.ClipboardListener;
 import net.mms_projects.copy_it.PollingServiceInterface;
 import net.mms_projects.copy_it.clipboard_services.CopyServiceInterface;
 import net.mms_projects.copy_it.clipboard_services.PasteServiceInterface;
-import net.mms_projects.copy_it.ui.swt.SwtUtils;
+import net.mms_projects.copy_it.swt.SwtExecutorService;
 
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
@@ -79,7 +80,9 @@ public class SwtBackend implements CopyServiceInterface, PasteServiceInterface,
 
 		final String[] content = new String[1];
 
-		Runnable task = new Runnable() {
+		ExecutorService swtExecutorService = new SwtExecutorService(
+				Display.getDefault());
+		swtExecutorService.execute(new Runnable() {
 			@Override
 			public void run() {
 				TextTransfer transfer = TextTransfer.getInstance();
@@ -88,14 +91,7 @@ public class SwtBackend implements CopyServiceInterface, PasteServiceInterface,
 
 				countDownLatch.countDown();
 			}
-
-		};
-
-		if (SwtUtils.isUIThread()) {
-			task.run();
-		} else {
-			Display.getDefault().asyncExec(task);
-		}
+		});
 
 		try {
 			countDownLatch.await();
@@ -115,7 +111,9 @@ public class SwtBackend implements CopyServiceInterface, PasteServiceInterface,
 
 		final CountDownLatch countDownLatch = new CountDownLatch(1);
 
-		Runnable task = new Runnable() {
+		ExecutorService swtExecutorService = new SwtExecutorService(
+				Display.getDefault());
+		swtExecutorService.execute(new Runnable() {
 			@Override
 			public void run() {
 				TextTransfer textTransfer = TextTransfer.getInstance();
@@ -125,13 +123,7 @@ public class SwtBackend implements CopyServiceInterface, PasteServiceInterface,
 
 				countDownLatch.countDown();
 			}
-		};
-
-		if (SwtUtils.isUIThread()) {
-			task.run();
-		} else {
-			Display.getDefault().asyncExec(task);
-		}
+		});
 
 		try {
 			countDownLatch.await();
