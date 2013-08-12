@@ -3,9 +3,9 @@ package net.mms_projects.copy_it.activities;
 import java.util.List;
 
 import net.mms_projects.copy_it.AndroidClipboardUtils;
-import net.mms_projects.copy_it.ClipboardUtils;
 import net.mms_projects.copy_it.R;
 import net.mms_projects.copy_it.adapters.HistoryAdapter;
+import net.mms_projects.copy_it.clipboard_services.CopyServiceInterface;
 import net.mms_projects.copy_it.databases.HistoryItemsDbHelper;
 import net.mms_projects.copy_it.models.HistoryContract;
 import net.mms_projects.copy_it.models.HistoryItem;
@@ -58,7 +58,7 @@ public class HistoryActivity extends SherlockListActivity {
 			switch (item.getItemId()) {
 			case R.id.cab_put_in_clipboard:
 
-				ClipboardUtils clipboard = new AndroidClipboardUtils(
+				CopyServiceInterface clipboard = new AndroidClipboardUtils(
 						HistoryActivity.this);
 				clipboard.setContent(selectedText);
 

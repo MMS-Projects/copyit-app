@@ -3,11 +3,11 @@ package net.mms_projects.copy_it.ui.android.widgets;
 import java.util.UUID;
 
 import net.mms_projects.copy_it.AndroidClipboardUtils;
-import net.mms_projects.copy_it.ClipboardUtils;
 import net.mms_projects.copy_it.R;
 import net.mms_projects.copy_it.android.tasks.CopyItTask;
 import net.mms_projects.copy_it.android.tasks.PasteItTask;
 import net.mms_projects.copy_it.api.ServerApi;
+import net.mms_projects.copy_it.clipboard_services.PasteServiceInterface;
 import net.mms_projects.copy_it.ui.android.LoginActivity;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -35,7 +35,7 @@ abstract public class WidgetProvider extends AppWidgetProvider {
 				this.onDeleted(context, new int[] { appWidgetId });
 			}
 		} else {
-			ClipboardUtils clipboard = new AndroidClipboardUtils(context);
+			PasteServiceInterface clipboard = new AndroidClipboardUtils(context);
 			SharedPreferences preferences = PreferenceManager
 					.getDefaultSharedPreferences(context);
 
