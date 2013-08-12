@@ -90,14 +90,12 @@
     <string name="debug_unknown">Unknown</string>
     <string name="debug_available">Available</string>
     <string name="debug_not_available">Not available</string>
-    <!-- App settings -->
-    <string name="default_baseurl" translatable="false">http://copyit.dev.mms-projects.net</string>
-    <string name="jenkins_joburl" translatable="false">http://jenkins.marlinc.nl/job/CopyIt-App-Beta</string>
-    <string name="app_name" translatable="false">CopyIt</string>
-    <string name="default_apk" translatable="false">copyit.apk</string>
-    <string name="ga_trackingId" translatable="false">UA-37152392-6</string>
+    <!-- History screen -->
+    <string name="history_cab_put_in_clipboard">Put in clipboard</string>
+    <string name="history_content_set">Set the clipboard content to \'%1$s\'</string>
 
-    <bool name="ga_autoActivityTracking" translatable="false">true</bool>
-    <bool name="ga_reportUncaughtExceptions" translatable="false">true</bool>
+    <!-- Login specific stuff -->
+    <string name="login_button_browser_login">Login using our website</string>
+    <string name="login_dialog_text_automatic_service_login">Would you like to automatically login using %1$s?</string>
 
 </resources>

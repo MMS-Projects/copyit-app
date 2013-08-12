@@ -3,7 +3,7 @@
     package="net.mms_projects.copy_it"
     android:installLocation="internalOnly"
     android:versionCode="0"
-    android:versionName="0.0.1-ant" >
+    android:versionName="0.0.1R3-ant" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -15,6 +15,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="com.android.vending.BILLING" />
 
     <application
         android:name="net.mms_projects.copy_it.app.AndroidApplication"
@@ -201,6 +202,13 @@
                     android:scheme="android_secret_code" />
             </intent-filter>
         </receiver>
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
+        <activity android:name="com.facebook.LoginActivity" >
+        </activity>
     </application>
 
 </manifest>

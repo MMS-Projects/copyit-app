@@ -1,0 +1,15 @@
+Source: copyit
+Section: devel
+Priority: optional
+Maintainer: Marlin Cremers <m.cremers@mms-projects.net>
+XSBC-Original-Maintainer: Marlin Cremers <m.cremers@mms-projects.net>
+Standards-Version: 3.9.4
+Build-Depends: debhelper (>= 7), openjdk-7-jdk, ant
+Vcs-Browser: https://github.com/MMS-Projects/copyit-app
+Vcs-Git: git://github.com/MMS-Projects/copyit-app.git
+Homepage: https://github.com/MMS-Projects/copyit-app/
+
+Package: copyit
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, openjdk-7-jre, libwebkitgtk-1.0-0
+Description: The CopyIt desktop client

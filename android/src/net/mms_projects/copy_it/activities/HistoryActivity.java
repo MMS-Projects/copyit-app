@@ -2,6 +2,8 @@ package net.mms_projects.copy_it.activities;
 
 import java.util.List;
 
+import net.mms_projects.copy_it.AndroidClipboardUtils;
+import net.mms_projects.copy_it.ClipboardUtils;
 import net.mms_projects.copy_it.R;
 import net.mms_projects.copy_it.adapters.HistoryAdapter;
 import net.mms_projects.copy_it.databases.HistoryItemsDbHelper;
@@ -14,17 +16,73 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.SparseBooleanArray;
+import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockListActivity;
+import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.google.analytics.tracking.android.EasyTracker;
 
 public class HistoryActivity extends SherlockListActivity {
+
+	protected ActionMode actionMode;
+	private ActionMode.Callback actionModeCallback = new ActionMode.Callback() {
+
+		// Called when the action mode is created; startActionMode() was called
+		@Override
+		public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+			// Inflate a menu resource providing context menu items
+			MenuInflater inflater = mode.getMenuInflater();
+			inflater.inflate(R.menu.cab_history, menu);
+			return true;
+		}
+
+		// Called each time the action mode is shown. Always called after
+		// onCreateActionMode, but
+		// may be called multiple times if the mode is invalidated.
+		@Override
+		public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+			return false; // Return false if nothing is done
+		}
+
+		// Called when the user selects a contextual menu item
+		@Override
+		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+			switch (item.getItemId()) {
+			case R.id.cab_put_in_clipboard:
+
+				ClipboardUtils clipboard = new AndroidClipboardUtils(
+						HistoryActivity.this);
+				clipboard.setText(selectedText);
+
+				Toast.makeText(
+						HistoryActivity.this,
+						HistoryActivity.this.getResources().getString(
+								R.string.history_content_set, selectedText),
+						Toast.LENGTH_LONG).show();
+
+				mode.finish(); // Action picked, so close the CAB
+				return true;
+			default:
+				return false;
+			}
+		}
+
+		// Called when the user exits the action mode
+		@Override
+		public void onDestroyActionMode(ActionMode mode) {
+			actionMode = null;
+		}
+	};
+
+	private String selectedText;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +99,10 @@ public class HistoryActivity extends SherlockListActivity {
 
 		setTheme(R.style.AppTheme);
 		setContentView(R.layout.activity_history);
+
+		ListView list = (ListView) this.findViewById(android.R.id.list);
+		list.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+		list.setItemsCanFocus(false);
 
 		new ListLoader(this).execute();
 	}
@@ -63,6 +125,32 @@ public class HistoryActivity extends SherlockListActivity {
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
+		}
+	}
+
+	@Override
+	public void onListItemClick(ListView l, View v, int position, long id) {
+		SparseBooleanArray checked = l.getCheckedItemPositions();
+		boolean hasCheckedElement = false;
+		for (int i = 0; i < checked.size() && !hasCheckedElement; i++) {
+			hasCheckedElement = checked.valueAt(i);
+		}
+
+		if (hasCheckedElement) {
+			TextView contentView = (TextView) v
+					.findViewById(R.id.history_item_content);
+			this.selectedText = contentView.getText().toString();
+
+			if (actionMode == null) {
+				actionMode = this.startActionMode(actionModeCallback);
+				actionMode.invalidate();
+			} else {
+				actionMode.invalidate();
+			}
+		} else {
+			if (actionMode != null) {
+				actionMode.finish();
+			}
 		}
 	}
 

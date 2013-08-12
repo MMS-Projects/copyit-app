@@ -9,7 +9,7 @@
 
     <import file="desktop/build.xml" />
     <import file="android/build-call.xml" />
-    <property name="version" value="0.0.1" />
+    <property name="version" value="0.0.1R3" />
     
     <property file="local.properties" />
     
