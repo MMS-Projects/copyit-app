@@ -3,6 +3,11 @@
         }
 
 apply plugin: 'java'
+apply plugin: 'checkstyle'
+
+checkstyle {
+    ignoreFailures = true
+}
 
 dependencies {
     compile 'org.slf4j:slf4j-api:1+'
