@@ -8,35 +8,38 @@ import net.mms_projects.copy_it.listeners.EnabledListener;
  */
 public interface Activatable {
 
-	/**
-	 * This enabled the class
-	 */
-	public void enable();
+    /**
+     * This method enabled the class.
+     */
+    void enable();
 
-	/**
-	 * This disables the class
-	 */
-	public void disable();
+    /**
+     * This method disables the class.
+     */
+    void disable();
 
-	/**
-	 * Returns true if the class is enabled
-	 * 
-	 * @return This returns whenever the class is enabled
-	 */
-	public boolean isEnabled();
+    /**
+     * Returns true if the class is enabled.
+     *
+     * @return This returns whenever the class is enabled
+     */
+    boolean isEnabled();
 
-	/**
-	 * Changes the enabled state of the class
-	 * 
-	 * @param enabled
-	 *            Whenever the class needs to be enabled
-	 */
-	public void setEnabled(boolean enabled);
+    /**
+     * Changes whenever the class is enabled or not.
+     *
+     * @param enabled
+     *            Whenever the class needs to be enabled
+     */
+    void setEnabled(boolean enabled);
 
-	/**
-	 * Adds a listener that will get called when the class is enabled or disabled
-	 * @param listener The listener to add
-	 */
-	public void addEnabledListener(EnabledListener listener);
+    /**
+     * Adds a listener that will get called when the class is enabled or
+     * disabled.
+     *
+     * @param listener
+     *            The listener to add
+     */
+    void addEnabledListener(EnabledListener listener);
 
 }
