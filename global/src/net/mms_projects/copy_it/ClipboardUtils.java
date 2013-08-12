@@ -6,11 +6,11 @@ abstract public class ClipboardUtils {
 
 	private AbstractClipboardBackend backend;
 	
-	public String getText() {
+	public String getContent() {
 		return this.backend.getText();
 	}
 	
-	public void setText(String text) {
+	public void setContent(String text) {
 		this.backend.setText(text);
 	}
 	

@@ -61,7 +61,7 @@ abstract public class WidgetProvider extends AppWidgetProvider {
 
 			if (intent.getAction().equals(ACTION_COPYIT)) {
 				CopyItTask task = new CopyItTask(context, api);
-				task.execute(clipboard.getText());
+				task.execute(clipboard.getContent());
 			} else if (intent.getAction().equals(ACTION_PASTEIT)) {
 				PasteItTask task = new PasteItTask(context, api);
 				task.execute();

@@ -89,7 +89,7 @@ public class MainActivity extends SherlockFragmentActivity {
 
 		TextView clipboardContent = (TextView) this
 				.findViewById(R.id.clipboard_content);
-		clipboardContent.setText(clipboard.getText());
+		clipboardContent.setText(clipboard.getContent());
 	}
 
 	@Override
@@ -198,7 +198,7 @@ public class MainActivity extends SherlockFragmentActivity {
 
 		CopyItTask task = new CopyItTask(this, api);
 		task.setUseProgressDialog(true);
-		task.execute(clipboard.getText());
+		task.execute(clipboard.getContent());
 	}
 
 	public void pasteIt(View view) {

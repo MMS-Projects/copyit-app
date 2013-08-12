@@ -60,7 +60,7 @@ public class HistoryActivity extends SherlockListActivity {
 
 				ClipboardUtils clipboard = new AndroidClipboardUtils(
 						HistoryActivity.this);
-				clipboard.setText(selectedText);
+				clipboard.setContent(selectedText);
 
 				Toast.makeText(
 						HistoryActivity.this,
