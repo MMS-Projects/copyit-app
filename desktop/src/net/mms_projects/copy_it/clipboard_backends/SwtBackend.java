@@ -5,8 +5,7 @@ import java.util.concurrent.Executor;
 
 import net.mms_projects.copy_it.ClipboardListener;
 import net.mms_projects.copy_it.PollingServiceInterface;
-import net.mms_projects.copy_it.clipboard_services.CopyServiceInterface;
-import net.mms_projects.copy_it.clipboard_services.PasteServiceInterface;
+import net.mms_projects.copy_it.clipboard_services.ClipboardServiceInterface;
 import net.mms_projects.copy_it.ui.swt.SwtUtils;
 
 import org.eclipse.swt.dnd.Clipboard;
@@ -14,7 +13,7 @@ import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.widgets.Display;
 
-public class SwtBackend implements CopyServiceInterface, PasteServiceInterface,
+public class SwtBackend implements ClipboardServiceInterface,
 		PollingServiceInterface {
 
 	public static String SERVICE_NAME = "swt";

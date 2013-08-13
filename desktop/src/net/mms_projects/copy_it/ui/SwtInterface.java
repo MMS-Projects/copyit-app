@@ -66,8 +66,7 @@ public class SwtInterface implements UserInterfaceImplementation {
 		}
 		SwtBackend swtClipboard = new SwtBackend(this.clipboardManager);
 
-		this.clipboardManager.addCopyService(swtClipboard);
-		this.clipboardManager.addPasteService(swtClipboard);
+		this.clipboardManager.addClipboardService(swtClipboard);
 		this.clipboardManager.addPollingService(swtClipboard);
 
 		this.activityShell = new Shell(this.display);

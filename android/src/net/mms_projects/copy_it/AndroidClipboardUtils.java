@@ -5,12 +5,10 @@ import java.util.concurrent.Executor;
 import net.mms_projects.copy_it.clipboard_backends.AbstractClipboardBackend;
 import net.mms_projects.copy_it.clipboard_backends.HoneycombBackend;
 import net.mms_projects.copy_it.clipboard_backends.PreHoneycombBackend;
-import net.mms_projects.copy_it.clipboard_services.CopyServiceInterface;
-import net.mms_projects.copy_it.clipboard_services.PasteServiceInterface;
+import net.mms_projects.copy_it.clipboard_services.ClipboardServiceInterface;
 import android.content.Context;
 
-public class AndroidClipboardUtils implements CopyServiceInterface,
-		PasteServiceInterface {
+public class AndroidClipboardUtils implements ClipboardServiceInterface {
 
 	private Context context;
 
