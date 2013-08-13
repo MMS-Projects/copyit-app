@@ -3,6 +3,7 @@ package net.mms_projects.copy_it.clipboard_services;
 import java.util.concurrent.Executor;
 
 import net.mms_projects.copy_it.ClipboardListener;
+import net.mms_projects.copy_it.listeners.EnabledListener;
 
 public class TestService implements ClipboardServiceInterface {
 
@@ -47,39 +48,33 @@ public class TestService implements ClipboardServiceInterface {
     }
 
     @Override
-    public void activateCopy() {
+    public void enable() {
         // TODO Auto-generated method stub
 
     }
 
     @Override
-    public void deactivateCopy() {
+    public void disable() {
         // TODO Auto-generated method stub
 
     }
 
     @Override
-    public boolean isCopyActivated() {
+    public boolean isEnabled() {
         // TODO Auto-generated method stub
         return false;
     }
 
     @Override
-    public void activatePaste() {
+    public void setEnabled(boolean enabled) {
         // TODO Auto-generated method stub
-
+        
     }
 
     @Override
-    public void deactivatePaste() {
+    public void addEnabledListener(EnabledListener listener) {
         // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public boolean isPasteActivated() {
-        // TODO Auto-generated method stub
-        return false;
+        
     }
 
 }
