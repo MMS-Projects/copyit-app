@@ -332,17 +332,6 @@ public class CopyItDesktop extends CopyIt {
 
 				System.exit(1);
 			}
-
-			Runtime.getRuntime().addShutdownHook(new Thread() {
-				@Override
-				public void run() {
-					try {
-						appLock.unlock();
-					} catch (LockException exception) {
-						log.error("Could not unlock the application!");
-					}
-				}
-			});
 		}
 
 		EnvironmentIntegration environmentIntegration = null;
@@ -430,6 +419,13 @@ public class CopyItDesktop extends CopyIt {
 			CopyItDesktop.dbusConnection.disconnect();
 		}
 		executor.shutdown();
+		try {
+			appLock.unlock();
+		} catch (LockException e) {
+			e.printStackTrace();
+
+			log.error("Could not unlock the application!");
+		}
 	}
 
 	class StreamBuilder extends FileStreamBuilder {
