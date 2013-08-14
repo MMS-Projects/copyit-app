@@ -86,12 +86,6 @@ public class ApplicationLock {
         }
         this.lockFile.delete();
         this.thread.interrupt();
-        try {
-            this.server.close();
-        } catch (IOException exception) {
-            throw new LockException("Could not locking server socket",
-                    exception);
-        }
         this.locked = false;
     }
 
