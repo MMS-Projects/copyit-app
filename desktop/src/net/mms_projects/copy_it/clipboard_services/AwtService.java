@@ -1,13 +1,19 @@
 package net.mms_projects.copy_it.clipboard_services;
 
-import net.mms_projects.copy_it.ClipboardListener;
-
-import java.awt.*;
-import java.awt.datatransfer.*;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.ClipboardOwner;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.util.concurrent.Executor;
 
-public class AwtService implements CopyServiceInterface, PasteServiceInterface, ClipboardOwner {
+import net.mms_projects.copy_it.ClipboardListener;
+import net.mms_projects.copy_it.listeners.EnabledListener;
+
+public class AwtService implements ClipboardServiceInterface, ClipboardOwner {
 
     private Executor executor;
     private ClipboardListener listener;
@@ -17,15 +23,15 @@ public class AwtService implements CopyServiceInterface, PasteServiceInterface, 
     }
 
     @Override
-    public void activateCopy() {
+    public void enable() {
     }
 
     @Override
-    public void deactivateCopy() {
+    public void disable() {
     }
 
     @Override
-    public boolean isCopyActivated() {
+    public boolean isEnabled() {
         return false;
     }
 
@@ -37,19 +43,6 @@ public class AwtService implements CopyServiceInterface, PasteServiceInterface, 
                 setContent(content);
             }
         });
-    }
-
-    @Override
-    public void activatePaste() {
-    }
-
-    @Override
-    public void deactivatePaste() {
-    }
-
-    @Override
-    public boolean isPasteActivated() {
-        return false;
     }
 
     @Override
@@ -101,4 +94,16 @@ public class AwtService implements CopyServiceInterface, PasteServiceInterface, 
     @Override
     public void lostOwnership(Clipboard clipboard, Transferable transferable) {
     }
+
+	@Override
+	public void setEnabled(boolean enabled) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addEnabledListener(EnabledListener listener) {
+		// TODO Auto-generated method stub
+		
+	}
 }

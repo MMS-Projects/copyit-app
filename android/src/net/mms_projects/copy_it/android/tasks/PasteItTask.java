@@ -3,10 +3,10 @@ package net.mms_projects.copy_it.android.tasks;
 import java.util.Date;
 
 import net.mms_projects.copy_it.AndroidClipboardUtils;
-import net.mms_projects.copy_it.ClipboardUtils;
 import net.mms_projects.copy_it.R;
 import net.mms_projects.copy_it.api.ServerApi;
 import net.mms_projects.copy_it.api.endpoints.ClipboardContentEndpoint;
+import net.mms_projects.copy_it.clipboard_services.ClipboardServiceInterface;
 import net.mms_projects.copy_it.databases.HistoryItemsDbHelper;
 import net.mms_projects.copy_it.models.HistoryContract;
 import net.mms_projects.copy_it.models.HistoryItem.Change;
@@ -41,14 +41,14 @@ public class PasteItTask extends ServerApiUiTask<Void, Void, String> {
 		try {
 			this.doExceptionCheck();
 
-			ClipboardUtils clipboard = new AndroidClipboardUtils(this.context);
+			ClipboardServiceInterface clipboard = new AndroidClipboardUtils(this.context);
 
 			Toast.makeText(
 					this.context,
 					this.context.getResources().getString(
 							R.string.text_content_pulled, content),
 					Toast.LENGTH_LONG).show();
-			clipboard.setText(content);
+			clipboard.setContent(content);
 
 			ContentValues values = new ContentValues();
 			values.put(HistoryContract.ItemEntry.COLUMN_NAME_CONTENT, content);
