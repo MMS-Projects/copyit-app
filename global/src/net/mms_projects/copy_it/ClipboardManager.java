@@ -6,56 +6,37 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executor;
 
+import net.mms_projects.copy_it.clipboard_services.ClipboardServiceInterface;
+import net.mms_projects.copy_it.listeners.EnabledListener;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.mms_projects.copy_it.clipboard_services.CopyServiceInterface;
-import net.mms_projects.copy_it.clipboard_services.PasteServiceInterface;
+public class ClipboardManager implements 
+		ClipboardServiceInterface, PollingServiceInterface, ClipboardListener {
 
-public class ClipboardManager implements CopyServiceInterface,
-		PasteServiceInterface, PollingServiceInterface, ClipboardListener {
-
-	private Map<String, CopyServiceInterface> copyServices = new HashMap<String, CopyServiceInterface>();
-	private Map<String, PasteServiceInterface> pasteServices = new HashMap<String, PasteServiceInterface>();
+	private Map<String, ClipboardServiceInterface> clipboardServices = new HashMap<String, ClipboardServiceInterface>();
 	private Map<String, PollingServiceInterface> pollingServices = new HashMap<String, PollingServiceInterface>();
-	private String copyService;
-	private String pasteService;
+	private String clipboardService;
 	private String pollingService;
-	private boolean copyEnabled = true;
-	private boolean pasteEnabled = true;
+	private boolean enabled = true;
 	private boolean pollingEnabled = true;
 	private List<ClipboardListener> listeners = new ArrayList<ClipboardListener>();
 	private Executor executor;
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-	public void addCopyService(CopyServiceInterface service) {
+	public void addClipboardService(ClipboardServiceInterface service) {
 		if (this.executor == null) {
 			log.error("Before adding a service please define a executor");
 			return;
 		}
 		service.setExecutor(executor);
 		
-		this.copyServices.put(service.getServiceName(), service);
-		if (this.copyService == null) {
-			this.copyService = service.getServiceName();
-			if (this.isCopyActivated()) {
-				this.copyServices.get(this.copyService).activateCopy();
-			}
-		}
-	}
-
-	public void addPasteService(PasteServiceInterface service) {
-		if (this.executor == null) {
-			log.error("Before adding a service please define a executor");
-			return;
-		}
-		service.setExecutor(executor);
-		
-		this.pasteServices.put(service.getServiceName(), service);
-		if (this.pasteService == null) {
-			this.pasteService = service.getServiceName();
-			if (this.isPasteActivated()) {
-				this.pasteServices.get(this.pasteService).activatePaste();
+		this.clipboardServices.put(service.getServiceName(), service);
+		if (this.clipboardService == null) {
+			this.clipboardService = service.getServiceName();
+			if (this.isEnabled()) {
+				this.clipboardServices.get(this.clipboardService).enable();
 			}
 		}
 	}
@@ -80,43 +61,22 @@ public class ClipboardManager implements CopyServiceInterface,
 		this.listeners.add(listener);
 	}
 
-	public void setCopyService(String service) {
-		if (!this.copyServices.containsKey(service)) {
+	public void setClipboardService(String service) {
+		if (!this.clipboardServices.containsKey(service)) {
 			return;
 		}
-		this.deactivateCopy();
-		this.copyService = service;
-		if (this.isCopyActivated()) {
-			this.activateCopy();
+		this.disable();
+		this.clipboardService = service;
+		if (this.isEnabled()) {
+			this.enable();
 		}
 	}
 
-	public boolean isCopyServiceDefined() {
-		if (this.copyServices.isEmpty()) {
+	public boolean isClipboardServiceDefined() {
+		if (this.clipboardServices.isEmpty()) {
 			return false;
 		}
-		if (!this.copyServices.containsKey(this.copyService)) {
-			return false;
-		}
-		return true;
-	}
-
-	public void setPasteService(String service) {
-		if (!this.pasteServices.containsKey(service)) {
-			return;
-		}
-		this.deactivatePaste();
-		this.pasteService = service;
-		if (this.isPasteActivated()) {
-			this.activatePaste();
-		}
-	}
-
-	public boolean isPasteServiceDefined() {
-		if (this.pasteServices.isEmpty()) {
-			return false;
-		}
-		if (!this.pasteServices.containsKey(this.pasteService)) {
+		if (!this.clipboardServices.containsKey(this.clipboardService)) {
 			return false;
 		}
 		return true;
@@ -146,35 +106,35 @@ public class ClipboardManager implements CopyServiceInterface,
 	@Deprecated
 	@Override
 	public void requestSet(String content) {
-		if (this.copyServices.isEmpty()) {
+		if (this.clipboardServices.isEmpty()) {
 			return;
 		}
-		if (!this.copyServices.containsKey(this.copyService)) {
+		if (!this.clipboardServices.containsKey(this.clipboardService)) {
 			return;
 		}
-		this.copyServices.get(this.copyService).requestSet(content);
+		this.clipboardServices.get(this.clipboardService).requestSet(content);
 	}
 
     @Override
     public void setContent(String content) {
-        if (this.copyServices.isEmpty()) {
+        if (this.clipboardServices.isEmpty()) {
             return;
         }
-        if (!this.copyServices.containsKey(this.copyService)) {
+        if (!this.clipboardServices.containsKey(this.clipboardService)) {
             return;
         }
-        this.copyServices.get(this.copyService).setContent(content);
+        this.clipboardServices.get(this.clipboardService).setContent(content);
     }
 
     @Override
     public String getContent() {
-        if (this.pasteServices.isEmpty()) {
+        if (this.clipboardServices.isEmpty()) {
             return null;
         }
-        if (!this.pasteServices.containsKey(this.pasteService)) {
+        if (!this.clipboardServices.containsKey(this.clipboardService)) {
             return null;
         }
-        return this.pasteServices.get(this.pasteService).getContent();
+        return this.clipboardServices.get(this.clipboardService).getContent();
     }
 
     @Override
@@ -193,10 +153,7 @@ public class ClipboardManager implements CopyServiceInterface,
 	public void setExecutor(Executor executor) {
 		this.executor = executor;
 		
-		for (ServiceInterface service : this.copyServices.values()) {
-			service.setExecutor(executor);
-		}
-		for (ServiceInterface service : this.pasteServices.values()) {
+		for (ServiceInterface service : this.clipboardServices.values()) {
 			service.setExecutor(executor);
 		}
 		for (ServiceInterface service : this.pollingServices.values()) {
@@ -210,50 +167,26 @@ public class ClipboardManager implements CopyServiceInterface,
 	}
 
 	@Override
-	public void activateCopy() {
-		if (this.isCopyServiceDefined()
-				&& !this.copyServices.get(this.copyService).isCopyActivated()) {
-			this.copyServices.get(this.copyService).activateCopy();
+	public void enable() {
+		if (this.isClipboardServiceDefined()
+				&& !this.clipboardServices.get(this.clipboardService).isEnabled()) {
+			this.clipboardServices.get(this.clipboardService).enable();
 		}
-		this.copyEnabled = true;
+		this.enabled = true;
 	}
 
 	@Override
-	public void deactivateCopy() {
-		if (this.isCopyServiceDefined()
-				&& this.copyServices.get(this.copyService).isCopyActivated()) {
-			this.copyServices.get(this.pasteService).deactivateCopy();
+	public void disable() {
+		if (this.isClipboardServiceDefined()
+				&& this.clipboardServices.get(this.clipboardService).isEnabled()) {
+			this.clipboardServices.get(this.clipboardService).disable();
 		}
-		this.copyEnabled = false;
+		this.enabled = false;
 	}
 
 	@Override
-	public boolean isCopyActivated() {
-		return this.copyEnabled;
-	}
-
-	@Override
-	public void activatePaste() {
-		if (this.isPasteServiceDefined()
-				&& !this.pasteServices.get(this.pasteService)
-						.isPasteActivated()) {
-			this.pasteServices.get(this.pasteService).activatePaste();
-		}
-		this.pasteEnabled = true;
-	}
-
-	@Override
-	public void deactivatePaste() {
-		if (this.isPasteServiceDefined()
-				&& this.pasteServices.get(this.pasteService).isPasteActivated()) {
-			this.pasteServices.get(this.pasteService).deactivatePaste();
-		}
-		this.pasteEnabled = false;
-	}
-
-	@Override
-	public boolean isPasteActivated() {
-		return this.pasteEnabled;
+	public boolean isEnabled() {
+		return this.enabled;
 	}
 
 	@Override
@@ -280,5 +213,17 @@ public class ClipboardManager implements CopyServiceInterface,
 	public boolean isPollingActivated() {
 		return this.pollingEnabled;
 	}
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void addEnabledListener(EnabledListener listener) {
+        // TODO Auto-generated method stub
+        
+    }
 
 }

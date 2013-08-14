@@ -198,6 +198,8 @@ public class UnityIntegration extends EnvironmentIntegration implements
 
 		public ScriptOutputStreamReader(InputStream stream) {
 			super(stream);
+
+			this.setName("unity-script-output-reader");
 		}
 
 		@Override
@@ -211,6 +213,8 @@ public class UnityIntegration extends EnvironmentIntegration implements
 
 		public ScriptErrorStreamReader(InputStream stream) {
 			super(stream);
+
+			this.setName("unity-script-error-reader");
 		}
 
 		@Override

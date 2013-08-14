@@ -1,10 +1,11 @@
 package net.mms_projects.copy_it.clipboard_services;
 
-import net.mms_projects.copy_it.ClipboardListener;
-
 import java.util.concurrent.Executor;
 
-public class TestService implements CopyServiceInterface, PasteServiceInterface {
+import net.mms_projects.copy_it.ClipboardListener;
+import net.mms_projects.copy_it.listeners.EnabledListener;
+
+public class TestService implements ClipboardServiceInterface {
 
     public static String SERVICE_NAME = "test";
     protected ClipboardListener listener;
@@ -47,39 +48,33 @@ public class TestService implements CopyServiceInterface, PasteServiceInterface 
     }
 
     @Override
-    public void activateCopy() {
+    public void enable() {
         // TODO Auto-generated method stub
 
     }
 
     @Override
-    public void deactivateCopy() {
+    public void disable() {
         // TODO Auto-generated method stub
 
     }
 
     @Override
-    public boolean isCopyActivated() {
+    public boolean isEnabled() {
         // TODO Auto-generated method stub
         return false;
     }
 
     @Override
-    public void activatePaste() {
+    public void setEnabled(boolean enabled) {
         // TODO Auto-generated method stub
-
+        
     }
 
     @Override
-    public void deactivatePaste() {
+    public void addEnabledListener(EnabledListener listener) {
         // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public boolean isPasteActivated() {
-        // TODO Auto-generated method stub
-        return false;
+        
     }
 
 }

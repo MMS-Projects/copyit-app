@@ -2,19 +2,20 @@ package net.mms_projects.copy_it.clipboard_backends;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 
 import net.mms_projects.copy_it.ClipboardListener;
 import net.mms_projects.copy_it.PollingServiceInterface;
-import net.mms_projects.copy_it.clipboard_services.CopyServiceInterface;
-import net.mms_projects.copy_it.clipboard_services.PasteServiceInterface;
-import net.mms_projects.copy_it.ui.swt.SwtUtils;
+import net.mms_projects.copy_it.clipboard_services.ClipboardServiceInterface;
+import net.mms_projects.copy_it.listeners.EnabledListener;
+import net.mms_projects.copy_it.swt.SwtExecutorService;
 
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.widgets.Display;
 
-public class SwtBackend implements CopyServiceInterface, PasteServiceInterface,
+public class SwtBackend implements ClipboardServiceInterface,
 		PollingServiceInterface {
 
 	public static String SERVICE_NAME = "swt";
@@ -28,7 +29,7 @@ public class SwtBackend implements CopyServiceInterface, PasteServiceInterface,
 		this.listener = listener;
 		this.clipboard = new Clipboard(Display.getDefault());
 
-		new Thread(new Runnable() {
+		Thread pollingThread = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
@@ -60,7 +61,10 @@ public class SwtBackend implements CopyServiceInterface, PasteServiceInterface,
 					}
 				}
 			}
-		}).start();
+		});
+		pollingThread.setName("swt-polling-thread");
+		pollingThread.setDaemon(true);
+		pollingThread.start();
 	}
 
 	@Override
@@ -79,7 +83,9 @@ public class SwtBackend implements CopyServiceInterface, PasteServiceInterface,
 
 		final String[] content = new String[1];
 
-		Runnable task = new Runnable() {
+		ExecutorService swtExecutorService = new SwtExecutorService(
+				Display.getDefault());
+		swtExecutorService.execute(new Runnable() {
 			@Override
 			public void run() {
 				TextTransfer transfer = TextTransfer.getInstance();
@@ -88,14 +94,7 @@ public class SwtBackend implements CopyServiceInterface, PasteServiceInterface,
 
 				countDownLatch.countDown();
 			}
-
-		};
-
-		if (SwtUtils.isUIThread()) {
-			task.run();
-		} else {
-			Display.getDefault().asyncExec(task);
-		}
+		});
 
 		try {
 			countDownLatch.await();
@@ -115,7 +114,9 @@ public class SwtBackend implements CopyServiceInterface, PasteServiceInterface,
 
 		final CountDownLatch countDownLatch = new CountDownLatch(1);
 
-		Runnable task = new Runnable() {
+		ExecutorService swtExecutorService = new SwtExecutorService(
+				Display.getDefault());
+		swtExecutorService.execute(new Runnable() {
 			@Override
 			public void run() {
 				TextTransfer textTransfer = TextTransfer.getInstance();
@@ -125,13 +126,7 @@ public class SwtBackend implements CopyServiceInterface, PasteServiceInterface,
 
 				countDownLatch.countDown();
 			}
-		};
-
-		if (SwtUtils.isUIThread()) {
-			task.run();
-		} else {
-			Display.getDefault().asyncExec(task);
-		}
+		});
 
 		try {
 			countDownLatch.await();
@@ -157,37 +152,19 @@ public class SwtBackend implements CopyServiceInterface, PasteServiceInterface,
 	}
 
 	@Override
-	public void activatePaste() {
+	public void enable() {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void deactivatePaste() {
+	public void disable() {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public boolean isPasteActivated() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void activateCopy() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void deactivateCopy() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public boolean isCopyActivated() {
+	public boolean isEnabled() {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -205,5 +182,17 @@ public class SwtBackend implements CopyServiceInterface, PasteServiceInterface,
 	@Override
 	public boolean isPollingActivated() {
 		return this.pollingEnabled;
+	}
+
+	@Override
+	public void setEnabled(boolean enabled) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void addEnabledListener(EnabledListener listener) {
+		// TODO Auto-generated method stub
+
 	}
 }

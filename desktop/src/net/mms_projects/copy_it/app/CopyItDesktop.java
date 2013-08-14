@@ -332,13 +332,6 @@ public class CopyItDesktop extends CopyIt {
 
 				System.exit(1);
 			}
-
-			Runtime.getRuntime().addShutdownHook(new Thread() {
-				@Override
-				public void run() {
-					appLock.unlock();
-				}
-			});
 		}
 
 		EnvironmentIntegration environmentIntegration = null;
@@ -373,8 +366,7 @@ public class CopyItDesktop extends CopyIt {
 		if (args.length > 0) {
 			AwtService awtService = new AwtService(clipboardManager);
 
-			clipboardManager.addPasteService(awtService);
-			clipboardManager.addCopyService(awtService);
+			clipboardManager.addClipboardService(awtService);
 
 			if ("cli".equalsIgnoreCase(args[0])) {
 				uiImplementation = new ShellUi(this.settings, syncManager,
@@ -427,6 +419,13 @@ public class CopyItDesktop extends CopyIt {
 			CopyItDesktop.dbusConnection.disconnect();
 		}
 		executor.shutdown();
+		try {
+			appLock.unlock();
+		} catch (LockException e) {
+			e.printStackTrace();
+
+			log.error("Could not unlock the application!");
+		}
 	}
 
 	class StreamBuilder extends FileStreamBuilder {
