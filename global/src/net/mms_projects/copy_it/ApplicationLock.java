@@ -23,7 +23,6 @@ public class ApplicationLock {
     static final int LOCK_CHECK_TIMEOUT = 100;
 
     private File lockFile;
-    private ServerSocket server;
     private ServerThread thread;
     /**
      * The lock state of the application.
@@ -52,14 +51,14 @@ public class ApplicationLock {
         }
         BufferedWriter writer = null;
         try {
-            this.server = new ServerSocket(0);
 
             this.thread = new ServerThread();
             this.thread.setDaemon(true);
+            this.thread.setupServerSocket();
             this.thread.start();
 
             writer = new BufferedWriter(new FileWriter(this.lockFile));
-            writer.write(Integer.toString(this.server.getLocalPort()));
+            writer.write(Integer.toString(this.thread.getServerPort()));
         } catch (IOException e) {
             throw new LockException(e);
         } finally {
@@ -169,18 +168,50 @@ public class ApplicationLock {
     }
 
     private class ServerThread extends Thread {
+
+        private ServerSocket server;
+
         public ServerThread() {
             this.setName("application-lock-server");
+        }
+
+        public void setupServerSocket() throws LockException {
+            try {
+                this.server = new ServerSocket(0);
+            } catch (IOException exception) {
+                throw new LockException(
+                        "Could not create a locking server socket", exception);
+            }
+        }
+
+        @Override
+        public synchronized void start() {
+            if (this.server == null) {
+                throw new RuntimeException(
+                        "The server socket has not been set up. Run setupServerSocket()");
+            }
+
+            super.start();
         }
 
         @Override
         public void run() {
             log.info("Lock server thread running");
+
             while (true) {
                 if (this.isInterrupted()) {
                     log.info("Lock server thread interrupted");
+
+                    try {
+                        this.server.close();
+                    } catch (IOException exception) {
+                        throw new RuntimeException(new LockException(
+                                "Could close not locking server socket", exception));
+                    }
+
                     break;
                 }
+
                 try {
                     if (!server.isClosed()) {
                         server.accept();
@@ -189,6 +220,16 @@ public class ApplicationLock {
                 }
             }
         }
+
+        public int getServerPort() throws LockException {
+            if (!this.isAlive()) {
+                throw new LockException(
+                        "The locking server is not running yet!");
+            }
+
+            return this.server.getLocalPort();
+        }
+
     }
 
 }

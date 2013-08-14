@@ -75,6 +75,26 @@ public class ApplicationLockTest extends TestCase {
         assertFalse(this.appLock.isRunning());
     }
 
+    public void testRelockMultipleTimes() {
+        for (int i = 0; i < 10; ++i) {
+            try {
+                this.appLock.lock();
+            } catch (LockException exception) {
+                fail("Could not lock: " + exception.getMessage());
+            }
+
+            assertTrue(this.appLock.isRunning());
+
+            try {
+                this.appLock.unlock();
+            } catch (LockException exception) {
+                fail("Could not unlock: " + exception.getMessage());
+            }
+
+            assertFalse(this.appLock.isRunning());
+        }
+    }
+
     public static File createTempDirectory() throws IOException {
         File temp = File.createTempFile("test",
                 Long.toString(System.nanoTime()));
