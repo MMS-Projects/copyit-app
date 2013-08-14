@@ -31,7 +31,7 @@
     <string name="text_logging_in">bezig mit inlogge, efkes wachte</string>
     <string name="text_login_successful">yuu, gelukt!</string>
     <string name="text_logout_successful">oetlogge gelukt</string>
-    <string name="text_login_question">volges mich busse neet ingelogd, wilse nog inlogge of wie zit det</string>
+    <string name="text_login_question">Volges mich busse neet ingelogd, wilse nog inlogge of wie zit det?</string>
     <string name="text_content_pulling">diene kraom op nt haole</string>
     <string name="text_content_pushing">diene kraom aant verstjture</string>
     <string name="text_history_cleared">zoo, diene kraom is weg</string>
