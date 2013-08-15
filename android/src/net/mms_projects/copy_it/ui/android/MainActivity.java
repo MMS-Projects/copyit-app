@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.UUID;
 
 import net.mms_projects.copy_it.AndroidClipboardUtils;
-import net.mms_projects.copy_it.ClipboardUtils;
 import net.mms_projects.copy_it.FileStreamBuilder;
 import net.mms_projects.copy_it.R;
 import net.mms_projects.copy_it.activities.HistoryActivity;
@@ -16,6 +15,7 @@ import net.mms_projects.copy_it.android.tasks.PasteItTask;
 import net.mms_projects.copy_it.android.tasks.SendToAppTask;
 import net.mms_projects.copy_it.api.ServerApi;
 import net.mms_projects.copy_it.app.CopyItAndroid;
+import net.mms_projects.copy_it.clipboard_services.PasteServiceInterface;
 import net.mms_projects.copy_it.models.HistoryItem.Change;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -85,7 +85,7 @@ public class MainActivity extends SherlockFragmentActivity {
 	protected void onResume() {
 		super.onResume();
 
-		ClipboardUtils clipboard = new AndroidClipboardUtils(MainActivity.this);
+		PasteServiceInterface clipboard = new AndroidClipboardUtils(MainActivity.this);
 
 		TextView clipboardContent = (TextView) this
 				.findViewById(R.id.clipboard_content);
@@ -194,7 +194,7 @@ public class MainActivity extends SherlockFragmentActivity {
 		api.apiUrl = preferences.getString("server.baseurl", this
 				.getResources().getString(R.string.default_baseurl));
 
-		ClipboardUtils clipboard = new AndroidClipboardUtils(MainActivity.this);
+		PasteServiceInterface clipboard = new AndroidClipboardUtils(MainActivity.this);
 
 		CopyItTask task = new CopyItTask(this, api);
 		task.setUseProgressDialog(true);
