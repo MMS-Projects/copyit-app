@@ -1,6 +1,6 @@
 package net.mms_projects.copy_it.ui;
 
-import java.util.Date;
+import java.util.concurrent.ExecutorService;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -11,9 +11,9 @@ import net.mms_projects.copy_it.Config;
 import net.mms_projects.copy_it.EnvironmentIntegration;
 import net.mms_projects.copy_it.FunctionalityManager;
 import net.mms_projects.copy_it.Messages;
-import net.mms_projects.copy_it.SyncListener;
 import net.mms_projects.copy_it.SyncManager;
 import net.mms_projects.copy_it.clipboard_backends.SwtBackend;
+import net.mms_projects.copy_it.swt.SwtExecutorService;
 import net.mms_projects.copy_it.ui.swt.forms.AboutDialog;
 import net.mms_projects.copy_it.ui.swt.forms.DataQueue;
 import net.mms_projects.copy_it.ui.swt.forms.PreferencesDialog;
@@ -103,7 +103,8 @@ public class SwtInterface implements UserInterfaceImplementation {
 
 	@Override
 	public void close() {
-		Display.getDefault().asyncExec(new Runnable() {
+		ExecutorService executorService = new SwtExecutorService(Display.getDefault());
+		executorService.execute(new Runnable() {
 
 			@Override
 			public void run() {
