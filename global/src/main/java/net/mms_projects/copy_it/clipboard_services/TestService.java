@@ -1,10 +1,10 @@
 package net.mms_projects.copy_it.clipboard_services;
 
-import net.mms_projects.copy_it.ClipboardListener;
-
 import java.util.concurrent.Executor;
 
-public class TestService implements CopyServiceInterface, PasteServiceInterface {
+import net.mms_projects.copy_it.ClipboardListener;
+
+public class TestService implements ClipboardServiceInterface {
 
     public static String SERVICE_NAME = "test";
     protected ClipboardListener listener;

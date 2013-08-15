@@ -377,8 +377,7 @@ public class CopyItDesktop extends CopyIt {
 		if (args.length > 0) {
 			AwtService awtService = new AwtService(clipboardManager);
 
-			clipboardManager.addPasteService(awtService);
-			clipboardManager.addCopyService(awtService);
+			clipboardManager.addClipboardService(awtService);
 
 			if ("cli".equalsIgnoreCase(args[0])) {
 				uiImplementation = new ShellUi(this.settings, syncManager,

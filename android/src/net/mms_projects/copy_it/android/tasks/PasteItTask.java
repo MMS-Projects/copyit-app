@@ -6,7 +6,7 @@ import net.mms_projects.copy_it.AndroidClipboardUtils;
 import net.mms_projects.copy_it.R;
 import net.mms_projects.copy_it.api.ServerApi;
 import net.mms_projects.copy_it.api.endpoints.ClipboardContentEndpoint;
-import net.mms_projects.copy_it.clipboard_services.CopyServiceInterface;
+import net.mms_projects.copy_it.clipboard_services.ClipboardServiceInterface;
 import net.mms_projects.copy_it.databases.HistoryItemsDbHelper;
 import net.mms_projects.copy_it.models.HistoryContract;
 import net.mms_projects.copy_it.models.HistoryItem.Change;
@@ -41,7 +41,7 @@ public class PasteItTask extends ServerApiUiTask<Void, Void, String> {
 		try {
 			this.doExceptionCheck();
 
-			CopyServiceInterface clipboard = new AndroidClipboardUtils(this.context);
+			ClipboardServiceInterface clipboard = new AndroidClipboardUtils(this.context);
 
 			Toast.makeText(
 					this.context,
