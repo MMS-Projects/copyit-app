@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.concurrent.Executor;
 
 import net.mms_projects.copy_it.ClipboardListener;
+import net.mms_projects.copy_it.listeners.EnabledListener;
 
 public class AwtService implements ClipboardServiceInterface, ClipboardOwner {
 
@@ -22,15 +23,15 @@ public class AwtService implements ClipboardServiceInterface, ClipboardOwner {
     }
 
     @Override
-    public void activateCopy() {
+    public void enable() {
     }
 
     @Override
-    public void deactivateCopy() {
+    public void disable() {
     }
 
     @Override
-    public boolean isCopyActivated() {
+    public boolean isEnabled() {
         return false;
     }
 
@@ -42,19 +43,6 @@ public class AwtService implements ClipboardServiceInterface, ClipboardOwner {
                 setContent(content);
             }
         });
-    }
-
-    @Override
-    public void activatePaste() {
-    }
-
-    @Override
-    public void deactivatePaste() {
-    }
-
-    @Override
-    public boolean isPasteActivated() {
-        return false;
     }
 
     @Override
@@ -106,4 +94,16 @@ public class AwtService implements ClipboardServiceInterface, ClipboardOwner {
     @Override
     public void lostOwnership(Clipboard clipboard, Transferable transferable) {
     }
+
+	@Override
+	public void setEnabled(boolean enabled) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addEnabledListener(EnabledListener listener) {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -6,6 +6,7 @@ import net.mms_projects.copy_it.clipboard_backends.AbstractClipboardBackend;
 import net.mms_projects.copy_it.clipboard_backends.HoneycombBackend;
 import net.mms_projects.copy_it.clipboard_backends.PreHoneycombBackend;
 import net.mms_projects.copy_it.clipboard_services.ClipboardServiceInterface;
+import net.mms_projects.copy_it.listeners.EnabledListener;
 import android.content.Context;
 
 public class AndroidClipboardUtils implements ClipboardServiceInterface {
@@ -47,42 +48,24 @@ public class AndroidClipboardUtils implements ClipboardServiceInterface {
 	}
 
 	@Override
-	public void activatePaste() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void deactivatePaste() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public boolean isPasteActivated() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public String getContent() {
 		return this.backend.getText();
 	}
 
 	@Override
-	public void activateCopy() {
+	public void enable() {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void deactivateCopy() {
+	public void disable() {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public boolean isCopyActivated() {
+	public boolean isEnabled() {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -96,6 +79,18 @@ public class AndroidClipboardUtils implements ClipboardServiceInterface {
 	@Override
 	public void setContent(String content) {
 		this.backend.setText(content);
+	}
+
+	@Override
+	public void setEnabled(boolean enabled) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addEnabledListener(EnabledListener listener) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

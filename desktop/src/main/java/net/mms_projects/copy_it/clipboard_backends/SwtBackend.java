@@ -6,6 +6,7 @@ import java.util.concurrent.Executor;
 import net.mms_projects.copy_it.ClipboardListener;
 import net.mms_projects.copy_it.PollingServiceInterface;
 import net.mms_projects.copy_it.clipboard_services.ClipboardServiceInterface;
+import net.mms_projects.copy_it.listeners.EnabledListener;
 import net.mms_projects.copy_it.ui.swt.SwtUtils;
 
 import org.eclipse.swt.dnd.Clipboard;
@@ -156,37 +157,19 @@ public class SwtBackend implements ClipboardServiceInterface,
 	}
 
 	@Override
-	public void activatePaste() {
+	public void enable() {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void deactivatePaste() {
+	public void disable() {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public boolean isPasteActivated() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void activateCopy() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void deactivateCopy() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public boolean isCopyActivated() {
+	public boolean isEnabled() {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -204,5 +187,17 @@ public class SwtBackend implements ClipboardServiceInterface,
 	@Override
 	public boolean isPollingActivated() {
 		return this.pollingEnabled;
+	}
+
+	@Override
+	public void setEnabled(boolean enabled) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addEnabledListener(EnabledListener listener) {
+		// TODO Auto-generated method stub
+		
 	}
 }
