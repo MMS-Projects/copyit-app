@@ -336,7 +336,11 @@ public class CopyItDesktop extends CopyIt {
 			Runtime.getRuntime().addShutdownHook(new Thread() {
 				@Override
 				public void run() {
-					appLock.unlock();
+					try {
+						appLock.unlock();
+					} catch (LockException exception) {
+						log.error("Could not unlock the application!");
+					}
 				}
 			});
 		}

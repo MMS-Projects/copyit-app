@@ -11,81 +11,85 @@ import net.mms_projects.copy_it.ApplicationLock.LockException;
 
 public class ApplicationLockTest extends TestCase {
 
-	private ApplicationLock appLock;
-	private File path;
+    private ApplicationLock appLock;
+    private File path;
 
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
 
-		this.path = createTempDirectory();
-		this.appLock = new ApplicationLock(this.path);
-	}
+        this.path = createTempDirectory();
+        this.appLock = new ApplicationLock(this.path);
+    }
 
-	public void testLockedApp() {
-		try {
-			this.appLock.lock();
-		} catch (LockException e) {
-			fail("Could not lock: " + e.getMessage());
-		}
+    public void testLockedApp() {
+        try {
+            this.appLock.lock();
+        } catch (LockException exception) {
+            fail("Could not lock: " + exception.getMessage());
+        }
 
-		assertTrue(this.appLock.isRunning());
+        assertTrue(this.appLock.isRunning());
 
-		this.appLock.unlock();
-	}
+        try {
+            this.appLock.unlock();
+        } catch (LockException exception) {
+            fail("Could not unlock: " + exception.getMessage());
+        }
+    }
 
-	public void testSecondLockException() {
-		try {
-			this.appLock.lock();
-		} catch (LockException e) {
-			fail("Could not lock the first time: " + e.getMessage());
-		}
+    public void testSecondLockException() {
+        try {
+            this.appLock.lock();
+        } catch (LockException e) {
+            fail("Could not lock the first time: " + e.getMessage());
+        }
 
-		LockException exception = null;
-		try {
-			this.appLock.lock();
-		} catch (LockException e) {
-			exception = e;
-		}
-		assertNotNull(exception);
-		assertEquals("The app is already locked", exception.getMessage());
-	}
+        LockException exception = null;
+        try {
+            this.appLock.lock();
+        } catch (LockException e) {
+            exception = e;
+        }
+        assertNotNull(exception);
+        assertEquals("The app is already locked", exception.getMessage());
+    }
 
-	public void testUnresponsiveSocket() {
-		File fakeLock = new File(this.path, ".lock");
-		BufferedWriter writer = null;
-		try {
-			writer = new BufferedWriter(new FileWriter(fakeLock));
-			writer.write(Integer.toString(500));
-		} catch (IOException e) {
-			fail("Could not create lock file: " + e.getMessage());
-		} finally {
-			try {
-				if (writer != null) {
-					writer.close();
-				}
-			} catch (IOException e) {
-			}
-		}
+    public void testUnresponsiveSocket() {
+        File fakeLock = new File(this.path, ".lock");
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter(fakeLock));
+            writer.write(Integer.toString(500));
+        } catch (IOException e) {
+            fail("Could not create lock file: " + e.getMessage());
+        } finally {
+            try {
+                if (writer != null) {
+                    writer.close();
+                }
+            } catch (IOException e) {
+            }
+        }
 
-		assertFalse(this.appLock.isRunning());
-	}
+        assertFalse(this.appLock.isRunning());
+    }
 
-	public static File createTempDirectory() throws IOException {
-		File temp = File.createTempFile("test",
-				Long.toString(System.nanoTime()));
+    public static File createTempDirectory() throws IOException {
+        File temp = File.createTempFile("test",
+                Long.toString(System.nanoTime()));
 
-		if (!temp.delete()) {
-			throw new IOException("Could not delete temp file: "
-					+ temp.getAbsolutePath());
-		}
+        if (!temp.delete()) {
+            throw new IOException("Could not delete temp file: "
+                    + temp.getAbsolutePath());
+        }
 
-		if (!temp.mkdir()) {
-			throw new IOException("Could not create temp directory: "
-					+ temp.getAbsolutePath());
-		}
+        if (!temp.mkdir()) {
+            throw new IOException("Could not create temp directory: "
+                    + temp.getAbsolutePath());
+        }
 
-		return temp;
-	}
+        return temp;
+    }
 
 }
