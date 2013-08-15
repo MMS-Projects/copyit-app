@@ -169,6 +169,10 @@ public class ApplicationLock {
     }
 
     private class ServerThread extends Thread {
+        public ServerThread() {
+            this.setName("application-lock-server");
+        }
+
         @Override
         public void run() {
             log.info("Lock server thread running");

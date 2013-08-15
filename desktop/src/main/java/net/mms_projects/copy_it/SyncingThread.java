@@ -26,6 +26,7 @@ public class SyncingThread extends Thread implements PollingServiceInterface {
 		this.endpoint = endpoint;
 
 		this.setDaemon(true);
+		this.setName("syncing-thread");
 		this.start();
 	}
 

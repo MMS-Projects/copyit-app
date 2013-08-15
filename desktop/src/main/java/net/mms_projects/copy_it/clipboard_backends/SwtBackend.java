@@ -29,7 +29,7 @@ public class SwtBackend implements ClipboardServiceInterface,
 		this.listener = listener;
 		this.clipboard = new Clipboard(Display.getDefault());
 
-		new Thread(new Runnable() {
+		Thread pollingThread = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
@@ -61,7 +61,9 @@ public class SwtBackend implements ClipboardServiceInterface,
 					}
 				}
 			}
-		}).start();
+		});
+		pollingThread.setName("swt-polling-thread");
+		pollingThread.start();
 	}
 
 	@Override
