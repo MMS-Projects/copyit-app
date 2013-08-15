@@ -1,3 +1,22 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-</resources>
+<string name="dashboard_button_sendtoapp">sjtuur nao app</string>
+    <string name="dashboard_button_login">Log in</string>
+    <string name="dashboard_button_settings">insjtellinge</string>
+    <string name="dashboard_button_about">euver os</string>
+    <string name="dashboard_button_history">gesjiedenis</string>
+    <string name="menu_settings">insjtellinge</string>
+    <string name="menu_feedback">Feedback</string>
+    <string name="menu_history_clear"/>
+    <string name="menu_history_clear">weggooie</string>
+    <string name="button_login">Inlogge</string>
+    <string name="login_dialog_text_automatic_service_login">wilse automatisch kinne inlogge?</string>
+    
+    <string name="pref_category_history">gesjiedenis</string>
+    <string name="pref_category_account">gebroeker</string>
+    <string name="pref_category_information">informatie</string>
+    <string name="pref_history_tracking_state">dien dinger opsjlaon in de gesjiedenis</string>
+    <string name="pref_history_tracking_state_summary_on">dien dinger zin opgesjlage</string>
+    <string name="pref_history_tracking_state_summary_off">dien dinger zin neet opgesjlage</string>
+    <string name="pref_history_clear">gesjiedenis wisse</string>
+    </resources>
