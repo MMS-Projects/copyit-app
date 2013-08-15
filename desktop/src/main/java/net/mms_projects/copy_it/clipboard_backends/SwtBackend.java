@@ -63,6 +63,7 @@ public class SwtBackend implements ClipboardServiceInterface,
 			}
 		});
 		pollingThread.setName("swt-polling-thread");
+		pollingThread.setDaemon(true);
 		pollingThread.start();
 	}
 
