@@ -43,7 +43,9 @@ public final class StringUtils {
     }
 
     /**
-     * Shortens and string a adds a ellipsis at the end.
+     * Shortens a text and adds a ellipsis at the end. If the max length is
+     * shorter then the ellipsis or the length is negative it will shorten the
+     * ellipsis or return a empty string.
      *
      * @param text
      *            The text to ellipsize
@@ -52,6 +54,26 @@ public final class StringUtils {
      * @return The shortened string with a ellipsis
      */
     public static String ellipsize(final String text, final int max) {
+        if (text == null) {
+            throw new NullPointerException("No text specified to ellipsize");
+        }
+        /*
+         * The max length is shorter then the length of the ellipsis.
+         */
+        if (max < ELLIPSIS_LENGTH) {
+            if (max < 0) {
+                /*
+                 * The length is negative. Return a empty string.
+                 */
+                return "";
+            } else {
+                /*
+                 * The length is shorter then the length of the ellipsis. Cut it
+                 * off.
+                 */
+                return ELLIPSIS.substring(0, max);
+            }
+        }
         if (textWidth(text) <= max) {
             return text;
         }
@@ -88,5 +110,4 @@ public final class StringUtils {
 
         return text.substring(0, end) + ELLIPSIS;
     }
-
 }
