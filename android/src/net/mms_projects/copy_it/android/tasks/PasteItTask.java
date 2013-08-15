@@ -48,7 +48,7 @@ public class PasteItTask extends ServerApiUiTask<Void, Void, String> {
 					this.context.getResources().getString(
 							R.string.text_content_pulled, content),
 					Toast.LENGTH_LONG).show();
-			clipboard.setText(content);
+			clipboard.setContent(content);
 
 			ContentValues values = new ContentValues();
 			values.put(HistoryContract.ItemEntry.COLUMN_NAME_CONTENT, content);
