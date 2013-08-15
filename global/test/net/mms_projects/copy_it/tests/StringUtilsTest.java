@@ -23,40 +23,40 @@ public class StringUtilsTest extends TestCase {
         int maxLength = 10;
         String result = StringUtils.ellipsize(ELLIPSIS_STRING, maxLength);
         assertEquals("Hello" + StringUtils.ELLIPSIS, result);
-        // lengthCheck(maxLength, result.length());
+        lengthCheck(maxLength, result.length());
 
         maxLength = 20;
         result = StringUtils.ellipsize(ELLIPSIS_STRING, maxLength);
         assertEquals("Hello there I'm a" + StringUtils.ELLIPSIS, result);
-        // lengthCheck(maxLength, result.length());
+        lengthCheck(maxLength, result.length());
 
         maxLength = 30;
         result = StringUtils.ellipsize(ELLIPSIS_STRING, maxLength);
         assertEquals("Hello there I'm a very long" + StringUtils.ELLIPSIS,
                 result);
-        // lengthCheck(maxLength, result.length());
+        lengthCheck(maxLength, result.length());
 
         maxLength = 35;
         result = StringUtils.ellipsize(ELLIPSIS_STRING, maxLength);
-        assertEquals("Hello there I'm a very long string!"
-                + StringUtils.ELLIPSIS, result);
-        // lengthCheck(maxLength, result.length());
+        assertEquals("Hello there I'm a very long" + StringUtils.ELLIPSIS,
+                result);
+        lengthCheck(maxLength, result.length());
 
         maxLength = 40;
         result = StringUtils.ellipsize(ELLIPSIS_STRING, maxLength);
-        assertEquals("Hello there I'm a very long string! Yay"
+        assertEquals("Hello there I'm a very long string!"
                 + StringUtils.ELLIPSIS, result);
-        // lengthCheck(maxLength, result.length());
+        lengthCheck(maxLength, result.length());
 
         maxLength = ELLIPSIS_FULL_TEXT_LENGTH;
         result = StringUtils.ellipsize(ELLIPSIS_STRING, maxLength);
         assertEquals(ELLIPSIS_STRING, result);
-        // lengthCheck(maxLength, result.length());
+        lengthCheck(maxLength, result.length());
 
         maxLength = ELLIPSIS_FULL_TEXT_LENGTH + 10;
         result = StringUtils.ellipsize(ELLIPSIS_STRING, maxLength);
         assertEquals(ELLIPSIS_STRING, result);
-        // lengthCheck(maxLength, result.length());
+        lengthCheck(maxLength, result.length());
 
         /*
          * A check with a very long word. It should be cut off.
@@ -73,7 +73,7 @@ public class StringUtilsTest extends TestCase {
         maxLength = StringUtils.ELLIPSIS.length() - 1;
         result = StringUtils.ellipsize(ELLIPSIS_STRING, maxLength);
         assertEquals(StringUtils.ELLIPSIS.substring(0, maxLength), result);
-        // lengthCheck(maxLength, result.length());
+        lengthCheck(maxLength, result.length());
 
         /*
          * A check with negative maximal length. It should return a empty
@@ -84,6 +84,25 @@ public class StringUtilsTest extends TestCase {
         assertEquals("", result);
         assertEquals(0, result.length());
 
+        /*
+         * A test with a null string. It should throw a NullPointerException in
+         * the ellipsize method.
+         */
+        try {
+            StringUtils.ellipsize(null, 2);
+
+            fail("A NullPointerException should have been thrown on the text.");
+        } catch (NullPointerException exception) {
+            /*
+             * The exception should be thrown in the ellipsize method itself.
+             */
+            assertEquals(
+                    "NullPointerException not thrown by the ellipsize method",
+                    "ellipsize", exception.getStackTrace()[0].getMethodName());
+        }
+    }
+
+    public final void testEllipsizeThin() {
         /*
          * A test with a null string. It should throw a NullPointerException in
          * the ellipsize method.

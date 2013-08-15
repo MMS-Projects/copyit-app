@@ -51,9 +51,13 @@ public final class StringUtils {
      *            The text to ellipsize
      * @param max
      *            The max length of the text
+     * @param useThinCharacters
+     *            Whenever to take thin characters in account when calculating
+     *            the length
      * @return The shortened string with a ellipsis
      */
-    public static String ellipsize(final String text, final int max) {
+    public static String ellipsize(final String text, final int max,
+            final boolean useThinCharacters) {
         if (text == null) {
             throw new NullPointerException("No text specified to ellipsize");
         }
@@ -74,8 +78,14 @@ public final class StringUtils {
                 return ELLIPSIS.substring(0, max);
             }
         }
-        if (textWidth(text) <= max) {
-            return text;
+        if (useThinCharacters) {
+            if (textWidth(text) <= max) {
+                return text;
+            }
+        } else {
+            if (text.length() <= max) {
+                return text;
+            }
         }
 
         /*
@@ -106,8 +116,25 @@ public final class StringUtils {
                 newEnd = text.length();
             }
 
-        } while (textWidth(text.substring(0, newEnd) + ELLIPSIS) < max);
+        } while (((useThinCharacters) ? textWidth(text.substring(0, newEnd)
+                + ELLIPSIS) : (text.substring(0, newEnd) + ELLIPSIS).length()) < max);
 
         return text.substring(0, end) + ELLIPSIS;
     }
+
+    /**
+     * Shortens a text and adds a ellipsis at the end. If the max length is
+     * shorter then the ellipsis or the length is negative it will shorten the
+     * ellipsis or return a empty string.
+     *
+     * @param text
+     *            The text to ellipsize
+     * @param max
+     *            The max length of the text
+     * @return The shortened string with a ellipsis
+     */
+    public static String ellipsize(final String text, final int max) {
+        return ellipsize(text, max, false);
+    }
+
 }
