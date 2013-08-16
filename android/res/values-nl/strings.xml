@@ -23,7 +23,7 @@
     <string name="pref_history_clear">Wis geschiedenis</string>
     <string name="pref_login">Inloggen</string>
     <string name="pref_logout">Uitloggen</string>
-    <string name="pref_about">@string/dashboard_button_about</string>
+    <string name="pref_about">Over</string>
     <!-- Activity titles -->
     <string name="title_activity_login">Inloggen</string>
     <string name="title_activity_welcome">Welkom bij CopyIt</string>
