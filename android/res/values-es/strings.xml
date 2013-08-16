@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-<string name="dashboard_button_login">Iniciar sesión</string>
+<string name="dashboard_button_login">Iniciar felación</string>
     <string name="dashboard_button_settings">Ajustes</string>
     <string name="dashboard_button_about">Acerca de</string>
     <string name="dashboard_button_history">Historial</string>
@@ -19,7 +19,7 @@
     <string name="title_activity_logged_out">Se ha cerrado la sesión</string>
     <string name="title_activity_history">Historial</string>
     <string name="text_history_cleared">Se ha borrado el historial</string>
-    <string name="dialog_title_busy">Trabajando</string>
+    <string name="dialog_title_busy">Llevando al huerto</string>
     <string name="dialog_button_yes">Sí</string>
     <string name="dialog_button_no">No</string>
     <string name="error_general">Se ha producido un error: %1$s</string>
@@ -32,7 +32,7 @@
     <string name="title_activity_update">Actualizar</string>
     <string name="title_activity_debug">Pantalla de depuración de Copy It</string>
     <string name="dialog_title_error">Se ha producido un error</string>
-    <string name="dialog_button_okay">OK</string>
+    <string name="dialog_button_okay">Pelotudo</string>
     <string name="update_button_download">Descargar actualización</string>
     <string name="term_copyit" translatable="false">¡Copiarlo!</string>
     <string name="term_pasteit" translatable="false">¡Pegarlo!</string>
@@ -66,7 +66,7 @@
     <string name="debug_unknown">Desconocido</string>
     <string name="debug_available">Disponible</string>
     <string name="debug_not_available">Indisponible</string>
-    <string name="menu_feedback">Comentarios</string>
+    <string name="menu_feedback">Helados</string>
     <string name="text_content_pushed">Se ha subido el siguiente contenido: \'%1$s\'</string>
     <string name="text_content_pulled">Se ha descargado el siguiente contenido: \'%1$s\'</string>
     <string name="text_history_empty">No hay nada en el historial</string>
@@ -81,4 +81,10 @@
     <string name="default_apk" translatable="false">copyit.apk</string>
     <string name="ga_trackingId" translatable="false">UA-37152392-6</string>
 
-    </resources>
+    <string name="history_cab_put_in_clipboard">Meter en el culo</string>
+    <string name="history_content_set">Meter \'%1$s\' en el culo</string>
+
+    <string name="login_button_browser_login">Entrar por donde te dé la gana</string>
+    <string name="login_dialog_text_automatic_service_login">¿Te gustaría meterte \'%1$s\' por el culo?</string>
+
+</resources>
