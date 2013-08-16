@@ -21,7 +21,7 @@
     <string name="pref_history_tracking_state_summary_on">Acties worden opgeslagen</string>
     <string name="pref_history_tracking_state_summary_off">Acties worden niet opgeslagen</string>
     <string name="pref_history_clear">Wis geschiedenis</string>
-    <string name="pref_login">@string/dashboard_button_login</string>
+    <string name="pref_login">Inloggen</string>
     <string name="pref_logout">Uitloggen</string>
     <string name="pref_about">@string/dashboard_button_about</string>
     <!-- Activity titles -->
