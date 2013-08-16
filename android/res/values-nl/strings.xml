@@ -58,7 +58,7 @@
     <string name="dialog_button_yes">Ja</string>
     <string name="dialog_button_no">Nee</string>
     <!-- Fouten -->
-    <string name="error_device_setup_failed">Instellen van het app is mislukt: %1$s</string>
+    <string name="error_device_setup_failed">Instellen van de app is mislukt: %1$s</string>
     <string name="error_general">Er is een fout opgetreden: %1$s</string>
     <!-- Widgets -->
     <string name="widget_title_general">CopyIt - Algemeen</string>
