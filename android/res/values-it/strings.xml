@@ -1,3 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-</resources>
+<string name="dashboard_button_history">Cronologia</string>
+    <string name="pref_category_history">Cronologia</string>
+    <string name="pref_category_information">Informazioni</string>
+    </resources>
