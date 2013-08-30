@@ -28,6 +28,9 @@ public class PathBuilder {
 		File directory = new File("." + File.separator);
 		if (OSValidator.isUnix()) {
 			directory = new File(XDG.getCacheHome() + File.separator + "copyit");
+		} else if (OSValidator.isWindows()) {
+			directory = new File(System.getenv("APPDATA"), "copyit"
+					+ File.separator + "cache");
 		}
 
 		if (!directory.exists()) {
@@ -43,6 +46,9 @@ public class PathBuilder {
 			directory = new File(System.getenv("HOME")
 					+ "/.local/share/icons/hicolor/" + size + "x" + size
 					+ "/apps");
+		} else if (OSValidator.isWindows()) {
+			directory = new File(System.getenv("APPDATA"), "copyit"
+					+ File.separator + "icons");
 		}
 
 		if (!directory.exists()) {
