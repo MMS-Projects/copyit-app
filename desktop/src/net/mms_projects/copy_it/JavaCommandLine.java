@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.mms_projects.copy_it.app.CopyItDesktop;
+import net.mms_projects.utils.OSValidator;
 
 public class JavaCommandLine {
 
@@ -19,7 +20,16 @@ public class JavaCommandLine {
 	static public String generateJavaCommandLine() {
 		List<String> commandline = new ArrayList<String>();
 
-		commandline.add("java");
+		/*
+		 * For some reason Windows needs to open a console when it launches Java
+		 * so it needs to use a different Java binary to well not open a
+		 * console.
+		 */
+		if (OSValidator.isWindows()) {
+			commandline.add("javaw");
+		} else {
+			commandline.add("java");
+		}
 		/*
 		 * This adds some the command line arguments passed to the current JVM
 		 */
