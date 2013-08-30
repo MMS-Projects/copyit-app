@@ -27,13 +27,13 @@
     <!-- Activity titles -->
     <string name="title_activity_login">Anmelden</string>
     <string name="title_activity_welcome">Willkommen bei CopyIt</string>
-    <string name="title_activity_settings">Institutionen</string>
+    <string name="title_activity_settings">Einstellungen</string>
     <string name="title_activity_about">@string/pref_about</string>
     <string name="title_activity_update">Aktualisieren</string>
-    <string name="title_activity_debug">Kopiere es debug Fenster</string>
+    <string name="title_activity_debug">CopyIt Debug Fenster</string>
     <string name="title_activity_test">Tests DE</string>
     <string name="title_activity_logged_out">Abgemeldet</string>
-    <string name="title_activity_history">Geschichte</string>
+    <string name="title_activity_history">Verlauf</string>
     <!-- Other stuff -->
     <string name="text_content">Inhalt:</string>
     <string name="text_welcome_message">Danke für die Installation von CopyIt. So starten Sie CopyIt bitte anmelden.</string>
