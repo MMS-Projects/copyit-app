@@ -15,13 +15,13 @@
     <string name="button_login">\@string/dashboard_button_login</string>
     <!-- Preferenties -->
     <string name="pref_category_history">Geschichte</string>
-    <string name="pref_category_account">Benutzer</string>
+    <string name="pref_category_account">Benutzerkonto</string>
     <string name="pref_category_information">Informationen</string>
-    <string name="pref_history_tracking_state">Speichern Aktionen, um Ihre Geschichte</string>
-    <string name="pref_history_tracking_state_summary_on">Aktionen werden sparen</string>
-    <string name="pref_history_tracking_state_summary_off">Aktionen werden nicht verfolgt</string>
+    <string name="pref_history_tracking_state">Speichere Aktionen in deinem Verlauf</string>
+    <string name="pref_history_tracking_state_summary_on">Aktionen werden gespeichert</string>
+    <string name="pref_history_tracking_state_summary_off">Aktionen werden nicht gespeichert</string>
     <string name="pref_history_clear">Verlauf löschen</string>
-    <string name="pref_login">@string/dashboard_button_login</string>
+    <string name="pref_login">\@string/dashboard_button_login</string>
     <string name="pref_logout">Abmelden</string>
     <string name="pref_about">Über</string>
     <!-- Activity titles -->
