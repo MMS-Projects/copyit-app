@@ -3,6 +3,7 @@ package net.mms_projects.copy_it.ui.swt.forms;
 import net.mms_projects.copy_it.Activatable;
 import net.mms_projects.copy_it.Config;
 import net.mms_projects.copy_it.EnvironmentIntegration;
+import net.mms_projects.copy_it.EnvironmentIntegration.AutostartManager.AutoStartSetupException;
 import net.mms_projects.copy_it.EnvironmentIntegration.NotificationManager.NotificationUrgency;
 import net.mms_projects.copy_it.FunctionalityManager;
 import net.mms_projects.copy_it.LoginResponse;
@@ -24,6 +25,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
@@ -44,6 +46,7 @@ public class PreferencesDialog extends GeneralDialog implements
 	private Label lblDeviceIdHere;
 	private Button btnLogin;
 	private Button btnManualLogin;
+	private Button btnSetupAutoStart;
 
 	private Button btnEnablePolling;
 
@@ -163,6 +166,22 @@ public class PreferencesDialog extends GeneralDialog implements
 		fd_btnManualLogin.right = new FormAttachment(100, -10);
 		fd_btnManualLogin.top = new FormAttachment(lblDeviceIdHere, 6);
 		btnManualLogin.setLayoutData(fd_btnManualLogin);
+
+		this.btnSetupAutoStart = new Button(compositeAccount, SWT.CHECK);
+		/*
+		 * If there is a auto start manager available enable the 'Setup auto
+		 * start' button
+		 */
+		btnSetupAutoStart.setEnabled(this.environmentIntegration
+				.hasAutostartManager());
+		FormData fd_btnSetupAutoStart = new FormData();
+		fd_btnSetupAutoStart.bottom = new FormAttachment(btnLogin, 35,
+				SWT.BOTTOM);
+		fd_btnSetupAutoStart.right = new FormAttachment(btnLogin, 0, SWT.RIGHT);
+		fd_btnSetupAutoStart.top = new FormAttachment(btnLogin, 6);
+		fd_btnSetupAutoStart.left = new FormAttachment(lblAccountNameHere, 0,
+				SWT.LEFT);
+		btnSetupAutoStart.setLayoutData(fd_btnSetupAutoStart);
 		// Security tab
 		TabItem tbtmSecurity = new TabItem(tabFolder, SWT.NONE);
 		Composite compositeSecurity = new Composite(tabFolder, SWT.NONE);
@@ -218,6 +237,18 @@ public class PreferencesDialog extends GeneralDialog implements
 		this.lblDeviceIdHere.setText("Device id here...");
 		this.btnLogin.setText(Messages.getString("button_login"));
 		this.btnManualLogin.setText("Manual login ");
+		this.btnSetupAutoStart.setText(Messages
+				.getString("autostart.button.enable"));
+		this.btnSetupAutoStart.setEnabled(this.environmentIntegration
+				.hasAutostartManager());
+		if (this.environmentIntegration.hasAutostartManager()) {
+			try {
+				this.btnSetupAutoStart.setSelection(this.environmentIntegration
+						.getAutostartManager().isEnabled());
+			} catch (AutoStartSetupException e) {
+				e.printStackTrace();
+			}
+		}
 		// Security tab
 		tbtmSecurity.setText("Security");
 		tbtmSecurity.setControl(compositeSecurity);
@@ -249,6 +280,60 @@ public class PreferencesDialog extends GeneralDialog implements
 			@Override
 			public AbstractLoginDialog getLoginDialog() {
 				return new LoginDialog(shell);
+			}
+		});
+
+		/*
+		 * This listener calls the environment integration, asks for the auto
+		 * start manager and sets up the auto start functionality
+		 */
+		this.btnSetupAutoStart.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent event) {
+				MessageBox messageBox = new MessageBox(
+						PreferencesDialog.this.shell);
+
+				try {
+					if (!environmentIntegration.getAutostartManager()
+							.isEnabled()) {
+						/*
+						 * Setup the auto start the way it should in the current
+						 * environment
+						 */
+						environmentIntegration.getAutostartManager()
+								.enableAutostart();
+
+						/*
+						 * Tell the user the setup is done
+						 */
+						messageBox.setMessage(Messages
+								.getString("autostart.message.enabled"));
+						messageBox.open();
+					} else {
+						/*
+						 * Setup the auto start the way it should in the current
+						 * environment
+						 */
+						environmentIntegration.getAutostartManager()
+								.disableAutostart();
+
+						/*
+						 * Tell the user the setup is done
+						 */
+						messageBox.setMessage(Messages
+								.getString("autostart.message.disabled"));
+						messageBox.open();
+					}
+				} catch (AutoStartSetupException e) {
+					/*
+					 * Show the user a nice error dialog explaining the error
+					 */
+					messageBox.setMessage(Messages.getString(
+							"autostart.error.exception_thrown",
+							e.getLocalizedMessage()));
+					messageBox.open();
+				}
+				updateForm();
 			}
 		});
 		// Encryption enable checkbox
@@ -298,6 +383,18 @@ public class PreferencesDialog extends GeneralDialog implements
 		if (this.settings.get("device.id") != null) {
 			this.btnManualLogin.setText("Relogin (manual)");
 		}
+
+		this.btnSetupAutoStart.setEnabled(this.environmentIntegration
+				.hasAutostartManager());
+		if (this.environmentIntegration.hasAutostartManager()) {
+			try {
+				this.btnSetupAutoStart.setSelection(this.environmentIntegration
+						.getAutostartManager().isEnabled());
+			} catch (AutoStartSetupException e) {
+				e.printStackTrace();
+			}
+		}
+
 		btnEnablePolling.setSelection(functionality.isEnabled("polling"));
 		btnEnableQueue.setSelection(functionality.isEnabled("queue"));
 		btnEnableQueue.setEnabled(functionality.isEnabled("polling"));
