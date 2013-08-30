@@ -137,4 +137,8 @@ public final class StringUtils {
         return ellipsize(text, max, false);
     }
 
+    public static boolean containsIgnoreCase(String haystack, String needle) {
+        return haystack.toLowerCase().contains(needle.toLowerCase());
+    }
+
 }

@@ -72,4 +72,21 @@ public class PathBuilder {
 		return directory;
 	}
 
+	public static File getAutostartDirectory() {
+		File directory = new File("." + File.separator);
+		if (OSValidator.isUnix()) {
+			directory = new File(System.getenv("HOME") + "/.config/autostart");
+		} else if (OSValidator.isWindows()) {
+			directory = new File(
+					System.getenv("APPDATA")
+							+ "\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup");
+		}
+
+		if (!directory.exists()) {
+			directory.mkdir();
+		}
+
+		return directory;
+	}
+
 }

@@ -2,16 +2,14 @@ package net.mms_projects.copy_it.integration;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.management.ManagementFactory;
 import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.mms_projects.copy_it.EnvironmentIntegration;
+import net.mms_projects.copy_it.JavaCommandLine;
 import net.mms_projects.copy_it.Messages;
 import net.mms_projects.copy_it.PathBuilder;
-import net.mms_projects.copy_it.app.CopyItDesktop;
 import net.mms_projects.copy_it.integration.notifications.FreedesktopNotificationManager;
 
 import org.apache.commons.io.FileUtils;
@@ -29,6 +27,10 @@ public class FreeDesktopIntegration extends EnvironmentIntegration {
 		this.dbusConnection = dbusConnection;
 	}
 
+	/**
+	 * Sets up the FreeDesktop integration with FreeDesktop notifications and
+	 * FreeDesktop auto start support using desktop files.
+	 */
 	@Override
 	public void standaloneSetup() {
 		try {
@@ -41,8 +43,10 @@ public class FreeDesktopIntegration extends EnvironmentIntegration {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
-
-		List<String> content = this.generateDesktopContents();
+		/*
+		 * Sets the FreeDesktop autostart manager
+		 */
+		this.setAutostartManager(new FreeDesktopAutostartManager());
 
 		/*
 		 * Write the 16x16 icon the the icon directory
@@ -69,8 +73,23 @@ public class FreeDesktopIntegration extends EnvironmentIntegration {
 			e1.printStackTrace();
 		}
 
-		File file = new File(PathBuilder.getLauncherShortcutDirectory(),
-				"copyit.desktop");
+		/*
+		 * This writes a .desktop file to the directory where launcher .desktop
+		 * files should be.
+		 */
+		this.writeDesktopFile(PathBuilder.getLauncherShortcutDirectory());
+	}
+
+	/**
+	 * This method writes a .desktop for the app to the specified path
+	 * 
+	 * @param path
+	 *            The path the .desktop file should be created in
+	 */
+	private void writeDesktopFile(File path) {
+		List<String> content = this.generateDesktopContents();
+
+		File file = new File(path, "copyit.desktop");
 		try {
 			FileUtils.writeLines(file, content);
 		} catch (IOException e) {
@@ -80,6 +99,11 @@ public class FreeDesktopIntegration extends EnvironmentIntegration {
 		file.setExecutable(true);
 	}
 
+	/**
+	 * This methods returns a list of all lines in the .desktop file
+	 * 
+	 * @return List of all lines for the .desktop file
+	 */
 	private List<String> generateDesktopContents() {
 		List<String> content = new ArrayList<String>();
 		content.add("[Desktop Entry]");
@@ -87,64 +111,46 @@ public class FreeDesktopIntegration extends EnvironmentIntegration {
 		content.add("Type=Application");
 		content.add("Name=" + Messages.getString("app_name"));
 		content.add("Icon=copyit");
-		content.add("Exec=" + this.generateJavaCommandLine() + " %f");
+		content.add("Exec=" + JavaCommandLine.generateJavaCommandLine());
 		content.add("Terminal=false");
 		content.add("StartupNotify=true");
 		return content;
 	}
 
 	/**
-	 * This method generates a java command line that can be used to run the
-	 * application the way it was started in this runtime
-	 * 
-	 * @return A string with the Java command line
+	 * The FreeDesktop auto start manager that writes follows the FreeDesktop
+	 * specifications
 	 */
-	private String generateJavaCommandLine() {
-		List<String> commandline = new ArrayList<String>();
+	class FreeDesktopAutostartManager implements
+			EnvironmentIntegration.AutostartManager {
 
-		commandline.add("java");
-		/*
-		 * This adds some the command line arguments passed to the current JVM
-		 */
-		commandline.addAll(ManagementFactory.getRuntimeMXBean()
-				.getInputArguments());
-		/*
-		 * This adds the current class path
-		 */
-		commandline.add("-classpath \"" + getClasspath() + "\"");
-		/*
-		 * This adds the main class to the command line
-		 */
-		commandline.add(CopyItDesktop.class.getName());
-
-		/*
-		 * Converts the array of command line arguments to a long string with
-		 * all the command line arguments. Delimited by a string.
-		 */
-		String rawCommandline = "";
-		for (String part : commandline) {
-			rawCommandline += part + " ";
+		@Override
+		public boolean isEnabled() throws AutoStartSetupException {
+			File file = new File(PathBuilder.getAutostartDirectory(),
+					"copyit.desktop");
+			return file.exists();
 		}
 
-		return rawCommandline;
-	}
-
-	/**
-	 * This methods returns the class path used by the current runtime
-	 * 
-	 * @return Returns the class path used by the current runtime
-	 */
-	private String getClasspath() {
-		String classpath = "";
-		ClassLoader classLoader = ClassLoader.getSystemClassLoader();
-
-		URL[] urls = ((URLClassLoader) classLoader).getURLs();
-
-		for (URL url : urls) {
-			classpath += url.getFile();
-			classpath += System.getProperty("path.separator");
+		/**
+		 * This creates a .desktop file in the auto start directory to make it
+		 * auto start
+		 */
+		@Override
+		public void enableAutostart() {
+			/*
+			 * Write a .desktop file to the auto start directory
+			 */
+			FreeDesktopIntegration.this.writeDesktopFile(PathBuilder
+					.getAutostartDirectory());
 		}
-		return classpath;
+
+		@Override
+		public void disableAutostart() throws AutoStartSetupException {
+			File file = new File(PathBuilder.getAutostartDirectory(),
+					"copyit.desktop");
+			file.delete();
+		}
+
 	}
 
 }
