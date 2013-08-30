@@ -8,11 +8,11 @@
     <string name="dashboard_button_about">Über</string>
     <string name="dashboard_button_history">Geschichte</string>
     <!-- Menu -->
-    <string name="menu_settings">@string/dashboard_button_settings</string>
+    <string name="menu_settings">\@string/dashboard_button_settings</string>
     <string name="menu_feedback">Feedback</string>
     <string name="menu_history_clear">Entleeren</string>
     <!-- Buttons -->
-    <string name="button_login">@string/dashboard_button_login</string>
+    <string name="button_login">\@string/dashboard_button_login</string>
     <!-- Preferenties -->
     <string name="pref_category_history">Geschichte</string>
     <string name="pref_category_account">Benutzer</string>
