@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-<string name="dashboard_button_login">Einloggen</string>
+<string name="dashboard_button_login">Log ind</string>
     <string name="dashboard_button_settings">Indstillinger</string>
     <string name="dashboard_button_about">Om</string>
     <string name="dashboard_button_history">Historik</string>
