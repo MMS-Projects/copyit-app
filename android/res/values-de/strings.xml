@@ -23,7 +23,7 @@
     <string name="pref_history_clear">Verlauf löschen</string>
     <string name="pref_login">\@string/dashboard_button_login</string>
     <string name="pref_logout">Abmelden</string>
-    <string name="pref_about">Über</string>
+    <string name="pref_about">\@string/dashboard_button_about</string>
     <!-- Activity titles -->
     <string name="title_activity_login">Anmelden</string>
     <string name="title_activity_welcome">Willkommen bei CopyIt</string>
