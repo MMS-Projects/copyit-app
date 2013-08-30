@@ -12,51 +12,55 @@ public class PathBuilder {
 		if (OSValidator.isWindows()) {
 			directory = new File(System.getenv("APPDATA") + File.separator
 					+ "copyit");
-			if (!directory.exists()) {
-				directory.mkdir();
-			}
 		} else if (OSValidator.isUnix()) {
 			directory = new File(XDG.getConfigHome() + File.separator
 					+ "copyit");
-			if (!directory.exists()) {
-				directory.mkdir();
-			}
+		}
+
+		if (!directory.exists()) {
+			directory.mkdir();
 		}
 
 		return directory;
 	}
-	
+
 	public static File getCacheDirectory() {
 		File directory = new File("." + File.separator);
 		if (OSValidator.isUnix()) {
 			directory = new File(XDG.getCacheHome() + File.separator + "copyit");
-			if (!directory.exists()) {
-				directory.mkdir();
-			}
+		}
+
+		if (!directory.exists()) {
+			directory.mkdir();
 		}
 
 		return directory;
 	}
-	
+
 	public static File getIconDirectory(int size) {
 		File directory = new File("." + File.separator);
 		if (OSValidator.isUnix()) {
-			directory = new File(System.getenv("HOME") + "/.local/share/icons/hicolor/" + size + "x" + size + "/apps");
-			if (!directory.exists()) {
-				directory.mkdir();
-			}
+			directory = new File(System.getenv("HOME")
+					+ "/.local/share/icons/hicolor/" + size + "x" + size
+					+ "/apps");
+		}
+
+		if (!directory.exists()) {
+			directory.mkdir();
 		}
 
 		return directory;
 	}
-	
+
 	public static File getLauncherShortcutDirectory() {
 		File directory = new File("." + File.separator);
 		if (OSValidator.isUnix()) {
-			directory = new File(System.getenv("HOME") + "/.local/share/applications");
-			if (!directory.exists()) {
-				directory.mkdir();
-			}
+			directory = new File(System.getenv("HOME")
+					+ "/.local/share/applications");
+		}
+
+		if (!directory.exists()) {
+			directory.mkdir();
 		}
 
 		return directory;
