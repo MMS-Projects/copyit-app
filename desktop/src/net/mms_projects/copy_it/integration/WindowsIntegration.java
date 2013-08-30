@@ -1,19 +1,16 @@
 package net.mms_projects.copy_it.integration;
 
-import java.io.File;
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.InputStreamReader;
 
 import net.mms_projects.copy_it.Activatable;
 import net.mms_projects.copy_it.ClipboardManager;
 import net.mms_projects.copy_it.EnvironmentIntegration;
 import net.mms_projects.copy_it.FunctionalityManager;
 import net.mms_projects.copy_it.JavaCommandLine;
-import net.mms_projects.copy_it.PathBuilder;
 import net.mms_projects.copy_it.SyncManager;
-
-import org.apache.commons.io.FileUtils;
+import net.mms_projects.utils.StringUtils;
 
 /**
  * This integration provider adds Windows specific integrations.
@@ -38,23 +35,44 @@ public class WindowsIntegration extends EnvironmentIntegration {
 	class WindowsAutoStartManager implements
 			EnvironmentIntegration.AutostartManager {
 
+		static public final String CHECK_COMMAND = "reg query HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run /v %1$s";
+		static public final String ENABLE_COMMAND = "reg add HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run /v %1$s /t REG_SZ /d \"%2$s\"";
+		static public final String DISABLE_COMMAND = "reg delete HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run /v %1$s /f";
+
+		static public final String KEY_NAME = "copyit";
+
 		@Override
 		public boolean isEnabled() throws AutoStartSetupException {
-			File file = new File(PathBuilder.getAutostartDirectory(),
-					"copyit.bat");
-			return file.exists();
+			Process process = null;
+			try {
+				process = Runtime.getRuntime().exec(
+						String.format(CHECK_COMMAND, KEY_NAME));
+			} catch (IOException ioException) {
+				throw new AutoStartSetupException(ioException);
+			}
+
+			BufferedReader inputStream = new BufferedReader(
+					new InputStreamReader(process.getInputStream()));
+			String line = null;
+			try {
+				while ((line = inputStream.readLine()) != null) {
+					if (StringUtils.containsIgnoreCase(line, KEY_NAME)) {
+						return true;
+					}
+				}
+			} catch (IOException ioException) {
+				throw new AutoStartSetupException(ioException);
+			}
+
+			return false;
 		}
 
 		@Override
 		public void enableAutostart() throws AutoStartSetupException {
-			List<String> content = new ArrayList<String>();
-			content.add("@echo off");
-			content.add("start " + JavaCommandLine.generateJavaCommandLine());
-
-			File file = new File(PathBuilder.getAutostartDirectory(),
-					"copyit.bat");
 			try {
-				FileUtils.writeLines(file, content);
+				Runtime.getRuntime().exec(
+						String.format(ENABLE_COMMAND, KEY_NAME,
+								JavaCommandLine.generateJavaCommandLine()));
 			} catch (IOException e) {
 				throw new AutoStartSetupException(e);
 			}
@@ -62,9 +80,12 @@ public class WindowsIntegration extends EnvironmentIntegration {
 
 		@Override
 		public void disableAutostart() throws AutoStartSetupException {
-			File file = new File(PathBuilder.getAutostartDirectory(),
-					"copyit.bat");
-			file.delete();
+			try {
+				Runtime.getRuntime().exec(
+						String.format(DISABLE_COMMAND, KEY_NAME));
+			} catch (IOException e) {
+				throw new AutoStartSetupException(e);
+			}
 		}
 
 	}

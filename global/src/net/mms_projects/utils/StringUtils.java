@@ -39,4 +39,8 @@ public class StringUtils {
         return text.substring(0, end) + "...";
     }
 
+    public static boolean containsIgnoreCase(String haystack, String needle) {
+        return haystack.toLowerCase().contains(needle.toLowerCase());
+    }
+
 }
