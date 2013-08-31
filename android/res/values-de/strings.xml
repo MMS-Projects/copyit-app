@@ -40,20 +40,20 @@
     <string name="text_logging_in">Einloggen…</string>
     <string name="text_login_successful">Anmeldung erfolgreich!</string>
     <string name="text_logout_successful">Abmeldung erfolgreich!</string>
-    <string name="text_login_question">Wie es aussieht, bist nicht eingeloggt Möchten Sie sich anmelden?</string>
+    <string name="text_login_question">Es sieht so aus als wärst du nicht angemeldet. Möchtest du dich anmelden?</string>
     <string name="text_content_pushed">Schob den folgenden Inhalt: \'%1$s\'</string>
     <string name="text_content_pulled">Holte den folgenden Inhalt: \'%1$s\'</string>
     <string name="text_content_pulling">Ziehe Inhalt…</string>
     <string name="text_content_pushing">Schiebe Inhalt…</string>
     <string name="text_history_cleared">Dein Verlauf wurde gelöscht</string>
-    <string name="text_history_empty">Kein Verlauf wurde bis jetzt aufgenommen</string>
+    <string name="text_history_empty">Bisjetzt wurde kein Verlauf aufgenommen</string>
     <!-- Accessibility -->
-    <string name="accessibility_widget_button_app">Dieser Knopf öffnet Copy It</string>
-    <string name="accessibility_app_icon_big">Buck CopyIt logo</string>
+    <string name="accessibility_widget_button_app">Diese Taste startet CopyIt</string>
+    <string name="accessibility_app_icon_big">Großes CopyIt logo</string>
     <!-- Dialog -->
     <string name="dialog_title_error">Fehler</string>
     <string name="dialog_title_busy">Beschäftigt</string>
-    <string name="dialog_title_select_send_app">Wählen App zu teilen…</string>
+    <string name="dialog_title_select_send_app">Wähle die App zu der geteilt werden soll…</string>
     <string name="dialog_button_okay">Ok</string>
     <string name="dialog_button_yes">Ja</string>
     <string name="dialog_button_no">Nein</string>
