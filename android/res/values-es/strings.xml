@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-<string name="dashboard_button_login">Iniciar felación</string>
+<string name="dashboard_button_login">Iniciar sesión</string>
     <string name="dashboard_button_settings">Ajustes</string>
     <string name="dashboard_button_about">Acerca de</string>
     <string name="dashboard_button_history">Historial</string>
@@ -8,9 +8,9 @@
     <string name="pref_category_history">Historial</string>
     <string name="pref_category_account">Cuenta de usuario</string>
     <string name="pref_category_information">Información</string>
-    <string name="pref_history_tracking_state">Guardar acciones en tu historial</string>
-    <string name="pref_history_tracking_state_summary_on">Se guardarán las acciones</string>
-    <string name="pref_history_tracking_state_summary_off">No se guardarán las acciones</string>
+    <string name="pref_history_tracking_state">Guardar cambios en tu historial</string>
+    <string name="pref_history_tracking_state_summary_on">Los cambios se han guardado</string>
+    <string name="pref_history_tracking_state_summary_off">Los cambios no se han guardado</string>
     <string name="pref_history_clear">Borrar historial</string>
     <string name="pref_logout">Cerrar sesión</string>
     <string name="title_activity_login">Iniciar sesión</string>
@@ -19,7 +19,7 @@
     <string name="title_activity_logged_out">Se ha cerrado la sesión</string>
     <string name="title_activity_history">Historial</string>
     <string name="text_history_cleared">Se ha borrado el historial</string>
-    <string name="dialog_title_busy">Llevando al huerto</string>
+    <string name="dialog_title_busy">Ocupado</string>
     <string name="dialog_button_yes">Sí</string>
     <string name="dialog_button_no">No</string>
     <string name="error_general">"Se ha producido un error:  %1$s"</string>
@@ -32,7 +32,7 @@
     <string name="title_activity_update">Actualizar</string>
     <string name="title_activity_debug">Pantalla de depuración de Copy It</string>
     <string name="dialog_title_error">Se ha producido un error</string>
-    <string name="dialog_button_okay">Pelotudo</string>
+    <string name="dialog_button_okay">Ok</string>
     <string name="update_button_download">Descargar actualización</string>
     <string name="term_copyit" translatable="false">¡Copiarlo!</string>
     <string name="term_pasteit" translatable="false">¡Pegarlo!</string>
@@ -45,19 +45,19 @@
     <string name="pref_login">Iniciar sesión</string>
     <string name="title_activity_about">Acerca de</string>
     <string name="title_activity_test">Pruebas EN</string>
-    <string name="text_content">Contento:</string>
-    <string name="text_welcome_message">Gracias por instalar CopyIt. Para empezar a usar CopyIt, inicia felación.</string>
+    <string name="text_content">Contenido:</string>
+    <string name="text_welcome_message">Gracias por instalar CopyIt. Para empezar a usar CopyIt, inicia sesión.</string>
     <string name="text_logging_in">Iniciando sesión…</string>
     <string name="text_login_successful">¡Inicio de sesión correcto!</string>
     <string name="text_logout_successful">¡Cierre de sesión correcto!</string>
     <string name="text_login_question">Parece que no has iniciado sesión. ¿Quieres iniciar sesión?</string>
     <string name="accessibility_widget_button_app">Este botón abre Copy It</string>
-    <string name="accessibility_app_icon_big">Gran logotipo de CopyIt</string>
+    <string name="accessibility_app_icon_big">Gran logo de CopyIt</string>
     <string name="dialog_title_select_send_app">Elige una app con la que compartir…</string>
     <string name="error_device_setup_failed">No se puede configurar el dispositivo: %1$s</string>
-    <string name="widget_title_copyit">"CopyIt -  ¡Copiarlo!"</string>
-    <string name="widget_title_pasteit">CopyIt - ¡Pegarlo!</string>
-    <string name="widget_title_copyit_pasteit">CopyIt - ¡Copiarlo/Pegarlo!</string>
+    <string name="widget_title_copyit">"CopyIt -  ¡Cópialo!"</string>
+    <string name="widget_title_pasteit">CopyIt - ¡Pégalo!</string>
+    <string name="widget_title_copyit_pasteit">CopyIt - ¡Cópialo/Pégalo!</string>
     <string name="debug_label_server_baseurl">Base de URL del servidor</string>
     <string name="debug_label_jenkins_baseurl">Base de URL de Jenkins</string>
     <string name="debug_label_device_id">ID de dispositivo</string>
@@ -65,15 +65,15 @@
     <string name="debug_no_value">Ninguno</string>
     <string name="debug_unknown">Desconocido</string>
     <string name="debug_available">Soltero</string>
-    <string name="debug_not_available">Indispuesta</string>
-    <string name="menu_feedback">Helados</string>
+    <string name="debug_not_available">No disponible</string>
+    <string name="menu_feedback">Comentarios</string>
     <string name="text_content_pushed">"Se ha subido el siguiente contenido:  \'%1$s\'"</string>
     <string name="text_content_pulled">"Se ha descargado el siguiente contenido:  \'%1$s\'"</string>
     <string name="text_history_empty">No hay nada en el historial</string>
     <string name="text_content_pulling">Descargando contenido…</string>
     <string name="text_content_pushing">Subiendo contenido…</string>
     <string name="widget_title_general">CopyIt - General</string>
-    <string name="debug_label_build_number">Número de depilación</string>
+    <string name="debug_label_build_number">Número de creación</string>
     <string name="debug_label_screen_density">"Densidad de  pantalla"</string>
     <string name="default_baseurl" translatable="false">http://copyit.dev.mms-projects.net</string>
     <string name="jenkins_joburl" translatable="false">http://jenkins.marlinc.nl/job/CopyIt-App-Beta</string>
@@ -81,10 +81,10 @@
     <string name="default_apk" translatable="false">copyit.apk</string>
     <string name="ga_trackingId" translatable="false">UA-37152392-6</string>
 
-    <string name="history_cab_put_in_clipboard">Meter en el culo</string>
+    <string name="history_cab_put_in_clipboard">Copiar al portapapeles</string>
     <string name="history_content_set">Meter \'%1$s\' en el culo</string>
 
-    <string name="login_button_browser_login">Entrar por donde te dé la gana</string>
-    <string name="login_dialog_text_automatic_service_login">¿Te gustaría meterte \'%1$s\' por el culo?</string>
+    <string name="login_button_browser_login">Iniciar sesión usando la web</string>
+    <string name="login_dialog_text_automatic_service_login">¿Te gustaría iniciar sesión automaticamente usando \'%1$s\'?</string>
 
 </resources>
