@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Terms -->
+    <string name="term_copyit" translatable="false">Copy It!</string>
+    <string name="term_pasteit" translatable="false">Paste It!</string>
+
+    <!-- Dashboard icons -->
+    <string name="dashboard_button_copyit" translatable="false">Copy It!</string>
+    <string name="dashboard_button_pasteit" translatable="false">Paste It!</string>
+
+    <!-- Buttons -->
+    <string name="button_copyit" translatable="false">Copy It!</string>
+    <string name="button_pasteit" translatable="false">Paste It!</string>
+
+</resources>

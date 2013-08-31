@@ -1,26 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Terms -->
-    <string name="term_copyit" translatable="false">Copy It!</string>
-    <string name="term_pasteit" translatable="false">Paste It!</string>
-
     <!-- Dashboard icons -->
-    <string name="dashboard_button_copyit" translatable="false">@string/term_copyit</string>
-    <string name="dashboard_button_pasteit" translatable="false">@string/term_pasteit</string>
     <string name="dashboard_button_sendtoapp">Share it</string>
     <string name="dashboard_button_login">Login</string>
     <string name="dashboard_button_settings">Settings</string>
     <string name="dashboard_button_about">About</string>
     <string name="dashboard_button_history">History</string>
     <!-- Menu -->
-    <string name="menu_settings">@string/dashboard_button_settings</string>
+    <string name="menu_settings">Settings</string>
     <string name="menu_feedback">Feedback</string>
     <string name="menu_history_clear">Clear</string>
     <!-- Buttons -->
-    <string name="button_copyit" translatable="false">@string/dashboard_button_copyit</string>
-    <string name="button_pasteit" translatable="false">@string/dashboard_button_pasteit</string>
-    <string name="button_login">@string/dashboard_button_login</string>
+    <string name="button_login">Login</string>
     <!-- Preferences -->
     <string name="pref_category_history">History</string>
     <string name="pref_category_account">User account</string>
@@ -29,14 +21,14 @@
     <string name="pref_history_tracking_state_summary_on">Actions are saved</string>
     <string name="pref_history_tracking_state_summary_off">Actions are not saved</string>
     <string name="pref_history_clear">Clear history</string>
-    <string name="pref_login">@string/dashboard_button_login</string>
+    <string name="pref_login">Login</string>
     <string name="pref_logout">Logout</string>
-    <string name="pref_about">@string/dashboard_button_about</string>
+    <string name="pref_about">About</string>
     <!-- Activity titles -->
     <string name="title_activity_login">Login</string>
     <string name="title_activity_welcome">Welcome to CopyIt</string>
     <string name="title_activity_settings">Settings</string>
-    <string name="title_activity_about">@string/pref_about</string>
+    <string name="title_activity_about">About</string>
     <string name="title_activity_update">Update</string>
     <string name="title_activity_debug">Copy It debug screen</string>
     <string name="title_activity_test">Tests EN</string>

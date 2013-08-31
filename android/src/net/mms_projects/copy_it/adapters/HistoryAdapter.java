@@ -58,8 +58,8 @@ public class HistoryAdapter extends BaseAdapter {
 		InlineSwitch<Change, Integer> imageSwitch = new InlineSwitch<HistoryItem.Change, Integer>();
 		imageSwitch.addClause(Change.PULLED, R.drawable.dashboard_icon_pull);
 		imageSwitch.addClause(Change.PUSHED, R.drawable.dashboard_icon_push);
-		imageSwitch.addClause(Change.SEND_TO_APP, R.drawable.dashboard_icon_send_to_app);
-		imageSwitch.addClause(Change.RECEIVED_FROM_APP, R.drawable.dashboard_icon_send_to_app);
+		imageSwitch.addClause(Change.SEND_TO_APP, R.drawable.history_icon_shareit_up);
+		imageSwitch.addClause(Change.RECEIVED_FROM_APP, R.drawable.history_icon_shareit_down);
 		image.setImageResource(imageSwitch.runSwitch(item.change));
 
 		date.setText(item.date.toString());
