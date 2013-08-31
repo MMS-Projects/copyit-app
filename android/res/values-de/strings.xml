@@ -37,7 +37,7 @@
     <!-- Other stuff -->
     <string name="text_content">Inhalt:</string>
     <string name="text_welcome_message">Danke für das Installieren von CopyIt. Zum starten von CopyIt bitte anmelden.</string>
-    <string name="text_logging_in">Am Login…</string>
+    <string name="text_logging_in">Einloggen…</string>
     <string name="text_login_successful">Anmeldung erfolgreich!</string>
     <string name="text_logout_successful">Abmeldung erfolgreich!</string>
     <string name="text_login_question">Wie es aussieht, bist nicht eingeloggt Möchten Sie sich anmelden?</string>
