@@ -6,7 +6,7 @@
     <string name="dashboard_button_login">Anmelden</string>
     <string name="dashboard_button_settings"/>
     <string name="dashboard_button_about">Über</string>
-    <string name="dashboard_button_history">Geschichte</string>
+    <string name="dashboard_button_history">Verlauf</string>
     <!-- Menu -->
     <string name="menu_settings">Einstellungen</string>
     <string name="menu_feedback">Feedback</string>
@@ -14,7 +14,7 @@
     <!-- Buttons -->
     <string name="button_login">Anmelden</string>
     <!-- Preferenties -->
-    <string name="pref_category_history">Geschichte</string>
+    <string name="pref_category_history">Verlauf</string>
     <string name="pref_category_account">Benutzerkonto</string>
     <string name="pref_category_information">Informationen</string>
     <string name="pref_history_tracking_state">Speichere Aktionen in deinem Verlauf</string>
@@ -42,11 +42,11 @@
     <string name="text_logout_successful">Abmeldung erfolgreich!</string>
     <string name="text_login_question">Es sieht so aus als wärst du nicht angemeldet. Möchtest du dich anmelden?</string>
     <string name="text_content_pushed">Schob den folgenden Inhalt: \'%1$s\'</string>
-    <string name="text_content_pulled">Ziehte den folgenden Inhalt: \'%1$s\'</string>
+    <string name="text_content_pulled">Zog den folgenden Inhalt: \'%1$s\'</string>
     <string name="text_content_pulling">Ziehe Inhalt…</string>
     <string name="text_content_pushing">Schiebe Inhalt…</string>
-    <string name="text_history_cleared">Dein Verlauf wurde gelöscht</string>
-    <string name="text_history_empty">Bisjetzt wurde kein Verlauf aufgenommen</string>
+    <string name="text_history_cleared">Der Verlauf wurde gelöscht</string>
+    <string name="text_history_empty">Es wurde noch kein Verlauf aufgenommen</string>
     <!-- Accessibility -->
     <string name="accessibility_widget_button_app">Diese Taste startet CopyIt</string>
     <string name="accessibility_app_icon_big">Großes CopyIt logo</string>
