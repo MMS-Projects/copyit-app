@@ -26,7 +26,7 @@
     <string name="pref_about">Über</string>
     <!-- Activity titles -->
     <string name="title_activity_login">Anmelden</string>
-    <string name="title_activity_welcome">Willkommen bei CopyIt</string>
+    <string name="title_activity_welcome">Willkommen zu CopyIt</string>
     <string name="title_activity_settings">Einstellungen</string>
     <string name="title_activity_about">Über</string>
     <string name="title_activity_update">Aktualisieren</string>
@@ -48,7 +48,7 @@
     <string name="text_history_cleared">Der Verlauf wurde gelöscht</string>
     <string name="text_history_empty">Es wurde noch kein Verlauf aufgenommen</string>
     <!-- Accessibility -->
-    <string name="accessibility_widget_button_app">Diese Taste startet CopyIt</string>
+    <string name="accessibility_widget_button_app">Dieser Knopf startet CopyIt</string>
     <string name="accessibility_app_icon_big">Großes CopyIt logo</string>
     <!-- Dialog -->
     <string name="dialog_title_error">Fehler</string>
@@ -98,7 +98,7 @@
 
     <string name="dashboard_button_copyit" translatable="false">\@string/term_copyit</string>
     <string name="dashboard_button_pasteit" translatable="false">\@string/term_pasteit</string>
-    <string name="history_cab_put_in_clipboard">Leg in Notizblock</string>
+    <string name="history_cab_put_in_clipboard">In die Zwischenablage</string>
     <string name="login_button_browser_login">Melde dich über die Website an</string>
     <string name="login_dialog_text_automatic_service_login">Möchtest du dich automatisch einloggen mit %1$s?</string>
 
