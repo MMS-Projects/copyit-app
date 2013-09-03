@@ -7,7 +7,6 @@
     <string name="dashboard_button_history">gesjiedenis</string>
     <string name="menu_settings">insjtellinge</string>
     <string name="menu_feedback">Feedback</string>
-    <string name="menu_history_clear"/>
     <string name="menu_history_clear">weggooie</string>
     <string name="button_login">Inlogge</string>
     <string name="login_dialog_text_automatic_service_login">Wilse automatisch kinne inlogge?</string>
