@@ -7,52 +7,52 @@
     <string name="dashboard_button_about">Über</string>
     <string name="dashboard_button_history">Geschichte</string>
     <!-- Menu -->
-    <string name="menu_settings">@string/dashboard_button_settings</string>
-    <string name="menu_feedback">Rückmeldung</string>
+    <string name="menu_settings">\@string/dashboard_button_settings</string>
+    <string name="menu_feedback">Feedback</string>
     <string name="menu_history_clear">Entleeren</string>
     <!-- Buttons -->
-    <string name="button_login">@string/dashboard_button_login</string>
+    <string name="button_login">\@string/dashboard_button_login</string>
     <!-- Preferenties -->
     <string name="pref_category_history">Geschichte</string>
-    <string name="pref_category_account">Benutzer</string>
+    <string name="pref_category_account">Benutzerkonto</string>
     <string name="pref_category_information">Informationen</string>
-    <string name="pref_history_tracking_state">Speichern Aktionen, um Ihre Geschichte</string>
-    <string name="pref_history_tracking_state_summary_on">Aktionen werden sparen</string>
-    <string name="pref_history_tracking_state_summary_off">Aktionen werden nicht verfolgt</string>
+    <string name="pref_history_tracking_state">Speichere Aktionen in deinem Verlauf</string>
+    <string name="pref_history_tracking_state_summary_on">Aktionen werden gespeichert</string>
+    <string name="pref_history_tracking_state_summary_off">Aktionen werden nicht gespeichert</string>
     <string name="pref_history_clear">Verlauf löschen</string>
-    <string name="pref_login">@string/dashboard_button_login</string>
+    <string name="pref_login">\@string/dashboard_button_login</string>
     <string name="pref_logout">Abmelden</string>
-    <string name="pref_about">Über</string>
+    <string name="pref_about">\@string/dashboard_button_about</string>
     <!-- Activity titles -->
     <string name="title_activity_login">Anmelden</string>
     <string name="title_activity_welcome">Willkommen bei CopyIt</string>
-    <string name="title_activity_settings">Institutionen</string>
+    <string name="title_activity_settings">Einstellungen</string>
     <string name="title_activity_about">@string/pref_about</string>
     <string name="title_activity_update">Aktualisieren</string>
-    <string name="title_activity_debug">Kopiere es debug Fenster</string>
+    <string name="title_activity_debug">CopyIt Debug Fenster</string>
     <string name="title_activity_test">Tests DE</string>
     <string name="title_activity_logged_out">Abgemeldet</string>
-    <string name="title_activity_history">Geschichte</string>
+    <string name="title_activity_history">Verlauf</string>
     <!-- Other stuff -->
     <string name="text_content">Inhalt:</string>
-    <string name="text_welcome_message">Danke für die Installation von CopyIt. So starten Sie CopyIt bitte anmelden.</string>
-    <string name="text_logging_in">Am Login…</string>
+    <string name="text_welcome_message">Danke für das Installieren von CopyIt. Zum starten von CopyIt bitte anmelden.</string>
+    <string name="text_logging_in">Einloggen…</string>
     <string name="text_login_successful">Anmeldung erfolgreich!</string>
     <string name="text_logout_successful">Abmeldung erfolgreich!</string>
-    <string name="text_login_question">Wie es aussieht, bist nicht eingeloggt Möchten Sie sich anmelden?</string>
+    <string name="text_login_question">Es sieht so aus als wärst du nicht angemeldet. Möchtest du dich anmelden?</string>
     <string name="text_content_pushed">Schob den folgenden Inhalt: \'%1$s\'</string>
     <string name="text_content_pulled">Holte den folgenden Inhalt: \'%1$s\'</string>
-    <string name="text_content_pulling">Ziehe Inhalt&amp;#8230;</string>
-    <string name="text_content_pushing">Schiebe Inhalt&amp;#8230;</string>
+    <string name="text_content_pulling">Ziehe Inhalt…</string>
+    <string name="text_content_pushing">Schiebe Inhalt…</string>
     <string name="text_history_cleared">Dein Verlauf wurde gelöscht</string>
-    <string name="text_history_empty">Kein Verlauf wurde bis jetzt aufgenommen</string>
+    <string name="text_history_empty">Bisjetzt wurde kein Verlauf aufgenommen</string>
     <!-- Accessibility -->
-    <string name="accessibility_widget_button_app">Dieser Knopf öffnet Copy It</string>
-    <string name="accessibility_app_icon_big">Big CopyIt logo</string>
+    <string name="accessibility_widget_button_app">Diese Taste startet CopyIt</string>
+    <string name="accessibility_app_icon_big">Großes CopyIt logo</string>
     <!-- Dialog -->
     <string name="dialog_title_error">Fehler</string>
     <string name="dialog_title_busy">Beschäftigt</string>
-    <string name="dialog_title_select_send_app">Wählen App zu teilen…</string>
+    <string name="dialog_title_select_send_app">Wähle die App zu der geteilt werden soll…</string>
     <string name="dialog_button_okay">Ok</string>
     <string name="dialog_button_yes">Ja</string>
     <string name="dialog_button_no">Nein</string>
@@ -63,7 +63,7 @@
     <string name="widget_title_general">CopyIt - Allgemeine</string>
     <string name="widget_title_copyit">CopyIt - Copy It!</string>
     <string name="widget_title_pasteit">CopyIt - Paste It!</string>
-    <string name="widget_title_copyit_pasteit">CopyIt - Copy/Paste It!</string>
+    <string name="widget_title_copyit_pasteit">CopyIt - Kopieren/Aufbauen das!</string>
     <!-- About information -->
     <string name="about_version">Version: %1$s</string>
     <string name="about_copyright">Erstellt von MMS-Projects</string>
@@ -97,4 +97,6 @@
 
     <string name="dashboard_button_copyit" translatable="false">\@string/term_copyit</string>
     <string name="dashboard_button_pasteit" translatable="false">\@string/term_pasteit</string>
+    <string name="history_cab_put_in_clipboard">Stelle am geflimmer pappe</string>
+    <string name="login_button_browser_login">Melde dich über die Website an</string>
     </resources>

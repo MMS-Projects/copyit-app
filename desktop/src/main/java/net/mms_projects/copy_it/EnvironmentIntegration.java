@@ -8,6 +8,7 @@ import net.mms_projects.copy_it.ui.UserInterfaceImplementation;
 abstract public class EnvironmentIntegration {
 
 	private NotificationManager notificationManager;
+	private AutostartManager autostartManager;
 	private List<EnvironmentIntegration> integrationProviders = new ArrayList<EnvironmentIntegration>();
 	private UserInterfaceImplementation userInterfaceImplementation;
 	private EnvironmentIntegration parentIntegration;
@@ -44,6 +45,44 @@ abstract public class EnvironmentIntegration {
 			return this.getParentIntegration().getNotificationManager();
 		} else {
 			return this.notificationManager;
+		}
+	}
+
+	/**
+	 * This method sets the auto start manager that should be used for this
+	 * environment. If there's a parent integration provider it will set the
+	 * autostart manager on that.
+	 * 
+	 * @param autostartManager
+	 *            The auto start manager to use
+	 */
+	public void setAutostartManager(AutostartManager autostartManager) {
+		if (this.hasParentIntegration()) {
+			this.getParentIntegration().setAutostartManager(autostartManager);
+		} else {
+			this.autostartManager = autostartManager;
+		}
+	}
+
+	/**
+	 * This method checks if there is a auto start manager available
+	 * 
+	 * @return true if there is a auto start manager available
+	 */
+	public boolean hasAutostartManager() {
+		return this.getAutostartManager() != null;
+	}
+
+	/**
+	 * This method returns the auto start manager used in this environment
+	 * 
+	 * @return The actual auto start manager
+	 */
+	public AutostartManager getAutostartManager() {
+		if (this.hasParentIntegration()) {
+			return this.getParentIntegration().getAutostartManager();
+		} else {
+			return this.autostartManager;
 		}
 	}
 
@@ -146,6 +185,47 @@ abstract public class EnvironmentIntegration {
 		public void notify(int id, NotificationUrgency urgency, String icon,
 				String summary, String body);
 
+	}
+
+	/**
+	 * A interface that describes a basic auto start manager
+	 */
+	static public interface AutostartManager {
+		public static class AutoStartSetupException extends Exception {
+
+			private static final long serialVersionUID = -2363782709319312249L;
+
+			public AutoStartSetupException() {
+				super();
+			}
+
+			public AutoStartSetupException(String message) {
+				super(message);
+			}
+
+			public AutoStartSetupException(String message, Throwable cause) {
+				super(message, cause);
+			}
+
+			public AutoStartSetupException(Throwable cause) {
+				super(cause);
+			}
+
+		}
+
+		/**
+		 * This method enabled the auto start the way it should in the
+		 * environment it belongs to.
+		 * 
+		 * @throws AutoStartSetupException
+		 *             This gets thrown when something bad happens while setting
+		 *             up the auto start
+		 */
+		public void enableAutostart() throws AutoStartSetupException;
+
+		public boolean isEnabled() throws AutoStartSetupException;
+
+		public void disableAutostart() throws AutoStartSetupException;
 	}
 
 }
