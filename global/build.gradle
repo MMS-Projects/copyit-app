@@ -5,6 +5,9 @@
 apply plugin: 'java'
 apply plugin: 'checkstyle'
 
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
+
 checkstyle {
     ignoreFailures = true
 }
