@@ -3,6 +3,7 @@
         }
 
 apply plugin: 'java'
+apply plugin: 'application'
 
 dependencies {
     compile project(':global')
@@ -14,4 +15,10 @@ dependencies {
 
     compile files('libs/swt-4.2.1-gtk-linux-x86_64.jar')
     compile files('libs/linux/libdbus-java-2.7.jar')
+
+    runtime 'org.slf4j:slf4j-jdk14:1.7.5'
+    runtime files('libs/linux/hexdump-0.2.jar')
+    runtime files('libs/linux/unix-0.5.jar')
 }
+
+mainClassName = "net.mms_projects.copy_it.app.CopyItDesktop"
