@@ -25,7 +25,7 @@ before_script:
     # Make sure the emulator has started before running tests
     - ./scripts/android-wait-for-simulator
 script:
- - ant linux windows macosx
+ - gradle assemble
  - gradle check
 jdk:
  - oraclejdk7
