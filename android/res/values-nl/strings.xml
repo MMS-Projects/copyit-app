@@ -8,7 +8,7 @@
     <string name="dashboard_button_about">Over</string>
     <string name="dashboard_button_history">Geschiedenis</string>
     <!-- Menu -->
-    <string name="menu_settings">@string/dashboard_button_settings</string>
+    <string name="menu_settings">\@string/dashboard_button_settings</string>
     <string name="menu_feedback">Feedback</string>
     <string name="menu_history_clear">Wissen</string>
     <!-- Buttons -->

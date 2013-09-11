@@ -30,8 +30,8 @@
     <string name="button_copyit" translatable="false">¡Copiarlo!</string>
     <string name="button_pasteit" translatable="false">¡Pegarlo!</string>
     <string name="title_activity_update">Actualizar</string>
-    <string name="title_activity_debug">Pantalla de depuración de Copy It</string>
-    <string name="dialog_title_error">Se ha producido un error</string>
+    <string name="title_activity_debug">Copiar a la pantalla de depuración</string>
+    <string name="dialog_title_error">Error</string>
     <string name="dialog_button_okay">Ok</string>
     <string name="update_button_download">Descargar actualización</string>
     <string name="term_copyit" translatable="false">¡Copiarlo!</string>
