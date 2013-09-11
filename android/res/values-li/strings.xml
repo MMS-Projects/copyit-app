@@ -68,4 +68,9 @@
     <string name="history_content_set">Zit dien clipboard content nao \'%1$s\'</string>
 
     <string name="login_button_browser_login">Login mit osse website</string>
+    <string name="pref_login">Inlogge</string>
+    <string name="pref_about">Euver</string>
+    <string name="title_activity_test">Tests LIM</string>
+    <string name="text_content_pushed">Volgende content wird verstuurd: \'%1$s\'</string>
+    <string name="text_content_pulled">Volgende content wird gedownload: \'%1$s\'</string>
     </resources>
