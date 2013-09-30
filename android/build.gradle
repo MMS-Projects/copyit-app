@@ -11,7 +11,7 @@ buildscript {
             mavenCentral()
         } 
         dependencies {
-            classpath 'com.android.tools.build:gradle:0.4+'
+            classpath 'com.android.tools.build:gradle:0.5+'
         }
     }
     apply plugin: 'android'
@@ -41,7 +41,7 @@ android {
         targetSdkVersion 17
     }
 
-    sourceSets {
+    /*sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
             java.srcDirs = ['src']
@@ -56,7 +56,7 @@ android {
       assets.srcDirs = ['tests/assets']
       resources.srcDirs = ['tests/src']
     }
-    }
+    }*/
     applicationVariants.all {
         variant -> variant.javaCompile.classpath += configurations.provided
     }
