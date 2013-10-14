@@ -28,7 +28,7 @@
     <string name="title_activity_login">Inloggen</string>
     <string name="title_activity_welcome">Welkom bij CopyIt</string>
     <string name="title_activity_settings">Instellingen</string>
-    <string name="title_activity_about">@string/pref_about</string>
+    <string name="title_activity_about">Over</string>
     <string name="title_activity_update">Bijwerken</string>
     <string name="title_activity_debug">CopyIt foutopsporings scherm</string>
     <string name="title_activity_test">Tests NL</string>
