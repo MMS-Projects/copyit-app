@@ -97,7 +97,7 @@
     <string name="debug_prefs_enable_shortcut">Snelkoppeling aanzetten</string>
 
     <string name="gcm_debug_activity_title">Google Cloud Messaging foutopsporing</string>
-    <string name="gcm_debug_play_services_availability_label">Aanwezigheid Play Services</string>
+    <string name="gcm_debug_play_services_availability_label">Play Services aanwezig</string>
     <string name="gcm_debug_sender_id_label">Zender ID</string>
     <string name="gcm_debug_registration_id_label">Registratie ID</string>
     <string name="gcm_debug_toast_registered">Geregistreerd op Google Cloud Messaging</string>
