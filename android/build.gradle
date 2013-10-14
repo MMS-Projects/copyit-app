@@ -7,15 +7,15 @@ configurations {
 }
 
 buildscript {
-       repositories {
-            mavenCentral()
-        } 
-        dependencies {
-            classpath 'com.android.tools.build:gradle:0.5+'
-        }
+    repositories {
+        mavenCentral()
     }
-    apply plugin: 'android'
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.6+'
+    }
+}
 
+apply plugin: 'android'
 
 dependencies {
     compile project(':global')
