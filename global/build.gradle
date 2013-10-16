@@ -1,0 +1,25 @@
+       repositories {
+            mavenCentral()
+        }
+
+apply plugin: 'java'
+apply plugin: 'checkstyle'
+
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
+
+checkstyle {
+    ignoreFailures = true
+}
+
+dependencies {
+    compile 'org.slf4j:slf4j-api:1+'
+    compile 'com.google.code.gson:gson:2.2.2'
+    compile 'org.apache.commons:commons-io:1.3.2'
+    compile 'org.apache.httpcomponents:httpclient:4+'
+
+    // OAuth library
+    compile 'org.scribe:scribe:1.3.5'
+
+    testCompile 'junit:junit:4.10' 
+}

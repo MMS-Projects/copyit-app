@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+
+    <string name="debug_not_available">Non disponible</string>
+    <string name="dashboard_button_sendtoapp">Partager</string>
+    <string name="dashboard_button_settings">Réglages</string>
+    <string name="dashboard_button_history">Historique</string>
+    <string name="menu_feedback">Réaction</string>
+    <string name="menu_history_clear">Effacer</string>
+    <string name="pref_category_information">Information</string>
+    <string name="pref_logout">Déconnexion</string>
+    <string name="title_activity_update">Mettre à jour</string>
+<string name="debug_available">Disponible</string>
+    <string name="debug_unknown">Inconnu</string>
+    <string name="debug_no_value">Aucun</string>
+    <string name="debug_label_screen_density">Densité de l\'écran</string>
+    <string name="debug_label_device_password">Mot de passe de périphérique</string>
+    <string name="debug_label_device_id">Id du périphérique</string>
+    <string name="debug_label_jenkins_baseurl">Jenkins baseurl</string>
+    <string name="update_button_download">Télécharger mise à jour</string>
+    <string name="update_available_text">Il y a une nouvelle version disponible de Copy It. Pour télécharger la dernière version cliquer sur le bouton de téléchargement. Sélectionner le package avec le nom suivant:</string>
+    <string name="error_general">Une erreur s\'est produite: %1$s</string>
+    <string name="about_version">Version: %1$s</string>
+    <string name="about_copyright">Réalisé par MMS-Projets</string>
+    <string name="dashboard_button_login">Connexion</string>
+    <string name="dashboard_button_about">A propos de</string>
+    <string name="pref_category_history">Historique</string>
+    <string name="pref_category_account">Compte d\'utilisateur</string>
+    <string name="pref_history_tracking_state_summary_on">Les actions sont enregistrées</string>
+    <string name="pref_history_tracking_state_summary_off">Les actions ne sont pas enregistrées</string>
+    <string name="pref_history_clear">Effacer l\'historique</string>
+    <string name="title_activity_login">Connexion</string>
+    <string name="title_activity_welcome">Bienvenue chez CopyIt</string>
+    <string name="title_activity_settings">Réglages</string>
+    <string name="app_name" translatable="false">CopyIt</string>
+    <string name="title_activity_debug">CopyIt Ecran déboguer</string>
+    <string name="title_activity_logged_out">Déconnexion</string>
+    <string name="title_activity_history">Historique</string>
+    <string name="text_content">Contenut:</string>
+    <string name="text_welcome_message">Merci d\'avoir installé CopyIt. Pour commencer à utiliser CopyIt identifiez-vous.</string>
+    <string name="text_logging_in">Connexion…</string>
+    <string name="text_login_successful">Connexion réussie!</string>
+    <string name="text_logout_successful">Déconnexion réussie!</string>
+    <string name="text_login_question">On dirait que vous n\'êtes pas connecté. Voulez-vous vous connecter?</string>
+    <string name="text_content_pushed">Poussé le contenu suivant: \'%1$s\'</string>
+    <string name="text_content_pulled">Tiré le contenu suivant: \'%1$s\'</string>
+    <string name="text_content_pulling">Tirer le contenu&amp;#8230;</string>
+    <string name="text_content_pushing">Pousser le contenu&amp;#8230;</string>
+    <string name="text_history_cleared">L\'historique a été effacée</string>
+    <string name="text_history_empty">Aucune historique n\'a encore été enregistré</string>
+    <string name="accessibility_widget_button_app">Ce bouton ouvre Copy It</string>
+    <string name="accessibility_app_icon_big">Grand logo CopyIt</string>
+    <string name="dialog_title_error">Erreur</string>
+    <string name="dialog_title_busy">Occupé</string>
+    <string name="dialog_button_okay">Ok</string>
+    <string name="dialog_button_yes">Oui</string>
+    <string name="dialog_button_no">Non</string>
+    <string name="error_device_setup_failed">Impossible de configurer le périphérique: %1$s</string>
+    <string name="widget_title_general">CopyIt - Général</string>
+    <string name="debug_label_server_baseurl">Serveur baseurl</string>
+    <string name="pref_history_tracking_state">Enregistrer les actions vers votre historique</string>
+    <string name="title_activity_test">Tests FR</string>
+    <string name="dialog_title_select_send_app">Sélectionner app pour partager avec…</string>
+    <string name="widget_title_copyit">CopyIt - Copiez-le!</string>
+    <string name="widget_title_pasteit">CopyIt - Collez-le!</string>
+    <string name="widget_title_copyit_pasteit">CopyIt - Copiez/Collez-le!</string>
+    <string name="debug_label_build_number">Numéro de build</string>
+    <string name="pref_about">\@string/dashboard_button_about</string>
+    <string name="button_copyit" translatable="false">Copiez-le!</string>
+    <string name="button_pasteit" translatable="false">Collez-le!</string>
+    <string name="menu_settings">menu_réglages</string>
+    <string name="button_login">buoton_S\'identifier</string>
+    <string name="pref_login">\@string/dashboard_button_login</string>
+    <string name="title_activity_about">\@string/pref_about</string>
+    </resources>
