@@ -17,4 +17,6 @@
     <bool name="ga_autoActivityTracking" translatable="false">true</bool>
     <bool name="ga_reportUncaughtExceptions" translatable="false">true</bool>
 
+    <string name="gcm_sender_id">693449632515</string>
+
 </resources>

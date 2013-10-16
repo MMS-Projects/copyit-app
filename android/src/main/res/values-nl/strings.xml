@@ -84,6 +84,7 @@
     
 <string name="text_content_pulling">Inhoud aan het binnenhalen…</string>
     <string name="text_content_pushing">Inhoud aan het sturen…</string>
+    <string name="text_content_pushing">Inhoud aan het sturen...</string>
     <string name="history_cab_put_in_clipboard">Stop in klembord</string>
     <string name="history_content_set">klembord ingesteld op \'%1$s\'</string>
 
@@ -91,4 +92,17 @@
     <string name="login_button_browser_login">Login met onze website</string>
     <string name="login_dialog_text_automatic_service_login">Wil je automatisch inloggen met %1$s?</string>
     
+    <string name="debug_button_copy">Kopieer</string>
+    <string name="gcm_debug_menu_item_title">GCM foutopsporing</string>
+    <string name="debug_prefs_enable_shortcut">Snelkoppeling aanzetten</string>
+
+    <string name="gcm_debug_activity_title">Google Cloud Messaging foutopsporing</string>
+    <string name="gcm_debug_play_services_availability_label">Aanwezigheid Play Services</string>
+    <string name="gcm_debug_sender_id_label">Zender ID</string>
+    <string name="gcm_debug_registration_id_label">Registratie ID</string>
+    <string name="gcm_debug_toast_registered">Geregistreerd op Google Cloud Messaging</string>
+    <string name="gcm_debug_toast_register_errored">Kon niet registreren bij Google Cloud Messaging</string>
+
+<string name="activity_main_menu_item_debug">Foutopsporing</string>
+
     </resources>

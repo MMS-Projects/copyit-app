@@ -1,14 +1,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
+        android:id="@+id/action_feedback"
+        android:showAsAction="ifRoom"
+        android:title="@string/menu_feedback"/>
+
+    <item
         android:id="@+id/action_settings"
-        android:orderInCategory="100"
         android:showAsAction="never"
         android:title="@string/menu_settings"/>
+
     <item
-        android:id="@+id/action_feedback"
-        android:orderInCategory="100"
-        android:showAsAction="ifRoom"
-        android:title="@string/menu_feedback"/>		
+        android:id="@+id/action_open_debug"
+        android:showAsAction="never"
+        android:visible="false"
+        android:title="@string/activity_main_menu_item_debug"/>
 
 </menu>

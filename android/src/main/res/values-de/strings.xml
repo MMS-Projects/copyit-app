@@ -90,4 +90,17 @@
 
 <string name="history_content_set">Setze den Inhalt der Zwischenablage zu \'%1$s\'</string>
 
+    <string name="activity_main_menu_item_debug">Debug</string>
+
+    <string name="debug_button_copy">Kopieren</string>
+    <string name="gcm_debug_menu_item_title">GCM Debugging</string>
+    <string name="gcm_debug_activity_title">Google Cloud Messaging Debugging</string>
+    <string name="gcm_debug_play_services_availability_label">Play Service Verfügbarkeit</string>
+    <string name="gcm_debug_sender_id_label">Absender ID</string>
+    <string name="gcm_debug_registration_id_label">Registrierung ID</string>
+    <string name="gcm_debug_toast_registered">Registriert mit Google Cloud Messaging</string>
+    <string name="gcm_debug_toast_register_errored">Konnte nicht mit Google Cloud Messaging registrieren</string>
+
+<string name="debug_prefs_enable_shortcut">Aktiviere Verknüpfung</string>
+
     </resources>

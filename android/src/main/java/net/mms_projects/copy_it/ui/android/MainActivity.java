@@ -144,6 +144,13 @@ public class MainActivity extends SherlockFragmentActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getSupportMenuInflater();
 		inflater.inflate(R.menu.main, menu);
+
+        SharedPreferences preferences = PreferenceManager
+                .getDefaultSharedPreferences(this);
+
+        MenuItem debugShortcutItem = (MenuItem) menu.findItem(R.id.action_open_debug);
+        debugShortcutItem.setVisible(preferences.getBoolean("debug.shortcut.enabled", false));
+
 		return true;
 	}
 
@@ -155,6 +162,10 @@ public class MainActivity extends SherlockFragmentActivity {
 			intent = new Intent(this, SettingsActivity.class);
 			startActivity(intent);
 			return true;
+        case R.id.action_open_debug:
+                intent = new Intent(this, DebugActivity.class);
+                startActivity(intent);
+                return true;
 		case R.id.action_feedback:
 			intent = new Intent(this, DebugActivity.class);
 			intent.setAction(Intent.ACTION_SEND);

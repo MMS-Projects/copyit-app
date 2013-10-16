@@ -16,6 +16,18 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="com.android.vending.BILLING" />
+s
+    <permission android:name="net.mms_projects.copy_it.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+    <uses-permission android:name="net.mms_projects.copy_it.permission.C2D_MESSAGE" />
+
+    <!-- App receives GCM messages. -->
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <!-- GCM connects to Google Services. -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- GCM requires a Google account. -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <!-- Keeps the processor from sleeping when a message is received. -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:name="net.mms_projects.copy_it.app.AndroidApplication"
@@ -209,6 +221,37 @@
 
         <activity android:name="com.facebook.LoginActivity" >
         </activity>
+
+
+        <activity
+            android:name=".activities.debugging.GcmActivity"
+            android:label="@string/gcm_debug_activity_title"
+            android:parentActivityName="net.mms_projects.copy_it.ui.android.DebugActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="net.mms_projects.copyit.ui.android.DebugActivity" />
+        </activity>
+
+        <receiver
+            android:name=".android.gcm.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="net.mms_projects.copy_it" />
+            </intent-filter>
+        </receiver>
+        <service android:name=".android.gcm.GcmIntentService" />
+
+        <!-- Debugging specific -->
+        <activity
+            android:name="net.mms_projects.copy_it.activities.debugging.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName="net.mms_projects.copy_it.ui.android.DebugActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="net.mms_projects.copy_it.ui.android.DebugActivity" />
+        </activity>
+
     </application>
 
 </manifest>

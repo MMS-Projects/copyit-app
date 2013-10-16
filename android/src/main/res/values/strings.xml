@@ -90,4 +90,32 @@
     <string name="login_button_browser_login">Login using our website</string>
     <string name="login_dialog_text_automatic_service_login">Would you like to automatically login using %1$s?</string>
 
+    <!-- Main activity -->
+    <!-- Used in the main activity menu as label to open the debug screen -->
+    <string name="activity_main_menu_item_debug">Debug</string>
+
+    <!-- General debugging stuff -->
+    <!-- Used to copy some debug information to the clipboard -->
+    <string name="debug_button_copy">Copy</string>
+    <!-- Used in the debug preference screen to enable a shortcut to the debug screen -->
+    <string name="debug_prefs_enable_shortcut">Enable shortcut</string>
+    <!-- Used in almost all of the debugging activities. Its just a label to show that the particular activity shows the status of a piece of the app -->
+    <string name="debug_screen_status_label">Status:</string>
+
+    <!-- Google Cloud Messaging related stuff -->
+    <!-- Used in the debug activity to open the GCM debugging activity. GCM is a term so that should not be translated -->
+    <string name="gcm_debug_menu_item_title">GCM debugging</string>
+    <!-- Used as the GCM debugging activity title. Google Cloud Messaging itself should not be translated -->
+    <string name="gcm_debug_activity_title">Google Cloud Messaging debugging</string>
+    <!-- Used in the GCM debugging activity to show if the Play Services are available -->
+    <string name="gcm_debug_play_services_availability_label">Play Services availability</string>
+    <!-- Used in the GCM debugging activity to show the sender id -->
+    <string name="gcm_debug_sender_id_label">Sender ID</string>
+    <!-- Used in the GCM debugging activity to show the registration id -->
+    <string name="gcm_debug_registration_id_label">Registration ID</string>
+    <!-- Used in a the GCM debugging activity toast to show that the app is registered to GCM -->
+    <string name="gcm_debug_toast_registered">Registered with Google Cloud Messaging</string>
+    <!-- Used in a the GCM debugging activity toast to show that the app could not register to GCM -->
+    <string name="gcm_debug_toast_register_errored">Could not register with Google Cloud Messaging</string>
+
 </resources>

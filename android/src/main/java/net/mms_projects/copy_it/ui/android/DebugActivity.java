@@ -1,12 +1,5 @@
 package net.mms_projects.copy_it.ui.android;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.UUID;
-
-import net.mms_projects.copy_it.R;
-import net.mms_projects.copy_it.app.CopyItAndroid;
-import net.mms_projects.utils.InlineSwitch;
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -25,6 +18,15 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.google.analytics.tracking.android.EasyTracker;
+
+import net.mms_projects.copy_it.R;
+import net.mms_projects.copy_it.activities.debugging.*;
+import net.mms_projects.copy_it.app.CopyItAndroid;
+import net.mms_projects.utils.InlineSwitch;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.UUID;
 
 @SuppressLint("InlinedApi")
 public class DebugActivity extends SherlockActivity {
@@ -124,6 +126,14 @@ public class DebugActivity extends SherlockActivity {
 			intent = new Intent(this, TestActivity.class);
 			this.startActivity(intent);
 			return true;
+        case R.id.action_open_activity_gcm:
+            intent = new Intent(this, GcmActivity.class);
+            this.startActivity(intent);
+            return true;
+            case R.id.action_open_settings:
+                intent = new Intent(this, net.mms_projects.copy_it.activities.debugging.SettingsActivity.class);
+                this.startActivity(intent);
+                return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
