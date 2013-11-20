@@ -96,8 +96,8 @@
     <string name="default_apk" translatable="false">copyit.apk</string>
     <string name="ga_trackingId" translatable="false">UA-37152392-6</string>
 
-    <string name="dashboard_button_copyit" translatable="false">\@string/term_copyit</string>
-    <string name="dashboard_button_pasteit" translatable="false">\@string/term_pasteit</string>
+    <string name="dashboard_button_copyit" translatable="false">@string/term_copyit</string>
+    <string name="dashboard_button_pasteit" translatable="false">@string/term_pasteit</string>
     <string name="history_cab_put_in_clipboard">In die Zwischenablage</string>
     <string name="login_button_browser_login">Melde dich über die Website an</string>
     <string name="login_dialog_text_automatic_service_login">Möchtest du dich automatisch einloggen mit %1$s?</string>

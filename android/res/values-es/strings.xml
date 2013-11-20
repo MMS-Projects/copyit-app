@@ -27,19 +27,13 @@
     <string name="about_copyright">Desarrollado por MMS-Projects</string>
     <string name="update_available_text">"Hay una nueva versión de Copy It disponible. Para descargar la última versión haz clic el botón de descarga.  Elige el paquete con el siguiente nombre:"</string>
     <string name="pref_about">Acerca de</string>
-    <string name="button_copyit" translatable="false">¡Copiarlo!</string>
-    <string name="button_pasteit" translatable="false">¡Pegarlo!</string>
     <string name="title_activity_update">Actualizar</string>
     <string name="title_activity_debug">Copiar a la pantalla de depuración</string>
     <string name="dialog_title_error">Error</string>
     <string name="dialog_button_okay">Ok</string>
     <string name="update_button_download">Descargar actualización</string>
-    <string name="term_copyit" translatable="false">¡Copiarlo!</string>
-    <string name="term_pasteit" translatable="false">¡Pegarlo!</string>
 
     <string name="dashboard_button_sendtoapp">Compartirlo</string>
-    <string name="dashboard_button_copyit" translatable="false">Copiarlo</string>
-    <string name="dashboard_button_pasteit" translatable="false">Pegarlo</string>
     <string name="menu_settings">Ajustes</string>
     <string name="button_login">Iniciar sesión</string>
     <string name="pref_login">Iniciar sesión</string>
@@ -75,11 +69,6 @@
     <string name="widget_title_general">CopyIt - General</string>
     <string name="debug_label_build_number">Número de creación</string>
     <string name="debug_label_screen_density">"Densidad de  pantalla"</string>
-    <string name="default_baseurl" translatable="false">http://copyit.dev.mms-projects.net</string>
-    <string name="jenkins_joburl" translatable="false">http://jenkins.marlinc.nl/job/CopyIt-App-Beta</string>
-    <string name="app_name" translatable="false">CopyIt</string>
-    <string name="default_apk" translatable="false">copyit.apk</string>
-    <string name="ga_trackingId" translatable="false">UA-37152392-6</string>
 
     <string name="history_cab_put_in_clipboard">Copiar al portapapeles</string>
     <string name="history_content_set">Meter \'%1$s\' en el culo</string>

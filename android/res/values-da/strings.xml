@@ -45,13 +45,11 @@
     <string name="term_copyit" translatable="false">Kopier det!</string>
     <string name="term_pasteit" translatable="false">Indsæt det!</string>
 
-    <string name="dashboard_button_copyit" translatable="false">\@string/term_copyit</string>
-    <string name="dashboard_button_pasteit" translatable="false">\@string/term_pasteit</string>
     <string name="dashboard_button_sendtoapp">Del det</string>
-    <string name="menu_settings">\@string/dashboard_button_settings</string>
-    <string name="button_login">\@string/dashboard_button_login</string>
-    <string name="pref_login">\@string/dashboard_button_login</string>
-    <string name="title_activity_about">\@string/pref_about</string>
+    <string name="menu_settings">@string/dashboard_button_settings</string>
+    <string name="button_login">@string/dashboard_button_login</string>
+    <string name="pref_login">@string/dashboard_button_login</string>
+    <string name="title_activity_about">@string/pref_about</string>
     <string name="text_content">Indhold:</string>
     <string name="text_welcome_message">Tak fordi du installerede CopyIt. For at bruge CopyIt skal du logge ind.</string>
     <string name="text_logging_in">Logger ind…</string>

@@ -8,7 +8,7 @@
     <string name="dashboard_button_about">Over</string>
     <string name="dashboard_button_history">Geschiedenis</string>
     <!-- Menu -->
-    <string name="menu_settings">\@string/dashboard_button_settings</string>
+    <string name="menu_settings">@string/dashboard_button_settings</string>
     <string name="menu_feedback">Feedback</string>
     <string name="menu_history_clear">Wissen</string>
     <!-- Buttons -->
@@ -23,7 +23,7 @@
     <string name="pref_history_clear">Wis geschiedenis</string>
     <string name="pref_login">@string/dashboard_button_login</string>
     <string name="pref_logout">Uitloggen</string>
-    <string name="pref_about">\@string/dashboard_button_about</string>
+    <string name="pref_about">@string/dashboard_button_about</string>
     <!-- Activity titles -->
     <string name="title_activity_login">Inloggen</string>
     <string name="title_activity_welcome">Welkom bij CopyIt</string>
@@ -43,8 +43,6 @@
     <string name="text_login_question">U bent niet ingelogt. Wilt u inloggen?</string>
     <string name="text_content_pushed">Volgende inhoud word verstuurd: \'%1$s\'</string>
     <string name="text_content_pulled">Volgende inhoud is ontvangen: \'%1$s\'</string>
-    <string name="text_content_pulling"/>
-    <string name="text_content_pushing"/>
     <string name="text_history_cleared">Geschiedenis is geleegd</string>
     <string name="text_history_empty">Er is nog geen geschiedenis opgeslagen</string>
     <!-- Accessibility -->
