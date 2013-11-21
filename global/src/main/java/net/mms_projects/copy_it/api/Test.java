@@ -1,7 +1,6 @@
 package net.mms_projects.copy_it.api;
 
 import org.scribe.builder.ServiceBuilder;
-import org.scribe.builder.api.GoogleApi;
 import org.scribe.model.OAuthRequest;
 import org.scribe.model.Response;
 import org.scribe.model.Token;
@@ -69,7 +68,7 @@ public class Test
         System.out.println(response.getBody());
 
         System.out.println();
-        System.out.println("Thats it man! Go and build something awesome with Scribe! :)");
+        System.out.println("That's it man! Go and build something awesome with Scribe! :)");
 
     }
 }
