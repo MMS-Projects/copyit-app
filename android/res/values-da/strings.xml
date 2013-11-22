@@ -29,8 +29,6 @@
     <string name="update_available_text">Der er en ny version af CopyIT. For at hente den nyeste version, klik på download knappen. Vælg pakken med det følgende navn:</string>
     <string name="pref_about">Om</string>
     <string name="menu_feedback">Ris og Ros</string>
-    <string name="button_copyit" translatable="false">Kopier det!</string>
-    <string name="button_pasteit" translatable="false">Indsæt det!</string>
     <string name="title_activity_update">Opdater</string>
     <string name="title_activity_debug">Copy It fejlfindingsside</string>
     <string name="text_content_pulling">Henter indhold&amp;#8230;</string>
@@ -42,8 +40,6 @@
     <string name="text_content_pulled">Hentede følgende indhold: \'%1$s\'</string>
     <string name="text_logout_successful">Du er nu logget af!</string>
     <string name="text_login_question">Det ser ud som om du ikke er logget ind. Vil du logge ind?</string>
-    <string name="term_copyit" translatable="false">Kopier det!</string>
-    <string name="term_pasteit" translatable="false">Indsæt det!</string>
 
     <string name="dashboard_button_sendtoapp">Del det</string>
     <string name="menu_settings">@string/dashboard_button_settings</string>
@@ -72,11 +68,6 @@
     <string name="debug_unknown">Ukendt</string>
     <string name="debug_available">Tilgængelig</string>
     <string name="debug_not_available">Ikke tilgængelig</string>
-    <string name="default_baseurl" translatable="false">http://copyit.dev.mms-projects.net</string>
-    <string name="jenkins_joburl" translatable="false">http://jenkins.marlinc.nl/job/CopyIt-App-Beta</string>
-    <string name="app_name" translatable="false">CopyIt</string>
-    <string name="default_apk" translatable="false">copyit.apk</string>
-    <string name="ga_trackingId" translatable="false">UA-37152392-6</string>
 
     <string name="title_activity_test">Tests</string>
     </resources>
