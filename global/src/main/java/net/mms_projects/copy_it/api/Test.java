@@ -1,5 +1,8 @@
 package net.mms_projects.copy_it.api;
 
+import net.mms_projects.copy_it.sdk.api.exceptions.ApiException;
+import net.mms_projects.copy_it.sdk.api.exceptions.http.success.NoContentException;
+import net.mms_projects.copy_it.sdk.api.v1.Clipboard;
 import org.scribe.builder.ServiceBuilder;
 import org.scribe.model.OAuthRequest;
 import org.scribe.model.Response;
@@ -53,19 +56,41 @@ public class Test
         System.out.println("(if your curious it looks like this: " + accessToken + " )");
         System.out.println();
 
-        // Now let's go and ask for a protected resource!
-        System.out.println("Now we're going to access a protected resource...");
-        OAuthRequest request = new OAuthRequest(Verb.POST, PROTECTED_RESOURCE_URL);
-        request.addBodyParameter("content", "hoi");
-        request.addBodyParameter("content_type", "text/plain");
-        request.addBodyParameter("data", "hoi");
-        service.signRequest(accessToken, request);
-        request.addHeader("GData-Version", "3.0");
-        Response response = request.send();
-        System.out.println("Got it! Lets see what we found...");
-        System.out.println();
-        System.out.println(response.getCode());
-        System.out.println(response.getBody());
+        Clipboard clipboard = new Clipboard(accessToken, service, "http://api.copyit.mmsdev.org/1/clipboard/");
+
+        // Show the updated clipboard content
+        Clipboard.Responses.Get responseGet = null;
+        try {
+            responseGet = clipboard.get();
+
+            System.out.println(responseGet.getContent());
+            System.out.println(responseGet.getLastUpdated());
+        } catch (ApiException e) {
+            e.printStackTrace();
+        } catch (NoContentException e) {
+            System.out.println("Damn! No content is available on the server yet.");
+        }
+
+        // Update the clipboard content
+        Clipboard.Responses.Update responseSet = null;
+        try {
+            responseSet = clipboard.update("Blabla", "text/plain");
+        } catch (ApiException e) {
+            e.printStackTrace();
+        }
+        System.out.println(responseSet);
+
+        // Show the updated clipboard content
+        try {
+            responseGet = clipboard.get();
+
+            System.out.println(responseGet.getContent());
+            System.out.println(responseGet.getLastUpdated());
+        } catch (ApiException e) {
+            e.printStackTrace();
+        } catch (NoContentException e) {
+            System.out.println("Damn! No content is available on the server yet.");
+        }
 
         System.out.println();
         System.out.println("That's it man! Go and build something awesome with Scribe! :)");
