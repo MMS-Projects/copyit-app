@@ -34,6 +34,7 @@ import net.mms_projects.copy_it.api.ServerApi;
 import net.mms_projects.copy_it.api.endpoints.ClipboardContentEndpoint;
 import net.mms_projects.copy_it.clipboard_services.AwtService;
 import net.mms_projects.copy_it.functionality.SyncClipboardBinding;
+import net.mms_projects.copy_it.functionality.SyncNotificationBindings;
 import net.mms_projects.copy_it.integration.DefaultLinuxIntegration;
 import net.mms_projects.copy_it.integration.SwtIntegration;
 import net.mms_projects.copy_it.integration.UnityIntegration;
@@ -385,11 +386,18 @@ public class CopyItDesktop extends CopyIt {
 		environmentIntegration.setup();
 
 		SyncClipboardBinding syncClipboardBinding = new SyncClipboardBinding(
-				environmentIntegration, syncManager, clipboardManager);
+				syncManager, clipboardManager);
 		syncManager.addListener(syncClipboardBinding);
 		clipboardManager.addListener(syncClipboardBinding);
 		functionalityManager.addFunctionality("sync-clipboard-binding",
 				syncClipboardBinding);
+
+		SyncNotificationBindings syncNotificationBinding = new SyncNotificationBindings(
+				environmentIntegration, syncManager, clipboardManager);
+		syncManager.addListener(syncNotificationBinding);
+		clipboardManager.addListener(syncNotificationBinding);
+		functionalityManager.addFunctionality("sync-notifications-binding",
+				syncNotificationBinding);
 
 		QueueFunctionality queueFunctionality = new QueueFunctionality(
 				uiImplementation);
