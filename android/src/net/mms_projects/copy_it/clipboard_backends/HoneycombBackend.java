@@ -1,6 +1,7 @@
 package net.mms_projects.copy_it.clipboard_backends;
 
 import android.annotation.TargetApi;
+import android.content.ClipData;
 import android.content.Context;
 import android.os.Build;
 import net.mms_projects.copy_it.R;
@@ -17,7 +18,11 @@ public class HoneycombBackend extends AbstractAndroidClipboardBackend {
 		android.content.ClipboardManager clipboard = (android.content.ClipboardManager) this.context.getSystemService(Context.CLIPBOARD_SERVICE);
 		android.content.ClipData clip = clipboard.getPrimaryClip();
 		if ((clip != null) && (clip.getItemCount() != 0)) {
-			return clip.getItemAt(0).getText().toString();
+            ClipData.Item item = clip.getItemAt(0);
+            if ((item == null) || (item.getText() == null)) {
+                return null;
+            }
+			return item.getText().toString();
 		}
 		return null;
 	}
