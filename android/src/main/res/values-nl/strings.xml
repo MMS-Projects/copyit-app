@@ -12,7 +12,7 @@
     <string name="menu_feedback">Feedback</string>
     <string name="menu_history_clear">Wissen</string>
     <!-- Buttons -->
-    <string name="button_login">@string/dashboard_button_login</string>
+    <string name="button_login">Inloggen</string>
     <!-- Preferenties -->
     <string name="pref_category_history">Geschiedenis</string>
     <string name="pref_category_account">Gebruikersaccount</string>
@@ -21,9 +21,9 @@
     <string name="pref_history_tracking_state_summary_on">Acties worden opgeslagen</string>
     <string name="pref_history_tracking_state_summary_off">Acties worden niet opgeslagen</string>
     <string name="pref_history_clear">Wis geschiedenis</string>
-    <string name="pref_login">@string/dashboard_button_login</string>
+    <string name="pref_login">Inloggen</string>
     <string name="pref_logout">Uitloggen</string>
-    <string name="pref_about">\@string/dashboard_button_about</string>
+    <string name="pref_about">Over</string>
     <!-- Activity titles -->
     <string name="title_activity_login">Inloggen</string>
     <string name="title_activity_welcome">Welkom bij CopyIt</string>
@@ -83,7 +83,7 @@
     <!-- App settings -->
     
 <string name="text_content_pulling">Inhoud aan het binnenhalen…</string>
-    <string name="text_content_pushing">Inhoud aan het sturen...</string>
+    <string name="text_content_pushing">Inhoud aan het sturen…</string>
     <string name="history_cab_put_in_clipboard">Stop in klembord</string>
     <string name="history_content_set">klembord ingesteld op \'%1$s\'</string>
 
@@ -96,7 +96,7 @@
     <string name="debug_prefs_enable_shortcut">Snelkoppeling aanzetten</string>
 
     <string name="gcm_debug_activity_title">Google Cloud Messaging foutopsporing</string>
-    <string name="gcm_debug_play_services_availability_label">Aanwezigheid Play Services</string>
+    <string name="gcm_debug_play_services_availability_label">Play Services aanwezig</string>
     <string name="gcm_debug_sender_id_label">Zender ID</string>
     <string name="gcm_debug_registration_id_label">Registratie ID</string>
     <string name="gcm_debug_toast_registered">Geregistreerd op Google Cloud Messaging</string>
