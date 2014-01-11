@@ -2,12 +2,11 @@ package net.mms_projects.copy_it.api;
 
 import net.mms_projects.copy_it.sdk.api.exceptions.ApiException;
 import net.mms_projects.copy_it.sdk.api.exceptions.http.success.NoContentException;
+import net.mms_projects.copy_it.sdk.api.v1.Android;
 import net.mms_projects.copy_it.sdk.api.v1.Clipboard;
+
 import org.scribe.builder.ServiceBuilder;
-import org.scribe.model.OAuthRequest;
-import org.scribe.model.Response;
 import org.scribe.model.Token;
-import org.scribe.model.Verb;
 import org.scribe.model.Verifier;
 import org.scribe.oauth.OAuthService;
 
@@ -92,8 +91,17 @@ public class Test
             System.out.println("Damn! No content is available on the server yet.");
         }
 
+        Android android = new Android(accessToken, service, "http://api.copyit.mmsdev.org/1/android/");
+        try {
+            String id = "--";
+
+            android.gcmRegister(id);
+            android.gcmUnregister(id);
+        } catch (ApiException e) {
+            e.printStackTrace();
+        }
+
         System.out.println();
         System.out.println("That's it man! Go and build something awesome with Scribe! :)");
-
     }
 }
