@@ -42,9 +42,15 @@ public class DebugActivity extends SherlockActivity {
 		setContentView(R.layout.activity_debug);
 
 		Map<String, String> info = new LinkedHashMap<String, String>();
-		info.put(getString(R.string.debug_label_server_baseurl),
-				preferences.getString("server.baseurl", this.getResources()
-						.getString(R.string.default_baseurl)));
+        if (!preferences.getBoolean("api.use_dev_server", false)) {
+            info.put(getString(R.string.debug_label_server_baseurl),
+                    preferences.getString("server.baseurl", this.getResources()
+                            .getString(R.string.default_baseurl)));
+        } else {
+            info.put(getString(R.string.debug_label_server_baseurl),
+                    this.getResources()
+                            .getString(R.string.copyit_server));
+        }
 		info.put(getString(R.string.debug_label_jenkins_baseurl), this
 				.getResources().getString(R.string.jenkins_joburl));
 		info.put(getString(R.string.debug_label_device_id), this.getResources()

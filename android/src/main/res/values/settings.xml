@@ -17,6 +17,10 @@
     <bool name="ga_autoActivityTracking" translatable="false">true</bool>
     <bool name="ga_reportUncaughtExceptions" translatable="false">true</bool>
 
-    <string name="gcm_sender_id">693449632515</string>
+    <string name="copyit_server">http://api.copyit.mmsdev.org</string>
+    <string name="copyit_oauth_key">401a131e03357df2a563fba48f98749448ed63d37e007f7353608cf81fa70a2d</string>
+    <string name="copyit_oauth_secret">ba3f5945ba6cfb18ca4869cef2c3daf9d4230e37629f3087b281be6ec8fda2bd</string>
+
+    <string name="gcm_sender_id">977935585822</string>
 
 </resources>
