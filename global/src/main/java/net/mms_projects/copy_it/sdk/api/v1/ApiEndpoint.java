@@ -14,11 +14,14 @@ import org.scribe.model.Response;
 import org.scribe.model.Token;
 import org.scribe.oauth.OAuthService;
 
-abstract public class ApiEndpoint {
+abstract public class ApiEndpoint<ParsedResponse> {
 
     protected Token accessToken;
     protected OAuthService service;
     protected String endpointUrl;
+
+    public ApiEndpoint() {
+    }
 
     public ApiEndpoint(Token accessToken, OAuthService service, String endpointUrl) {
         this.setAccessToken(accessToken);
@@ -96,6 +99,8 @@ abstract public class ApiEndpoint {
 
         return null;
     }
+
+    abstract public ParsedResponse handleServerResponse(Response response) throws ApiException, HttpException;
 
     //<editor-fold desc="Getter and setter methods">
     public Token getAccessToken() {

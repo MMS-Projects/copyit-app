@@ -2,6 +2,7 @@ package net.mms_projects.copy_it.sdk.api.v1;
 
 import net.mms_projects.copy_it.sdk.api.exceptions.ApiException;
 import net.mms_projects.copy_it.sdk.api.exceptions.http.HttpException;
+import net.mms_projects.copy_it.sdk.api.exceptions.http.success.NoContentException;
 
 import org.scribe.model.OAuthRequest;
 import org.scribe.model.Response;
@@ -9,64 +10,104 @@ import org.scribe.model.Token;
 import org.scribe.model.Verb;
 import org.scribe.oauth.OAuthService;
 
-public class Android extends ApiEndpoint {
+public class Android {
+
+    private GcmRegister gcmRegisterEndpoint;
+    private GcmUnregister gcmUnregisterEndpoint;
 
     //<editor-fold desc="Constructor">
 
     public Android(Token accessToken, OAuthService service, String endpointUrl) {
-        super(accessToken, service, endpointUrl);
+        this.gcmRegisterEndpoint = new GcmRegister(accessToken, service, endpointUrl);
+        this.gcmUnregisterEndpoint = new GcmUnregister(accessToken, service, endpointUrl);
     }
 
     //</editor-fold>
 
-    /**
-     * Registers the GCM token with the CopyIt server
-     *
-     * @return An {@link net.mms_projects.copy_it.sdk.api.v1.Android.Responses.Register} containing the server response
-     * @throws ApiException This gets thrown if something bad happened. The cause will be given.
-     */
-    public Responses.Register gcmRegister(String gcmToken) throws ApiException {
-        // Create a request
-        OAuthRequest request = new OAuthRequest(Verb.POST, this.getEndpointUrl() + "register");
-        // Add the required parameters
-        request.addBodyParameter("gcm_token", gcmToken);
-        // Sign the request
-        this.signRequest(request);
-        // Send the request
-        Response response = request.send();
+    static public class GcmRegister extends ApiEndpoint<Responses.Register> {
 
-        if (response.isSuccessful()) {
-            return this.parseJson(response.getBody(), Responses.Register.class);
+        public GcmRegister() {
+            super();
         }
 
-        HttpException exception = this.generateErrorException(response);
+        public GcmRegister(Token accessToken, OAuthService service, String endpointUrl) {
+            super(accessToken, service, endpointUrl);
+        }
 
-        throw new ApiException(exception);
+        /**
+         * Registers the GCM token with the CopyIt server
+         *
+         * @return An {@link net.mms_projects.copy_it.sdk.api.v1.Android.Responses.Register} containing the server response
+         * @throws ApiException This gets thrown if something bad happened. The cause will be given.
+         */
+        public Responses.Register gcmRegister(String gcmToken) throws ApiException, NoContentException {
+            // Create a request
+            OAuthRequest request = new OAuthRequest(Verb.POST, this.getEndpointUrl() + "register");
+            // Add the required parameters
+            request.addBodyParameter("gcm_token", gcmToken);
+            // Sign the request
+            this.signRequest(request);
+            // Send the request
+            Response response = request.send();
+
+            return this.handleServerResponse(response);
+        }
+
+        @Override
+        public Responses.Register handleServerResponse(Response response) throws ApiException, NoContentException {
+            if (response.getCode() == NoContentException.HTTP_CODE) {
+                throw new NoContentException();
+            }
+            if (response.isSuccessful()) {
+                return this.parseJson(response.getBody(), Responses.Register.class);
+            }
+
+            HttpException exception = this.generateErrorException(response);
+
+            throw new ApiException(exception);
+        }
     }
 
-    /**
-     * Unregisters the GCM token with the CopyIt server
-     *
-     * @return An {@link net.mms_projects.copy_it.sdk.api.v1.Android.Responses.Unregister} containing the server response
-     * @throws ApiException This gets thrown if something bad happened. The cause will be given.
-     */
-    public Responses.Unregister gcmUnregister(String gcmToken) throws ApiException {
-        // Create a request
-        OAuthRequest request = new OAuthRequest(Verb.POST, this.getEndpointUrl() + "unregister");
-        // Add the required parameters
-        request.addBodyParameter("gcm_token", gcmToken);
-        // Sign the request
-        this.signRequest(request);
-        // Send the request
-        Response response = request.send();
+    static public class GcmUnregister extends ApiEndpoint<Responses.Unregister> {
 
-        if (response.isSuccessful()) {
-            return this.parseJson(response.getBody(), Responses.Unregister.class);
+        public GcmUnregister() {
+            super();
         }
 
-        HttpException exception = this.generateErrorException(response);
+        public GcmUnregister(Token accessToken, OAuthService service, String endpointUrl) {
+            super(accessToken, service, endpointUrl);
+        }
 
-        throw new ApiException(exception);
+        /**
+         * Unregisters the GCM token with the CopyIt server
+         *
+         * @return An {@link net.mms_projects.copy_it.sdk.api.v1.Android.Responses.Unregister} containing the server response
+         * @throws ApiException This gets thrown if something bad happened. The cause will be given.
+         */
+        public Responses.Unregister gcmUnregister(String gcmToken) throws ApiException, HttpException {
+            // Create a request
+            OAuthRequest request = new OAuthRequest(Verb.POST, this.getEndpointUrl() + "unregister");
+            // Add the required parameters
+            request.addBodyParameter("gcm_token", gcmToken);
+            // Sign the request
+            this.signRequest(request);
+            // Send the request
+            Response response = request.send();
+
+            return this.handleServerResponse(response);
+        }
+
+        @Override
+        public Responses.Unregister handleServerResponse(Response response) throws ApiException, HttpException {
+            if (response.isSuccessful()) {
+                return this.parseJson(response.getBody(), Responses.Unregister.class);
+            }
+
+            HttpException exception = this.generateErrorException(response);
+
+            throw new ApiException(exception);
+        }
+
     }
 
     //<editor-fold desc="API responses">
