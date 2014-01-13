@@ -1,6 +1,7 @@
 package net.mms_projects.copy_it.sdk.api.v1;
 
 import net.mms_projects.copy_it.sdk.api.exceptions.ApiException;
+import net.mms_projects.copy_it.sdk.api.exceptions.JsonParseException;
 import net.mms_projects.copy_it.sdk.api.exceptions.http.HttpException;
 import net.mms_projects.copy_it.sdk.api.exceptions.http.success.NoContentException;
 
@@ -59,7 +60,11 @@ public class Android {
                 throw new NoContentException();
             }
             if (response.isSuccessful()) {
-                return this.parseJson(response.getBody(), Responses.Register.class);
+                try {
+                    return this.parseJson(response.getBody(), Responses.Register.class);
+                } catch (JsonParseException jsonException) {
+                    throw new ApiException(jsonException);
+                }
             }
 
             HttpException exception = this.generateErrorException(response);
@@ -100,7 +105,11 @@ public class Android {
         @Override
         public Responses.Unregister handleServerResponse(Response response) throws ApiException, HttpException {
             if (response.isSuccessful()) {
-                return this.parseJson(response.getBody(), Responses.Unregister.class);
+                try {
+                    return this.parseJson(response.getBody(), Responses.Unregister.class);
+                } catch (JsonParseException jsonException) {
+                    throw new ApiException(jsonException);
+                }
             }
 
             HttpException exception = this.generateErrorException(response);

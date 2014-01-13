@@ -1,6 +1,7 @@
 package net.mms_projects.copy_it.sdk.api.v1;
 
 import net.mms_projects.copy_it.sdk.api.exceptions.ApiException;
+import net.mms_projects.copy_it.sdk.api.exceptions.JsonParseException;
 import net.mms_projects.copy_it.sdk.api.exceptions.http.HttpException;
 import net.mms_projects.copy_it.sdk.api.exceptions.http.success.NoContentException;
 import org.scribe.model.OAuthRequest;
@@ -57,7 +58,11 @@ public class Clipboard {
                 throw new NoContentException();
             }
             if (response.isSuccessful()) {
-                return this.parseJson(response.getBody(), Responses.Get.class);
+                try {
+                    return this.parseJson(response.getBody(), Responses.Get.class);
+                } catch (JsonParseException jsonException) {
+                    throw new ApiException(jsonException);
+                }
             }
 
             HttpException exception = this.generateErrorException(response);
@@ -102,7 +107,11 @@ public class Clipboard {
         @Override
         public Responses.Update handleServerResponse(Response response) throws ApiException, HttpException {
             if (response.isSuccessful())  {
-                return this.parseJson(response.getBody(), Responses.Update.class);
+                try {
+                    return this.parseJson(response.getBody(), Responses.Update.class);
+                } catch (JsonParseException jsonException) {
+                    throw new ApiException(jsonException);
+                }
             }
 
             HttpException exception = this.generateErrorException(response);
