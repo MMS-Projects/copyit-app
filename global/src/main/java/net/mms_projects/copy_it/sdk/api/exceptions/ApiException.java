@@ -8,4 +8,8 @@ public class ApiException extends Exception {
         super(cause);
     }
 
+    public ApiException(JsonParseException cause) {
+        super(cause);
+    }
+
 }

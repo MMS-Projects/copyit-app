@@ -2,6 +2,7 @@ package net.mms_projects.copy_it.sdk.api.v1;
 
 import com.google.gson.Gson;
 import net.mms_projects.copy_it.sdk.api.exceptions.ApiException;
+import net.mms_projects.copy_it.sdk.api.exceptions.JsonParseException;
 import net.mms_projects.copy_it.sdk.api.exceptions.http.HttpException;
 import net.mms_projects.copy_it.sdk.api.exceptions.http.client.ImATeapotException;
 import net.mms_projects.copy_it.sdk.api.exceptions.http.client.MethodNotAllowedException;
@@ -35,16 +36,15 @@ abstract public class ApiEndpoint<ParsedResponse> {
      * @param json The JSON to parse
      * @param type The class literal to generate a class instance of
      * @param <ResponseFormat>  The class type used for the object
+     * @throws JsonParseException This gets thrown when there's an error while parsing the JSON
      * @return A object representing the JSON
      */
-    protected <ResponseFormat> ResponseFormat parseJson(String json, Class<ResponseFormat> type) {
+    protected <ResponseFormat> ResponseFormat parseJson(String json, Class<ResponseFormat> type) throws JsonParseException {
         try {
             return new Gson().fromJson(json, type);
         } catch (com.google.gson.JsonSyntaxException exception) {
-            //throw new Exception(exception);
+            throw new JsonParseException(exception);
         }
-
-        return null;
     }
 
     /**
