@@ -133,13 +133,13 @@ public class Clipboard {
     static public class Responses {
         static public class Get {
             String content;
-            String last_updated;
+            int last_updated;
 
             public String getContent() {
                 return this.content;
             }
 
-            public String getLastUpdated() {
+            public int getLastUpdated() {
                 return this.last_updated;
             }
 
