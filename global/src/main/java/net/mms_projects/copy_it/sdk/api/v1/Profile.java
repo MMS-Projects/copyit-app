@@ -9,39 +9,61 @@ import org.scribe.model.Token;
 import org.scribe.model.Verb;
 import org.scribe.oauth.OAuthService;
 
-public class Profile extends ApiEndpoint {
+public class Profile {
+
+    private Get getEndpoint;
 
     //<editor-fold desc="Constructor">
 
     public Profile(Token accessToken, OAuthService service, String server) {
-        super(accessToken, service, server);
+        this.getEndpoint = new Get(accessToken, service, server);
     }
 
     //</editor-fold>
 
-    /**
-     * Gets the user's profile information
-     *
-     * @return An {@link net.mms_projects.copy_it.sdk.api.v1.Profile.Responses.Get} containing the server response
-     * @throws ApiException This gets thrown if something bad happened. The cause will be given.
-     */
-    public Responses.Get get() throws ApiException {
-        // Create a request
-        OAuthRequest request = new OAuthRequest(Verb.GET, this.getEndpointUrl() + "/1/user/profile");
-        // Sign the request
-        this.signRequest(request);
-        // Send the request
-        Response response = request.send();
+    static public class Get extends ApiEndpoint<Responses.Get> {
 
-        if (response.isSuccessful()) {
-            return this.parseJson(response.getBody(), Responses.Get.class);
+        public Get() {
+            super();
         }
 
-        HttpException exception = this.generateErrorException(response);
+        public Get(Token accessToken, OAuthService service, String endpointUrl) {
+            super(accessToken, service, endpointUrl);
+        }
 
-        System.out.println(exception);
+        /**
+         * Gets the user's profile information
+         *
+         * @return An {@link net.mms_projects.copy_it.sdk.api.v1.Profile.Responses.Get} containing the server response
+         * @throws ApiException This gets thrown if something bad happened. The cause will be given.
+         */
+        public Responses.Get get() throws ApiException, HttpException {
+            // Create a request
+            OAuthRequest request = new OAuthRequest(Verb.GET, this.getEndpointUrl() + "/1/user/profile");
+            // Sign the request
+            this.signRequest(request);
+            // Send the request
+            Response response = request.send();
 
-        throw new ApiException(exception);
+            return this.handleServerResponse(response);
+        }
+
+        @Override
+        public Responses.Get handleServerResponse(Response response) throws ApiException, HttpException {
+            if (response.isSuccessful()) {
+                return this.parseJson(response.getBody(), Responses.Get.class);
+            }
+
+            HttpException exception = this.generateErrorException(response);
+
+            System.out.println(exception);
+
+            throw new ApiException(exception);
+        }
+    }
+
+    public Responses.Get get() throws ApiException, HttpException {
+        return this.getEndpoint.get();
     }
 
     //<editor-fold desc="API responses">
