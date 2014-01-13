@@ -42,6 +42,9 @@ public class Android {
          * @throws ApiException This gets thrown if something bad happened. The cause will be given.
          */
         public Responses.Register gcmRegister(String gcmToken) throws ApiException, NoContentException {
+            if (gcmToken.length() > 4096) {
+                throw new IllegalArgumentException("The max length of a GCM registration id is 4096 bytes");
+            }
             // Create a request
             OAuthRequest request = new OAuthRequest(Verb.POST, this.getEndpointUrl() + "register");
             // Add the required parameters
