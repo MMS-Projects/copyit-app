@@ -6,8 +6,12 @@ public class InternalServerErrorException extends ServerErrorException {
 
     public final static int HTTP_CODE = 500;
 
-    public InternalServerErrorException(String body) {
+    public InternalServerErrorException() {
         super(HTTP_CODE);
+    }
+
+    public InternalServerErrorException(String body) {
+        this();
 
         this.setHttpResponseBody(body);
     }
