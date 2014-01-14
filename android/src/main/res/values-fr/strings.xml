@@ -32,10 +32,11 @@
     <string name="title_activity_login">Connexion</string>
     <string name="title_activity_welcome">Bienvenue chez CopyIt</string>
     <string name="title_activity_settings">Réglages</string>
+    <string name="app_name" translatable="false">CopyIt</string>
     <string name="title_activity_debug">CopyIt Ecran déboguer</string>
     <string name="title_activity_logged_out">Déconnexion</string>
     <string name="title_activity_history">Historique</string>
-    <string name="text_content">Contenu:</string>
+    <string name="text_content">Contenut:</string>
     <string name="text_welcome_message">Merci d\'avoir installé CopyIt. Pour commencer à utiliser CopyIt identifiez-vous.</string>
     <string name="text_logging_in">Connexion…</string>
     <string name="text_login_successful">Connexion réussie!</string>
@@ -64,12 +65,11 @@
     <string name="widget_title_pasteit">CopyIt - Collez-le!</string>
     <string name="widget_title_copyit_pasteit">CopyIt - Copiez/Collez-le!</string>
     <string name="debug_label_build_number">Numéro de build</string>
-    <string name="pref_about">@string/dashboard_button_about</string>
+    <string name="pref_about">\@string/dashboard_button_about</string>
+    <string name="button_copyit" translatable="false">Copiez-le!</string>
+    <string name="button_pasteit" translatable="false">Collez-le!</string>
     <string name="menu_settings">menu_réglages</string>
     <string name="button_login">buoton_S\'identifier</string>
-    <string name="pref_login">@string/dashboard_button_login</string>
-    <string name="title_activity_about">@string/pref_about</string>
-    <string name="login_button_browser_login">Connectez-vous via notre site web</string>
-    <string name="login_dialog_text_automatic_service_login">Voulez-vous vous connecter automatiquement à l\'aide de %1$s?</string>
-
-</resources>
+    <string name="pref_login">\@string/dashboard_button_login</string>
+    <string name="title_activity_about">\@string/pref_about</string>
+    </resources>

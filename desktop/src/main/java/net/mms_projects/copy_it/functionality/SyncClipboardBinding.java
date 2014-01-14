@@ -5,6 +5,10 @@ import java.util.Date;
 import net.mms_projects.copy_it.Activatable;
 import net.mms_projects.copy_it.ClipboardListener;
 import net.mms_projects.copy_it.ClipboardManager;
+import net.mms_projects.copy_it.EnvironmentIntegration;
+import net.mms_projects.copy_it.EnvironmentIntegration.NotificationManager;
+import net.mms_projects.copy_it.EnvironmentIntegration.NotificationManager.NotificationUrgency;
+import net.mms_projects.copy_it.Messages;
 import net.mms_projects.copy_it.SyncListener;
 import net.mms_projects.copy_it.SyncManager;
 import net.mms_projects.copy_it.listeners.EnabledListener;
@@ -16,9 +20,11 @@ public class SyncClipboardBinding implements Activatable, SyncListener,
 	protected ClipboardManager clipboardManager;
 
 	private boolean enabled = true;
+	private EnvironmentIntegration environmentIntegration;
 
-	public SyncClipboardBinding(SyncManager syncManager,
-			ClipboardManager clipboardManager) {
+	public SyncClipboardBinding(EnvironmentIntegration environmentIntegration,
+			SyncManager syncManager, ClipboardManager clipboardManager) {
+		this.environmentIntegration = environmentIntegration;
 		this.syncManager = syncManager;
 		this.clipboardManager = clipboardManager;
 	}
@@ -27,6 +33,10 @@ public class SyncClipboardBinding implements Activatable, SyncListener,
 	public void onRemoteContentChange(final String content, Date date) {
 		if (this.isEnabled()) {
 			this.clipboardManager.setContent(content);
+
+			getNotificationManager().notify(10, NotificationUrgency.NORMAL, "",
+					"CopyIt",
+					Messages.getString("text_content_pulled", content));
 		}
 	}
 
@@ -34,6 +44,10 @@ public class SyncClipboardBinding implements Activatable, SyncListener,
 	public void onClipboardContentChange(String content) {
 		if (this.isEnabled()) {
 			this.syncManager.setRemoteContent(content, new Date());
+
+			getNotificationManager().notify(10, NotificationUrgency.NORMAL, "",
+					"CopyIt",
+					Messages.getString("text_content_pushed", content));
 		}
 	}
 
@@ -64,6 +78,10 @@ public class SyncClipboardBinding implements Activatable, SyncListener,
 	@Override
 	public void addEnabledListener(EnabledListener listener) {
 
+	}
+
+	private NotificationManager getNotificationManager() {
+		return this.environmentIntegration.getNotificationManager();
 	}
 
 }
