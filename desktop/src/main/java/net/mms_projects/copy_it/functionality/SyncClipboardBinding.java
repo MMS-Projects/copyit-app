@@ -6,14 +6,14 @@ import net.mms_projects.copy_it.Activatable;
 import net.mms_projects.copy_it.ClipboardListener;
 import net.mms_projects.copy_it.ClipboardManager;
 import net.mms_projects.copy_it.EnvironmentIntegration;
+import net.mms_projects.copy_it.EnvironmentIntegration.NotificationManager;
+import net.mms_projects.copy_it.EnvironmentIntegration.NotificationManager.NotificationUrgency;
 import net.mms_projects.copy_it.Messages;
 import net.mms_projects.copy_it.SyncListener;
 import net.mms_projects.copy_it.SyncManager;
-import net.mms_projects.copy_it.EnvironmentIntegration.NotificationManager;
-import net.mms_projects.copy_it.EnvironmentIntegration.NotificationManager.NotificationUrgency;
 import net.mms_projects.copy_it.listeners.EnabledListener;
 
-public class SyncNotificationBindings implements Activatable, SyncListener,
+public class SyncClipboardBinding implements Activatable, SyncListener,
 		ClipboardListener {
 
 	protected SyncManager syncManager;
@@ -22,8 +22,7 @@ public class SyncNotificationBindings implements Activatable, SyncListener,
 	private boolean enabled = true;
 	private EnvironmentIntegration environmentIntegration;
 
-	public SyncNotificationBindings(
-			EnvironmentIntegration environmentIntegration,
+	public SyncClipboardBinding(EnvironmentIntegration environmentIntegration,
 			SyncManager syncManager, ClipboardManager clipboardManager) {
 		this.environmentIntegration = environmentIntegration;
 		this.syncManager = syncManager;
@@ -33,6 +32,8 @@ public class SyncNotificationBindings implements Activatable, SyncListener,
 	@Override
 	public void onRemoteContentChange(final String content, Date date) {
 		if (this.isEnabled()) {
+			this.clipboardManager.setContent(content);
+
 			getNotificationManager().notify(10, NotificationUrgency.NORMAL, "",
 					"CopyIt",
 					Messages.getString("text_content_pulled", content));
@@ -42,6 +43,8 @@ public class SyncNotificationBindings implements Activatable, SyncListener,
 	@Override
 	public void onClipboardContentChange(String content) {
 		if (this.isEnabled()) {
+			this.syncManager.setRemoteContent(content, new Date());
+
 			getNotificationManager().notify(10, NotificationUrgency.NORMAL, "",
 					"CopyIt",
 					Messages.getString("text_content_pushed", content));
