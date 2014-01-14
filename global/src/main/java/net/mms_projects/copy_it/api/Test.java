@@ -1,6 +1,7 @@
 package net.mms_projects.copy_it.api;
 
 import net.mms_projects.copy_it.sdk.api.exceptions.ApiException;
+import net.mms_projects.copy_it.sdk.api.exceptions.http.HttpException;
 import net.mms_projects.copy_it.sdk.api.exceptions.http.success.NoContentException;
 import net.mms_projects.copy_it.sdk.api.v1.Android;
 import net.mms_projects.copy_it.sdk.api.v1.Clipboard;
@@ -76,6 +77,8 @@ public class Test
             responseSet = clipboard.update("Blabla", "text/plain");
         } catch (ApiException e) {
             e.printStackTrace();
+        } catch (HttpException e) {
+            e.printStackTrace();
         }
         System.out.println(responseSet);
 
@@ -98,6 +101,10 @@ public class Test
             android.gcmRegister(id);
             android.gcmUnregister(id);
         } catch (ApiException e) {
+            e.printStackTrace();
+        } catch (NoContentException e) {
+            e.printStackTrace();
+        } catch (HttpException e) {
             e.printStackTrace();
         }
 

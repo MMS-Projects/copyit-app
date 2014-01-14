@@ -122,6 +122,14 @@ public class Android {
 
     }
 
+    public Responses.Register gcmRegister(String registrationId) throws NoContentException, ApiException {
+        return this.gcmRegisterEndpoint.gcmRegister(registrationId);
+    }
+
+    public Responses.Unregister gcmUnregister(String registrationId) throws ApiException, HttpException {
+        return this.gcmUnregisterEndpoint.gcmUnregister(registrationId);
+    }
+
     //<editor-fold desc="API responses">
 
     static public class Responses {
