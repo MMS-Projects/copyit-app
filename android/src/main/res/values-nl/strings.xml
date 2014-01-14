@@ -8,7 +8,7 @@
     <string name="dashboard_button_about">Over</string>
     <string name="dashboard_button_history">Geschiedenis</string>
     <!-- Menu -->
-    <string name="menu_settings">\@string/dashboard_button_settings</string>
+    <string name="menu_settings">@string/dashboard_button_settings</string>
     <string name="menu_feedback">Feedback</string>
     <string name="menu_history_clear">Wissen</string>
     <!-- Buttons -->
@@ -28,7 +28,7 @@
     <string name="title_activity_login">Inloggen</string>
     <string name="title_activity_welcome">Welkom bij CopyIt</string>
     <string name="title_activity_settings">Instellingen</string>
-    <string name="title_activity_about">@string/pref_about</string>
+    <string name="title_activity_about">Over</string>
     <string name="title_activity_update">Bijwerken</string>
     <string name="title_activity_debug">CopyIt foutopsporings scherm</string>
     <string name="title_activity_test">Tests NL</string>
@@ -82,7 +82,7 @@
     <string name="debug_not_available">Niet beschikbaar</string>
     <!-- App settings -->
     
-<string name="text_content_pulling">Inhoud aan het binnenhalen…</string>
+    <string name="text_content_pulling">Inhoud aan het binnenhalen…</string>
     <string name="text_content_pushing">Inhoud aan het sturen…</string>
     <string name="history_cab_put_in_clipboard">Stop in klembord</string>
     <string name="history_content_set">klembord ingesteld op \'%1$s\'</string>

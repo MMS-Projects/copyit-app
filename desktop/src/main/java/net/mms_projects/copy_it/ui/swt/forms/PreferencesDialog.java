@@ -51,6 +51,7 @@ public class PreferencesDialog extends GeneralDialog implements
 	private Button btnEnablePolling;
 
 	private Button btnEnableQueue;
+	private Button btnSyncNotifications;
 
 	private int notificationId = 10;
 
@@ -219,6 +220,11 @@ public class PreferencesDialog extends GeneralDialog implements
 		fd_btnEnableQueue.top = new FormAttachment(0, 40);
 		fd_btnEnableQueue.left = new FormAttachment(0, 10);
 		btnEnableQueue.setLayoutData(fd_btnEnableQueue);
+		btnSyncNotifications = new Button(compositeSync, SWT.CHECK);
+		FormData fd_btnSyncNotifications = new FormData();
+		fd_btnSyncNotifications.top = new FormAttachment(0, 70);
+		fd_btnSyncNotifications.left = new FormAttachment(0, 10);
+		btnSyncNotifications.setLayoutData(fd_btnSyncNotifications);
 
 		/*
 		 * Layout and settings
@@ -261,6 +267,8 @@ public class PreferencesDialog extends GeneralDialog implements
 				.getString("PreferencesDialog.btnEnablePolling.text"));
 		btnEnableQueue.setText(Messages
 				.getString("PreferencesDialog.btnEnableQueue.text")); //$NON-NLS-1$
+		btnSyncNotifications.setText(Messages
+				.getString("preferences.notifications.sync.enable")); //$NON-NLS-1$
 
 		/*
 		 * Listeners
@@ -368,6 +376,14 @@ public class PreferencesDialog extends GeneralDialog implements
 				PreferencesDialog.this.updateForm();
 			}
 		});
+		btnSyncNotifications.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				functionality.setEnabled("sync-notifications-binding",
+						btnSyncNotifications.getSelection());
+				PreferencesDialog.this.updateForm();
+			}
+		});
 	}
 
 	protected void updateForm() {
@@ -398,6 +414,8 @@ public class PreferencesDialog extends GeneralDialog implements
 		btnEnablePolling.setSelection(functionality.isEnabled("polling"));
 		btnEnableQueue.setSelection(functionality.isEnabled("queue"));
 		btnEnableQueue.setEnabled(functionality.isEnabled("polling"));
+		btnSyncNotifications.setSelection(functionality
+				.isEnabled("sync-notifications-binding"));
 	}
 
 	private abstract class LoginSectionAdapter extends SelectionAdapter {
