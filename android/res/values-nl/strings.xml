@@ -36,7 +36,7 @@
     <string name="title_activity_history">Geschiedenis</string>
     <!-- Other stuff -->
     <string name="text_content">Inhoud:</string>
-    <string name="text_welcome_message">Bedankt voor het downloaden van CopyIt. Om CopyIt te gebruiken moet je eerst inloggen.</string>
+    <string name="text_welcome_message">Bedankt voor het installeren van CopyIt. Om CopyIt te gebruiken moet je eerst inloggen.</string>
     <string name="text_logging_in">Inloggen…</string>
     <string name="text_login_successful">Succesvol ingelogt!</string>
     <string name="text_logout_successful">Succesvol uitgelogt!</string>
