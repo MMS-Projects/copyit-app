@@ -38,9 +38,9 @@
     <string name="text_content">Inhoud:</string>
     <string name="text_welcome_message">Bedankt voor het installeren van CopyIt. Om CopyIt te gebruiken moet je eerst inloggen.</string>
     <string name="text_logging_in">Inloggen…</string>
-    <string name="text_login_successful">Succesvol ingelogt!</string>
-    <string name="text_logout_successful">Succesvol uitgelogt!</string>
-    <string name="text_login_question">U bent niet ingelogt. Wilt u inloggen?</string>
+    <string name="text_login_successful">Succesvol ingelogd!</string>
+    <string name="text_logout_successful">Succesvol uitgelogd!</string>
+    <string name="text_login_question">U bent niet ingelogd. Wilt u inloggen?</string>
     <string name="text_content_pushed">Volgende inhoud word verstuurd: \'%1$s\'</string>
     <string name="text_content_pulled">Volgende inhoud is ontvangen: \'%1$s\'</string>
     <string name="text_history_cleared">Geschiedenis is geleegd</string>
