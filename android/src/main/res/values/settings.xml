@@ -20,6 +20,9 @@
     <string name="copyit_server">http://api.copyit.mmsdev.org</string>
     <string name="copyit_oauth_key">401a131e03357df2a563fba48f98749448ed63d37e007f7353608cf81fa70a2d</string>
     <string name="copyit_oauth_secret">ba3f5945ba6cfb18ca4869cef2c3daf9d4230e37629f3087b281be6ec8fda2bd</string>
+    
+    <string name="copyit_oauth_user_token">9476f5130a07a7c0061de48bc19123f51636af704c5df369701960e0bc151255</string>
+    <string name="copyit_oauth_user_secret">b96fc9e22532b6bdc2fb760465ea19fa373c520703877ef7e3f0b6a728cefcb1</string>
 
     <string name="gcm_sender_id">977935585822</string>
 
