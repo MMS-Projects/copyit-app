@@ -13,7 +13,15 @@ import android.widget.Toast;
 import net.mms_projects.copy_it.R;
 import net.mms_projects.copy_it.android.utilities.AppUtility;
 import net.mms_projects.copy_it.android.utilities.GcmUtility;
+import net.mms_projects.copy_it.api.CopyItProvider;
+import net.mms_projects.copy_it.sdk.api.exceptions.ApiException;
+import net.mms_projects.copy_it.sdk.api.exceptions.http.success.NoContentException;
+import net.mms_projects.copy_it.sdk.api.v1.Android;
 import net.mms_projects.copy_it.ui.android.MainActivity;
+
+import org.scribe.builder.ServiceBuilder;
+import org.scribe.model.Token;
+import org.scribe.oauth.OAuthService;
 
 public class GcmActivity extends Activity {
 
@@ -101,7 +109,7 @@ public class GcmActivity extends Activity {
         }
     }
 
-    private class GcmRegistrationTask extends AsyncTask<Void, Void, String> {
+    private class GcmRegistrationTask extends AsyncTask<Void, Status, String> {
 
         private final Context context = GcmActivity.this;
 
@@ -114,13 +122,36 @@ public class GcmActivity extends Activity {
 
         @Override
         protected String doInBackground(Void... voids) {
+            String registrationId = null;
             try {
-                return GcmUtility.register(this.context);
-            } catch (GcmUtility.GmcRegistrationException e) {
-                e.printStackTrace();
+                registrationId = GcmUtility.register(this.context);
 
-                return null;
+                this.publishProgress(GcmActivity.Status.GCM_REGISTERED);
+            } catch (GcmUtility.GmcRegistrationException e) {
             }
+
+            OAuthService service = new ServiceBuilder()
+                    .provider(CopyItProvider.class)
+                    .apiKey(this.context.getString(R.string.copyit_oauth_key))
+                    .apiSecret(this.context.getString(R.string.copyit_oauth_secret))
+                    .callback("http://example.com/")
+                    .debug()
+                    .build();
+
+            Token accessToken = new Token(
+                    this.context.getString(R.string.copyit_oauth_user_token), this.context.getString(R.string.copyit_oauth_user_secret)
+            );
+
+            Android android = new Android(accessToken, service, "http://api.copyit.mmsdev.org/1/android/");
+            try {
+                android.gcmRegister(registrationId);
+
+                this.publishProgress(GcmActivity.Status.SERVER_REGISTERED);
+            } catch (ApiException e) {
+                e.printStackTrace();
+            }
+
+            return registrationId;
         }
 
         @Override
@@ -149,5 +180,10 @@ public class GcmActivity extends Activity {
 
             reloadData();
         }
+
+    }
+
+    enum Status {
+        GCM_REGISTERED, SERVER_REGISTERED, STORED_ID
     }
 }
