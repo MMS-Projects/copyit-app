@@ -1,4 +1,4 @@
-package net.mms_projects.copy_it.activities.debugging;
+package net.mms_projects.copy_it.android.ui.activities.debugging;
 
 import android.app.Activity;
 import android.content.Context;
@@ -15,7 +15,6 @@ import net.mms_projects.copy_it.android.utilities.AppUtility;
 import net.mms_projects.copy_it.android.utilities.GcmUtility;
 import net.mms_projects.copy_it.api.CopyItProvider;
 import net.mms_projects.copy_it.sdk.api.exceptions.ApiException;
-import net.mms_projects.copy_it.sdk.api.exceptions.http.success.NoContentException;
 import net.mms_projects.copy_it.sdk.api.v1.Android;
 import net.mms_projects.copy_it.ui.android.MainActivity;
 

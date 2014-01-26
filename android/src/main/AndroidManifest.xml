@@ -224,7 +224,7 @@ s
 
 
         <activity
-            android:name=".activities.debugging.GcmActivity"
+            android:name=".android.ui.activities.debugging.GcmActivity"
             android:label="@string/gcm_debug_activity_title"
             android:parentActivityName="net.mms_projects.copy_it.ui.android.DebugActivity" >
             <meta-data
@@ -244,7 +244,7 @@ s
 
         <!-- Debugging specific -->
         <activity
-            android:name="net.mms_projects.copy_it.activities.debugging.SettingsActivity"
+            android:name=".android.ui.activities.debugging.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:parentActivityName="net.mms_projects.copy_it.ui.android.DebugActivity" >
             <meta-data

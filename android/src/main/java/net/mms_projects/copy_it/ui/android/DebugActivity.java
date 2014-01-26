@@ -20,7 +20,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.google.analytics.tracking.android.EasyTracker;
 
 import net.mms_projects.copy_it.R;
-import net.mms_projects.copy_it.activities.debugging.*;
+import net.mms_projects.copy_it.android.ui.activities.debugging.*;
 import net.mms_projects.copy_it.app.CopyItAndroid;
 import net.mms_projects.utils.InlineSwitch;
 
@@ -137,7 +137,7 @@ public class DebugActivity extends SherlockActivity {
             this.startActivity(intent);
             return true;
             case R.id.action_open_settings:
-                intent = new Intent(this, net.mms_projects.copy_it.activities.debugging.SettingsActivity.class);
+                intent = new Intent(this, net.mms_projects.copy_it.android.ui.activities.debugging.SettingsActivity.class);
                 this.startActivity(intent);
                 return true;
 		default:

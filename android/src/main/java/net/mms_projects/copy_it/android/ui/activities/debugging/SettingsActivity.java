@@ -1,4 +1,4 @@
-package net.mms_projects.copy_it.activities.debugging;
+package net.mms_projects.copy_it.android.ui.activities.debugging;
 
 import android.os.Bundle;
 

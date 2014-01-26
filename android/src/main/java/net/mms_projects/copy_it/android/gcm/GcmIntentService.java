@@ -13,7 +13,7 @@ import android.util.Log;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import net.mms_projects.copy_it.R;
-import net.mms_projects.copy_it.activities.debugging.GcmActivity;
+import net.mms_projects.copy_it.android.ui.activities.debugging.GcmActivity;
 
 public class GcmIntentService extends IntentService {
 
