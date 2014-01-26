@@ -41,7 +41,7 @@ public class Android {
          * @return An {@link net.mms_projects.copy_it.sdk.api.v1.Android.Responses.Register} containing the server response
          * @throws ApiException This gets thrown if something bad happened. The cause will be given.
          */
-        public Responses.Register gcmRegister(String gcmToken) throws ApiException, NoContentException {
+        public Responses.Register gcmRegister(String gcmToken) throws ApiException {
             if (gcmToken.length() > 4096) {
                 throw new IllegalArgumentException("The max length of a GCM registration id is 4096 bytes");
             }
@@ -58,10 +58,7 @@ public class Android {
         }
 
         @Override
-        public Responses.Register handleServerResponse(Response response) throws ApiException, NoContentException {
-            if (response.getCode() == NoContentException.HTTP_CODE) {
-                throw new NoContentException();
-            }
+        public Responses.Register handleServerResponse(Response response) throws ApiException {
             if (response.isSuccessful()) {
                 try {
                     return this.parseJson(response.getBody(), Responses.Register.class);
@@ -122,7 +119,7 @@ public class Android {
 
     }
 
-    public Responses.Register gcmRegister(String registrationId) throws NoContentException, ApiException {
+    public Responses.Register gcmRegister(String registrationId) throws ApiException {
         return this.gcmRegisterEndpoint.gcmRegister(registrationId);
     }
 
