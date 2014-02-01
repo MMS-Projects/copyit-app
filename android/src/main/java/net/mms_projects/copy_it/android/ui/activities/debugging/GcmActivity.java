@@ -3,8 +3,10 @@ package net.mms_projects.copy_it.android.ui.activities.debugging;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -129,6 +131,9 @@ public class GcmActivity extends Activity {
             } catch (GcmUtility.GmcRegistrationException e) {
             }
 
+            SharedPreferences preferences = PreferenceManager
+                    .getDefaultSharedPreferences(this.context);
+
             OAuthService service = new ServiceBuilder()
                     .provider(CopyItProvider.class)
                     .apiKey(this.context.getString(R.string.copyit_oauth_key))
@@ -137,9 +142,14 @@ public class GcmActivity extends Activity {
                     .debug()
                     .build();
 
-            Token accessToken = new Token(
-                    this.context.getString(R.string.copyit_oauth_user_token), this.context.getString(R.string.copyit_oauth_user_secret)
-            );
+            String token = preferences.getString("oauth_public_key", null);
+            String secret = preferences.getString("oauth_secret_key", null);
+
+            if ((token == null) || (secret == null)) {
+                return null;
+            }
+
+            Token accessToken = new Token(token, secret);
 
             Android android = new Android(accessToken, service, "http://api.copyit.mmsdev.org/1/android/");
             try {
