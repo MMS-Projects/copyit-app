@@ -140,6 +140,20 @@ public class DebugActivity extends SherlockActivity {
                 intent = new Intent(this, net.mms_projects.copy_it.android.ui.activities.debugging.SettingsActivity.class);
                 this.startActivity(intent);
                 return true;
+            case R.id.action_debug_load_test_tokens:
+                SharedPreferences preferences = PreferenceManager
+                        .getDefaultSharedPreferences(this);
+
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("oauth_public_key", this.getString(R.string.copyit_oauth_user_token));
+                editor.putString("oauth_secret_key", this.getString(R.string.copyit_oauth_user_secret));
+
+                editor.commit();
+
+                Toast.makeText(this, this.getString(R.string.debug_tokens_toast_tokens_loaded), Toast.LENGTH_SHORT)
+                        .show();
+
+                return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}

@@ -97,6 +97,8 @@
     <!-- General debugging stuff -->
     <!-- Used to copy some debug information to the clipboard -->
     <string name="debug_button_copy">Copy</string>
+    <string name="debug_tokens_menu_load_test_tokens">Load test tokens</string>
+    <string name="debug_tokens_toast_tokens_loaded">The test tokens have been stored</string>
     <!-- Used in the debug preference screen to enable a shortcut to the debug screen -->
     <string name="debug_prefs_enable_shortcut">Enable shortcut</string>
     <!-- Used in the debug preferences as a category for API related settings -->
