@@ -116,4 +116,12 @@
 
 <string name="debug_prefs_enable_shortcut">Aktiviere Verknüpfung</string>
 
+    <string name="debug_prefs_category_api">API Einstellungen</string>
+    <string name="debug_prefs_api_use_dev_server_summary_off">Entwicklungs Server nicht genutzt</string>
+    <string name="debug_screen_status_label">Status:</string>
+
+    <string name="debug_prefs_api_use_dev_server">Nutze Entwicklungs Server</string>
+    <string name="debug_prefs_api_use_dev_server_summary_on">Entwicklungs Server wird genutzt</string>
+    <string name="debug_tokens_menu_load_test_tokens">Lade test Tokens</string>
+    <string name="debug_tokens_toast_tokens_loaded">Die test Tokens wurden gespeichert</string>
     </resources>
