@@ -36,11 +36,11 @@
     <string name="title_activity_history">Geschiedenis</string>
     <!-- Other stuff -->
     <string name="text_content">Inhoud:</string>
-    <string name="text_welcome_message">Bedankt voor het downloaden van CopyIt. Om CopyIt te gebruiken moet je eerst inloggen.</string>
+    <string name="text_welcome_message">Bedankt voor het installeren van CopyIt. Om CopyIt te gebruiken moet je eerst inloggen.</string>
     <string name="text_logging_in">Inloggen…</string>
-    <string name="text_login_successful">Succesvol ingelogt!</string>
-    <string name="text_logout_successful">Succesvol uitgelogt!</string>
-    <string name="text_login_question">U bent niet ingelogt. Wilt u inloggen?</string>
+    <string name="text_login_successful">Inloggen succesvol!</string>
+    <string name="text_logout_successful">Uitloggen succesvol!</string>
+    <string name="text_login_question">Het lijkt erop dat u niet bent ingelogd. Wilt u inloggen?</string>
     <string name="text_content_pushed">Volgende inhoud word verstuurd: \'%1$s\'</string>
     <string name="text_content_pulled">Volgende inhoud is ontvangen: \'%1$s\'</string>
     <string name="text_history_cleared">Geschiedenis is geleegd</string>
@@ -61,8 +61,8 @@
     <!-- Widgets -->
     <string name="widget_title_general">CopyIt - Algemeen</string>
     <string name="widget_title_copyit">CopyIt: Copy It!</string>
-    <string name="widget_title_pasteit">CopyIt - Paste It!</string>
-    <string name="widget_title_copyit_pasteit">CopyIt - Copy/Paste It!</string>
+    <string name="widget_title_pasteit">CopyIt: Paste It!</string>
+    <string name="widget_title_copyit_pasteit">CopyIt: Copy/Paste It!</string>
     <!-- About information -->
     <string name="about_version">Versie: %1$s</string>
     <string name="about_copyright">Gemaakt door MMS-Projects</string>
