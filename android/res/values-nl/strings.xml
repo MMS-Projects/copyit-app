@@ -60,7 +60,7 @@
     <string name="error_general">Er is een fout opgetreden: %1$s</string>
     <!-- Widgets -->
     <string name="widget_title_general">CopyIt - Algemeen</string>
-    <string name="widget_title_copyit">CopyIt - Copy It!</string>
+    <string name="widget_title_copyit">CopyIt: Copy It!</string>
     <string name="widget_title_pasteit">CopyIt - Paste It!</string>
     <string name="widget_title_copyit_pasteit">CopyIt - Copy/Paste It!</string>
     <!-- About information -->
