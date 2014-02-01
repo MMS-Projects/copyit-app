@@ -3,8 +3,22 @@
 
     <item
         android:id="@+id/action_open_activity_test"
-        android:orderInCategory="100"
-        android:showAsAction="always"
-        android:title="@string/title_activity_test"/>
+        android:showAsAction="ifRoom"
+        android:title="@string/title_activity_test" />
+
+    <item
+        android:id="@+id/action_open_activity_gcm"
+        android:showAsAction="ifRoom"
+        android:title="@string/gcm_debug_menu_item_title" />
+
+    <item
+        android:id="@+id/action_debug_load_test_tokens"
+        android:showAsAction="ifRoom"
+        android:title="@string/debug_tokens_menu_load_test_tokens" />
+
+    <item
+        android:id="@+id/action_open_settings"
+        android:showAsAction="never"
+        android:title="@string/menu_settings"/>
 
 </menu>
