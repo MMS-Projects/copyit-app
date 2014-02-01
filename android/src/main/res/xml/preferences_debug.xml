@@ -6,4 +6,13 @@
             android:key="debug.shortcut.enabled"
             android:title="@string/debug_prefs_enable_shortcut" />
 
+    <PreferenceCategory android:title="@string/debug_prefs_category_api" >
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="api.use_dev_server"
+            android:summaryOff="@string/debug_prefs_api_use_dev_server_summary_off"
+            android:summaryOn="@string/debug_prefs_api_use_dev_server_summary_on"
+            android:title="@string/debug_prefs_api_use_dev_server" />
+    </PreferenceCategory>
+
 </PreferenceScreen>

@@ -20,7 +20,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.google.analytics.tracking.android.EasyTracker;
 
 import net.mms_projects.copy_it.R;
-import net.mms_projects.copy_it.activities.debugging.*;
+import net.mms_projects.copy_it.android.ui.activities.debugging.*;
 import net.mms_projects.copy_it.app.CopyItAndroid;
 import net.mms_projects.utils.InlineSwitch;
 
@@ -42,9 +42,15 @@ public class DebugActivity extends SherlockActivity {
 		setContentView(R.layout.activity_debug);
 
 		Map<String, String> info = new LinkedHashMap<String, String>();
-		info.put(getString(R.string.debug_label_server_baseurl),
-				preferences.getString("server.baseurl", this.getResources()
-						.getString(R.string.default_baseurl)));
+        if (!preferences.getBoolean("api.use_dev_server", false)) {
+            info.put(getString(R.string.debug_label_server_baseurl),
+                    preferences.getString("server.baseurl", this.getResources()
+                            .getString(R.string.default_baseurl)));
+        } else {
+            info.put(getString(R.string.debug_label_server_baseurl),
+                    this.getResources()
+                            .getString(R.string.copyit_server));
+        }
 		info.put(getString(R.string.debug_label_jenkins_baseurl), this
 				.getResources().getString(R.string.jenkins_joburl));
 		info.put(getString(R.string.debug_label_device_id), this.getResources()
@@ -131,8 +137,22 @@ public class DebugActivity extends SherlockActivity {
             this.startActivity(intent);
             return true;
             case R.id.action_open_settings:
-                intent = new Intent(this, net.mms_projects.copy_it.activities.debugging.SettingsActivity.class);
+                intent = new Intent(this, net.mms_projects.copy_it.android.ui.activities.debugging.SettingsActivity.class);
                 this.startActivity(intent);
+                return true;
+            case R.id.action_debug_load_test_tokens:
+                SharedPreferences preferences = PreferenceManager
+                        .getDefaultSharedPreferences(this);
+
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("oauth_public_key", this.getString(R.string.copyit_oauth_user_token));
+                editor.putString("oauth_secret_key", this.getString(R.string.copyit_oauth_user_secret));
+
+                editor.commit();
+
+                Toast.makeText(this, this.getString(R.string.debug_tokens_toast_tokens_loaded), Toast.LENGTH_SHORT)
+                        .show();
+
                 return true;
 		default:
 			return super.onOptionsItemSelected(item);

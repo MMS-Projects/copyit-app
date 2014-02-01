@@ -97,8 +97,18 @@
     <!-- General debugging stuff -->
     <!-- Used to copy some debug information to the clipboard -->
     <string name="debug_button_copy">Copy</string>
+    <string name="debug_tokens_menu_load_test_tokens">Load test tokens</string>
+    <string name="debug_tokens_toast_tokens_loaded">The test tokens have been stored</string>
     <!-- Used in the debug preference screen to enable a shortcut to the debug screen -->
     <string name="debug_prefs_enable_shortcut">Enable shortcut</string>
+    <!-- Used in the debug preferences as a category for API related settings -->
+    <string name="debug_prefs_category_api">API related settings</string>
+    <!-- Used in the debug preferences to enable access to the development server -->
+    <string name="debug_prefs_api_use_dev_server">Use development server</string>
+    <!-- Used in the debug proferences to show that the development server is being used -->
+    <string name="debug_prefs_api_use_dev_server_summary_on">Using the development server</string>
+    <!-- Used in the debug proferences to show that the development server is not being used -->
+    <string name="debug_prefs_api_use_dev_server_summary_off">Not using the development server</string>
     <!-- Used in almost all of the debugging activities. Its just a label to show that the particular activity shows the status of a piece of the app -->
     <string name="debug_screen_status_label">Status:</string>
 
