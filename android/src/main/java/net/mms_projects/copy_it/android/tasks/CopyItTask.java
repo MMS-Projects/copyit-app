@@ -3,17 +3,26 @@ package net.mms_projects.copy_it.android.tasks;
 import java.util.Date;
 
 import net.mms_projects.copy_it.R;
+import net.mms_projects.copy_it.api.CopyItProvider;
 import net.mms_projects.copy_it.api.ServerApi;
 import net.mms_projects.copy_it.api.endpoints.ClipboardContentEndpoint;
 import net.mms_projects.copy_it.databases.HistoryItemsDbHelper;
 import net.mms_projects.copy_it.models.HistoryContract;
 import net.mms_projects.copy_it.models.HistoryItem.Change;
+import net.mms_projects.copy_it.sdk.api.exceptions.ApiException;
+import net.mms_projects.copy_it.sdk.api.v1.Android;
+import net.mms_projects.copy_it.sdk.api.v1.Clipboard;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
+
+import org.scribe.builder.ServiceBuilder;
+import org.scribe.model.Token;
+import org.scribe.oauth.OAuthService;
 
 public class CopyItTask extends ServerApiUiTask<String, Void, Boolean> {
 	protected Change historyChangeType = Change.PUSHED;
@@ -52,7 +61,31 @@ public class CopyItTask extends ServerApiUiTask<String, Void, Boolean> {
 			this.database.close();
 		}
 
-		return new ClipboardContentEndpoint(api).update(this.content);
+        if (!prefences.getBoolean("api.use_dev_server", false)) {
+            return new ClipboardContentEndpoint(api).update(this.content);
+        } else {
+            OAuthService service = new ServiceBuilder()
+                    .provider(CopyItProvider.class)
+                    .apiKey(this.context.getString(R.string.copyit_oauth_key))
+                    .apiSecret(this.context.getString(R.string.copyit_oauth_secret))
+                    .callback("http://example.com/")
+                    .debug()
+                    .build();
+
+            String token = prefences.getString("oauth_public_key", null);
+            String secret = prefences.getString("oauth_secret_key", null);
+
+            if ((token == null) || (secret == null)) {
+                return null;
+            }
+
+            Token accessToken = new Token(token, secret);
+
+            Clipboard clipboard = new Clipboard(accessToken, service, "http://api.copyit.mmsdev.org/1/clipboard/");
+            clipboard.update(this.content, "text/plain");
+
+            return true;
+        }
 	}
 
 	@Override

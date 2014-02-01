@@ -3,11 +3,14 @@ package net.mms_projects.copy_it.android.tasks;
 import java.util.Date;
 
 import net.mms_projects.copy_it.R;
+import net.mms_projects.copy_it.api.CopyItProvider;
 import net.mms_projects.copy_it.api.ServerApi;
 import net.mms_projects.copy_it.api.endpoints.ClipboardContentEndpoint;
 import net.mms_projects.copy_it.databases.HistoryItemsDbHelper;
 import net.mms_projects.copy_it.models.HistoryContract;
 import net.mms_projects.copy_it.models.HistoryItem.Change;
+import net.mms_projects.copy_it.sdk.api.v1.Clipboard;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +18,10 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
+
+import org.scribe.builder.ServiceBuilder;
+import org.scribe.model.Token;
+import org.scribe.oauth.OAuthService;
 
 public class SendToAppTask extends ServerApiUiTask<Void, Void, String> {
 
@@ -34,7 +41,35 @@ public class SendToAppTask extends ServerApiUiTask<Void, Void, String> {
 		HistoryItemsDbHelper dbHelper = new HistoryItemsDbHelper(context);
 		this.database = dbHelper.getWritableDatabase();
 
-		return new ClipboardContentEndpoint(api).get();
+        SharedPreferences preferences = PreferenceManager
+                .getDefaultSharedPreferences(this.context);
+
+        if (!preferences.getBoolean("api.use_dev_server", false)) {
+            return new ClipboardContentEndpoint(api).get();
+        } else {
+            OAuthService service = new ServiceBuilder()
+                    .provider(CopyItProvider.class)
+                    .apiKey(this.context.getString(R.string.copyit_oauth_key))
+                    .apiSecret(this.context.getString(R.string.copyit_oauth_secret))
+                    .callback("http://example.com/")
+                    .debug()
+                    .build();
+
+            String token = preferences.getString("oauth_public_key", null);
+            String secret = preferences.getString("oauth_secret_key", null);
+
+            if ((token == null) || (secret == null)) {
+                return null;
+            }
+
+            Token accessToken = new Token(token, secret);
+
+            Clipboard clipboard = new Clipboard(accessToken, service, "http://api.copyit.mmsdev.org/1/clipboard/");
+
+            Clipboard.Responses.Get responseGet = clipboard.get();
+
+            return responseGet.getContent();
+        }
 	}
 
 	@Override
