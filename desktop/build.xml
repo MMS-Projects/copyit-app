@@ -109,11 +109,6 @@
 			<zipfileset excludes="META-INF/*.SF"
 				src="desktop/libs/linux/libdbus-java-2.7.jar" />
 			<zipfileset excludes="META-INF/*.SF" src="desktop/libs/linux/unix-0.5.jar" />
-			<fileset dir="android">
-				<include name="**/res/**.properties" />
-				<include name="**/res/mmsprojects-copyit-**.png" />
-			</fileset>
-			<fileset dir="android/res" />
 			<fileset dir="desktop/src/main/resources" />
 			<fileset dir="desktop/libs/linux">
 				<include name="**/*.so" />
@@ -146,11 +141,6 @@
 			<zipfileset excludes="META-INF/*.SF"
 				src="desktop/libs/linux/libdbus-java-2.7.jar" />
 			<zipfileset excludes="META-INF/*.SF" src="desktop/libs/linux/unix-0.5.jar" />
-			<fileset dir="android">
-				<include name="**/res/**.properties" />
-				<include name="**/res/mmsprojects-copyit-**.png" />
-			</fileset>
-			<fileset dir="android/res" />
 			<fileset dir="desktop/src/main/resources" />
 			<fileset dir="desktop/libs/linux">
 				<include name="**/*.so" />
@@ -182,11 +172,6 @@
 			<zipfileset excludes="META-INF/*.SF"
 				src="desktop/libs/linux/libdbus-java-2.7.jar" />
 			<zipfileset excludes="META-INF/*.SF" src="desktop/libs/linux/unix-0.5.jar" />
-			<fileset dir="android">
-				<include name="**/res/**.properties" />
-				<include name="**/res/mmsprojects-copyit-**.png" />
-			</fileset>
-			<fileset dir="android/res" />
 			<fileset dir="desktop/src/main/resources" />
 		</jar>
 	</target>
@@ -221,11 +206,6 @@
 			<zipfileset excludes="META-INF/*.SF"
 				src="desktop/libs/linux/libdbus-java-2.7.jar" />
 			<zipfileset excludes="META-INF/*.SF" src="desktop/libs/linux/unix-0.5.jar" />
-			<fileset dir="android">
-				<include name="**/res/**.properties" />
-				<include name="**/res/mmsprojects-copyit-**.png" />
-			</fileset>
-			<fileset dir="android/res" />
 			<fileset dir="desktop/src/main/resources" />
 		</jar>
 	</target>
@@ -260,11 +240,6 @@
 			<zipfileset excludes="META-INF/*.SF"
 				src="desktop/libs/linux/libdbus-java-2.7.jar" />
 			<zipfileset excludes="META-INF/*.SF" src="desktop/libs/linux/unix-0.5.jar" />
-			<fileset dir="android">
-				<include name="**/res/**.properties" />
-				<include name="**/res/mmsprojects-copyit-**.png" />
-			</fileset>
-			<fileset dir="android/res" />
 			<fileset dir="desktop/src/main/resources" />
 		</jar>
 	</target>
@@ -293,11 +268,6 @@
 			<zipfileset excludes="META-INF/*.SF"
 				src="desktop/libs/linux/libdbus-java-2.7.jar" />
 			<zipfileset excludes="META-INF/*.SF" src="desktop/libs/linux/unix-0.5.jar" />
-			<fileset dir="android">
-				<include name="**/res/**.properties" />
-				<include name="**/res/mmsprojects-copyit-**.png" />
-			</fileset>
-			<fileset dir="android/res" />
 			<fileset dir="desktop/src/main/resources" />
 		</jar>
 	</target>
